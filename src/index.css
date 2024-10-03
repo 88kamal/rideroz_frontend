@@ -5,3 +5,7 @@
 .app-font {
     font-family: Tahoma;
 }
+
+.swal-popup {
+    z-index: 9999; /* Ensure this is higher than the dialog */
+}

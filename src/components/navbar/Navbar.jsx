@@ -83,7 +83,7 @@ export default function Navbars() {
                 { to: '/contact', label: 'Contact' },
                 { to: '/blog', label: 'Blog' },
                 { to: '/faqs', label: 'FAQs' },
-                {to: '/signup' , label : 'Sign Up'}
+                { to: '/signup', label: 'Sign Up' }
             ].map((item, index) => {
                 if (item.submenu) {
                     return (
@@ -154,8 +154,8 @@ export default function Navbars() {
                     <div className="flex items-center gap-3 lg:gap-3">
                         <div className="hidden lg:block">{navList}</div>
 
-
-                        <Button
+<Link to={'/list-shop'}>
+ <Button
                             variant=""
                             className="bg-[#E6FFF3] border shadow-none hover:shadow-none border-green-300 rounded-lg py-2 px-4 flex items-center space-x-2">
                             <span className="text-black font-semibold ">List Shop</span>
@@ -163,6 +163,8 @@ export default function Navbars() {
                                 Free
                             </span>
                         </Button>
+</Link>
+                       
 
 
                         {/* User Icon and Sign Up */}

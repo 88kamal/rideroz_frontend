@@ -1,8 +1,20 @@
 import { Button } from "@material-tailwind/react";
-import { AiOutlineSearch, AiOutlineEnvironment } from "react-icons/ai";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import { AiOutlineSearch } from "react-icons/ai";
+import SelectCityOrLocationModal from "../modal/selectCityOrLocation/SelectCityOrLocationModal";
+import { useState } from "react";
+import Swal from 'sweetalert2';
 
 const SearchSection = () => {
+  const [selectedCity, setSelectedCity] = useState('');
+
+  const handleSearch = () => {
+    Swal.fire({
+      title: 'Success!',
+      text: 'Bike, Scooty, and Car Searching',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+  }
   return (
     <div className="w-full flex flex-col items-center bg-gray-100 h-[23em] lg:h-[25em] md:h-[30em] sm:h-[30em] lg:mb-20 mb-32">
       {/* Bikes Image Section */}
@@ -22,19 +34,12 @@ const SearchSection = () => {
           </h2>
           <div className="flex flex-wrap justify-between items-center lg:space-x-4">
             {/* Select City */}
-            <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 w-full lg:w-[15.5em] mb-2 lg:mb-0">
-              <AiOutlineEnvironment className="mr-2 text-gray-500" size={20} />
-              <select className="w-full bg-transparent focus:outline-none">
-                <option>Select City</option>
-                <option>City 1</option>
-                <option>City 2</option>
-                <option>City 3</option>
-              </select>
-            </div>
+           <SelectCityOrLocationModal 
+           selectedCity={selectedCity}
+           setSelectedCity={setSelectedCity}/>
 
             {/* Select Date */}
             <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 w-full lg:w-[15.5em] mb-2 lg:mb-0">
-              <FaRegCalendarAlt className="mr-2 text-gray-500" size={20} />
               <input
                 type="date"
                 className="w-full bg-transparent focus:outline-none"
@@ -43,7 +48,6 @@ const SearchSection = () => {
 
             {/* Select Booking Time */}
             <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 w-full lg:w-[15.5em] mb-2 lg:mb-0">
-              <FaRegCalendarAlt className="mr-2 text-gray-500" size={20} />
               <input
                 type="time"
                 className="w-full bg-transparent focus:outline-none"
@@ -52,13 +56,13 @@ const SearchSection = () => {
 
             {/* Search Button */}
             <div className=" hidden lg:block">
-              <Button variant="" className="bg-green-500 text-white px-4 py-2.5 rounded-md hover:bg-green-600 flex items-center justify-center">
+              <Button variant="" onClick={()=> handleSearch()} className="bg-green-500 text-white px-4 py-2.5 rounded-md hover:bg-green-600 flex items-center justify-center">
                 <AiOutlineSearch size={20} />
               </Button>
             </div>
 
             <div className=" lg:hidden block w-full">
-              <Button variant="" className="bg-green-500 text-white px-4 py-2.5 rounded-md hover:bg-green-600 w-full">
+              <Button variant="" onClick={()=> handleSearch()} className="bg-green-500 text-white px-4 py-2.5 rounded-md hover:bg-green-600 w-full">
                 {/* <AiOutlineSearch size={20} /> */}
                 <p>Search</p>
               </Button>
