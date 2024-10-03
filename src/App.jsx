@@ -1,20 +1,25 @@
-import { Card } from '@material-tailwind/react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-'./ass'
-const App = () => {
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+import HomePage from "./pages/home/HomePage";
+import AboutPage from "./pages/about/AboutPage";
+import ContactPage from "./pages/contact/ContactPage";
+import NoPage from "./pages/noPage/NoPage";
+
+
+function App() {
   return (
-    <div className=' flex justify-center items-center h-screen'>
-      <Card className='border'>
-        <LazyLoadImage
-          alt={"image.alt"}
-          height={500}
-          wrapperProps={{
-            // If you need to, you can tweak the effect transition using the wrapper style.
-            style: { transitionDelay: "1s" },
-          }}
-          src="../logo/rideroz.png" // use normal <img> attributes as props
-          width={500} />
-      </Card>
+    <div className="App">
+      <Router>
+       <Routes>
+        <Route path="/" element={ <HomePage/> } />
+        <Route path="/about" element={ <AboutPage/> } />
+        <Route path="/contact" element={ <ContactPage/> } />
+        <Route path="/*" element={ <NoPage/> } />
+       </Routes>
+      </Router>
     </div>
   )
 }
