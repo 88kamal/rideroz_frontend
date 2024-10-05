@@ -136,7 +136,7 @@ export default function Navbars() {
     );
 
     return (
-        <div className="sticky inset-0 z-20 h-max max-w-full border-none rounded-none">
+        <div className="sticky inset-0 z-50 h-max max-w-full border-none rounded-none">
             <Navbar className="sticky inset-0 z-20 h-max shadow-md max-w-full border-none rounded-none py-2 px-4 lg:px-5 lg:py-1.5">
                 <div className="flex items-center justify-between text-blue-gray-900">
                     <Link to={'/'}>

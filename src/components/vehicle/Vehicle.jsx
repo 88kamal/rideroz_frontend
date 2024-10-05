@@ -141,7 +141,7 @@ export default function Vehicle() {
             </div>
             <Tabs value={activeTab}>
                 <TabsHeader
-                    className="rounded-none border-b  border-blue-gray-50 bg-transparent p-0 container mx-auto max-w-2xl"
+                    className="rounded-none border-b  border-blue-gray-50 bg-transparent p-0 container mx-auto max-w-2xl "
                     indicatorProps={{
                         className:
                             "bg-transparent border-b-4 border-[#82BE23] shadow-none rounded-none",

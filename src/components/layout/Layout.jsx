@@ -12,7 +12,7 @@ function Layout({ children }) {
                 <TopHeader />
             </div>
             <Navbar />
-            <div className=" min-h-screen ">
+            <div className=" min-h-screen  ">
                 {children}
             </div>
             <Footer />
