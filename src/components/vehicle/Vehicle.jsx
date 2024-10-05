@@ -20,7 +20,7 @@ export default function Vehicle() {
                     brandName: 'Ampere',
                     title: 'Electric Scooter',
                     price: "339",
-                    imageUrl: 'https://freedo-backend-static-prod.s3.ap-south-1.amazonaws.com/public/uploads/ModelImages/Ampere%20Magnus%20Ex%20EV%201.png'
+                    imageUrl: 'https://freedo-backend-static-prod.s3.ap-south-1.amazonaws.com/public/uploads/ModelImages/PleasurePlusBlueTesterRightpng.png'
                 },
                 {
                     brandName: 'Hero',
@@ -56,7 +56,7 @@ export default function Vehicle() {
                     brandName: 'Ampere',
                     title: 'Electric Scooter',
                     price: "339",
-                    imageUrl: 'https://freedo-backend-static-prod.s3.ap-south-1.amazonaws.com/public/uploads/ModelImages/Ampere%20Magnus%20Ex%20EV%201.png'
+                    imageUrl: 'https://freedo-backend-static-prod.s3.ap-south-1.amazonaws.com/public/uploads/ModelImages/PleasurePlusBlueTesterRightpng.png'
                 },
                 {
                     brandName: 'Hero',
