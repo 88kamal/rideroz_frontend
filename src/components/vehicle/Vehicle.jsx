@@ -128,7 +128,7 @@ export default function Vehicle() {
                     brandName: '',
                     title: 'Mahindra Scorpio',
                     price: "1550",
-                    imageUrl: 'https://www.rapidriderental.com/wp-content/uploads/2024/08/Mahindra-Scorpio-2022.webp'
+                    imageUrl: 'https://www.rapidriderental.com/wp-content/uploads/2024/08/Swift-2022.webp'
                 }
             ]
         },
@@ -170,11 +170,13 @@ export default function Vehicle() {
                                             return (
                                                 <div key={index} className="p-4 w-full md:w-1/4">
                                                     <Card className="h-full drop-shadow overflow-hidden">
-                                                        <img
-                                                            className=" w-full h-56"
+                                                       <div className="flex justify-center">
+                                                       <img
+                                                            className="w-[280px] h-[200px] rounded-xl"
                                                             src={imageUrl}
                                                             alt="blog"
                                                         />
+                                                       </div>
                                                         <div className="p-6">
                                                             <h2 className="tracking-widest text-xs title-font font-medium mb-1 app-font">
                                                                 Rideroz
