@@ -1,7 +1,5 @@
 import { Button } from "@material-tailwind/react";
 import { MoveLeft } from "lucide-react";
-import React from "react";
-import { BiLeftArrow } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 function ShopLogin() {

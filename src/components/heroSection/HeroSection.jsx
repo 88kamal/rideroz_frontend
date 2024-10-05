@@ -28,7 +28,7 @@ const SearchSection = () => {
 
       {/* Search Bar Section */}
       <div className="px-4 lg:px-0">
-        <div className="bg-white shadow-md rounded-md p-4 mt-4 w-full max-w-4xl">
+        <div className="bg-white drop-shadow rounded-md p-4 mt-4 w-full max-w-4xl">
           <h2 className="text-center text-xl font-semibold mb-4">
             Search The Bike/Scooty/Car!
           </h2>
