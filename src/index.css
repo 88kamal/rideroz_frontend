@@ -9,3 +9,17 @@
 .swal-popup {
     z-index: 9999; /* Ensure this is higher than the dialog */
 }
+
+input[type="checkbox"] {
+    display: none;
+}
+
+  
+
+#file-upload {
+    display: none;
+  }
+  .custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+  }
