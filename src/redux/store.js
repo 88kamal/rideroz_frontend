@@ -1,6 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { cityApi } from './slices/cityApiSlice';
-import { shopApi } from './slices/shopApiSlice';
 import apiSlice from './slices/apiSlice';
 
 const store = configureStore({

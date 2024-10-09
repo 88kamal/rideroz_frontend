@@ -1,23 +1,3 @@
-// import apiSlice from './apiSlice';
-
-// export const shopApi = apiSlice.injectEndpoints({
-//     endpoints: (builder) => ({
-//         addShop: builder.mutation({
-//             query: (shopData) => ({
-//                 url: '/shop/add-shop',
-//                 method: 'POST',
-//                 body: shopData,
-//                 formData: true,
-//             }),
-//         }),
-//     }),
-//     // Enable refetch on reconnect
-//     refetchOnReconnect: true,
-// });
-
-// export const { useAddShopMutation } = shopApi;
-
-
 import apiSlice from './apiSlice';
 
 export const shopApi = apiSlice.injectEndpoints({
@@ -29,6 +9,7 @@ export const shopApi = apiSlice.injectEndpoints({
                 body: shopData,
                 formData: true,
             }),
+            // eslint-disable-next-line no-unused-vars
             onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
                 try {
                     // You can optimistically update the state or perform any side effect here
