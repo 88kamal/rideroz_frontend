@@ -1,497 +1,40 @@
-// // import { Button } from "@material-tailwind/react";
-// // import { useState } from "react";
-// // import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { Button, Spinner } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
+import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { Eye, EyeOff, Locate } from "lucide-react";
+import { useAddShopMutation } from "../../redux/slices/shopApiSlice";
+import toast from "react-hot-toast";
+import Swal from 'sweetalert2'
+import { useGetCitiesQuery } from "../../redux/slices/cityApiSlice";
 
-// // function ListShopPage() {
-// //     const [formData, setFormData] = useState({
-// //         photo: "",
-// //         shopName: "",
-// //         ownerName: "",
-// //         email: "",
-// //         password: "",
-// //         phoneNumber: "",
-// //         gender: "",
-// //         city: "",
-// //         location: "",
-// //         coordinates: { lat: null, lng: null }
-// //     });
-
-// //     const { isLoaded } = useJsApiLoader({
-// //         googleMapsApiKey: "AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE" // Replace with your actual Google Maps API key
-// //     });
-
-// //     const handleChangePhoto = (event) => {
-// //         const file = event.target.files[0];
-// //         if (file) {
-// //             setFormData((prevState) => ({
-// //                 ...prevState,
-// //                 photo: file,
-// //             }));
-// //         }
-// //     };
-
-// //     const handleChange = (event) => {
-// //         const { name, value } = event.target;
-// //         setFormData((prevState) => ({
-// //             ...prevState,
-// //             [name]: value,
-// //         }));
-// //     };
-
-// //     const handleGetCurrentLocation = () => {
-// //         if (navigator.geolocation) {
-// //             navigator.geolocation.getCurrentPosition(
-// //                 (position) => {
-// //                     setFormData((prevState) => ({
-// //                         ...prevState,
-// //                         coordinates: {
-// //                             lat: position.coords.latitude,
-// //                             lng: position.coords.longitude,
-// //                         },
-// //                         location: `Lat: ${position.coords.latitude}, Lng: ${position.coords.longitude}`
-// //                     }));
-// //                 },
-// //                 (error) => {
-// //                     console.error("Error getting location: ", error);
-// //                     alert("Unable to retrieve your location");
-// //                 }
-// //             );
-// //         } else {
-// //             alert("Geolocation is not supported by this browser");
-// //         }
-// //     };
-
-// //     const handleSubmit = (event) => {
-// //         event.preventDefault();
-
-// //         // Validate the form
-// //         if (!formData.shopName || !formData.ownerName || !formData.email || !formData.password || !formData.phoneNumber || !formData.gender || !formData.city || !formData.location) {
-// //             alert("Please fill in all fields");
-// //             return;
-// //         }
-
-// //         // Print form data (Here you can also send it to a backend server)
-// //         console.log("Form Data:", formData);
-// //         alert("Form submitted successfully!");
-// //     };
-
-// //     return (
-// //         <div className="min-h-screen flex justify-center items-center bg-white p-2">
-// //             <div className="max-w-2xl w-full bg-white rounded-lg drop-shadow">
-// //                 {/* Form */}
-// //                 <div className="flex flex-col justify-center p-8">
-// //                     <div className="text-center mb-8">
-// //                         <div className="flex justify-center">
-// //                             <img
-// //                                 src="../../logo/rideroz.png" // Replace with your actual logo URL
-// //                                 alt="Rideroz Logo"
-// //                                 className="h-20 mb-4 w-48"
-// //                             />
-// //                         </div>
-// //                         <h2 className="text-2xl font-semibold text-gray-800">
-// //                             List your shop with Rideroz
-// //                         </h2>
-// //                     </div>
-
-// //                     <form className="space-y-6" onSubmit={handleSubmit}>
-// //                         {/* Photo Upload */}
-// //                         <div className="flex justify-center border p-2 border-gray-400 rounded-md border-dashed">
-// //                             <label htmlFor="file-upload" className="custom-file-upload">
-// //                                 {formData.photo && formData.photo instanceof Blob ? (
-// //                                     <img className="w-24 h-24 border-2 rounded-full" src={URL.createObjectURL(formData.photo)} alt="" />
-// //                                 ) : (
-// //                                     <img src="https://cdn-icons-png.flaticon.com/128/1771/1771013.png" className="h-24 w-24" alt="Upload" />
-// //                                 )}
-// //                             </label>
-// //                             <input id="file-upload" name="photo" type="file" onChange={handleChangePhoto} />
-// //                         </div>
-
-// //                         <div className="">
-// //                             <input type="text"
-// //                                 placeholder="Enter Shop Name"
-// //                                 className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md"
-// //                             />
-// //                         </div>
-
-// //                         <div className="">
-// //                             <input type="text"
-// //                                 placeholder="Enter Owner Full Name"
-// //                                 className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md"
-// //                             />
-// //                         </div>
-
-// //                         <div className="">
-// //                             <input type="email"
-// //                                 placeholder="Email"
-// //                                 className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md"
-// //                             />
-// //                         </div>
-
-// //                         <div className="">
-// //                             <input type="password"
-// //                                 placeholder="Password"
-// //                                 className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md"
-// //                             />
-// //                         </div>
-
-// //                         <div className="">
-// //                             <input type="number"
-// //                                 placeholder="Mobile Number"
-// //                                 className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md"
-// //                             />
-// //                         </div>
-
-
-// //                         <div className="">
-// //                             <input type="email"
-// //                                 placeholder="Email"
-// //                                 className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md"
-// //                             />
-// //                         </div>
-
-// //                         <select name="" id=""  className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md">
-// //                             <option value="">Select Gender</option>
-// //                             <option value="">Male</option>
-// //                             <option value="">female</option>
-// //                         </select>
-
-// //                         <select name="" id=""  className=" bg-white outline-none w-full py-2 px-3 border 
-// //                         border-gray-400 rounded-md">
-// //                              <option value="">Select City</option>
-// //                             <option value="">Noida</option>
-// //                             <option value="">Dehradun</option>
-// //                         </select>
-
-// //                         {/* Get Current Location */}
-// //                         <div>
-// //                             <Button
-// //                                 onClick={handleGetCurrentLocation}
-// //                                 className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-none hover:shadow-none"
-// //                             >
-// //                                 Use Current Location
-// //                             </Button>
-// //                             {formData.coordinates.lat && (
-// //                                 <p className="text-center mt-2 text-gray-700">
-// //                                     Location: {formData.location}
-// //                                 </p>
-// //                             )}
-// //                         </div>
-
-// //                         {/* Google Map */}
-// //                         {isLoaded && formData.coordinates.lat && (
-// //                             <div className="mt-4">
-// //                                 <GoogleMap
-// //                                     mapContainerStyle={{ width: "100%", height: "300px" }}
-// //                                     center={formData.coordinates}
-// //                                     zoom={15}
-// //                                 >
-// //                                     <Marker position={formData.coordinates} />
-// //                                 </GoogleMap>
-// //                             </div>
-// //                         )}
-
-// //                         {/* Submit Button */}
-// //                         <div>
-// //                             <Button
-// //                                 type="submit"
-// //                                 className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700 shadow-none hover:shadow-none"
-// //                             >
-// //                                 Submit
-// //                             </Button>
-// //                         </div>
-// //                     </form>
-// //                 </div>
-// //             </div>
-// //         </div>
-// //     );
-// // }
-
-// // export default ListShopPage;
-
-
-// import { Button } from "@material-tailwind/react";
-// import { useState } from "react";
-// import { GoogleMap, useJsApiLoader, Marker, Autocomplete } from "@react-google-maps/api";
-
-// function ListShopPage() {
-//     const [formData, setFormData] = useState({
-//         photo: "",
-//         shopName: "",
-//         ownerName: "",
-//         email: "",
-//         password: "",
-//         phoneNumber: "",
-//         gender: "",
-//         city: "",
-//         location: "",
-//         coordinates: { lat: null, lng: null },
-//     });
-
-//     const [autocomplete, setAutocomplete] = useState(null);
-
-//     const { isLoaded } = useJsApiLoader({
-//         googleMapsApiKey: "AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE", // Replace with your actual Google Maps API key
-//         libraries: ["places"],
-//     });
-
-//     const handleChangePhoto = (event) => {
-//         const file = event.target.files[0];
-//         if (file) {
-//             setFormData((prevState) => ({
-//                 ...prevState,
-//                 photo: file,
-//             }));
-//         }
-//     };
-
-//     const handleChange = (event) => {
-//         const { name, value } = event.target;
-//         setFormData((prevState) => ({
-//             ...prevState,
-//             [name]: value,
-//         }));
-//     };
-
-//     const handleGetCurrentLocation = () => {
-//         if (navigator.geolocation) {
-//             navigator.geolocation.getCurrentPosition(
-//                 (position) => {
-//                     setFormData((prevState) => ({
-//                         ...prevState,
-//                         coordinates: {
-//                             lat: position.coords.latitude,
-//                             lng: position.coords.longitude,
-//                         },
-//                         location: `Lat: ${position.coords.latitude}, Lng: ${position.coords.longitude}`
-//                     }));
-//                 },
-//                 (error) => {
-//                     console.error("Error getting location: ", error);
-//                     alert("Unable to retrieve your location");
-//                 }
-//             );
-//         } else {
-//             alert("Geolocation is not supported by this browser");
-//         }
-//     };
-
-//     const handleSubmit = (event) => {
-//         event.preventDefault();
-
-//         // Validate the form
-//         if (!formData.shopName || !formData.ownerName || !formData.email || !formData.password || !formData.phoneNumber || !formData.gender || !formData.city || !formData.location) {
-//             alert("Please fill in all fields");
-//             return;
-//         }
-
-//         // Print form data (Here you can also send it to a backend server)
-//         console.log("Form Data:", formData);
-//         alert("Form submitted successfully!");
-//     };
-
-//     const onLoadAutocomplete = (autocompleteInstance) => {
-//         setAutocomplete(autocompleteInstance);
-//     };
-
-//     const onPlaceChanged = () => {
-//         if (autocomplete !== null) {
-//             const place = autocomplete.getPlace();
-//             setFormData((prevState) => ({
-//                 ...prevState,
-//                 city: place.formatted_address,
-//             }));
-//         } else {
-//             console.error("Autocomplete is not loaded yet!");
-//         }
-//     };
-
-//     return (
-//         <div className="min-h-screen flex justify-center items-center bg-white p-2">
-//             {/* <pre>{JSON.stringify(formData,null,2)}</pre> */}
-//             <div className="max-w-2xl w-full bg-white rounded-lg drop-shadow">
-//                 {/* Form */}
-//                 <div className="flex flex-col justify-center p-8">
-//                     <div className="text-center mb-8">
-//                         <div className="flex justify-center">
-//                             <img
-//                                 src="../../logo/rideroz.png" // Replace with your actual logo URL
-//                                 alt="Rideroz Logo"
-//                                 className="h-20 mb-4 w-48"
-//                             />
-//                         </div>
-//                         <h2 className="text-2xl font-semibold text-gray-800">
-//                             List your shop with Rideroz
-//                         </h2>
-//                     </div>
-
-//                     <form className="space-y-6" onSubmit={handleSubmit}>
-//                         {/* Photo Upload */}
-//                         <div className="flex justify-center border p-2 border-gray-400 rounded-md border-dashed">
-//                             <label htmlFor="file-upload" className="custom-file-upload">
-//                                 {formData.photo && formData.photo instanceof Blob ? (
-//                                     <img className="w-24 h-24 border-2 rounded-full" src={URL.createObjectURL(formData.photo)} alt="" />
-//                                 ) : (
-//                                     <img src="https://cdn-icons-png.flaticon.com/128/1771/1771013.png" className="h-24 w-24" alt="Upload" />
-//                                 )}
-//                             </label>
-//                             <input id="file-upload" name="photo" type="file" onChange={handleChangePhoto} />
-//                         </div>
-
-//                         <div className="">
-//                             <input
-//                                 type="text"
-//                                 name="shopName"
-//                                 placeholder="Enter Shop Name"
-//                                 value={formData.shopName}
-//                                 onChange={handleChange}
-//                                 className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
-//                             />
-//                         </div>
-
-//                         <div className="">
-//                             <input
-//                                 type="text"
-//                                 name="ownerName"
-//                                 placeholder="Enter Owner Full Name"
-//                                 value={formData.ownerName}
-//                                 onChange={handleChange}
-//                                 className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
-//                             />
-//                         </div>
-
-//                         <div className="">
-//                             <input
-//                                 type="email"
-//                                 name="email"
-//                                 placeholder="Email"
-//                                 value={formData.email}
-//                                 onChange={handleChange}
-//                                 className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
-//                             />
-//                         </div>
-
-//                         <div className="">
-//                             <input
-//                                 type="password"
-//                                 name="password"
-//                                 placeholder="Password"
-//                                 value={formData.password}
-//                                 onChange={handleChange}
-//                                 className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
-//                             />
-//                         </div>
-
-//                         <div className="">
-//                             <input
-//                                 type="number"
-//                                 name="phoneNumber"
-//                                 placeholder="Mobile Number"
-//                                 value={formData.phoneNumber}
-//                                 onChange={handleChange}
-//                                 className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
-//                             />
-//                         </div>
-
-//                         <select
-//                             name="gender"
-//                             value={formData.gender}
-//                             onChange={handleChange}
-//                             className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
-//                         >
-//                             <option value="">Select Gender</option>
-//                             <option value="Male">Male</option>
-//                             <option value="Female">Female</option>
-//                         </select>
-
-//                         {/* Google Places Autocomplete for City */}
-//                         {isLoaded && (
-//                             <Autocomplete onLoad={onLoadAutocomplete} onPlaceChanged={onPlaceChanged}>
-//                                 <input
-//                                     type="text"
-//                                     placeholder="Select City"
-//                                     value={formData.city}
-//                                     onChange={(e) => setFormData({
-//                                         ...formData,
-//                                         city: e.target.value
-//                                     })}
-//                                     className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
-//                                 />
-//                             </Autocomplete>
-//                         )}
-
-//                         {/* Get Current Location */}
-//                         <div>
-//                             <Button
-//                                 onClick={handleGetCurrentLocation}
-//                                 className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-none hover:shadow-none"
-//                             >
-//                                 Use Current Location
-//                             </Button>
-//                             {formData.coordinates.lat && (
-//                                 <p className="text-center mt-2 text-gray-700">
-//                                     Location: {formData.location}
-//                                 </p>
-//                             )}
-//                         </div>
-
-//                         {/* Google Map */}
-//                         {isLoaded && formData.coordinates.lat && (
-//                             <div className="mt-4">
-//                                 <GoogleMap
-//                                     mapContainerStyle={{ width: "100%", height: "300px" }}
-//                                     center={formData.coordinates}
-//                                     zoom={15}
-//                                 >
-//                                     <Marker position={formData.coordinates} />
-//                                 </GoogleMap>
-//                             </div>
-//                         )}
-
-//                         {/* Submit Button */}
-//                         <div>
-//                             <Button
-//                                 type="submit"
-//                                 className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700 shadow-none hover:shadow-none"
-//                             >
-//                                 Submit
-//                             </Button>
-//                         </div>
-//                     </form>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default ListShopPage;
-
-
-import { Button } from "@material-tailwind/react";
-import { useState } from "react";
-import { GoogleMap, useJsApiLoader, Marker, Autocomplete } from "@react-google-maps/api";
 
 function ListShopPage() {
     const [formData, setFormData] = useState({
-        photo: "",
+        shopImage: "",
         shopName: "",
         ownerName: "",
-        email: "",
+        ownerEmail: "",
         password: "",
-        phoneNumber: "",
+        ownerPhoneNumber: "",
         gender: "",
-        city: "",
-        location: "",
-        coordinates: { lat: null, lng: null },
+        selectCity: "",
+        lat: null,
+        lng: null,
+        legalDoc: ""
     });
 
-    const [autocomplete, setAutocomplete] = useState(null);
+    // Fetching cities with the query hook
+    const { data: cities, error: citiesError, isLoading: isCitiesLoading } = useGetCitiesQuery();
+
+    // Mutation for adding a shop
+    const [addShop, { isLoading: isAddingShop, error: addShopError }] = useAddShopMutation();
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [showGenderDropdown, setShowGenderDropdown] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+    const [preview, setPreview] = useState(null); // Storing the image preview URL
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE", // Replace with your actual Google Maps API key
@@ -503,7 +46,7 @@ function ListShopPage() {
         if (file) {
             setFormData((prevState) => ({
                 ...prevState,
-                photo: file,
+                shopImage: file,
             }));
         }
     };
@@ -516,17 +59,70 @@ function ListShopPage() {
         }));
     };
 
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            // Update the form data
+            setFormData((prevState) => ({
+                ...prevState,
+                legalDoc: file,
+            }));
+
+            // Generate a preview URL for the image
+            setPreview(URL.createObjectURL(file));
+        }
+    };
+
+    const handleCitySearch = (event) => {
+        const value = event.target.value;
+        setSearchTerm(value);
+
+        if (value.trim() === '') {
+            // If the input is empty, close the dropdown
+            setShowDropdown(false);
+        } else {
+            // Show the dropdown and filter cities based on input
+            setShowDropdown(true);
+        }
+    };
+
+    // Filter cities based on searchTerm (case-insensitive)
+    const filteredCities = cities?.filter((city) =>
+        city.cityName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+
+    const handleCitySelect = (cityName, cityState, _id) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            selectCity: _id,
+        }));
+        setSearchTerm(`${cityName}, ${cityState}`);
+        setShowDropdown(false);
+    };
+
+    const handleGenderSelect = (selectedGender) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            gender: selectedGender,
+        }));
+        setShowGenderDropdown(false);
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const handleGetCurrentLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setCoordinates({ lat: latitude, lng: longitude });
                     setFormData((prevState) => ({
                         ...prevState,
-                        coordinates: {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        },
-                        location: `Lat: ${position.coords.latitude}, Lng: ${position.coords.longitude}`
+                        lat: latitude,
+                        lng: longitude,
                     }));
                 },
                 (error) => {
@@ -539,144 +135,330 @@ function ListShopPage() {
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Validate the form
-        if (!formData.shopName || !formData.ownerName || !formData.email || !formData.password || !formData.phoneNumber || !formData.gender || !formData.city || !formData.location) {
-            alert("Please fill in all fields");
-            return;
+        const data = new FormData();
+        console.log("data", [...data]); // Log the FormData contents
+
+
+
+        for (let key in formData) {
+            data.append(key, formData[key]);
         }
+        try {
+            const response = await addShop(data).unwrap();
 
-        // Print form data (Here you can also send it to a backend server)
-        console.log("Form Data:", formData);
-        alert("Form submitted successfully!");
-    };
-
-    const onLoadAutocomplete = (autocompleteInstance) => {
-        setAutocomplete(autocompleteInstance);
-    };
-
-    const onPlaceChanged = () => {
-        if (autocomplete !== null) {
-            const place = autocomplete.getPlace();
-            setFormData((prevState) => ({
-                ...prevState,
-                city: place.formatted_address,
-            }));
-        } else {
-            console.error("Autocomplete is not loaded yet!");
+            console.log("response", response)
+            Swal.fire({
+                title: response.message,
+                // text: 'Do you want to continue',
+                icon: 'success',
+                confirmButtonText: 'Cool'
+            })
+            // console.log('Shop added successfully', response.err);
+            // Reset the form after successful submission
+            setFormData({
+                shopImage: '',
+                shopName: '',
+                ownerName: '',
+                ownerEmail: '',
+                password: '',
+                ownerPhoneNumber: '',
+                gender: '',
+                selectCity: '',
+                lat: '',
+                lng: '',
+                legalDoc: ""
+            });
+        } catch (err) {
+            console.log('Failed to add shop:', err);
         }
     };
+
+    useEffect(() => {
+        if (addShopError) {
+            toast.error(addShopError?.data?.error || 'Something went wrong!');
+        }
+    }, [addShopError]);
+
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-4">
-            <div className="max-w-2xl w-full bg-white rounded-3xl shadow-lg overflow-hidden p-8">
-                {/* Form Header */}
-                <div className="text-center mb-8">
-                    <img
-                        src="../../logo/rideroz.png" // Replace with your actual logo URL
-                        alt="Rideroz Logo"
-                        className="h-20 mb-4 w-auto mx-auto"
-                    />
-                    <h2 className="text-3xl font-bold text-gray-800">
-                        List your shop with Rideroz
-                    </h2>
-                </div>
+        <div className="min-h-screen flex justify-center items-center bg-white p-2">
 
-                {/* Form */}
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                    {/* Photo Upload */}
-                    <div className="flex flex-col items-center">
-                        <label htmlFor="file-upload" className="cursor-pointer">
-                            {formData.photo && formData.photo instanceof Blob ? (
-                                <img className="w-32 h-32 object-cover rounded-full border-4 border-blue-500" src={URL.createObjectURL(formData.photo)} alt="Uploaded" />
-                            ) : (
-                                <img src="https://cdn-icons-png.flaticon.com/128/1771/1771013.png" className="w-32 h-32 object-cover" alt="Upload" />
-                            )}
-                        </label>
-                        <input id="file-upload" name="photo" type="file" className="hidden" onChange={handleChangePhoto} />
-                        <p className="text-gray-600 mt-2">Click to upload shop photo</p>
-                    </div>
 
-                    {/* Input Fields */}
-                    {[
-                        { name: "shopName", placeholder: "Enter Shop Name" },
-                        { name: "ownerName", placeholder: "Enter Owner Full Name" },
-                        { name: "email", placeholder: "Email", type: "email" },
-                        { name: "password", placeholder: "Password", type: "password" },
-                        { name: "phoneNumber", placeholder: "Mobile Number", type: "number" },
-                    ].map((input, index) => (
-                        <div key={index} className="relative">
-                            <input
-                                {...input}
-                                value={formData[input.name]}
-                                onChange={handleChange}
-                                className="bg-gray-100 w-full py-3 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            <div className="max-w-2xl w-full bg-white rounded-lg drop-shadow">
+                {/* {isLoading && <p>Submitting...</p>}  Show this while loading */}
+
+
+                <div className="flex flex-col justify-center p-4 lg:p-8">
+                    <div className="text-center mb-8">
+                        <div className="flex justify-center">
+                            <img
+                                src="../../logo/rideroz.png"
+                                alt="Rideroz Logo"
+                                className="h-20 mb-4 w-48"
                             />
                         </div>
-                    ))}
+                        <h2 className="text-2xl font-semibold text-gray-800">
+                            List your shop with Rideroz
+                        </h2>
+                    </div>
 
-                    <select
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleChange}
-                        className="bg-gray-100 w-full py-3 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                    >
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
+                    <form className="space-y-4" onSubmit={handleSubmit} encType="multipart/form-data">
+                        <div className="flex justify-center border p-2 border-gray-400 rounded-md border-dashed">
+                            <label htmlFor="file-upload" className="custom-file-upload">
+                                {formData.shopImage ? (
+                                    <img
+                                        className="w-24 h-24 border-2 rounded-full"
+                                        src={URL.createObjectURL(formData.shopImage)}
+                                        alt=""
+                                    />
+                                ) : (
+                                    <img
+                                        src="https://cdn-icons-png.flaticon.com/128/13434/13434878.png"
+                                        className="h-20 w-20"
+                                        alt="Upload"
+                                    />
+                                )}
+                            </label>
+                            <input id="file-upload" name="shopImage" type="file" onChange={handleChangePhoto} />
+                        </div>
 
-                    {/* Google Places Autocomplete for City */}
-                    {isLoaded && (
-                        <Autocomplete onLoad={onLoadAutocomplete} onPlaceChanged={onPlaceChanged}>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="w-full sm:w-1/2">
+                                <input
+                                    type="text"
+                                    name="shopName"
+                                    placeholder="Enter Shop Name"
+                                    value={formData.shopName}
+                                    onChange={handleChange}
+                                    className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                />
+                            </div>
+
+                            <div className="w-full sm:w-1/2">
+                                <input
+                                    type="text"
+                                    name="ownerName"
+                                    placeholder="Enter Owner Full Name"
+                                    value={formData.ownerName}
+                                    onChange={handleChange}
+                                    className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="w-full sm:w-1/2">
+                                <input
+                                    type="email"
+                                    name="ownerEmail"
+                                    placeholder="Email"
+                                    value={formData.ownerEmail}
+                                    onChange={handleChange}
+                                    className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                />
+                            </div>
+
+                            <div className="w-full sm:w-1/2 relative">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                />
+                                <button
+                                    type="button"
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {showPassword ? (
+                                        <Eye className="text-gray-500 h-5 w-5" />
+                                    ) : (
+                                        <EyeOff className="text-gray-500 h-5 w-5" />
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="w-full sm:w-1/2">
+                                <input
+                                    type="text"
+                                    name="ownerPhoneNumber"
+                                    placeholder="Phone Number"
+                                    value={formData.ownerPhoneNumber}
+                                    onChange={handleChange}
+                                    className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                />
+                            </div>
+
+                            <div className="w-full sm:w-1/2 relative">
+                                <input
+                                    type="text"
+                                    name="gender"
+                                    placeholder="Select Gender"
+                                    value={formData.gender}
+                                    onChange={handleChange}
+                                    onClick={() => setShowGenderDropdown(!showGenderDropdown)}
+                                    className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                    readOnly
+                                />
+                                {showGenderDropdown && (
+                                    <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full">
+                                        <div
+                                            onClick={() => handleGenderSelect("male")}
+                                            className="cursor-pointer p-2 hover:bg-gray-200"
+                                        >
+                                            Male
+                                        </div>
+                                        <div
+                                            onClick={() => handleGenderSelect("female")}
+                                            className="cursor-pointer p-2 hover:bg-gray-200"
+                                        >
+                                            Female
+                                        </div>
+                                        <div
+                                            onClick={() => handleGenderSelect("other")}
+                                            className="cursor-pointer p-2 hover:bg-gray-200"
+                                        >
+                                            Other
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="w-full relative">
                             <input
                                 type="text"
-                                placeholder="Select City"
-                                value={formData.city}
-                                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                className="bg-gray-100 w-full py-3 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                                name="selectCity"
+                                placeholder="Search for your city"
+                                value={searchTerm}
+                                onChange={handleCitySearch}
+                                className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
                             />
-                        </Autocomplete>
-                    )}
 
-                    {/* Get Current Location Button */}
-                    <div>
-                        <Button
-                            onClick={handleGetCurrentLocation}
-                            className="w-full py-3 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
-                        >
-                            Use Current Location
-                        </Button>
-                        {formData.coordinates.lat && (
-                            <p className="text-center mt-2 text-gray-700">
-                                Location: {formData.location}
-                            </p>
-                        )}
-                    </div>
+                            {isCitiesLoading && (
+                                <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full p-2">
+                                    <p className=" text-center">Loading cities...</p>
+                                </div>
+                            )}
 
-                    {/* Google Map */}
-                    {isLoaded && formData.coordinates.lat && (
-                        <div className="mt-4">
-                            <GoogleMap
-                                mapContainerStyle={{ width: "100%", height: "300px", borderRadius: '12px' }}
-                                center={formData.coordinates}
-                                zoom={15}
-                            >
-                                <Marker position={formData.coordinates} />
-                            </GoogleMap>
+                            {citiesError && (
+                                <div className="absolute mt-1 bg-white z-10 border border-red-400 rounded-md w-full p-2">
+                                    <p className="text-red-500 text-center">Failed to load cities. Please try again.</p>
+                                </div>
+                            )}
+
+                            {showDropdown && !isCitiesLoading && !citiesError && filteredCities?.length > 0 && (
+                                <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full max-h-40 overflow-y-auto">
+                                    {filteredCities.map((city) => (
+                                        <div
+                                            key={city.id}
+                                            onClick={() => handleCitySelect(city.cityName, city.cityState, city._id)}
+                                            className="cursor-pointer p-2 hover:bg-gray-200"
+                                        >
+                                            {city.cityName}, {city.cityState}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+
+                            {!isCitiesLoading && !citiesError && showDropdown && filteredCities.length === 0 && (
+                                <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full p-2">
+                                    <p className=" text-center">No cities found.</p>
+                                </div>
+                            )}
                         </div>
-                    )}
 
-                    {/* Submit Button */}
-                    <Button
-                        type="submit"
-                        className="w-full py-3 px-4 rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none"
-                    >
-                        Submit
-                    </Button>
-                </form>
+
+                        <div className="w-full">
+                            <input
+                                type="file"
+                                name="legalDoc"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="w-full py-2 px-3 border border-gray-400 rounded-md"
+                            />
+
+                            {/* Conditionally render the image preview */}
+                            {preview && (
+                                <div className="mt-4">
+                                    <img
+                                        src={preview}
+                                        alt="Preview"
+                                        className="w-full h-auto max-h-64 object-contain border border-gray-400 rounded-md"
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+
+                        <div className="flex justify-between items-center border border-gray-400 p-1 rounded-lg">
+
+                            <div className=" hidden lg:block md:block sm:block">
+                                <Button
+                                    variant=""
+                                    onClick={handleGetCurrentLocation}
+                                    className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md shadow-none hover:shadow-none items-center gap-2 flex"
+                                >
+                                    <Locate size={20} />
+                                    Get Current Location
+                                </Button>
+                            </div>
+
+                            <Button
+                                variant=""
+                                onClick={handleGetCurrentLocation}
+                                className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md shadow-none hover:shadow-none items-center gap-2 flex w-full  lg:hidden md:hidden sm:hidden "
+                            >
+                                <Locate size={20} />
+                                Get Current Location
+                            </Button>
+
+                            {coordinates.lat && coordinates.lng && (
+                                <div className="text-sm hidden lg:block sm:block md:block">
+                                    Lat: {coordinates.lat}, Lng: {coordinates.lng}
+                                </div>
+                            )}
+                        </div>
+
+                        <>
+                            {isLoaded && coordinates.lat && coordinates.lng && (
+                                <div className="w-full h-64">
+                                    <GoogleMap
+                                        center={{
+                                            lat: coordinates.lat || 20.5937, // Default center is India
+                                            lng: coordinates.lng || 78.9629,
+                                        }}
+                                        zoom={coordinates.lat && coordinates.lng ? 14 : 4}
+                                        mapContainerStyle={{ width: "100%", height: "100%" }}
+                                    >
+                                        {coordinates.lat && coordinates.lng && (
+                                            <Marker position={{ lat: coordinates.lat, lng: coordinates.lng }} />
+                                        )}
+                                    </GoogleMap>
+                                </div>
+
+                            )}
+                        </>
+
+                        <div className="text-center">
+                            <Button
+                                variant=""
+                                type="submit"
+                                className="bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-md w-full shadow-none hover:shadow-none flex justify-center"
+                            >
+                                {isAddingShop ? <Spinner /> : "Register for a FREE account"}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

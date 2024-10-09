@@ -154,17 +154,17 @@ export default function Navbars() {
                     <div className="flex items-center gap-3 lg:gap-3">
                         <div className="hidden lg:block">{navList}</div>
 
-<Link to={'/list-shop'}>
- <Button
-                            variant=""
-                            className="bg-[#E6FFF3] border shadow-none hover:shadow-none border-green-300 rounded-lg py-2 px-4 flex items-center space-x-2">
-                            <span className="text-black font-semibold ">List Shop</span>
-                            <span className="bg-gradient-to-r from-blue-400 to-green-400 text-white font-semibold rounded-sm px-3 py-[1px] text-[10px] animate-pulse ">
-                                Free
-                            </span>
-                        </Button>
-</Link>
-                       
+                        <Link to={'/list-shop'} target="_blank">
+                            <Button
+                                variant=""
+                                className="bg-[#E6FFF3] border shadow-none hover:shadow-none border-green-300 rounded-lg py-2 px-4 flex items-center space-x-2">
+                                <span className="text-black font-semibold ">List Shop</span>
+                                <span className="bg-gradient-to-r from-blue-400 to-green-400 text-white font-semibold rounded-sm px-3 py-[1px] text-[10px] animate-pulse ">
+                                    Free
+                                </span>
+                            </Button>
+                        </Link>
+
 
 
                         {/* User Icon and Sign Up */}
