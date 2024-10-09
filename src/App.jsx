@@ -11,6 +11,8 @@ import { Toaster } from 'react-hot-toast';
 import ListShopPage from "./pages/listShop/ListShopPage";
 import SuperAdminDashboard from "./pages/dashboard/super-admin/SuperAdminDashboard";
 import SuperAdminHomePage from "./pages/dashboard/super-admin/pages/SuperAdminHomePage";
+import SuperAdminAddCityPage from "./pages/dashboard/super-admin/pages/SuperAdminAddCityPage";
+import SuperAdminViewCityPage from "./pages/dashboard/super-admin/pages/SuperAdminViewCityPage";
 
 
 function App() {
@@ -35,11 +37,23 @@ function App() {
                   <SuperAdminDashboard />
                 </>
               }>
-                
+
               <Route
                 index={true}
                 path="super-admin-home-page"
                 element={<SuperAdminHomePage />}
+              />
+
+              <Route
+                index={true}
+                path="add-city"
+                element={<SuperAdminAddCityPage />}
+              />
+
+              <Route
+                index={true}
+                path="view-city"
+                element={<SuperAdminViewCityPage />}
               />
             </Route>
 

@@ -2,16 +2,16 @@ import apiSlice from './apiSlice';
 
 // Define the API slice
 export const cityApi = apiSlice.injectEndpoints({
-  tagTypes: ['City'], // Define the tag type for cache invalidation
+  tagTypes: ['GetCity'], // Define the tag type for cache invalidation
   endpoints: (builder) => ({
     getCities: builder.query({
       query: () => {
-        return 'city/cities';
+        return 'city/get-cities';
       },
-      transformResponse : (data) => {
+      transformResponse: (data) => {
         return data?.cities || []
       },
-      providesTags: ['City'],
+      providesTags: ['GetCity'],
       keepUnusedDataFor: 300, // Cache data for 5 minutes (300 seconds)
       refetchOnMountOrArgChange: true, // Automatically refetch when the component remounts
       refetchOnReconnect: true, // Automatically refetch when the browser regains connection
@@ -34,10 +34,28 @@ export const cityApi = apiSlice.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: ['City'], // Invalidate 'City' tag to trigger a re-fetch of the data
+      invalidatesTags: ['GetCity'], // Invalidate 'City' tag to trigger a re-fetch of the data
+    }),
+
+    getCitiesForAdmin: builder.query({
+      // Accept search, page, and limit as parameters for pagination
+      query: ({ search = "", page = 1, limit = 10 } = {}) => {
+        return {
+          url: `city/get-cities-admin`,
+          params: { search, page, limit },
+        };
+      },
+      transformResponse: (data) => {
+        return data || [];
+      },
+      providesTags: ['GetCity'],
+      keepUnusedDataFor: 300, // Cache data for 5 minutes (300 seconds)
+      refetchOnMountOrArgChange: true, // Automatically refetch when the component remounts
+      refetchOnReconnect: true, // Automatically refetch when the browser regains connection
+      refetchOnFocus: true, // Automatically refetch when the window/tab regains focus
     }),
   }),
 });
 
 // Export the auto-generated hooks for the 'getCities' query and 'addCity' mutation endpoints
-export const { useGetCitiesQuery, useAddCityMutation } = cityApi;
+export const { useGetCitiesQuery, useAddCityMutation, useGetCitiesForAdminQuery } = cityApi;

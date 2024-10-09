@@ -149,7 +149,7 @@ function ListShopPage() {
         try {
             const response = await addShop(data).unwrap();
 
-            console.log("response", response)
+            // console.log("response", response)
             Swal.fire({
                 title: response.message,
                 // text: 'Do you want to continue',

@@ -22,14 +22,14 @@ export default function SuperAdminSidebar() {
     return (
         <div className=" h-screen fixed w-full max-w-[16rem] p-4 
         rounded-none shadow-md">
-          
+
             <div className="">
                 <div className="mb-2 p-4 ">
                     <div
                         className=" py-6"
                     >
                         <div className="flex justify-center mb-2">
-                            <img className="w-24" src="https://cdn-icons-png.flaticon.com/128/1587/1587600.png" alt="img" />
+                            <img className="w-24" src="https://cdn-icons-png.flaticon.com/128/8899/8899687.png" alt="img" />
                         </div>
                         <h1 className="text-center text-xl text-black font-bold app-font">Super Admin Dashboard</h1>
                     </div>
@@ -38,24 +38,25 @@ export default function SuperAdminSidebar() {
 
             <List>
                 <Link to={'super-admin-home-page'}>
-                    <ListItem>
+                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <HomeIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         Home
                     </ListItem>
+
                 </Link>
 
-                <Link to={'all-employee-page'}>
-                    <ListItem>
+                <Link >
+                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <UserGroupIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         All Employee
                     </ListItem>
                 </Link>
-                <Link to={'all-visitor'}>
-                    <ListItem>
+                <Link >
+                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <UserGroupIcon className="h-5 w-5" />
                         </ListItemPrefix>
@@ -63,8 +64,8 @@ export default function SuperAdminSidebar() {
                     </ListItem>
                 </Link>
 
-                <Link to={'get-employee-report'}>
-                    <ListItem>
+                <Link>
+                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <ClipboardPlus className="h-5 w-5" />
                         </ListItemPrefix>
@@ -72,16 +73,17 @@ export default function SuperAdminSidebar() {
                     </ListItem>
                 </Link>
 
-                <Link to={'track-employee'}>
-                    <ListItem>
+                <Link>
+                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
-                            <MapPinned  className="h-5 w-5" />
+                            <MapPinned className="h-5 w-5" />
                         </ListItemPrefix>
-                        Track Employee 
+                        Track Employee
                     </ListItem>
                 </Link>
-                <Link to={'super-admin-profile'}>
-                    <ListItem>
+
+                <Link >
+                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <UserCircleIcon className="h-5 w-5" />
                         </ListItemPrefix>
@@ -89,7 +91,7 @@ export default function SuperAdminSidebar() {
                     </ListItem>
                 </Link>
 
-                <ListItem onClick={logout}>
+                <ListItem onClick={logout} className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                     <ListItemPrefix>
                         <PowerIcon className="h-5 w-5" />
                     </ListItemPrefix>
