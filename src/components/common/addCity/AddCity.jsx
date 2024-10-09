@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAddCityMutation } from "../../../redux/slices/cityApiSlice";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
-import { Button, Input, Card, CardBody, CardHeader } from "@material-tailwind/react";
+import { Button, Input, CardBody } from "@material-tailwind/react";
 
 const AddCity = () => {
     const [formData, setFormData] = useState({
@@ -28,6 +28,9 @@ const AddCity = () => {
         });
     };
 
+    const fileInputRef = useRef(null); // Create a ref for the file input
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -41,8 +44,13 @@ const AddCity = () => {
             setFormData({
                 cityName : "",
                 cityState : "",
-                cityImage : ""
+                cityImage : null
             })
+
+               // Reset the file input manually
+    if (fileInputRef.current) {
+        fileInputRef.current.value = null; // This clears the file input field
+      }
         } catch (error) {
             console.error("Failed to add city: ", error);
         }
@@ -98,6 +106,7 @@ const AddCity = () => {
 
                             <input
                                 type="file"
+                                ref={fileInputRef}
                                 name="cityImage"
                                 accept="image/*"
                                 onChange={handleFileChange}

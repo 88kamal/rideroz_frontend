@@ -1,65 +1,17 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+/* eslint-disable no-unused-vars */
+import { ArrowPathIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
     CardHeader,
     Input,
     Typography,
     Button,
-    IconButton,
 } from "@material-tailwind/react";
-import { Trash2 } from "lucide-react";
 import ViewCityImageModal from "./modal/ViewCityImageModal";
 import { useState } from "react";
 import { useGetCitiesForAdminQuery } from "../../../redux/slices/cityApiSlice";
+import DeleteCityModal from "./modal/DeleteCityModal";
 
 const TABLE_HEAD = ["S.No", "City Name", "City State", "City Image", "Delete"];
-
-const TABLE_ROWS = [
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-        name: "John Michael",
-        email: "john@creative-tim.com",
-        job: "Manager",
-        org: "Organization",
-        online: true,
-        date: "23/04/18",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-        name: "Alexa Liras",
-        email: "alexa@creative-tim.com",
-        job: "Programator",
-        org: "Developer",
-        online: false,
-        date: "23/04/18",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-        name: "Laurent Perrier",
-        email: "laurent@creative-tim.com",
-        job: "Executive",
-        org: "Projects",
-        online: false,
-        date: "19/09/17",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-        name: "Michael Levi",
-        email: "michael@creative-tim.com",
-        job: "Programator",
-        org: "Developer",
-        online: true,
-        date: "24/12/08",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-        name: "Richard Gran",
-        email: "richard@creative-tim.com",
-        job: "Manager",
-        org: "Executive",
-        online: false,
-        date: "04/10/21",
-    },
-];
 
 export default function ViewCity() {
     const [search, setSearch] = useState('');
@@ -67,7 +19,7 @@ export default function ViewCity() {
     const [limit, setLimit] = useState(10);
 
     // Pass the search, page, and limit as parameters to the query
-    const { data: cities, error, isLoading } = useGetCitiesForAdminQuery({ search, page, limit });
+    const { data: cities, error, isLoading, refetch } = useGetCitiesForAdminQuery({ search, page, limit });
 
     const handlePrevious = () => {
         if (page > 1) setPage(page - 1);
@@ -92,96 +44,127 @@ export default function ViewCity() {
                         </Typography>
                     </div>
 
-                    <div className="w-full md:w-72">
-                        <Input
-                            label="Search"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                    <div className="flex items-center gap-2">
+                        <div className=" w-64 md:w-72">
+                            <Input
+                                label="Search"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                color="green"
+                                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                            />
+                        </div>
+                        <Button
+                            variant=""
                             color="green"
-                            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                        />
+                            size="sm"
+                            className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+                            onClick={refetch}
+                        >
+                            <ArrowPathIcon className="h-5 w-5" />
+                            <p className=" hidden lg:block md:block sm:block">Refresh</p>
+                        </Button>
                     </div>
                 </div>
 
             </CardHeader>
 
             <div className="overflow-scroll p-2">
-                <table className=" w-full min-w-max table-auto text-left ">
-                    <thead>
-                        <tr>
-                            {TABLE_HEAD.map((head) => (
-                                <th
-                                    key={head}
-                                    className="border-y border-l border-r border-green-200 bg-green-50 p-4"
-                                >
-                                    <Typography
-                                        variant="small"
-                                        color="blue-gray"
-                                        className="font-bold leading-none text-green-700 "
-                                    >
-                                        {head}
-                                    </Typography>
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody className=" p-2">
-                        {cities?.cities?.map(
-                            ({ _id, cityImage, cityName, cityState }, index) => {
-                                const isLast = index === TABLE_ROWS.length - 1;
-                                const classes = isLast
-                                    ? "px-5 py-   border-l  border-r border-b border-green-200"
-                                    : "px-5 py-  border-l  border-r border-b border-green-200";
+                {isLoading ? (
+                    <div className="flex justify-center p-4">
+                        {/* <Spinner className="h-8 w-8 text-green-500" /> */}
+                        <img className="h-14 w-14 text-green-500"
+                            src="https://cdn-icons-gif.flaticon.com/17905/17905752.gif" alt="" />
+                    </div>
+                ) : error ? (
+                    <div className="p-4">
+                        <div className=" flex justify-center items-center">
+                            <img className="w-20" src="https://cdn-icons-png.flaticon.com/128/9961/9961360.png" alt="" />
+                        </div>
+                        <h1 className=" text-center" color="red">{error?.data?.error}</h1>
+                    </div>
+                )
+                    :
 
-                                return (
-                                    <tr key={name} className=" hover:bg-green-50/50 cursor-pointer">
-                                        <td className={classes}>
+                    (
+                        <table className=" w-full min-w-max table-auto text-left ">
+                            <thead>
+                                <tr>
+                                    {TABLE_HEAD.map((head) => (
+                                        <th
+                                            key={head}
+                                            className="border-y border-l border-r border-green-200 bg-green-50 p-4"
+                                        >
                                             <Typography
                                                 variant="small"
                                                 color="blue-gray"
-                                                className="font-normal app-font"
+                                                className="font-bold leading-none text-green-700 "
                                             >
-                                                {index + 1 + (page - 1) * limit}.
+                                                {head}
                                             </Typography>
-                                        </td>
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {cities?.cities?.map(
+                                    ({ _id, cityImage, cityName, cityState }, index) => {
+                                        const isLast = index === cities?.cities?.length - 1;
+                                        const classes = isLast
+                                            ? "px-5 py-   border-l  border-r border-b border-green-200"
+                                            : "px-5 py-  border-l  border-r border-b border-green-200";
 
-                                        <td className={classes}>
-                                            <Typography
-                                                variant="small"
-                                                color="blue-gray"
-                                                className="font-normal app-font capitalize"
-                                            >
-                                                {cityName}
-                                            </Typography>
-                                        </td>
+                                        return (
+                                            <tr key={index} className=" hover:bg-green-50/50 cursor-pointer">
+                                                <td className={classes}>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal app-font"
+                                                    >
+                                                        {index + 1 + (page - 1) * limit}.
+                                                    </Typography>
+                                                </td>
 
-                                        <td className={classes}>
-                                            <Typography
-                                                variant="small"
-                                                color="blue-gray"
-                                                className="font-normal app-font capitalize"
-                                            >
-                                                {cityState}
-                                            </Typography>
-                                        </td>
+                                                <td className={classes}>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal app-font capitalize"
+                                                    >
+                                                        {cityName}
+                                                    </Typography>
+                                                </td>
 
-                                        <td className={classes}>
-                                            <ViewCityImageModal
-                                                cityImage={cityImage}
-                                            />
-                                        </td>
+                                                <td className={classes}>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal app-font capitalize"
+                                                    >
+                                                        {cityState}
+                                                    </Typography>
+                                                </td>
 
-                                        <td className={classes}>
-                                            <IconButton variant="text" className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300">
-                                                <Trash2 className="h-4 w-4" />
-                                            </IconButton>
-                                        </td>
-                                    </tr>
-                                );
-                            },
-                        )}
-                    </tbody>
-                </table>
+                                                <td className={classes}>
+                                                    <ViewCityImageModal
+                                                        cityImage={cityImage}
+                                                    />
+                                                </td>
+
+                                                <td className={classes}>
+                                                    <DeleteCityModal id={_id} />
+                                                </td>
+                                            </tr>
+                                        );
+                                    },
+                                )}
+                            </tbody>
+                        </table>
+                    )
+
+                }
+
             </div>
             <div className="flex items-center justify-between border-t border-blue-gray-50 p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
