@@ -10,6 +10,8 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import LoginModal from "../registration/LoginModal";
+import ShareModal from "./ShareModal";
 
 export default function Navbars() {
     const [openNav, setOpenNav] = React.useState(false);
@@ -83,7 +85,8 @@ export default function Navbars() {
                 { to: '/contact', label: 'Contact' },
                 { to: '/blog', label: 'Blog' },
                 { to: '/faqs', label: 'FAQs' },
-                { to: '/signup', label: 'Sign Up' }
+                { to: '/signup', label: 'Sign Up' },
+                { to: '/signup', label: 'login' }
             ].map((item, index) => {
                 if (item.submenu) {
                     return (
@@ -145,7 +148,7 @@ export default function Navbars() {
                             className="mr-4 cursor-pointer py-1.5 text-xl font-bold flex gap-2 items-center"
                         >
                             <img
-                                className=" w-24 h-9 lg:w-24 lg:h-10"
+                                className=" w-28 h-11 lg:w-24 lg:h-10"
                                 src="/logo/rideroz.png"
                                 alt="Devknus Logo"
                             />
@@ -165,17 +168,15 @@ export default function Navbars() {
                             </Button>
                         </Link>
 
+                        <ShareModal />
 
-
-                        {/* User Icon and Sign Up */}
-                        <FaUserCircle className="text-black text-2xl cursor-pointer hidden lg:block" />
-                        <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block">
-                            Sign Up
+                        <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">
+                            <LoginModal />
                         </span>
 
-
                         <IconButton
-                            className="ml-auto h-10 w-10 text-inherit rounded-lg lg:hidden bg-white border"
+                        variant=""
+                            className="ml-auto h-10 w-10 text-inherit rounded-lg border-green-400 lg:hidden bg-white border shadow-none hover:shadow-none"
                             ripple={false}
                             onClick={() => setOpenNav(!openNav)}
                         >

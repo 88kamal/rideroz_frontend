@@ -350,7 +350,7 @@ function ListShopPage() {
 
                             {citiesError && (
                                 <div className="absolute mt-1 bg-white z-10 border border-red-400 rounded-md w-full p-2">
-                                    <p className="text-red-500 text-center">Failed to load cities. Please try again.</p>
+                                    <p className="text-red-500 text-center">{citiesError?.data?.error}</p>
                                 </div>
                             )}
 

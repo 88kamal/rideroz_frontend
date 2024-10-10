@@ -52,7 +52,7 @@ const AddRoleForm = () => {
     }, []);
 
     return (
-        <div className="flex justify-center items-center h-96">
+        <div className="flex justify-center items-center">
             <div className="w-full max-w-2xl bg-white border border-green-300 rounded-md">
                 <CardBody>
                     {/* <pre>Add Role : {JSON.stringify({

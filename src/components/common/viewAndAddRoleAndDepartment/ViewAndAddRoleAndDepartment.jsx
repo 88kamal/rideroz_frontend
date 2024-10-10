@@ -74,7 +74,7 @@ export default function ViewAndAddRoleAndDepartment() {
                         <ViewDepartment />
                     </TabPanel>
 
-                    <TabPanel  key={'add Role'} value={"Add Role"}>
+                    <TabPanel  className=" h-screen" key={'add Role'} value={"Add Role"}>
                         <AddRole />
                     </TabPanel>
 

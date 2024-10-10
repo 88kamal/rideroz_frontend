@@ -20,7 +20,7 @@ const SuperAdminLayout = () => {
 
                 {/* main content  */}
                 <main className="flex-1 min-w-0 mb-[3em] lg:mb-0 ">
-                    <div className=" sticky top-0 z-50">
+                    <div className=" sticky top-0 z-50 hidden lg:block md:block sm:block">
                         <SuperAdminRightNavbar />
                     </div>
 

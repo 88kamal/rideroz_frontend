@@ -41,3 +41,14 @@ input[type="checkbox"] {
     /* IE and Edge */
 }
 
+.dropdown {
+    position: relative;
+  }
+  
+  .dropdown ul {
+    position: absolute;
+    z-index: 1000; /* Ensures it's on top */
+    left: 0; /* Aligns the dropdown properly */
+    width: 100%; /* Ensures it takes the same width as the parent */
+  }
+  

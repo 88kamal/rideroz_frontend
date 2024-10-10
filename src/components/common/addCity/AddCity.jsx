@@ -42,15 +42,15 @@ const AddCity = () => {
             });
 
             setFormData({
-                cityName : "",
-                cityState : "",
-                cityImage : null
+                cityName: "",
+                cityState: "",
+                cityImage: null
             })
 
-               // Reset the file input manually
-    if (fileInputRef.current) {
-        fileInputRef.current.value = null; // This clears the file input field
-      }
+            // Reset the file input manually
+            if (fileInputRef.current) {
+                fileInputRef.current.value = null; // This clears the file input field
+            }
         } catch (error) {
             console.error("Failed to add city: ", error);
         }
@@ -65,11 +65,11 @@ const AddCity = () => {
     return (
         <div className="flex justify-center items-center ">
             <div className="w-full max-w-2xl border border-green-300 bg-white rounded-md">
-              
+
                 <div className=" flex justify-center items-center pt-5">
                     <h2 className="text-black text-2xl font-semibold app-font">Add New City</h2>
                 </div>
-                
+
                 <CardBody>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="flex flex-col pt-2">
