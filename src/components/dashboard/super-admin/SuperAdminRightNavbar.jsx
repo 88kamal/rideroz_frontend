@@ -13,7 +13,7 @@ function SuperAdminRightNavbar() {
 
     return (
         <div className=''>
-            <div className="rounded-none border-b drop-shadow border-gray-300 border-t-0 border-l-0 border-r-0">
+            <div className="rounded-none border-b bg-green-50 border-green-300 border-t-0 border-l-0 border-r-0">
                 <div className="flex justify-end px-2 py-3.5">
                     <div className="flex items-center space-x-4">
 
@@ -30,7 +30,7 @@ function SuperAdminRightNavbar() {
             </div>
 
             {/* Drawer Component */}
-            <Drawer placement='top' className=' shadow-none drop-shadow' overlay={true} open={open} onClose={closeDrawer}>
+            <Drawer placement='top' className=' shadow-none drop-shadow bg-green-50' overlay={true} open={open} onClose={closeDrawer}>
                 <div className="mb-2 flex items-center justify-between p-4">
                     <Typography variant="h5" color="blue-gray">
                         More Services.....

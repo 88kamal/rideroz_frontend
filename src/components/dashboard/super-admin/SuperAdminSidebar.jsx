@@ -21,7 +21,7 @@ export default function SuperAdminSidebar() {
 
     return (
         <div className=" h-screen fixed w-full max-w-[16rem] p-4 
-        rounded-none shadow-md">
+        rounded-none border-r border-r-green-300 bg-green-50">
 
             <div className="">
                 <div className="mb-2 p-4 ">

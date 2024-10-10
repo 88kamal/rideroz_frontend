@@ -2,7 +2,7 @@
 function TopNavbar({ image, name }) {
     return (
         <>
-            <div className='rounded-none  bg-white shadow-sm '>
+            <div className='rounded-none  bg-green-50 shadow-sm '>
                 <div
                     className="flex items-center px-3 py-3 gap-3"
                 >

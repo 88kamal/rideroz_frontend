@@ -13,6 +13,7 @@ import SuperAdminDashboard from "./pages/dashboard/super-admin/SuperAdminDashboa
 import SuperAdminHomePage from "./pages/dashboard/super-admin/pages/SuperAdminHomePage";
 import SuperAdminAddCityPage from "./pages/dashboard/super-admin/pages/SuperAdminAddCityPage";
 import SuperAdminViewCityPage from "./pages/dashboard/super-admin/pages/SuperAdminViewCityPage";
+import SuperAdminAddRoleAndView from "./pages/dashboard/super-admin/pages/SuperAdminAddRoleAndView";
 
 
 function App() {
@@ -54,6 +55,12 @@ function App() {
                 index={true}
                 path="view-city"
                 element={<SuperAdminViewCityPage />}
+              />
+
+<Route
+                index={true}
+                path="view-and-add-roles-and-department"
+                element={<SuperAdminAddRoleAndView />}
               />
             </Route>
 

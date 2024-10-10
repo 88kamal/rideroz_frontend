@@ -64,7 +64,7 @@ const AddCity = () => {
 
     return (
         <div className="flex justify-center items-center ">
-            <div className="w-full max-w-2xl drop-shadow bg-white rounded-md">
+            <div className="w-full max-w-2xl border border-green-300 bg-white rounded-md">
               
                 <div className=" flex justify-center items-center pt-5">
                     <h2 className="text-black text-2xl font-semibold app-font">Add New City</h2>
@@ -120,7 +120,7 @@ const AddCity = () => {
                                 type="submit"
                                 className="w-full bg-green-500 hover:bg-green-600 shadow-none hover:shadow-none app-font"
                                 size="lg"
-                                disabled={isLoading}
+                                disabled={isLoading || !formData?.cityName || !formData?.cityState || !formData?.cityImage}
                             >
                                 {isLoading ? "Adding City..." : "Add City"}
                             </Button>

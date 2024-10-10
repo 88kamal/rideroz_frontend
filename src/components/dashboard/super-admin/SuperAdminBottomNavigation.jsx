@@ -1,7 +1,7 @@
 const SuperAdminBottomNavigation = () => {
     return (
         <div className="">
-            <div className="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border-t border-gray-200 bottom-0 left-1/2">
+            <div className=" fixed z-50 w-full h-14 max-w-lg -translate-x-1/2 bg-white border-t border-gray-200 bottom-0 left-1/2" >
                 <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
                     <button
                         data-tooltip-target="tooltip-home"
@@ -148,3 +148,4 @@ const SuperAdminBottomNavigation = () => {
 }
 
 export default SuperAdminBottomNavigation;
+
