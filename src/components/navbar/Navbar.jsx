@@ -9,7 +9,6 @@ import {
     MenuHandler,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
 import LoginModal from "../registration/LoginModal";
 import ShareModal from "./ShareModal";
 
@@ -85,56 +84,25 @@ export default function Navbars() {
                 { to: '/contact', label: 'Contact' },
                 { to: '/blog', label: 'Blog' },
                 { to: '/faqs', label: 'FAQs' },
-                { to: '/signup', label: 'Sign Up' },
-                { to: '/signup', label: 'login' }
             ].map((item, index) => {
-                if (item.submenu) {
-                    return (
-                        <li key={index} className="relative">
-                            <Typography
-                                as="div"
-                                variant="small"
-                                color="blue-gray"
-                                className="flex items-center p-1 cursor-pointer app-font"
-                                onClick={() => setOpenServices(!openServices)}
-                            >
-                                {item.label}
-                            </Typography>
-                            <Collapse open={openServices}>
-                                <ul className="pl-4">
-                                    {item.submenu.map((subItem, subIndex) => (
-                                        <Typography
-                                            key={subIndex}
-                                            as="li"
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="p-1 app-font"
-                                        >
-                                            <Link to={subItem.to} className="flex items-center">
-                                                - {subItem.label}
-                                            </Link>
-                                        </Typography>
-                                    ))}
-                                </ul>
-                            </Collapse>
-                        </li>
-                    );
-                } else {
-                    return (
-                        <Typography
-                            key={index}
-                            as="li"
-                            variant="small"
-                            color="blue-gray"
-                            className="p-1 app-font"
-                        >
-                            <Link to={item.to} className="flex items-center">
-                                {item.label}
-                            </Link>
-                        </Typography>
-                    );
-                }
+                return (
+                    <Typography
+                        key={index}
+                        as="li"
+                        variant="small"
+                        color="blue-gray"
+                        className="p-1 app-font"
+                    >
+                        <Link to={item.to} className="flex items-center">
+                            {item.label}
+                        </Link>
+                    </Typography>
+                );
             })}
+            <>
+                {/* Show the LoginModal in the mobile menu */}
+                <LoginModal />
+            </>
         </ul>
     );
 
