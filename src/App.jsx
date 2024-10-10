@@ -14,7 +14,6 @@ import SuperAdminHomePage from "./pages/dashboard/super-admin/pages/SuperAdminHo
 import SuperAdminAddRoleAndView from "./pages/dashboard/super-admin/pages/SuperAdminAddRoleAndView";
 import SuperAdminViewAndAddCityPage from "./pages/dashboard/super-admin/pages/SuperAdminViewAndAddCityPage";
 import SuperAdminAddAndViewEmployeePage from "./pages/dashboard/super-admin/pages/SuperAdminAddAndViewEmployeePage";
-import LoginPage from "./pages/registration/LoginPage";
 
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/list-shop" element={<ListShopPage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/*" element={<NoPage />} />
 
 
