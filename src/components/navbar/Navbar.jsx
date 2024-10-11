@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import LoginModal from "../registration/LoginModal";
 import ShareModal from "./ShareModal";
 import authService from "../../services/authService";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Navbars() {
     const [openNav, setOpenNav] = React.useState(false);
@@ -141,20 +142,23 @@ export default function Navbars() {
 
                         <ShareModal />
 
-                      {[2].includes(user?.role) ? 
+                        {[2].includes(user?.role) ?
 
-                      <Link to={'/super-admin-dashboard/super-admin-home-page'}>
-                      <h1 className="">Dashboard</h1>
-                      </Link>
+<div className="hidden lg:block">
+     <Link to={'/super-admin-dashboard/super-admin-home-page'}>
+                                <FaUserCircle className="w-7 h-7" />
+                            </Link>
 
-                      :
-                      
-                      <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">
-                            <LoginModal />
-                        </span>}
+</div>
+                           
+                            :
+
+                            <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">
+                                <LoginModal />
+                            </span>}
 
                         <IconButton
-                        variant=""
+                            variant=""
                             className="ml-auto h-10 w-10 text-inherit rounded-lg border-green-400 lg:hidden bg-white border shadow-none hover:shadow-none"
                             ripple={false}
                             onClick={() => setOpenNav(!openNav)}
