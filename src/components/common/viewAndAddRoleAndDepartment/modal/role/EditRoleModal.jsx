@@ -608,7 +608,7 @@ export default function EditRoleModal({ id, roleName: initialRoleName, roleCode:
             <Dialog open={open} className="shadow-none hover:shadow-none rounded-md bg-white">
                 <div className="px-4 py-4">
                     <h1 className="text-xl text-black font-bold">Edit Role</h1>
-                    <div className="absolute top-0 right-0 py-1.5 px-1.5 bg-green-50 cursor-pointer" onClick={handleOpen}>
+                    <div className="absolute top-0 right-0 py-1.5 px-1.5 bg-green-50 cursor-pointer rounded-tr-md" onClick={handleOpen}>
                         <X size={20} className="text-green-300 hover:text-green-400" />
                     </div>
                 </div>

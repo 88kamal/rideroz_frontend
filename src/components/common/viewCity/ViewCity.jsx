@@ -71,6 +71,8 @@ export default function ViewCity() {
 
             </CardHeader>
 
+            {/* <pre>{JSON.stringify(error,null,2)}</pre> */}
+
             <div className="overflow-scroll p-2">
                 {isLoading ? (
                     <div className="flex justify-center p-4">

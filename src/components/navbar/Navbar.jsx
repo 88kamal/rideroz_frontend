@@ -11,10 +11,13 @@ import {
 import { Link } from "react-router-dom";
 import LoginModal from "../registration/LoginModal";
 import ShareModal from "./ShareModal";
+import authService from "../../services/authService";
 
 export default function Navbars() {
     const [openNav, setOpenNav] = React.useState(false);
     const [openServices, setOpenServices] = React.useState(false);
+
+    const user = authService.getCurrentUser();
 
     React.useEffect(() => {
         const handleResize = () => {
@@ -138,9 +141,17 @@ export default function Navbars() {
 
                         <ShareModal />
 
-                        <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">
+                      {[2].includes(user?.role) ? 
+
+                      <>
+                      <h1></h1>
+                      </>
+
+                      :
+                      
+                      <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">
                             <LoginModal />
-                        </span>
+                        </span>}
 
                         <IconButton
                         variant=""
