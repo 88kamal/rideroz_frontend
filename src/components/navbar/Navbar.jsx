@@ -143,9 +143,9 @@ export default function Navbars() {
 
                       {[2].includes(user?.role) ? 
 
-                      <>
-                      <h1></h1>
-                      </>
+                      <Link to={'/super-admin-dashboard/super-admin-home-page'}>
+                      <h1 className="">Dashboard</h1>
+                      </Link>
 
                       :
                       
