@@ -11,9 +11,10 @@ import { useState } from "react";
 import { useGetUsersQuery } from "../../../redux/slices/userApiSlice";
 import DeleteUserModal from "./modal/user/DeleteUserModal";
 import ViewUserDetailModal from "./modal/user/ViewUserDetailModal";
+import EditUserModal from "./modal/user/EditUserModal";
 
 
-const TABLE_HEAD = ["S.No", "Name", "Email", "Mobile Number", "Delete", "View"];
+const TABLE_HEAD = ["S.No", "Name", "Email", "Mobile Number", "Edit", "Delete", "View"];
 
 export default function ViewUserTable() {
     const [search, setSearch] = useState('');
@@ -158,6 +159,12 @@ export default function ViewUserTable() {
                                                     >
                                                         {userPhoneNumber}
                                                     </Typography>
+                                                </td>
+
+                                                <td className={classes}>
+                                                   <EditUserModal
+                                                   id={_id}
+                                                   />
                                                 </td>
 
                                                 <td className={classes}>

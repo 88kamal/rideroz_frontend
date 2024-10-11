@@ -14,9 +14,10 @@ import { useGetShopsQuery } from "../../../redux/slices/shopApiSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import DeleteShopOwnerModal from "./modal/shopOwner/DeleteShopOwnerModal";
 import ViewShopOwnerDetailModal from "./modal/shopOwner/ViewShopOwnerDetailModal";
+import EditShopOwnerModal from "./modal/shopOwner/EditShopOwnerModal";
 
 
-const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Owner Name", "Email", "PhoneNumber", "Delete", "View"];
+const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Owner Name", "Email", "PhoneNumber", "Edit", "Delete", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState('');
@@ -187,6 +188,11 @@ export default function ViewShopOwnerTable() {
                                                 </td>
 
 
+                                                <td className={classes}>
+                                                   <EditShopOwnerModal
+                                                   id={_id}
+                                                   />
+                                                </td>
 
                                                 <td className={classes}>
                                                    <DeleteShopOwnerModal

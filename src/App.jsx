@@ -75,6 +75,12 @@ function App() {
                 path="view-user-and-shop-owner"
                 element={<SuperAdminViewUserAndShopOwnerPage />}
               />
+
+              {/* <Route
+                index={true}
+                path="add-and-view-employee/edit-employee/:id"
+                element={<SuperAdminEditEmployee />}
+              /> */}
             </Route>
 
 

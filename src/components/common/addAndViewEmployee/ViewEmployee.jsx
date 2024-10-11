@@ -14,6 +14,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import DeleteEmployeeModal from "./modal/DeleteEmployeeModal";
 import ViewEmployeeDetailModal from "./modal/ViewEmployeeDetailModal";
 import { Edit } from "lucide-react";
+import EditEmployeeModal from "./modal/EditEmployeeModal";
 
 const TABLE_HEAD = ["S.No", "Photo", "Name", "Email", "Mobile Number", "Edit", "Delete", "View"];
 
@@ -189,13 +190,7 @@ export default function ViewEmployee() {
 
 
                                                 <td className={classes}>
-                                                    <IconButton
-                                                        variant="text"
-                                                        className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
-                                                    >
-                                                        <Edit className="h-4 w-4" />
-                                                    </IconButton>
-
+                                                  <EditEmployeeModal/>
                                                 </td>
 
                                                 <td className={classes}>
