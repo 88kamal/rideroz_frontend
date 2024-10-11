@@ -10,14 +10,22 @@ import {
     HomeIcon,
     UserGroupIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ClipboardPlus, MapPinned } from "lucide-react";
+import authService from "../../../services/authService";
+import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
 
 export default function SuperAdminSidebar() {
 
-    const logout = () => {
-    }
+    const [logout] = useLogoutMutation();
 
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+      await logout(); // Call the logout mutation to remove token
+      navigate('/');  // Redirect to the home page after logout
+    };
+  
 
     return (
         <div className=" h-screen fixed w-full max-w-[16rem] p-4 
@@ -91,7 +99,7 @@ export default function SuperAdminSidebar() {
                     </ListItem>
                 </Link>
 
-                <ListItem onClick={logout} className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
+                <ListItem onClick={handleLogout} className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                     <ListItemPrefix>
                         <PowerIcon className="h-5 w-5" />
                     </ListItemPrefix>

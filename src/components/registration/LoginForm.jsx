@@ -228,12 +228,29 @@ import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 import { useEffect, useState } from 'react';
 import { useLoginMutation } from '../../redux/slices/authApiSlice';
+import authService from '../../services/authService';
+import NeedChangePassword from './NeedChangePassword';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginForm = ({ switchToSignup }) => {
+    const navigate = useNavigate();
     const [loginState, setLoginState] = useState({
         email: '',
         password: '',
     });
+
+    const [needPassword, setNeedPassword] = useState(false); // Track if the user needs a password
+
+
+    const toggleNeedPassword = () => {
+        if (user?.requiredPasswordChange) {
+            setNeedPassword(true)
+        }
+    }
+
+
+    const user = authService.getCurrentUser();
 
     //* State for managing messages
     const [errorMessage, setErrorMessage] = useState('');
@@ -243,7 +260,7 @@ const LoginForm = ({ switchToSignup }) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     //* Handle Toggle Function (For Password Visible)
-    const handleToggle = () => {
+    const handleToggle = async () => {
         setPasswordVisible(!passwordVisible);
     };
 
@@ -254,7 +271,9 @@ const LoginForm = ({ switchToSignup }) => {
         e.preventDefault();
         try {
             const response = await login(loginState).unwrap();
-            console.log(response.data); // Logged in user data, token etc.
+            console.log(response); // Logged in user data, token etc
+
+            toggleNeedPassword()
         } catch (err) {
             console.error(err);
         }
@@ -270,80 +289,110 @@ const LoginForm = ({ switchToSignup }) => {
         }
 
         if (isSuccess) {
-            setSuccessMessage(data?.message || 'Login successful!');
-            // Hide the success message after 5 seconds
-            setTimeout(() => {
-                setSuccessMessage('');
-            }, 1000);
+            if (user?.requiredPasswordChange) {
+                setNeedPassword(true)
+            }
+            else {
+                setSuccessMessage(data?.message || 'Login successful!');
+                const rolePaths = {
+                    2: '/super-admin-dashboard/super-admin-home-page',
+                };
+
+                navigate(rolePaths[user?.role]);
+                // Hide the success message after 5 seconds
+                setTimeout(() => {
+                    setSuccessMessage('');
+                }, 1000);
+            }
+
+
+
+
         }
     }, [isError, error, isSuccess, data]);
 
     return (
-        <div>
-            {errorMessage && (
-                <div className=" text-red-800 p-2 mb-4 rounded text-center app-font">
-                    {errorMessage}
-                </div>
-            )}
-            {successMessage && (
-                <div className=" text-green-800 p-2 mb-4 rounded text-center app-font">
-                    {successMessage}
-                </div>
-            )}
-            <div className="mb-6">
-                <Input
-                    color="green"
-                    label="Email"
-                    type="email"
-                    name="email"
-                    className="app-font"
-                    value={loginState.email}
-                    onChange={(e) =>
-                        setLoginState({ ...loginState, email: e.target.value })
-                    }
-                />
-            </div>
-            <div className="mb-6">
-                <Input
-                    color="green"
-                    type={passwordVisible ? 'text' : 'password'}
-                    label="Password"
-                    className="app-font"
-                    value={loginState.password}
-                    onChange={(e) =>
-                        setLoginState({ ...loginState, password: e.target.value })
-                    }
-                    icon={
-                        <span className="flex justify-around items-center cursor-pointer -mt-[3px]">
-                            <Icon
-                                className="text-green-200"
-                                icon={passwordVisible ? eye : eyeOff}
-                                size={20}
-                                onClick={handleToggle}
-                            />
-                        </span>
-                    }
-                />
-            </div>
-            <Button
-                variant=""
-                className="w-full bg-green-400 hover:shadow-none shadow-none"
-                onClick={handleLogin}
-                disabled={isLoading}
-            >
-                {isLoading ? 'Logging in...' : 'Login'}
-            </Button>
-            <div className="pt-2 flex justify-between items-center">
-                <h1 className="text-sm text-black" onClick={switchToSignup}>
-                    New to{' '}
-                    <span className="font-bold text-green-400 cursor-pointer">
-                        Rideroz
-                    </span>
-                    ? Signup
-                </h1>
-                <h1 className="text-sm text-black cursor-pointer">Forgot Password?</h1>
-            </div>
-        </div>
+        <>
+            {needPassword ?
+                <>
+                    <NeedChangePassword />
+                </>
+                :
+
+                <>
+                    {errorMessage && (
+                        <div className=" text-red-800 p-2 mb-4 rounded text-center app-font">
+                            {errorMessage}
+                        </div>
+                    )}
+                    {successMessage && (
+                        <div className=" text-green-800 p-2 mb-4 rounded text-center app-font">
+                            {successMessage}
+                        </div>
+                    )}
+
+                    {/* <pre>{JSON.stringify(roles, null, 2)}</pre> */}
+                    {/* <pre>{JSON.stringify(user,null,2)}</pre> */}
+
+                    <div className="mb-6">
+                        <Input
+                            color="green"
+                            label="Email"
+                            type="email"
+                            name="email"
+                            className="app-font"
+                            value={loginState.email}
+                            onChange={(e) =>
+                                setLoginState({ ...loginState, email: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <Input
+                            color="green"
+                            type={passwordVisible ? 'text' : 'password'}
+                            label="Password"
+                            className="app-font"
+                            value={loginState.password}
+                            onChange={(e) =>
+                                setLoginState({ ...loginState, password: e.target.value })
+                            }
+                            icon={
+                                <span className="flex justify-around items-center cursor-pointer -mt-[3px]">
+                                    <Icon
+                                        className="text-green-200"
+                                        icon={passwordVisible ? eye : eyeOff}
+                                        size={20}
+                                        onClick={handleToggle}
+                                    />
+                                </span>
+                            }
+                        />
+                    </div>
+                    <Button
+                        variant=""
+                        className="w-full bg-green-400 hover:shadow-none shadow-none"
+                        onClick={handleLogin}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Logging in...' : 'Login'}
+                    </Button>
+                    <div className="pt-2 flex justify-between items-center">
+                        <h1 className="text-sm text-black" onClick={switchToSignup}>
+                            New to{' '}
+                            <span className="font-bold text-green-400 cursor-pointer">
+                                Rideroz
+                            </span>
+                            ? Signup
+                        </h1>
+                        <h1 className="text-sm text-black cursor-pointer">Forgot Password?</h1>
+                    </div>
+                </>}
+        </>
+
+
+
+
     );
 };
 

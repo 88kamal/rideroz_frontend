@@ -3,17 +3,16 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import {
     CardHeader,
-    Input,
     Typography,
     Button,
     Spinner,
-    IconButton,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { Trash } from "lucide-react";
 import { useGetDepartmentsQuery } from "../../../redux/slices/departmentApiSlice";
+import EditDepartmentModal from "./modal/department/EditDepartmentModal";
+import DeleteDepartmentModal from "./modal/department/DeleteDepartmentModal";
 
-const TABLE_HEAD = ["S.No", "Department Name", "Delete"];
+const TABLE_HEAD = ["S.No", "Department Name", "Edit", "Delete"];
 
 export default function ViewCity() {
     const [search, setSearch] = useState('');
@@ -49,7 +48,7 @@ export default function ViewCity() {
                             color="green"
                             size="sm"
                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-300 bg-transparent border text-black"
-                        onClick={refetch}
+                            onClick={refetch}
                         >
                             <ArrowPathIcon className="h-5 w-5" />
                             <p className=" hidden lg:block md:block sm:block">Refresh</p>
@@ -72,73 +71,83 @@ export default function ViewCity() {
                         <h1 className=" text-center" color="red">{error?.data?.error}</h1>
                     </div>
                 )
-                    :
+                    : departments?.length === 0 ? (
+                        <div className="p-4">
+                            <div className=" flex justify-center items-center">
+                                <img className="w-20" src="https://cdn-icons-png.flaticon.com/128/9961/9961360.png" alt="" />
+                            </div>
+                            <h1 className=" text-center app-font" color="red">Department Not Found</h1>
+                        </div>)
+                        :
 
-                    (
-                        <table className=" w-full min-w-max table-auto text-left ">
-                            <thead>
-                                <tr>
-                                    {TABLE_HEAD.map((head) => (
-                                        <th
-                                            key={head}
-                                            className="border-y border-l border-r border-green-200 bg-green-50 p-4"
-                                        >
-                                            <Typography
-                                                variant="small"
-                                                color="blue-gray"
-                                                className="font-bold leading-none text-green-700 "
+                        (
+                            <table className=" w-full min-w-max table-auto text-left ">
+                                <thead>
+                                    <tr>
+                                        {TABLE_HEAD.map((head) => (
+                                            <th
+                                                key={head}
+                                                className="border-y border-l border-r border-green-200 bg-green-50 p-4"
                                             >
-                                                {head}
-                                            </Typography>
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {departments?.map(
-                                    ({ _id, departmentName }, index) => {
-                                        const isLast = index === departments?.length - 1;
-                                        const classes = isLast
-                                            ? "px-5   border-l  border-r border-b border-green-300"
-                                            : "px-5  border-l  border-r border-b border-green-300";
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-bold leading-none text-green-700 "
+                                                >
+                                                    {head}
+                                                </Typography>
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    {departments?.map(
+                                        ({ _id, departmentName }, index) => {
+                                            const isLast = index === departments?.length - 1;
+                                            const classes = isLast
+                                                ? "px-5   border-l  border-r border-b border-green-300"
+                                                : "px-5  border-l  border-r border-b border-green-300";
 
-                                        return (
-                                            <tr key={index} className=" hover:bg-green-50/50 cursor-pointer">
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        {index + 1}.
-                                                    </Typography>
-                                                </td>
+                                            return (
+                                                <tr key={index} className=" hover:bg-green-50/50 cursor-pointer">
+                                                    <td className={classes}>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal app-font"
+                                                        >
+                                                            {index + 1}.
+                                                        </Typography>
+                                                    </td>
 
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font capitalize"
-                                                    >
-                                                        {departmentName}
-                                                    </Typography>
-                                                </td>
+                                                    <td className={classes}>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal app-font capitalize"
+                                                        >
+                                                            {departmentName}
+                                                        </Typography>
+                                                    </td>
 
-                                                <td className={classes}>
-                                                    <IconButton variant="text"
-                                                        className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300">
-                                                        <Trash color="red" size={20}/>
-                                                    </IconButton>
-                                                </td>
+                                                    <td className={classes}>
+                                                        <EditDepartmentModal
+                                                            id={_id}
+                                                            departmentName={departmentName} />
+                                                    </td>
+
+                                                    <td className={classes}>
+                                                        <DeleteDepartmentModal id={_id} />
+                                                    </td>
 
 
-                                            </tr>
-                                        );
-                                    },
-                                )}
-                            </tbody>
-                        </table>
-                    )
+                                                </tr>
+                                            );
+                                        },
+                                    )}
+                                </tbody>
+                            </table>
+                        )
 
                 }
 

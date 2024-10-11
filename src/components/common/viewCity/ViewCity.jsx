@@ -11,8 +11,9 @@ import ViewCityImageModal from "./modal/ViewCityImageModal";
 import { useState } from "react";
 import { useGetCitiesForAdminQuery } from "../../../redux/slices/cityApiSlice";
 import DeleteCityModal from "./modal/DeleteCityModal";
+import EditCityModal from "./modal/EditCityModal";
 
-const TABLE_HEAD = ["S.No", "City Name", "City State", "City Image", "Delete"];
+const TABLE_HEAD = ["S.No", "City Name", "City State", "City Image", "Edit", "Delete"];
 
 export default function ViewCity() {
     const [search, setSearch] = useState('');
@@ -150,6 +151,15 @@ export default function ViewCity() {
                                                 <td className={classes}>
                                                     <ViewCityImageModal
                                                         cityImage={cityImage}
+                                                    />
+                                                </td>
+
+                                                <td className={classes}>
+                                                    <EditCityModal 
+                                                    id={_id} 
+                                                    cityName={cityName}
+                                                    cityState={cityState}
+                                                    cityImage={cityImage}
                                                     />
                                                 </td>
 

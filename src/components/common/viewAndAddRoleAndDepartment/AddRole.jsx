@@ -17,9 +17,9 @@ const AddRoleForm = () => {
         e.preventDefault();
 
         try {
-            await addRole({ 
-                roleName, 
-                roleCode, 
+            await addRole({
+                roleName,
+                roleCode,
                 departmentName: selectedDepartment.id  // Send the department ID as departmentName
             }).unwrap();
             setRoleName('');
@@ -106,7 +106,7 @@ const AddRoleForm = () => {
                                     {departments.map((department) => (
                                         <li
                                             key={department._id}
-                                            className="px-4 py-2 hover:bg-green-100 cursor-pointer app-font"
+                                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer app-font"
                                             onClick={() => {
                                                 setSelectedDepartment({ name: department.departmentName, id: department._id });
                                                 setIsDropdownOpen(false);

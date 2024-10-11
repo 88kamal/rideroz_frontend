@@ -8,8 +8,24 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: credentials, // The data to be sent (email and password)
       }),
+      async onQueryStarted(credentials, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          // Store token in localStorage after successful login
+          localStorage.setItem('token', JSON.stringify(data.token));
+        } catch (error) {
+          console.error("Login error:", error);
+        }
+      },
+    }),
+    logout: builder.mutation({
+      queryFn: () => {
+        // Custom logic for logging out (client-side)
+        localStorage.removeItem('token');
+        return { data: null }; // No need to send a request to the server
+      },
     }),
   }),
 });
 
-export const { useLoginMutation } = apiSlice;
+export const { useLoginMutation, useLogoutMutation } = authApiSlice;

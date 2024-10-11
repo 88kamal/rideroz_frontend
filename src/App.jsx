@@ -14,6 +14,7 @@ import SuperAdminHomePage from "./pages/dashboard/super-admin/pages/SuperAdminHo
 import SuperAdminAddRoleAndView from "./pages/dashboard/super-admin/pages/SuperAdminAddRoleAndView";
 import SuperAdminViewAndAddCityPage from "./pages/dashboard/super-admin/pages/SuperAdminViewAndAddCityPage";
 import SuperAdminAddAndViewEmployeePage from "./pages/dashboard/super-admin/pages/SuperAdminAddAndViewEmployeePage";
+import { ProtectedRoute } from "./protectedRoutes/ProtectedRoute";
 
 
 function App() {
@@ -34,9 +35,9 @@ function App() {
             <Route
               path="super-admin-dashboard"
               element={
-                <>
+                <ProtectedRoute requiredRole={2}>
                   <SuperAdminDashboard />
-                </>
+                </ProtectedRoute>
               }>
 
               <Route

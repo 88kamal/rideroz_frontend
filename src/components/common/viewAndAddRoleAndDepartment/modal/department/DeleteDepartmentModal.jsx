@@ -10,23 +10,24 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { Trash2 } from "lucide-react";
-import { useDeleteCityMutation } from "../../../../redux/slices/cityApiSlice";
+import { useDeleteDepartmentMutation } from "../../../../../redux/slices/departmentApiSlice";
 
-export default function DeleteCityModal({ id }) {
+export default function DeleteDepartmentModal({ id }) {
   const [open, setOpen] = useState(false);
   const [verificationText, setVerificationText] = useState(""); // State to track user input
   const requiredText = "DELETE"; // The text user needs to enter to confirm deletion
 
   const handleOpen = () => setOpen(!open);
 
-  const [deleteCity] = useDeleteCityMutation();
+  const [deleteDepartment] = useDeleteDepartmentMutation();
 
   const handleDelete = async () => {
     try {
-      await deleteCity(id).unwrap();
+      await deleteDepartment(id).unwrap();
+      setVerificationText("")
       handleOpen(); // Close the modal after deletion
     } catch (error) {
-      console.log("Error deleting city:", error);
+      console.log("Error deleting department:", error);
     }
   };
 
@@ -44,7 +45,7 @@ export default function DeleteCityModal({ id }) {
         <DialogHeader>Are you sure?</DialogHeader>
         <DialogBody>
           <p className="app-font text-black">
-            Do you really want to delete this city? This process cannot be undone.
+            Do you really want to delete this department? This process cannot be undone.
           </p>
           <p className="mt-2 mb-5 text-black">Please type <span className=" font-bold text-red-500">{requiredText}</span> to confirm.</p>
           <Input
