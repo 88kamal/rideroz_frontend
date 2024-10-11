@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const SuperAdminBottomNavigation = () => {
+const ShopOwnerBottomNavigation = () => {
     return (
         <div className="">
             <div className=" fixed z-50 w-full h-14 max-w-lg -translate-x-1/2 bg-white border-t border-gray-200 bottom-0 left-1/2" >
@@ -10,7 +10,7 @@ const SuperAdminBottomNavigation = () => {
                             type="button"
                             className="inline-flex flex-col items-center justify-center px-5 rounded-s-full group"
                         >
-                            <Link to={'super-admin-home-page'}>
+                            <Link to={'shop-owner-home-page'}>
                             <svg
                                 className="w-5 h-5 mb-1 text-gray-500 group-hover:text-green-600 dark:group-hover:text-green-500"
                                 aria-hidden="true"
@@ -152,5 +152,5 @@ const SuperAdminBottomNavigation = () => {
     )
 }
 
-export default SuperAdminBottomNavigation;
+export default ShopOwnerBottomNavigation;
 

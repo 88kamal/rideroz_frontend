@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Button, Input } from '@material-tailwind/react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
+import { useSignUpUserMutation } from '../../redux/slices/userApiSlice';
 
 const UserSignupForm = ({ switchToLogin }) => {
     const [formData, setFormData] = useState({
@@ -31,8 +33,52 @@ const UserSignupForm = ({ switchToLogin }) => {
         }
     }
 
+    const [signUpUser, { isLoading, isError, isSuccess, error, data }] = useSignUpUserMutation();
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await signUpUser(formData);
+    };
+
+    //* State for managing messages
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
+
+
+    useEffect(() => {
+        if (isError) {
+            setErrorMessage(error?.data?.error || 'Login failed, please try again.');
+            // Hide the error message after 5 seconds
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 2000);
+        }
+
+        if (isSuccess) {
+            setSuccessMessage(data?.message || 'Login successful!');
+            switchToLogin()
+            // Hide the success message after 5 seconds
+            setTimeout(() => {
+                setSuccessMessage('');
+            }, 2000);
+        }
+    }, [isError, error, isSuccess, data]);
     return (
         <div>
+            {errorMessage && (
+                <div className=" text-red-800 text-center text-md app-font absolute top-3 right-20 lg:top-[9.5em] lg:right-[7.5em]">
+                    {errorMessage}
+                </div>
+            )}
+            {successMessage && (
+                <div className=" text-green-800 text-center app-font">
+                    {successMessage}
+                </div>
+            )}
+
+
             <div className="mb-5">
                 <Input
                     color="green"
@@ -100,8 +146,8 @@ const UserSignupForm = ({ switchToLogin }) => {
 
                 />
             </div>
-            <Button variant="" className="w-full bg-green-400 hover:shadow-none shadow-none">
-                Signup
+            <Button variant="" onClick={handleSubmit} className="w-full bg-green-400 hover:shadow-none shadow-none">
+                {isLoading ? 'Signing Up...' : 'Sign Up'}
             </Button>
             <div className="pt-2 text-center">
                 <h1 className="text-sm text-black" onClick={switchToLogin}>

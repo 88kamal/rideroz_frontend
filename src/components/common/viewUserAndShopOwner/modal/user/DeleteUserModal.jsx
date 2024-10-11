@@ -10,23 +10,23 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { Trash2 } from "lucide-react";
-import { useDeleteEmployeeMutation } from "../../../../redux/slices/employeeApiSlice";
+import { useDeleteUserMutation } from "../../../../../redux/slices/userApiSlice";
 
-export default function DeleteEmployeeModal({ id }) {
+export default function DeleteUserModal({ id }) {
   const [open, setOpen] = useState(false);
   const [verificationText, setVerificationText] = useState(""); // State to track user input
   const requiredText = "DELETE"; // The text user needs to enter to confirm deletion
 
   const handleOpen = () => setOpen(!open);
 
-  const [deleteEmployee] = useDeleteEmployeeMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const handleDelete = async () => {
     try {
-      await deleteEmployee(id).unwrap(); // unwrap to handle resolved or rejected promise
-      handleOpen()
+      await deleteUser(id).unwrap();
+      handleOpen(); // Close the modal after deletion
     } catch (error) {
-      console.error('Error deleting employee:', error);
+      console.log("Error deleting user:", error);
     }
   };
 
@@ -44,7 +44,7 @@ export default function DeleteEmployeeModal({ id }) {
         <DialogHeader>Are you sure?</DialogHeader>
         <DialogBody>
           <p className="app-font text-black">
-            Do you really want to delete this department? This process cannot be undone.
+            Do you really want to delete this user? This process cannot be undone.
           </p>
 
           <p className="mt-2 mb-5 text-black">Please type <span className=" font-bold text-red-500">{requiredText}</span> to confirm.</p>

@@ -14,17 +14,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { ClipboardPlus, MapPinned } from "lucide-react";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
 
-export default function SuperAdminSidebar() {
+export default function ShopOwnerSidebar() {
 
     const [logout] = useLogoutMutation();
 
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-      await logout(); // Call the logout mutation to remove token
-      navigate('/');  // Redirect to the home page after logout
+        await logout(); // Call the logout mutation to remove token
+        navigate('/');  // Redirect to the home page after logout
     };
-  
+
 
     return (
         <div className=" h-screen fixed w-full max-w-[16rem] p-4 
@@ -36,15 +36,15 @@ export default function SuperAdminSidebar() {
                         className=" py-6"
                     >
                         <div className="flex justify-center mb-2">
-                            <img className="w-24" src="https://cdn-icons-png.flaticon.com/128/8899/8899687.png" alt="img" />
+                            <img className="w-24" src="https://cdn-icons-png.flaticon.com/128/17027/17027059.png" alt="img" />
                         </div>
-                        <h1 className="text-center text-xl text-black font-bold app-font">Super Admin Dashboard</h1>
+                        <h1 className="text-center text-xl text-black font-bold app-font">Shop Owner Dashboard</h1>
                     </div>
                 </div>
             </div>
 
             <List>
-                <Link to={'super-admin-home-page'}>
+                <Link to={'shop-owner-home-page'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <HomeIcon className="h-5 w-5" />

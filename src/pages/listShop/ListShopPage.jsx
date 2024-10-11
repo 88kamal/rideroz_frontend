@@ -1,5 +1,5 @@
 import { Button, Spinner } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { Eye, EyeOff, Locate } from "lucide-react";
 import { useAddShopMutation } from "../../redux/slices/shopApiSlice";
@@ -22,6 +22,8 @@ function ListShopPage() {
         lng: null,
         legalDoc: ""
     });
+
+    const fileInputRef = useRef(null); // Create a ref for the file input
 
     // Fetching cities with the query hook
     const { data: cities, error: citiesError, isLoading: isCitiesLoading } = useGetCitiesQuery();
@@ -171,6 +173,13 @@ function ListShopPage() {
                 lng: '',
                 legalDoc: ""
             });
+
+            setSearchTerm("")
+
+              // Reset the file input manually
+              if (fileInputRef.current) {
+                fileInputRef.current.value = null; // This clears the file input field
+            }
         } catch (err) {
             console.log('Failed to add shop:', err);
         }

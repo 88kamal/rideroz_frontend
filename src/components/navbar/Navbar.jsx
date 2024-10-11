@@ -144,13 +144,13 @@ export default function Navbars() {
 
                         {[2].includes(user?.role) ?
 
-<div className="hidden lg:block">
-     <Link to={'/super-admin-dashboard/super-admin-home-page'}>
-                                <FaUserCircle className="w-7 h-7" />
-                            </Link>
+                            <div className="hidden lg:block">
+                                <Link to={'/super-admin-dashboard/super-admin-home-page'}>
+                                    <FaUserCircle className="w-7 h-7" />
+                                </Link>
 
-</div>
-                           
+                            </div>
+
                             :
 
                             <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">

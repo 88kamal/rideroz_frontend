@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { IconButton } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
-import { BookCheck, EllipsisVertical, Network, UserRoundPlus } from 'lucide-react';
+import { EllipsisVertical, Network, UserRoundPlus, Users } from 'lucide-react';
 import { Drawer, Typography, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
 import { useState } from 'react';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
@@ -59,11 +59,11 @@ function MoreButton() {
                             <ListItemPrefix>
                                 <PlusCircleIcon className="h-5 w-5" />
                             </ListItemPrefix>
-                            Add Or View 
+                            Add Or View
                         </ListItem>
                     </Link>
 
-                    
+
                     <Link onClick={() => setOpen(false)} to={'view-and-add-roles-and-department'}>
                         <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300'>
                             <ListItemPrefix>
@@ -76,11 +76,21 @@ function MoreButton() {
                     <Link onClick={() => setOpen(false)} to={'add-and-view-employee'}>
                         <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300'>
                             <ListItemPrefix>
-                            <UserRoundPlus />
+                                <UserRoundPlus />
                             </ListItemPrefix>
                             Add And View Employee
                         </ListItem>
                     </Link>
+
+                    <Link onClick={() => setOpen(false)} to={'view-user-and-shop-owner'}>
+                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300'>
+                            <ListItemPrefix>
+                                <Users />
+                            </ListItemPrefix>
+                            View User And Shop Owner
+                        </ListItem>
+                    </Link>
+
                 </List>
 
 

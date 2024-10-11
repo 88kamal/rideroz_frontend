@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import {
+  Button,
   Dialog,
   DialogBody,
   IconButton,
@@ -8,6 +9,7 @@ import {
 import { Eye, X } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
+// eslint-disable-next-line no-unused-vars
 export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEmail, employeeMobileNumber, department, role, employeeSalary, employeePhoto, employeeAdharCard, employeePanCard, employeeAgreement }) {
   const [open, setOpen] = useState(false);
 
@@ -86,16 +88,25 @@ export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEma
 
           </div>
 
+          {/* <pre>{JSON.stringify({ employeeAdharCard, employeePanCard, employeeAgreement }, null, 2)}</pre> */}
           <div className="flex justify-between items-center flex-wrap ">
-            <div className=" bg-blue-400 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/3">
-              <p className=" text-center app-font text-white">View Aadhar Card </p>
-            </div>
-            <div className=" bg-pink-400 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/3">
-              <p className=" text-center app-font text-white">View Pan Card </p>
-            </div>
-            <div className=" bg-indigo-400 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/3">
-              <p className=" text-center app-font text-white">View Agreement </p>
-            </div>
+            <Button variant="" className=" hover:shadow-none shadow-none bg-blue-500 border border-green-200 text-black py-3 rounded-none px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/3">
+              <a href={employeeAdharCard?.url} target="_blank">
+                <p className=" text-center app-font text-white">View Aadhar Card </p>
+              </a>
+            </Button>
+
+            <Button variant="" className=" hover:shadow-none shadow-none bg-pink-500 border border-green-200 text-black py-3 rounded-none px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/3">
+              <a href={employeePanCard?.url} target="_blank">
+                <p className=" text-center app-font text-white">View Pan Card </p>
+              </a>
+            </Button>
+
+            <Button variant="" className=" hover:shadow-none shadow-none bg-indigo-500 border border-green-200 text-black py-3 rounded-none px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/3">
+              <a href={employeeAgreement?.url} target="_blank">
+                <p className=" text-center app-font text-white">View Agreement </p>
+              </a>
+            </Button>
           </div>
 
         </DialogBody>

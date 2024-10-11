@@ -14,7 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ClipboardPlus, MapPinned } from "lucide-react";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
 
-export default function SuperAdminSidebar() {
+export default function UserSidebar() {
 
     const [logout] = useLogoutMutation();
 
@@ -36,15 +36,15 @@ export default function SuperAdminSidebar() {
                         className=" py-6"
                     >
                         <div className="flex justify-center mb-2">
-                            <img className="w-24" src="https://cdn-icons-png.flaticon.com/128/8899/8899687.png" alt="img" />
+                            <img className="w-24" src="https://cdn-icons-png.flaticon.com/128/5432/5432747.png" alt="img" />
                         </div>
-                        <h1 className="text-center text-xl text-black font-bold app-font">Super Admin Dashboard</h1>
+                        <h1 className="text-center text-xl text-black font-bold app-font">User Dashboard</h1>
                     </div>
                 </div>
             </div>
 
             <List>
-                <Link to={'super-admin-home-page'}>
+                <Link to={'user-home-page'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <HomeIcon className="h-5 w-5" />

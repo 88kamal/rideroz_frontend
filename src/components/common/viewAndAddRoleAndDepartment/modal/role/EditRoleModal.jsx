@@ -613,9 +613,9 @@ export default function EditRoleModal({ id, roleName: initialRoleName, roleCode:
                     </div>
                 </div>
 
-                <pre>{JSON.stringify(formData,null,2)}</pre>
+                {/* <pre>{JSON.stringify(formData,null,2)}</pre> */}
 
-                <pre>{JSON.stringify(selectedDepartment,null,2)}</pre>
+                {/* <pre>{JSON.stringify(selectedDepartment,null,2)}</pre> */}
 
                 <DialogBody>
                     <form onSubmit={handleSubmit} className="space-y-3">

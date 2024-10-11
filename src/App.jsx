@@ -15,6 +15,11 @@ import SuperAdminAddRoleAndView from "./pages/dashboard/super-admin/pages/SuperA
 import SuperAdminViewAndAddCityPage from "./pages/dashboard/super-admin/pages/SuperAdminViewAndAddCityPage";
 import SuperAdminAddAndViewEmployeePage from "./pages/dashboard/super-admin/pages/SuperAdminAddAndViewEmployeePage";
 import { ProtectedRoute } from "./protectedRoutes/ProtectedRoute";
+import SuperAdminViewUserAndShopOwnerPage from "./pages/dashboard/super-admin/pages/SuperAdminViewUserAndShopOwnerPage";
+import UserDashboard from "./pages/dashboard/user/UserDashboard";
+import ShopOwnerDashboard from "./pages/dashboard/shopOwner/ShopOwnerDashboard";
+import ShopOwnerHomePage from "./pages/dashboard/shopOwner/pages/ShopOwnerHomePage";
+import ScrollTop from "./components/scrollTop/scrollTop";
 
 
 function App() {
@@ -22,6 +27,7 @@ function App() {
     <div className="App">
       <Router>
         <Toaster />
+        <ScrollTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -62,6 +68,50 @@ function App() {
                 index={true}
                 path="add-and-view-employee"
                 element={<SuperAdminAddAndViewEmployeePage />}
+              />
+
+              <Route
+                index={true}
+                path="view-user-and-shop-owner"
+                element={<SuperAdminViewUserAndShopOwnerPage />}
+              />
+            </Route>
+
+
+          </>
+
+          <>
+            <Route
+              path="user-dashboard"
+              element={
+                <ProtectedRoute requiredRole={15}>
+                  <UserDashboard />
+                </ProtectedRoute>
+              }>
+
+              <Route
+                index={true}
+                path="user-home-page"
+                element={<SuperAdminHomePage />}
+              />
+            </Route>
+
+
+          </>
+
+          <>
+            <Route
+              path="shop-owner-dashboard"
+              element={
+                <ProtectedRoute requiredRole={14}>
+                  <ShopOwnerDashboard />
+                </ProtectedRoute>
+              }>
+
+              <Route
+                index={true}
+                path="shop-owner-home-page"
+                element={<ShopOwnerHomePage />}
               />
             </Route>
 

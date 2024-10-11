@@ -296,6 +296,8 @@ const LoginForm = ({ switchToSignup }) => {
                 setSuccessMessage(data?.message || 'Login successful!');
                 const rolePaths = {
                     2: '/super-admin-dashboard/super-admin-home-page',
+                    14: '/shop-owner-dashboard/shop-owner-home-page',
+                    15: '/user-dashboard/user-home-page'
                 };
 
                 navigate(rolePaths[user?.role]);
