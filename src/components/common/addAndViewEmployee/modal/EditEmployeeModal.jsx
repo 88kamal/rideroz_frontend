@@ -1058,7 +1058,7 @@ export default function EditEmployeeModal({
                           checkFormModification(updatedFormData);
                           setIsDepartmentDropdownOpen(false);
                         }}
-                        
+
                       >
                         {department.departmentName}
                       </li>
@@ -1119,7 +1119,7 @@ export default function EditEmployeeModal({
               </div>
             </div>
 
-            {/* <pre>{JSON.stringify(pdfPreviews.employeeAdharCard, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(pdfPreviews, null, 2)}</pre> */}
 
             {/* File Upload for Aadhar, Pan, Agreement */}
             <div className="flex flex-col sm:flex-row gap-4">
@@ -1134,11 +1134,18 @@ export default function EditEmployeeModal({
                   ref={fileInputRef}
                 />
                 {pdfPreviews.employeeAdharCard && (
-                  <embed
-                    src={pdfPreviews.employeeAdharCard}
-                    type="application/pdf"
-                    className="w-full h-48 mt-2"
-                  />
+                  // <embed
+                  //   src={pdfPreviews.employeeAdharCard}
+                  //   type="application/pdf"
+                  //   className="w-full h-48 mt-2"
+                  // />
+                  <iframe
+  src={pdfPreviews.employeeAdharCard}
+  type="application/pdf"
+  className="w-full h-48 mt-2"
+  title="Employee Adhar Card"
+/>
+
                 )}
               </div>
 
@@ -1153,11 +1160,18 @@ export default function EditEmployeeModal({
                   ref={fileInputRef}
                 />
                 {pdfPreviews.employeePanCard && (
-                  <embed
-                    src={pdfPreviews.employeePanCard}
-                    type="application/pdf"
-                    className="w-full h-48 mt-2"
-                  />
+                  // <embed
+                  //   src={pdfPreviews.employeePanCard}
+                  //   type="application/pdf"
+                  //   className="w-full h-48 mt-2"
+                  // />
+                  <iframe
+  src={pdfPreviews.employeePanCard}
+  type="application/pdf"
+  className="w-full h-48 mt-2"
+  title="Employee Adhar Card"
+/>
+
                 )}
               </div>
 
@@ -1172,11 +1186,18 @@ export default function EditEmployeeModal({
                   ref={fileInputRef}
                 />
                 {pdfPreviews.employeeAgreement && (
-                  <embed
-                    src={pdfPreviews.employeeAgreement}
-                    type="application/pdf"
-                    className="w-full h-48 mt-2"
-                  />
+                  // <embed
+                  //   src={pdfPreviews.employeeAgreement}
+                  //   type="application/pdf"
+                  //   className="w-full h-48 mt-2"
+                  // />
+                  <iframe
+  src={pdfPreviews.employeeAgreement}
+  type="application/pdf"
+  className="w-full h-48 mt-2"
+  title="Employee Adhar Card"
+/>
+
                 )}
               </div>
             </div>

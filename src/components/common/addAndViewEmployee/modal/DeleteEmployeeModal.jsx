@@ -25,6 +25,7 @@ export default function DeleteEmployeeModal({ id }) {
     try {
       await deleteEmployee(id).unwrap(); // unwrap to handle resolved or rejected promise
       handleOpen()
+      setVerificationText("");
     } catch (error) {
       console.error('Error deleting employee:', error);
     }
