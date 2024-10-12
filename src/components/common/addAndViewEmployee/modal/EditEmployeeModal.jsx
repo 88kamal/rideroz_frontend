@@ -934,6 +934,7 @@ export default function EditEmployeeModal({
 
     if (isSuccess) {
       handleOpen();
+      toast.success(data?.message)
     }
   }, [isError, error, isSuccess, data]);
 
@@ -952,7 +953,10 @@ export default function EditEmployeeModal({
       </IconButton>
 
       <Dialog open={open} size="xxl" className="shadow-none hover:shadow-none rounded-md bg-white">
-        {/* <pre>{JSON.stringify(initialEmployeeAdharCard,null,2)}</pre> */}
+        {/* <pre>{JSON.stringify(formData,null,2)}</pre> */}
+
+        {/* <pre>{JSON.stringify(selectedDepartment.name,null,2)}</pre> */}
+        {/* <pre>{JSON.stringify(selectedRole?.name,null,2)}</pre> */}
         <div className="px-4 py-4">
           <h1 className="text-xl text-black font-bold">Edit Employee</h1>
           <div
@@ -1049,7 +1053,9 @@ export default function EditEmployeeModal({
                         className="px-4 py-2 hover:bg-green-100 cursor-pointer"
                         onClick={() => {
                           setSelectedDepartment({ name: department.departmentName, id: department._id });
-                          checkFormModification({ ...formData, department: department._id }); // Check for form modifications
+                          const updatedFormData = { ...formData, department: department._id };
+                          setFormData(updatedFormData);
+                          checkFormModification(updatedFormData);
                           setIsDepartmentDropdownOpen(false);
                         }}
                         
@@ -1087,10 +1093,11 @@ export default function EditEmployeeModal({
                         className="px-4 py-2 hover:bg-green-100 cursor-pointer"
                         onClick={() => {
                           setSelectedRole({ name: role.roleName, id: role._id });
-                          checkFormModification({ ...formData, role: role._id }); // Check for form modifications
+                          const updatedFormData = { ...formData, role: role._id };
+                          setFormData(updatedFormData);
+                          checkFormModification(updatedFormData);
                           setIsRoleDropdownOpen(false);
                         }}
-                        
                       >
                         {role.roleName}
                       </li>
