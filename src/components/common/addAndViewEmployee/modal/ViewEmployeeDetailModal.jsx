@@ -38,7 +38,7 @@ export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEma
               <LazyLoadImage
                 alt={"img"}
                 src={employeePhoto?.url}
-                className=" w-20 h-20 rounded-full"
+                className=" w-20 h-20 rounded-full shadow-md border border-green-300 p-1"
                 effect="opacity"
                 wrapperProps={{
                   // If you need to, you can tweak the effect transition using the wrapper style.
