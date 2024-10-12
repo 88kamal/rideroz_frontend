@@ -1209,6 +1209,7 @@ import toast from "react-hot-toast";
 import { useEditEmployeeMutation } from "../../../../redux/slices/employeeApiSlice";
 import { useGetDepartmentsQuery } from "../../../../redux/slices/departmentApiSlice";
 import { useGetRolesQuery } from "../../../../redux/slices/roleApiSlice";
+import CustomDropdown from "../../custom/CustomDropDown";
 
 export default function EditEmployeeModal({
   id,
@@ -1222,6 +1223,14 @@ export default function EditEmployeeModal({
   employeeAdharCard: initialEmployeeAdharCard,
   employeePanCard: initialEmployeePanCard,
   employeeAgreement: initialEmployeeAgreement,
+  fatherOrHusbandName: initialFatherOrHusbandName,
+  sex: initialSex,
+  maritalStatus: initialMaritalStatus,
+  bloodGroup: initialBloodGroup,
+  presentAddress: initialPresentAddress,
+  permanentAddress: initialPermanentAddress,
+  dateOfBirth: initialDateOfBirth,
+  dateOfJoining: initialDateOfJoining,
 }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -1235,6 +1244,14 @@ export default function EditEmployeeModal({
     employeePanCard: null,
     employeeAgreement: null,
     employeePhoto: null,
+    fatherOrHusbandName: "",
+    sex: "",
+    maritalStatus: "",
+    bloodGroup: "",
+    presentAddress: "",
+    permanentAddress: "",
+    dateOfBirth: "",
+    dateOfJoining: "",
   });
 
   const [pdfPreviews, setPdfPreviews] = useState({
@@ -1278,6 +1295,14 @@ export default function EditEmployeeModal({
         employeePanCard: null,
         employeeAgreement: null,
         employeePhoto: null,
+        fatherOrHusbandName: initialFatherOrHusbandName || "",
+        sex: initialSex || "",
+        maritalStatus: initialMaritalStatus || "",
+        bloodGroup: initialBloodGroup || "",
+        presentAddress: initialPresentAddress || "",
+        permanentAddress: initialPermanentAddress || "",
+        dateOfBirth: initialDateOfBirth || "",
+        dateOfJoining: initialDateOfJoining || "",
       });
 
       setSelectedDepartment({
@@ -1336,7 +1361,15 @@ export default function EditEmployeeModal({
       updatedFormData.employeePhoto !== null ||
       updatedFormData.employeeAdharCard !== null ||
       updatedFormData.employeePanCard !== null ||
-      updatedFormData.employeeAgreement !== null;
+      updatedFormData.employeeAgreement !== null ||
+      updatedFormData.fatherOrHusbandName !== initialFatherOrHusbandName ||
+      updatedFormData.sex !== initialSex ||
+      updatedFormData.maritalStatus !== initialMaritalStatus ||
+      updatedFormData.bloodGroup !== initialBloodGroup ||
+      updatedFormData.presentAddress !== initialPresentAddress ||
+      updatedFormData.permanentAddress !== initialPermanentAddress ||
+      updatedFormData.dateOfBirth !== initialDateOfBirth ||
+      updatedFormData.dateOfJoining !== initialDateOfJoining;
 
     setIsFormModified(isModified);
   };
@@ -1372,6 +1405,12 @@ export default function EditEmployeeModal({
   const filteredRoles = roles?.filter(
     (role) => role.departmentName?._id === selectedDepartment.id
   );
+
+
+  const handleDropdownChange = (name) => (value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // You might want to check if form data has changed here as well
+  };
 
   return (
     <>
@@ -1440,6 +1479,7 @@ export default function EditEmployeeModal({
                   label="Employee Name"
                   size="lg"
                   color="green"
+                  className=" app-font"
                 />
               </div>
 
@@ -1452,6 +1492,7 @@ export default function EditEmployeeModal({
                   label="Email"
                   size="lg"
                   color="green"
+                  className=" app-font"
                 />
               </div>
             </div>
@@ -1466,22 +1507,23 @@ export default function EditEmployeeModal({
                   label="Mobile Number"
                   size="lg"
                   color="green"
+                  className=" app-font"
                 />
               </div>
 
               <div className="relative w-full sm:w-1/2">
                 <div
                   onClick={() => setIsDepartmentDropdownOpen(!isDepartmentDropdownOpen)}
-                  className="w-full px-3 py-2 border border-[#607d8b] rounded-lg cursor-pointer app-font"
+                  className="w-full px-3 py-2 border border-[#607d8b] capitalize rounded-lg cursor-pointer app-font"
                 >
                   {selectedDepartment.name || "Select Department"}
                 </div>
                 {isDepartmentDropdownOpen && (
-                  <ul className="absolute left-0 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-40 overflow-y-auto">
+                  <ul className="absolute left-0 w-full mt-1 bg-white capitalize border border-gray-300 rounded-lg shadow-lg z-10 max-h-40 overflow-y-auto">
                     {departments?.map((department) => (
                       <li
                         key={department._id}
-                        className="px-4 py-2 hover:bg-green-100 cursor-pointer"
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer app-font"
                         onClick={() => {
                           setSelectedDepartment({ name: department.departmentName, id: department._id });
                           const updatedFormData = { ...formData, department: department._id };
@@ -1512,7 +1554,7 @@ export default function EditEmployeeModal({
               >
                 <div
                   onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
-                  className={`w-full px-3 py-2 border border-[#607d8b] rounded-lg cursor-pointer ${!selectedDepartment.id ? "opacity-50 cursor-not-allowed" : ""}`}
+                  className={`w-full px-3 py-2 border capitalize border-[#607d8b] app-font rounded-lg cursor-pointer ${!selectedDepartment.id ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   {selectedRole.name || "Select Role"}
                 </div>
@@ -1521,7 +1563,7 @@ export default function EditEmployeeModal({
                     {filteredRoles?.map((role) => (
                       <li
                         key={role._id}
-                        className="px-4 py-2 hover:bg-green-100 cursor-pointer"
+                        className="px-4 py-2 hover:bg-green-100 cursor-pointer app-font capitalize"
                         onClick={() => {
                           setSelectedRole({ name: role.roleName, id: role._id });
                           const updatedFormData = { ...formData, role: role._id };
@@ -1546,9 +1588,114 @@ export default function EditEmployeeModal({
                   label="Salary"
                   size="lg"
                   color="green"
+                  className=" app-font"
                 />
               </div>
             </div>
+
+
+          <div className="flex flex-col sm:flex-row gap-4">
+                <div className="w-full sm:w-1/2">
+                  <Input
+                    type="text"
+                    name="fatherOrHusbandName"
+                    value={formData.fatherOrHusbandName}
+                    onChange={handleInputChange}
+                    label="Father or Husband Name"
+                    size="lg"
+                    color="green"
+                  />
+                </div>
+
+                <div className="w-full sm:w-1/2">
+                  <CustomDropdown
+                    label="Select Sex"
+                    options={["male", "female", "other"]}
+                    selectedValue={formData.sex}
+                    onChange={handleDropdownChange("sex")}
+                  />
+                </div>
+              </div>
+
+
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="w-full sm:w-1/2">
+                  <CustomDropdown
+                    label="Select Marital Status"
+                    options={["single", "married", "divorced", "widowed"]}
+                    selectedValue={formData.maritalStatus}
+                    onChange={handleDropdownChange("maritalStatus")}
+                  />
+                </div>
+                <div className="w-full sm:w-1/2">
+                  <Input
+                    type="text"
+                    name="bloodGroup"
+                    value={formData.bloodGroup}
+                    onChange={handleInputChange}
+                    label="Blood Group"
+                    size="lg"
+                    color="green"
+                  />
+                </div>
+              </div>
+            {/* Address Info */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="w-full sm:w-1/2">
+                <Input
+                  type="text"
+                  name="presentAddress"
+                  value={formData.presentAddress}
+                  onChange={handleInputChange}
+                  label="Present Address"
+                  size="lg"
+                  color="green"
+                  className="app-font"
+                />
+              </div>
+              <div className="w-full sm:w-1/2">
+                <Input
+                  type="text"
+                  name="permanentAddress"
+                  value={formData.permanentAddress}
+                  onChange={handleInputChange}
+                  label="Permanent Address"
+                  size="lg"
+                  color="green"
+                  className="app-font"
+                />
+              </div>
+            </div>
+
+            {/* Date Info */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="w-full sm:w-1/2">
+                <Input
+                  type="date"
+                  name="dateOfBirth"
+                  value={formData.dateOfBirth}
+                  onChange={handleInputChange}
+                  label="Date of Birth"
+                  size="lg"
+                  color="green"
+                  className="app-font"
+                />
+              </div>
+              <div className="w-full sm:w-1/2">
+                <Input
+                  type="date"
+                  name="dateOfJoining"
+                  value={formData.dateOfJoining}
+                  onChange={handleInputChange}
+                  label="Date of Joining"
+                  size="lg"
+                  color="green"
+                  className="app-font"
+                />
+              </div>
+            </div>
+
 
             {/* <pre>{JSON.stringify(pdfPreviews, null, 2)}</pre> */}
 

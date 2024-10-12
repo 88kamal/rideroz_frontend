@@ -16,7 +16,7 @@ function TopNavbar({ image, name }) {
                         </div>
                         <h1 className="text-center text-xl text-black font-medium app-font">{name} Dashboard</h1>
                     </div>
-                   {[3].includes(user?.role) &&  <MoreButton />}
+                   {[2].includes(user?.role) &&  <MoreButton />}
                 </div>
             </div>
         </>

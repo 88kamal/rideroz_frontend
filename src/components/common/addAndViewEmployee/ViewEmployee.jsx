@@ -118,9 +118,11 @@ export default function ViewEmployee() {
                                     ))}
                                 </tr>
                             </thead>
+
+                            {/* <pre>{JSON.stringify(employeesData,null,2)}</pre> */}
                             <tbody >
                                 {employeesData?.employees?.map(
-                                    ({ _id, employeeName, employeeEmail, employeeMobileNumber, department, role, employeeSalary, employeePhoto, employeeAdharCard, employeePanCard, employeeAgreement }, index) => {
+                                    ({ _id, employeeName, employeeEmail, employeeMobileNumber, department, role, employeeSalary, employeePhoto, employeeAdharCard, employeePanCard, employeeAgreement, createdAt, fatherOrHusbandName, sex, maritalStatus, bloodGroup, presentAddress, permanentAddress, dateOfBirth, dateOfJoining }, index) => {
                                         const isLast = index === employeesData?.employees?.length - 1;
                                         const classes = isLast
                                             ? "px-5 py-   border-l  border-r border-b border-green-300"
@@ -144,7 +146,7 @@ export default function ViewEmployee() {
                                                         <LazyLoadImage
                                                             alt={"img"}
                                                             src={employeePhoto?.url}
-                                                            className=" w-10 h-10 rounded-full"
+                                                            className=" w-9 h-9 rounded-full"
                                                             effect="opacity"
                                                             wrapperProps={{
                                                                 // If you need to, you can tweak the effect transition using the wrapper style.
@@ -201,6 +203,14 @@ export default function ViewEmployee() {
                                                    employeeAdharCard={employeeAdharCard}
                                                    employeePanCard={employeePanCard}
                                                    employeeAgreement={employeeAgreement}
+                                                   fatherOrHusbandName={fatherOrHusbandName}
+                                                   sex={sex}
+                                                   maritalStatus={maritalStatus}
+                                                   bloodGroup={bloodGroup}
+                                                   presentAddress={presentAddress}
+                                                   permanentAddress={permanentAddress}
+                                                   dateOfBirth={dateOfBirth}
+                                                   dateOfJoining={dateOfJoining}
                                                   />
                                                 </td>
 
@@ -210,7 +220,7 @@ export default function ViewEmployee() {
 
                                                 <td className={classes}>
                                                     <ViewEmployeeDetailModal
-                                                        _id={_id}
+                                                        id={_id}
                                                         employeeName={employeeName}
                                                         employeeEmail={employeeEmail}
                                                         employeeMobileNumber={employeeMobileNumber}
@@ -221,6 +231,7 @@ export default function ViewEmployee() {
                                                         employeeAdharCard={employeeAdharCard}
                                                         employeePanCard={employeePanCard}
                                                         employeeAgreement={employeeAgreement}
+                                                        createdAt={createdAt}
                                                     />
                                                 </td>
 

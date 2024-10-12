@@ -357,6 +357,7 @@ function ListShopPage() {
                                 </div>
                             )}
 
+{/* <pre>{JSON.stringify({data: cities, error: citiesError, isLoading: isCitiesLoading},null,2)}</pre> */}
                             {citiesError && (
                                 <div className="absolute mt-1 bg-white z-10 border border-red-400 rounded-md w-full p-2">
                                     <p className="text-red-500 text-center">{citiesError?.data?.error}</p>

@@ -10,10 +10,12 @@ import { Eye, X } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // eslint-disable-next-line no-unused-vars
-export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEmail, employeeMobileNumber, department, role, employeeSalary, employeePhoto, employeeAdharCard, employeePanCard, employeeAgreement }) {
+export default function ViewEmployeeDetailModal({ id, employeeName, employeeEmail, employeeMobileNumber, department, role, employeeSalary, employeePhoto, employeeAdharCard, employeePanCard, employeeAgreement, createdAt }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
+
+  const readableDate = new Date(createdAt).toLocaleString();
 
   return (
     <>
@@ -71,7 +73,7 @@ export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEma
             </div>
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
-              <span className=" font-bold">Departmemt : </span> <span className=" app-font">{department?.departmentName}</span>
+              <span className=" font-bold">Departmemt : </span> <span className=" app-font capitalize">{department?.departmentName}</span>
             </div>
           </div>
 
@@ -79,7 +81,20 @@ export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEma
 
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
-              <span className=" font-bold">Role : </span> <span className=" app-font">{role?.roleName}</span>
+              <span className=" font-bold">Role : </span> <span className=" app-font capitalize">{role?.roleName}</span>
+            </div>
+
+            <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
+              <span className=" font-bold">Salary : </span> <span className=" app-font">₹ {employeeSalary}</span>
+            </div>
+
+          </div>
+
+          <div className="flex flex-wrap justify-between items-center">
+
+
+            <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
+              <span className=" font-bold">Created Date : </span> <span className=" app-font">{readableDate}</span>
             </div>
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">

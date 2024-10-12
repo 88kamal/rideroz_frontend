@@ -1626,10 +1626,10 @@ export default function EditShopOwnerModal({
             formData.lng !== initialLng ||
             formData.shopImage !== null || // Check if a new shop image is selected
             formData.legalDoc !== null; // Check if a new legal doc is selected
-    
+
         setIsFormChanged(isChanged);
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -1692,15 +1692,18 @@ export default function EditShopOwnerModal({
             <IconButton
                 onClick={handleOpen}
                 variant="text"
-                className="hover:text-blue-900"
+                className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
             >
                 <Edit className="h-4" />
             </IconButton>
-            <Dialog open={open} size="xxl" handler={handleOpen} className="shadow-none hover:shadow-none rounded-md bg-white overflow-auto">
+            <Dialog open={open} size="xxl" handler={handleOpen} className="shadow-none hover:shadow-none rounded-none bg-green-50 overflow-scroll">
                 <div className="px-4 py-4">
-                    <h1 className="text-xl text-black font-bold">Edit Shop Owner</h1>
-                    <div className="absolute top-0 right-0 py-1.5 px-1.5 bg-green-50 cursor-pointer rounded-tr-md" onClick={handleOpen}>
-                        <X size={20} className="text-green-300 hover:text-green-400" />
+                    <h1 className="text-xl text-black font-bold">Edit Employee</h1>
+                    <div
+                        className="absolute top-0 right-0 py-1.5 px-1.5 bg-green-500 cursor-pointer "
+                        onClick={handleOpen}
+                    >
+                        <X size={20} className="text-green-100 hover:text-white" />
                     </div>
                 </div>
                 <DialogBody>
@@ -1712,7 +1715,7 @@ export default function EditShopOwnerModal({
                                 <label htmlFor="shop-image-upload" className="custom-file-upload cursor-pointer shadow-md rounded-full">
                                     {imagePreview ? (
                                         <img
-                                            className="w-24 h-24 border-2 rounded-full object-cover"
+                                            className="w-24 h-24 border-2 rounded-full object-cover border-green-200"
                                             src={imagePreview}
                                             alt="Shop"
                                         />
@@ -1744,6 +1747,7 @@ export default function EditShopOwnerModal({
                                         value={formData.shopName}
                                         onChange={handleInputChange}
                                         color="green"
+                                        className=" app-font"
                                     />
                                 </div>
                                 <div className="w-full sm:w-1/2">
@@ -1753,6 +1757,7 @@ export default function EditShopOwnerModal({
                                         value={formData.ownerName}
                                         onChange={handleInputChange}
                                         color="green"
+                                        className=" app-font"
                                     />
                                 </div>
                             </div>
@@ -1766,6 +1771,7 @@ export default function EditShopOwnerModal({
                                         value={formData.ownerEmail}
                                         onChange={handleInputChange}
                                         color="green"
+                                          className=" app-font"
                                     />
                                 </div>
                                 <div className="w-full sm:w-1/2">
@@ -1775,40 +1781,35 @@ export default function EditShopOwnerModal({
                                         value={formData.ownerPhoneNumber}
                                         onChange={handleInputChange}
                                         color="green"
+                                          className=" app-font"
                                     />
                                 </div>
                             </div>
 
 
                             <div className="flex flex-col sm:flex-row gap-4">
-                                    <div className="w-full sm:w-1/2 relative">
-                                        <div
-                                            className="border border-gray-500 p-2 rounded-md cursor-pointer capitalize"
-                                            onClick={handleGenderToggle}
-                                        >
-                                            {formData.gender || "Select Gender"}
-                                        </div>
-                                        {genderDropdownOpen && (
-                                            <div className="absolute z-10 mt-1 bg-white border border-gray-300 rounded-md w-full shadow-lg">
-                                                {genders.map((gender) => (
-                                                    <div
-                                                        key={gender}
-                                                        className="p-2 hover:bg-gray-100 cursor-pointer capitalize"
-                                                        onClick={() => handleGenderSelect(gender)}
-                                                    >
-                                                        {gender}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
+                                <div className="w-full sm:w-1/2 relative">
+                                    <div
+                                        className="border border-gray-500 p-2 rounded-md cursor-pointer capitalize app-font"
+                                        onClick={handleGenderToggle}
+                                    >
+                                        {formData.gender || "Select Gender"}
                                     </div>
+                                    {genderDropdownOpen && (
+                                        <div className="absolute z-10 mt-1 bg-white border border-gray-300 rounded-md w-full shadow-lg">
+                                            {genders.map((gender) => (
+                                                <div
+                                                    key={gender}
+                                                    className="p-2 hover:bg-gray-100 cursor-pointer capitalize app-font"
+                                                    onClick={() => handleGenderSelect(gender)}
+                                                >
+                                                    {gender}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                                 <div className="w-full sm:w-1/2">
-                                    {/* <Input
-                                label="Latitude"
-                                name="lat"
-                                value={formData.lat}
-                                onChange={handleInputChange}
-                            /> */}
 
                                     <div className="relative">
                                         <Input
@@ -1817,6 +1818,7 @@ export default function EditShopOwnerModal({
                                             value={searchTerm}
                                             onChange={handleCitySearch}
                                             color="green"
+                                              className=" app-font capitalize"
                                         />
                                         {isCitiesLoading && (
                                             <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full p-2">
@@ -1824,19 +1826,21 @@ export default function EditShopOwnerModal({
                                             </div>
                                         )}
 
+                                        <pre>{JSON.stringify(citiesError)}</pre>
+
                                         {citiesError && (
-                                            <div className="absolute mt-1 bg-white z-10 border border-red-400 rounded-md w-full p-2">
+                                            <div className="absolute mt-1 bg-green-200 z-10 border border-red-400 rounded-md w-full p-2">
                                                 <p className="text-red-500 text-center">{citiesError?.data?.error}</p>
                                             </div>
                                         )}
 
                                         {showDropdown && !isCitiesLoading && !citiesError && filteredCities?.length > 0 && (
-                                            <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full max-h-40 overflow-y-auto">
+                                            <div className="absolute mt-1 bg-green-100 z-10 border border-gray-400 app-font rounded-md w-full max-h-40 overflow-y-auto">
                                                 {filteredCities.map((city) => (
                                                     <div
                                                         key={city.id}
                                                         onClick={() => handleCitySelect(city.cityName, city.cityState, city._id)}
-                                                        className="cursor-pointer p-2 hover:bg-gray-200"
+                                                        className="cursor-pointer p-2 hover:bg-gray-200 app-font text-green-700 capitalize"
                                                     >
                                                         {city.cityName}, {city.cityState}
                                                     </div>
@@ -1845,11 +1849,11 @@ export default function EditShopOwnerModal({
                                         )}
 
 
-                                        {!isCitiesLoading && !citiesError && showDropdown && filteredCities.length === 0 && (
+                                        {/* {!isCitiesLoading && !citiesError && showDropdown && filteredCities.length === 0 && (
                                             <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full p-2">
                                                 <p className=" text-center">No cities found.</p>
                                             </div>
-                                        )}
+                                        )} */}
                                     </div>
                                 </div>
                             </div>
