@@ -520,7 +520,7 @@ import toast from "react-hot-toast";
 import { useEditRoleMutation } from "../../../../../redux/slices/roleApiSlice";
 import { useGetDepartmentsQuery } from "../../../../../redux/slices/departmentApiSlice";
 
-export default function EditRoleModal({ id, roleName: initialRoleName, roleCode: initialRoleCode, departmentName: initialDepartmentName }) {
+function EditRoleModal({ id, roleName: initialRoleName, roleCode: initialRoleCode, departmentName: initialDepartmentName }) {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({
         roleName: "",
@@ -691,3 +691,5 @@ export default function EditRoleModal({ id, roleName: initialRoleName, roleCode:
         </>
     );
 }
+
+export default EditRoleModal

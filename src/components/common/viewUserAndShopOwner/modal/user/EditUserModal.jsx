@@ -3,7 +3,6 @@
 import  { useState } from "react";
 import {
   Dialog,
-  DialogHeader,
   DialogBody,
   IconButton,
 } from "@material-tailwind/react";

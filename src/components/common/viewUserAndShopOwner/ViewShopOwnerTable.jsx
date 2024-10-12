@@ -135,16 +135,16 @@ export default function ViewShopOwnerTable() {
                                                 </td>
 
                                                 <td className={classes}>
-                                                <LazyLoadImage
-                                                            alt={"img"}
-                                                            src={shopImage?.url}
-                                                            className=" w-10 h-10 rounded-full"
-                                                            effect="opacity"
-                                                            wrapperProps={{
-                                                                // If you need to, you can tweak the effect transition using the wrapper style.
-                                                                style: { transitionDelay: "1s" },
-                                                            }}
-                                                        />
+                                                    <LazyLoadImage
+                                                        alt={"img"}
+                                                        src={shopImage?.url}
+                                                        className=" w-10 h-10 rounded-full"
+                                                        effect="opacity"
+                                                        wrapperProps={{
+                                                            // If you need to, you can tweak the effect transition using the wrapper style.
+                                                            style: { transitionDelay: "1s" },
+                                                        }}
+                                                    />
                                                 </td>
 
                                                 <td className={classes}>
@@ -189,20 +189,41 @@ export default function ViewShopOwnerTable() {
 
 
                                                 <td className={classes}>
-                                                   <EditShopOwnerModal
-                                                   id={_id}
-                                                   />
+                                                    <EditShopOwnerModal
+                                                        id={_id}
+                                                        shopImage={shopImage}
+                                                        legalDoc={legalDoc}
+                                                        shopName={shopName}
+                                                        ownerName={ownerName}
+                                                        ownerEmail={ownerEmail}
+                                                        ownerPhoneNumber={ownerPhoneNumber}
+                                                        gender={gender}
+                                                        selectCity={selectCity}
+                                                        lat={lat}
+                                                        lng={lng}
+                                                    />
                                                 </td>
 
                                                 <td className={classes}>
-                                                   <DeleteShopOwnerModal
-                                                   id={_id}
-                                                   />
+                                                    <DeleteShopOwnerModal
+                                                        id={_id}
+                                                    />
                                                 </td>
 
 
                                                 <td className={classes}>
-                                                   <ViewShopOwnerDetailModal/>
+                                                    <ViewShopOwnerDetailModal 
+                                                     id={_id}
+                                                     shopImage={shopImage}
+                                                     legalDoc={legalDoc}
+                                                     shopName={shopName}
+                                                     ownerName={ownerName}
+                                                     ownerEmail={ownerEmail}
+                                                     ownerPhoneNumber={ownerPhoneNumber}
+                                                     gender={gender}
+                                                     selectCity={selectCity}
+                                                     lat={lat}
+                                                     lng={lng}/>
                                                 </td>
                                             </tr>
                                         );

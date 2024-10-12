@@ -60,16 +60,11 @@ export const shopApi = apiSlice.injectEndpoints({
         // Edit Shop mutation
         editShop: builder.mutation({
             query: ({ id, updatedData }) => {
-                const formData = new FormData();
-                // Append data to formData
-                Object.entries(updatedData).forEach(([key, value]) => {
-                    formData.append(key, value);
-                });
-
+                console.log("63 updatedData", updatedData)
                 return {
                     url: `/shop/edit-shop/${id}`,
                     method: 'PUT',
-                    body: formData,
+                    body: updatedData,
                     formData: true,
                 };
             },

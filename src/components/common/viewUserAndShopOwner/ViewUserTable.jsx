@@ -162,20 +162,25 @@ export default function ViewUserTable() {
                                                 </td>
 
                                                 <td className={classes}>
-                                                   <EditUserModal
-                                                   id={_id}
-                                                   />
+                                                    <EditUserModal
+                                                        id={_id}
+                                                    />
                                                 </td>
 
                                                 <td className={classes}>
-                                                   <DeleteUserModal
-                                                   id={_id}
-                                                   />
+                                                    <DeleteUserModal
+                                                        id={_id}
+                                                    />
                                                 </td>
 
 
                                                 <td className={classes}>
-                                                 <ViewUserDetailModal/>
+                                                    <ViewUserDetailModal
+                                                        id={_id}
+                                                        userName={userName}
+                                                        userEmail={userEmail}
+                                                        userPhoneNumber={userPhoneNumber}
+                                                    />
                                                 </td>
                                             </tr>
                                         );

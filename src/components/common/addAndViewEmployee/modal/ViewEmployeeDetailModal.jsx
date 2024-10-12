@@ -71,7 +71,7 @@ export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEma
             </div>
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
-              <span className=" font-bold">Departmemt : </span> <span className=" app-font">{department}</span>
+              <span className=" font-bold">Departmemt : </span> <span className=" app-font">{department?.departmentName}</span>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ export default function ViewEmployeeDetailModal({ _id, employeeName, employeeEma
 
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
-              <span className=" font-bold">Role : </span> <span className=" app-font">{role}</span>
+              <span className=" font-bold">Role : </span> <span className=" app-font">{role?.roleName}</span>
             </div>
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">

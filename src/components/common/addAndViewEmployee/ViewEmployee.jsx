@@ -13,7 +13,6 @@ import { useGetEmployeesQuery } from "../../../redux/slices/employeeApiSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import DeleteEmployeeModal from "./modal/DeleteEmployeeModal";
 import ViewEmployeeDetailModal from "./modal/ViewEmployeeDetailModal";
-import { Edit } from "lucide-react";
 import EditEmployeeModal from "./modal/EditEmployeeModal";
 
 const TABLE_HEAD = ["S.No", "Photo", "Name", "Email", "Mobile Number", "Edit", "Delete", "View"];
@@ -76,7 +75,7 @@ export default function ViewEmployee() {
 
             </CardHeader>
 
-            {/* <pre>{JSON.stringify(error?.data, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(employeesData, null, 2)}</pre> */}
 
             <div className="overflow-scroll p-2">
                 {isLoading ? (
@@ -190,7 +189,19 @@ export default function ViewEmployee() {
 
 
                                                 <td className={classes}>
-                                                  <EditEmployeeModal/>
+                                                  <EditEmployeeModal
+                                                   id={_id}
+                                                   employeeName={employeeName}
+                                                   employeeEmail={employeeEmail}
+                                                   employeeMobileNumber={employeeMobileNumber}
+                                                   department={department}
+                                                   role={role}
+                                                   employeeSalary={employeeSalary}
+                                                   employeePhoto={employeePhoto}
+                                                   employeeAdharCard={employeeAdharCard}
+                                                   employeePanCard={employeePanCard}
+                                                   employeeAgreement={employeeAgreement}
+                                                  />
                                                 </td>
 
                                                 <td className={classes}>

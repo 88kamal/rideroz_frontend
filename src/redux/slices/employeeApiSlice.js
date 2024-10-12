@@ -57,6 +57,42 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       refetchOnFocus: true, // Refetch when window is refocused
     }),
 
+     // Edit Employee Mutation
+     editEmployee: builder.mutation({
+      query: ({ id, employeeData }) => ({
+        url: `/employee/edit-employee/${id}`,
+        method: 'PUT',
+        body: employeeData, // Send the updated employee data
+      }),
+      invalidatesTags: [{ type: 'Employee', id: 'LIST' }], // Invalidate employee list to refetch
+
+      // Handle optimistic update
+      onQueryStarted: async ({ id, employeeData }, { dispatch, queryFulfilled }) => {
+        // Optimistically update the employee in the cache
+        const patchResult = dispatch(
+          employeeApiSlice.util.updateQueryData('getEmployees', undefined, (draft) => {
+            const employeeIndex = draft.employees.findIndex((employee) => employee.id === id);
+            if (employeeIndex !== -1) {
+              draft.employees[employeeIndex] = { ...draft.employees[employeeIndex], ...employeeData };
+            }
+          })
+        );
+
+        try {
+          // Wait for the mutation to complete
+          const { data } = await queryFulfilled;
+
+          // toast.success(data?.message); // Show success message
+        } catch (error) {
+          // Revert optimistic update if the mutation fails
+          patchResult.undo();
+          // toast.error(error?.error?.data?.error || "Error updating employee");
+          console.error('Error updating employee:', error);
+        }
+      },
+    }),
+
+
     // Delete Employee Mutation
     deleteEmployee: builder.mutation({
       query: (id) => ({
@@ -97,5 +133,6 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
 export const {
   useAddEmployeeMutation,
   useGetEmployeesQuery,
-  useDeleteEmployeeMutation
+  useDeleteEmployeeMutation,
+  useEditEmployeeMutation
 } = employeeApiSlice;
