@@ -12,6 +12,7 @@ import { useGetUsersQuery } from "../../../redux/slices/userApiSlice";
 import DeleteUserModal from "./modal/user/DeleteUserModal";
 import ViewUserDetailModal from "./modal/user/ViewUserDetailModal";
 import EditUserModal from "./modal/user/EditUserModal";
+import toast from "react-hot-toast";
 
 
 const TABLE_HEAD = ["S.No", "Name", "Email", "Mobile Number", "Edit", "Delete", "View"];
@@ -31,6 +32,12 @@ export default function ViewUserTable() {
     const handleNext = () => {
         const totalPages = Math.ceil((users?.totalUser ?? 0) / limit);
         if (page < totalPages) setPage(page + 1);
+    };
+
+
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+        toast.success(`${text} copied!`);
     };
 
     return (
@@ -141,21 +148,21 @@ export default function ViewUserTable() {
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
+                                                <td className={classes} onClick={() => handleCopy(userEmail)}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font"
+                                                        className="font-normal app-font hover:text-green-700"
                                                     >
                                                         {userEmail}
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
+                                                <td className={classes} onClick={() => handleCopy(userPhoneNumber)}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font capitalize"
+                                                        className="font-normal app-font capitalize hover:text-green-700"
                                                     >
                                                         {userPhoneNumber}
                                                     </Typography>

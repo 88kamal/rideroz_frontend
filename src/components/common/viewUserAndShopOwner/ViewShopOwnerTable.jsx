@@ -15,6 +15,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import DeleteShopOwnerModal from "./modal/shopOwner/DeleteShopOwnerModal";
 import ViewShopOwnerDetailModal from "./modal/shopOwner/ViewShopOwnerDetailModal";
 import EditShopOwnerModal from "./modal/shopOwner/EditShopOwnerModal";
+import toast from "react-hot-toast";
 
 
 const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Owner Name", "Email", "PhoneNumber", "Edit", "Delete", "View"];
@@ -37,6 +38,11 @@ export default function ViewShopOwnerTable() {
         if (page < totalPages) setPage(page + 1);
     };
 
+
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+        toast.success(`${text} copied!`);
+    };
     return (
         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
             {/* <pre>{JSON.stringify(error, null, 2)}</pre> */}
@@ -167,21 +173,21 @@ export default function ViewShopOwnerTable() {
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
+                                                <td className={classes} onClick={() => handleCopy(ownerEmail)}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font "
+                                                        className="font-normal app-font hovertext-green-700 "
                                                     >
                                                         {ownerEmail}
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
+                                                <td className={classes} onClick={() => handleCopy(ownerPhoneNumber)}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font capitalize"
+                                                        className="font-normal app-font capitalize hover:text-green-700"
                                                     >
                                                         {ownerPhoneNumber}
                                                     </Typography>

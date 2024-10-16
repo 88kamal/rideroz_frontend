@@ -24,6 +24,7 @@ function ListShopPage() {
     });
 
     const fileInputRef = useRef(null); // Create a ref for the file input
+    const fileInputRefLegalDoc = useRef(null); // Create a ref for the file input
 
     // Fetching cities with the query hook
     const { data: cities, error: citiesError, isLoading: isCitiesLoading } = useGetCitiesQuery();
@@ -176,9 +177,13 @@ function ListShopPage() {
 
             setSearchTerm("")
 
-              // Reset the file input manually
-              if (fileInputRef.current) {
+            // Reset the file input manually
+            if (fileInputRef.current) {
                 fileInputRef.current.value = null; // This clears the file input field
+            }
+
+            if (fileInputRefLegalDoc.current) {
+                fileInputRefLegalDoc.current.value = null
             }
         } catch (err) {
             console.log('Failed to add shop:', err);
@@ -231,7 +236,7 @@ function ListShopPage() {
                                     />
                                 )}
                             </label>
-                            <input id="file-upload" name="shopImage" type="file" onChange={handleChangePhoto} />
+                            <input id="file-upload" ref={fileInputRef} name="shopImage" type="file" onChange={handleChangePhoto} />
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4">
@@ -357,7 +362,7 @@ function ListShopPage() {
                                 </div>
                             )}
 
-{/* <pre>{JSON.stringify({data: cities, error: citiesError, isLoading: isCitiesLoading},null,2)}</pre> */}
+                            {/* <pre>{JSON.stringify({data: cities, error: citiesError, isLoading: isCitiesLoading},null,2)}</pre> */}
                             {citiesError && (
                                 <div className="absolute mt-1 bg-white z-10 border border-red-400 rounded-md w-full p-2">
                                     <p className="text-red-500 text-center">{citiesError?.data?.error}</p>
@@ -389,6 +394,7 @@ function ListShopPage() {
 
                         <div className="w-full">
                             <input
+                                ref={fileInputRefLegalDoc}
                                 type="file"
                                 name="legalDoc"
                                 accept="image/*"

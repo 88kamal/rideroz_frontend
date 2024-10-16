@@ -25,7 +25,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
         return { data: null }; // No need to send a request to the server
       },
     }),
+    firstPasswordChange: builder.mutation({
+      query: ({ id, passwordState }) => ({
+        url: `/auth/first-password-change/${id}`,
+        method: 'PUT',
+        body: passwordState,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation } = authApiSlice;
+export const { useLoginMutation, useLogoutMutation, useFirstPasswordChangeMutation } = authApiSlice;

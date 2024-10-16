@@ -5,14 +5,13 @@ import {
     ListItemPrefix,
 } from "@material-tailwind/react";
 import {
-    UserCircleIcon,
     PowerIcon,
     HomeIcon,
     UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
-import { ClipboardPlus, MapPinned } from "lucide-react";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
+import { CarFront, CirclePlus } from "lucide-react";
 
 export default function ShopOwnerSidebar() {
 
@@ -57,46 +56,27 @@ export default function ShopOwnerSidebar() {
                 <Link >
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
-                            <UserGroupIcon className="h-5 w-5" />
+                            <CarFront className="h-5 w-5" />
                         </ListItemPrefix>
-                        All Employee
-                    </ListItem>
-                </Link>
-                <Link >
-                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
-                        <ListItemPrefix>
-                            <UserGroupIcon className="h-5 w-5" />
-                        </ListItemPrefix>
-                        View Visitors
+                        All Vehicle
                     </ListItem>
                 </Link>
 
-                <Link>
-                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
-                        <ListItemPrefix>
-                            <ClipboardPlus className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Report
-                    </ListItem>
-                </Link>
-
-                <Link>
-                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
-                        <ListItemPrefix>
-                            <MapPinned className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Track Employee
-                    </ListItem>
-                </Link>
 
                 <Link >
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
-                            <UserCircleIcon className="h-5 w-5" />
+                            <CirclePlus className="h-5 w-5" />
                         </ListItemPrefix>
-                        Profile
+                        Add Vehicle
                     </ListItem>
                 </Link>
+
+
+
+
+
+
 
                 <ListItem onClick={handleLogout} className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                     <ListItemPrefix>

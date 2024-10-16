@@ -6,7 +6,6 @@ import {
     Typography,
     Button,
     Spinner,
-    IconButton,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { useGetEmployeesQuery } from "../../../redux/slices/employeeApiSlice";
@@ -14,6 +13,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import DeleteEmployeeModal from "./modal/DeleteEmployeeModal";
 import ViewEmployeeDetailModal from "./modal/ViewEmployeeDetailModal";
 import EditEmployeeModal from "./modal/EditEmployeeModal";
+import toast from "react-hot-toast";
 
 const TABLE_HEAD = ["S.No", "Photo", "Name", "Email", "Mobile Number", "Edit", "Delete", "View"];
 
@@ -34,6 +34,11 @@ export default function ViewEmployee() {
     const handleNext = () => {
         const totalPages = Math.ceil((employeesData?.totalEmployee ?? 0) / limit);
         if (page < totalPages) setPage(page + 1);
+    };
+
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+        toast.success(`${text} copied!`);
     };
 
     return (
@@ -166,21 +171,21 @@ export default function ViewEmployee() {
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
+                                                <td className={classes} onClick={() => handleCopy(employeeEmail)}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font"
+                                                        className="font-normal app-font hover:text-green-700"
                                                     >
                                                         {employeeEmail}
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
+                                                <td className={classes} onClick={() => handleCopy(employeeMobileNumber)}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font"
+                                                        className="font-normal app-font hover:text-green-700"
                                                     >
                                                         {employeeMobileNumber}
                                                     </Typography>

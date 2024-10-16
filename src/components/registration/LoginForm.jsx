@@ -233,7 +233,7 @@ import NeedChangePassword from './NeedChangePassword';
 import { useNavigate } from 'react-router-dom';
 
 
-const LoginForm = ({ switchToSignup }) => {
+const LoginForm = ({ switchToSignup, switchToLogin }) => {
     const navigate = useNavigate();
     const [loginState, setLoginState] = useState({
         email: '',
@@ -317,7 +317,7 @@ const LoginForm = ({ switchToSignup }) => {
         <>
             {needPassword ?
                 <>
-                    <NeedChangePassword />
+                    <NeedChangePassword switchToLogin={switchToLogin} setNeedPassword={setNeedPassword}  needPassword={needPassword}/>
                 </>
                 :
 
