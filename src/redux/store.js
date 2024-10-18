@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import apiSlice from './slices/apiSlice';
+import locationSlice from './slices/location/locationSlice';
 
 const store = configureStore({
     reducer: {
+        location : locationSlice,
         [apiSlice.reducerPath]: apiSlice.reducer,  // Reducer for cityApi
         // [shopApi.reducerPath]: shopApi.reducer,  // Reducer for shopApi
     },

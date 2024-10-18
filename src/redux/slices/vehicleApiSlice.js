@@ -52,7 +52,14 @@ export const vehicleApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Vehicle'], // Will re-fetch the vehicles after update
         }),
+        getVehiclesNearby: builder.query({
+            query: ({ lat, lng, maxDistance }) => ({
+              url: 'vehicle/vehicles-nearby',
+              method: 'GET',
+              params: { lat, lng, maxDistance },  // Passing query parameters
+            }),
+          }),
     }),
 });
 
-export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation } = vehicleApi;
+export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery } = vehicleApi;
