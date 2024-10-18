@@ -11,9 +11,7 @@
     /* Ensure this is higher than the dialog */
 }
 
-input[type="checkbox"] {
-    display: none;
-}
+
 
 #file-upload {
     display: none;

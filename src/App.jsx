@@ -20,6 +20,9 @@ import UserDashboard from "./pages/dashboard/user/UserDashboard";
 import ShopOwnerDashboard from "./pages/dashboard/shopOwner/ShopOwnerDashboard";
 import ShopOwnerHomePage from "./pages/dashboard/shopOwner/pages/ShopOwnerHomePage";
 import ScrollTop from "./components/scrollTop/scrollTop";
+import ShopOwnerAddVehiclePage from "./pages/dashboard/shopOwner/pages/ShopOwnerAddVehiclePage";
+import ListShopMessage from "./pages/listShop/ListShopMessage";
+import ShopOwnerViewVehicle from "./pages/dashboard/shopOwner/pages/ShopOwnerViewVehicle";
 
 
 function App() {
@@ -33,6 +36,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/list-shop" element={<ListShopPage />} />
+          <Route path="/list-shop-message" element={<ListShopMessage />} />
           <Route path="/*" element={<NoPage />} />
 
 
@@ -119,6 +123,18 @@ function App() {
                 path="shop-owner-home-page"
                 element={<ShopOwnerHomePage />}
               />
+
+              <Route
+                index={true}
+                path="shop-owner-add-vehicle"
+                element={<ShopOwnerAddVehiclePage />}
+              />
+              <Route
+                index={true}
+                path="shop-owner-all-vehicle"
+                element={<ShopOwnerViewVehicle />}
+              />
+
             </Route>
 
 

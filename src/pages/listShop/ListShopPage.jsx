@@ -6,6 +6,7 @@ import { useAddShopMutation } from "../../redux/slices/shopApiSlice";
 import toast from "react-hot-toast";
 import Swal from 'sweetalert2'
 import { useGetCitiesQuery } from "../../redux/slices/cityApiSlice";
+import { useNavigate } from "react-router-dom";
 
 
 function ListShopPage() {
@@ -23,6 +24,8 @@ function ListShopPage() {
         legalDoc: ""
     });
 
+    const navigate = useNavigate();
+
     const fileInputRef = useRef(null); // Create a ref for the file input
     const fileInputRefLegalDoc = useRef(null); // Create a ref for the file input
 
@@ -30,7 +33,7 @@ function ListShopPage() {
     const { data: cities, error: citiesError, isLoading: isCitiesLoading } = useGetCitiesQuery();
 
     // Mutation for adding a shop
-    const [addShop, { isLoading: isAddingShop, error: addShopError }] = useAddShopMutation();
+    const [addShop, { isLoading: isAddingShop, error: addShopError, isSuccess, data }] = useAddShopMutation();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
@@ -194,7 +197,11 @@ function ListShopPage() {
         if (addShopError) {
             toast.error(addShopError?.data?.error || 'Something went wrong!');
         }
-    }, [addShopError]);
+
+        if(isSuccess){
+            navigate('/list-shop-message')
+        }
+    }, [addShopError, isSuccess]);
 
 
     return (
@@ -393,14 +400,16 @@ function ListShopPage() {
 
 
                         <div className="w-full">
+                            <div className=" border p-1 border-green-300 rounded-md">
                             <input
                                 ref={fileInputRefLegalDoc}
                                 type="file"
                                 name="legalDoc"
                                 accept="image/*"
                                 onChange={handleFileChange}
-                                className="w-full py-2 px-3 border border-gray-400 rounded-md"
+                                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer"
                             />
+                            </div>
 
                             {/* Conditionally render the image preview */}
                             {preview && (
@@ -468,7 +477,7 @@ function ListShopPage() {
                             <Button
                                 variant=""
                                 type="submit"
-                                className="bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-md w-full shadow-none hover:shadow-none flex justify-center"
+                                className="bg-green-500 hover:bg-green-600 text-white outline-none py-3 px-4 rounded-md w-full shadow-none hover:shadow-none flex justify-center"
                             >
                                 {isAddingShop ? <Spinner /> : "Register for a FREE account"}
                             </Button>

@@ -7,7 +7,6 @@ import {
 import {
     PowerIcon,
     HomeIcon,
-    UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
@@ -53,7 +52,7 @@ export default function ShopOwnerSidebar() {
 
                 </Link>
 
-                <Link >
+                <Link to={'shop-owner-all-vehicle'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <CarFront className="h-5 w-5" />
@@ -63,7 +62,7 @@ export default function ShopOwnerSidebar() {
                 </Link>
 
 
-                <Link >
+                <Link to={'shop-owner-add-vehicle'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <CirclePlus className="h-5 w-5" />
