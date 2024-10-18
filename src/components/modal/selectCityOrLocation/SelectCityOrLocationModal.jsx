@@ -1012,9 +1012,14 @@ export default function SelectCityOrLocationModal({ selectedCity, setSelectedCit
     };
 
     const errorCallback = (error) => {
-        console.error("Error detecting location: ", error);
-        toast.error("Unable to detect location. Please try again.");
+        if (error.code === error.PERMISSION_DENIED) {
+            toast.error("Please enable location services in your device settings.");
+        } else {
+            console.error("Error detecting location: ", error);
+            toast.error("Unable to detect location. Please try again.");
+        }
     };
+    
 
     const CityCard = ({ cityImage, _id, cityName }) => (
         <div className="relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer" onClick={() => handleCitySelect(cityName)}>
@@ -1042,7 +1047,15 @@ export default function SelectCityOrLocationModal({ selectedCity, setSelectedCit
                 {selectedCity ? <p>{selectedCity}</p> : <p>Select City</p>}
                 <AiOutlineEnvironment className="text-gray-500" size={20} />
             </div>
-            <Dialog open={open} handler={handleOpen} size="xl" className="lg:max-w-[90%] max-w-full outline-none">
+            <Dialog 
+             open={open} 
+             handler={handleOpen} 
+             size="xl" 
+             className="lg:max-w-[90%] max-w-full outline-none"
+             animate={{
+                 mount: { opacity: 1 },   // Disable default animation
+                 unmount: { opacity: 0 }, // Remove exit animation
+             }}>
                 <DialogHeader className="flex flex-wrap justify-between items-center bg-white px-6 py-4 rounded-xl">
                     <p className="text-lg font-semibold">Select City</p>
                     <Button variant="" onClick={handleOpen} className=" bg-gray-50 px-2 py-2 rounded-lg shadow-none hover:shadow-none border border-gray-200 lg:hidden sm:hidden md:hidden">
