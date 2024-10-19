@@ -1,20 +1,30 @@
 import { useSelector } from "react-redux";
 import { useGetVehiclesNearbyQuery } from "../../redux/slices/vehicleApiSlice";
 import { Button, Card } from "@material-tailwind/react";
+import { useContext } from "react";
+import myContext from "../../context/myContext";
 
 const AllVehicle = () => {
-    const { lat, lng } = useSelector((state) => state.location);
+    const { lat, setLat,
+        lng, setLng,
+        vehicleType, setVehicleType,
+        vehicleCity, setVehicleCity } = useContext(myContext);
 
 
     const { data: vehicles, error: vehiclesError, isLoading: isVehiclesLoading } = useGetVehiclesNearbyQuery({
         lat,
         lng,
-    }, { skip: !lat || !lng }); // Skip fetching if lat or lng is not available
+        vehicleCity,
+        vehicleType,
+    }); // Skip fetching if lat or lng is not available
+
+    
     return (
         <section className=" body-font">
+                              <pre>{JSON.stringify({vehicleCity},null,2)}</pre>
+                              <pre>{JSON.stringify({lat,lng},null,2)}</pre>
             <div className="container lg:px-5 py-10 mx-auto">
                 <div className="flex flex-wrap -m-4">
-                    {/* <pre>{JSON.stringify(vehicles,null,2)}</pre> */}
                     {vehicles?.vehicles?.map((item, index) => {
                         const { _id, location, vehicleType, vehicleNumber, vehicleName, vehicleModel, vehiclePrice, bookingPrice, sittingCapacity, vehicleImage, vehicleAvailability, shop, numOfReviews, reviews, createdAt } = item
                         return (

@@ -23,11 +23,12 @@ import ScrollTop from "./components/scrollTop/scrollTop";
 import ShopOwnerAddVehiclePage from "./pages/dashboard/shopOwner/pages/ShopOwnerAddVehiclePage";
 import ListShopMessage from "./pages/listShop/ListShopMessage";
 import ShopOwnerViewVehicle from "./pages/dashboard/shopOwner/pages/ShopOwnerViewVehicle";
+import MyState from "./context/myState";
 
 
 function App() {
   return (
-    <div className="App">
+    <MyState>
       <Router>
         <Toaster />
         <ScrollTop />
@@ -143,7 +144,7 @@ function App() {
 
         </Routes>
       </Router>
-    </div>
+    </MyState>
   )
 }
 

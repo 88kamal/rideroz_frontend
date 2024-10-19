@@ -1,9 +1,9 @@
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
-import { Button } from '@material-tailwind/react'
 import Lottie from "lottie-react";
 import shoplist from '../../../public/success.json'
 import LoginModal from '../../components/registration/LoginModal';
+
 const ListShopMessage = () => {
     const { width, height } = useWindowSize()
     return (

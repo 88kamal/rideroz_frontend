@@ -52,13 +52,31 @@ export const vehicleApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Vehicle'], // Will re-fetch the vehicles after update
         }),
+        // getVehiclesNearby: builder.query({
+        //     query: ({ lat, lng, maxDistance }) => ({
+        //       url: 'vehicle/vehicles-nearby',
+        //       method: 'GET',
+        //       params: { lat, lng, maxDistance },  // Passing query parameters
+        //     }),
+        //   }),
+
         getVehiclesNearby: builder.query({
-            query: ({ lat, lng, maxDistance }) => ({
-              url: 'vehicle/vehicles-nearby',
-              method: 'GET',
-              params: { lat, lng, maxDistance },  // Passing query parameters
-            }),
-          }),
+            query: ({ lat, lng, maxDistance = 300, vehicleCity, vehicleType }) => {
+                const params = new URLSearchParams();
+
+                // Add query parameters
+                if (lat && lng) {
+                    params.append('lat', lat);
+                    params.append('lng', lng);
+                    params.append('maxDistance', maxDistance);
+                }
+
+                if (vehicleCity) params.append('vehicleCity', vehicleCity);
+                if (vehicleType) params.append('vehicleType', vehicleType);
+
+                return `/vehicle/vehicles-nearby?${params.toString()}`;
+            },
+        }),
     }),
 });
 
