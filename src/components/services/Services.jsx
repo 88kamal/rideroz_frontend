@@ -10,7 +10,7 @@ const services = [
 
 const Services = () => {
     return (
-        <div className="flex flex-wrap justify-center gap-4 lg:gap-6 lg:py-4 px-4 lg:px-0">
+        <div className="flex flex-wrap justify-center gap-4 lg:gap-6 lg:py-8 px-4 lg:px-0">
             {services.map((service, index) => (
                 <Card
                     key={index}

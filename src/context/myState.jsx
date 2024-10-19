@@ -8,6 +8,7 @@ function MyState(props) {
     const [vehicleCity, setVehicleCity] = useState('');  // Optional city
     const [vehicleType, setVehicleType] = useState('');  // Optional type
     const [selectedCity, setSelectedCity] = useState('');
+    const [currentLocationName, setCurrentLocationName] = useState('');
 
   return (
     <MyContext.Provider value={{
@@ -15,7 +16,8 @@ function MyState(props) {
         lng, setLng,
         vehicleType, setVehicleType,
         vehicleCity, setVehicleCity,
-        selectedCity, setSelectedCity
+        selectedCity, setSelectedCity,
+        currentLocationName, setCurrentLocationName
     }}>
       {props.children}
     </MyContext.Provider>
