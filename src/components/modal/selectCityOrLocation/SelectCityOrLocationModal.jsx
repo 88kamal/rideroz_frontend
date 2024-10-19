@@ -2550,6 +2550,7 @@ import {
     Button,
     Dialog,
     DialogBody,
+    Spinner,
 } from "@material-tailwind/react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import { Locate } from "lucide-react";
@@ -2689,21 +2690,58 @@ export default function SelectCityOrLocationModal() {
         toast.error("Unable to detect location. Please try again.");
     };
 
+    // const CityCard = ({ cityImage, _id, cityName }) => (
+    //     <div
+    //         className="relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer"
+    //         onClick={() => {
+    //             setSelectedCity(cityName);
+    //             setVehicleCity(_id);
+
+    //             // Store selected city in localStorage
+    //             localStorage.setItem('selectedCity', cityName);
+    //             localStorage.setItem('vehicleCity', _id);
+
+    //             // Refetch vehicles when city is selected
+    //             refetch();  // Fetch vehicles when a city is selected
+
+    //             handleOpen();
+    //         }}
+    //     >
+    //         <img
+    //             src={cityImage?.url}
+    //             alt={cityName}
+    //             className="w-full h-full object-cover transition-transform duration-200 hover:scale-110"
+    //         />
+    //         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-1 transition-colors duration-300 hover:bg-green-600 hover:bg-opacity-80">
+    //             {cityName}
+    //         </div>
+    //     </div>
+    // );
+
     const CityCard = ({ cityImage, _id, cityName }) => (
         <div
             className="relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer"
             onClick={() => {
+                // Set selected city and vehicle city
                 setSelectedCity(cityName);
                 setVehicleCity(_id);
-
-                // Store selected city in localStorage
+    
+                // Remove current location from state
+                setLat(null);
+                setLng(null);
+                setCurrentLocationName("");
+    
+                // Update localStorage: store selected city, remove location data
                 localStorage.setItem('selectedCity', cityName);
                 localStorage.setItem('vehicleCity', _id);
-
-                // Refetch vehicles when city is selected
-                refetch();  // Fetch vehicles when a city is selected
-
-                handleOpen();
+                localStorage.removeItem('lat');
+                localStorage.removeItem('lng');
+                localStorage.removeItem('currentLocationName');
+    
+                // Refetch vehicles for the newly selected city
+                refetch();
+    
+                handleOpen();  // Close the dialog
             }}
         >
             <img
@@ -2716,6 +2754,7 @@ export default function SelectCityOrLocationModal() {
             </div>
         </div>
     );
+    
 
     return (
         <>
@@ -2740,7 +2779,7 @@ export default function SelectCityOrLocationModal() {
                 <DialogBody className="max-h-[78vh] overflow-y-auto">
                     <div className="flex flex-wrap gap-6 justify-center p-6 overflow-x-auto scrollbar-hide">
                         {isCitiesLoading ? (
-                            <p>Loading cities...</p>
+                           <Spinner color="green"/>
                         ) : (
                             cities?.map((city) => (
                                 <CityCard key={city.cityName} {...city} />
