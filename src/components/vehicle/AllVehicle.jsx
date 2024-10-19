@@ -23,8 +23,8 @@ const AllVehicle = () => {
 
     return (
         <section className=" body-font">
-            <pre>{JSON.stringify({ vehicleCity }, null, 2)}</pre>
-            <pre>{JSON.stringify({ lat, lng }, null, 2)}</pre>
+            {/* <pre>{JSON.stringify({ vehicleCity }, null, 2)}</pre>
+            <pre>{JSON.stringify({ lat, lng }, null, 2)}</pre> */}
             {/* <pre>{JSON.stringify(error,null,2)}</pre> */}
             <div className="container lg:px-5 py-10 mx-auto">
                 <div className="flex flex-wrap -m-4 justify-center">
