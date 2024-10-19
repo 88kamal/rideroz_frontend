@@ -77,7 +77,16 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 return `/vehicle/vehicles-nearby?${params.toString()}`;
             },
         }),
+        getVehicleById: builder.query({
+            query: (id) => `/vehicle/get-vehicle/${id}`,
+            transformResponse: (data) => data?.vehicle || [],
+            providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
+            keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
+            refetchOnFocus: true, // Refetch data when the window is focused
+            refetchOnReconnect: true, // Refetch when the connection is re-established
+            refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
+        }),
     }),
 });
 
-export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery } = vehicleApi;
+export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery } = vehicleApi;

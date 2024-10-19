@@ -24,6 +24,7 @@ import ShopOwnerAddVehiclePage from "./pages/dashboard/shopOwner/pages/ShopOwner
 import ListShopMessage from "./pages/listShop/ListShopMessage";
 import ShopOwnerViewVehicle from "./pages/dashboard/shopOwner/pages/ShopOwnerViewVehicle";
 import MyState from "./context/myState";
+import VehicleInfoPage from "./pages/vehicleInfo/VehicleInfoPage";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/list-shop" element={<ListShopPage />} />
           <Route path="/list-shop-message" element={<ListShopMessage />} />
+          <Route path="/vehicle-info/:city/:id" element={<VehicleInfoPage />} />
           <Route path="/*" element={<NoPage />} />
 
 

@@ -3,12 +3,14 @@ import { useGetVehiclesNearbyQuery } from "../../redux/slices/vehicleApiSlice";
 import { Button, Card, Spinner } from "@material-tailwind/react";
 import { useContext } from "react";
 import myContext from "../../context/myContext";
+import { useNavigate } from "react-router-dom";
 
 const AllVehicle = () => {
+    const navigate = useNavigate();
     const { lat, setLat,
         lng, setLng,
         vehicleType, setVehicleType,
-        vehicleCity, setVehicleCity } = useContext(myContext);
+        vehicleCity, setVehicleCity, selectedCity, setSelectedCity } = useContext(myContext);
 
 
     const { data: vehicles, error, isLoading } = useGetVehiclesNearbyQuery({
@@ -45,8 +47,11 @@ const AllVehicle = () => {
                                 const { _id, location, vehicleType, vehicleNumber, vehicleName, vehicleModel, vehiclePrice, bookingPrice, sittingCapacity, vehicleImage, vehicleAvailability, shop, numOfReviews, reviews, createdAt } = item
                                 return (
                                     <div key={index} className="p-4 w-full md:w-1/4">
+                                        {/* <pre>{JSON.stringify(selectedCity, null, 2)}</pre> */}
                                         <Card className="h-full drop-shadow overflow-hidden">
-                                            <div className="flex justify-center">
+                                            <div className="flex justify-center cursor-pointer" onClick={() => {
+                                                navigate(`/vehicle-info/${selectedCity}/${_id}`)
+                                            }}>
                                                 <img
                                                     className="w-[280px] h-[200px] rounded-xl"
                                                     src={vehicleImage[0]?.url}

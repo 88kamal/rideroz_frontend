@@ -14,7 +14,6 @@ export default function Vehicle() {
 
     const { vehicleType, setVehicleType} = useContext(myContext);
 
-
     const vihicleData = [
         {
             label: "All",

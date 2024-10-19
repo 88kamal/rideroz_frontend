@@ -1628,12 +1628,12 @@ import { useGetCitiesQuery } from "../../../redux/slices/cityApiSlice";
 import { useGetVehiclesNearbyQuery } from "../../../redux/slices/vehicleApiSlice";
 import myContext from "../../../context/myContext";
 
-export default function SelectCityOrLocationModal({ selectedCity, setSelectedCity }) {
+export default function SelectCityOrLocationModal() {
     const [open, setOpen] = useState(false);
     
     const handleOpen = () => setOpen(!open);
 
-    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity } = useContext(myContext);
+    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity } = useContext(myContext);
 
     useEffect(() => {
         // Retrieve stored values from localStorage on mount

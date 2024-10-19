@@ -7,14 +7,15 @@ function MyState(props) {
     const [lng, setLng] = useState(null);  // Replace with actual longitude
     const [vehicleCity, setVehicleCity] = useState('');  // Optional city
     const [vehicleType, setVehicleType] = useState('');  // Optional type
-
+    const [selectedCity, setSelectedCity] = useState('');
 
   return (
     <MyContext.Provider value={{
         lat, setLat,
         lng, setLng,
         vehicleType, setVehicleType,
-        vehicleCity, setVehicleCity
+        vehicleCity, setVehicleCity,
+        selectedCity, setSelectedCity
     }}>
       {props.children}
     </MyContext.Provider>

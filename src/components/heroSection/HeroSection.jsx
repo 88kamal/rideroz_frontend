@@ -152,7 +152,6 @@ import { useState } from 'react'
 import SelectCityOrLocationModal from '../modal/selectCityOrLocation/SelectCityOrLocationModal'
 
 const HeroSection = () => {
-  const [selectedCity, setSelectedCity] = useState('');
   return (
     <div>
       <section className="text-gray-600 body-font">
@@ -180,9 +179,7 @@ const HeroSection = () => {
                   className=' border-green-300 border bg-white py-2 px-2 outline-none rounded-l-md' />
                 <button className=' py-2 bg-green-400 text-white rounded-none px-5 lg:px-8 border border-green-600 rounded-r-md mx-1'>Serach Vehicle</button>
               </div> */}
-              <SelectCityOrLocationModal
-              selectedCity={selectedCity}
-              setSelectedCity={setSelectedCity}/>
+              <SelectCityOrLocationModal/>
             </div>
           </div>
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 order-first">
