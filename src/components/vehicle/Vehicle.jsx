@@ -1,25 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
     Tabs,
     TabsHeader,
     TabsBody,
     Tab,
     TabPanel,
-    Button,
-    Card,
 } from "@material-tailwind/react";
 import AllVehicle from "./AllVehicle";
-import Scooty from "./Scooty";
-import Bike from "./Bike";
-import Car from "./Car";
+import myContext from "../../context/myContext";
 
 export default function Vehicle() {
-    const [activeTab, setActiveTab] = React.useState("all");
+    const [activeTab, setActiveTab] = React.useState("");
+
+    const { vehicleType, setVehicleType} = useContext(myContext);
+
 
     const vihicleData = [
         {
             label: "All",
-            value: "all",
+            value: "",
         },
         {
             label: "Scooty",
@@ -52,7 +51,10 @@ export default function Vehicle() {
                         <Tab
                             key={value}
                             value={value}
-                            onClick={() => setActiveTab(value)}
+                            onClick={() => {
+                                setActiveTab(value)
+                                setVehicleType(value)
+                            }}
                             className={activeTab === value ? "text-gray-900" : ""}
                         >
                             {label}
@@ -66,25 +68,12 @@ export default function Vehicle() {
                     {vihicleData?.map(({ value, data, index }) => (
                         <div className="" key={value}>
                             <TabPanel key={value} value={value}>
-                                {value === 'all' ? (
-                                    <AllVehicle value={value} />
-                                ) : value === 'scooty' ? (
-                                    <Scooty value={value} />
-                                ) : value === 'bike' ? (
-                                    <Bike value={value} />
-                                ) : value === 'car' ? (
-                                    <Car value={value} />
-                                ) : (
-                                    ""
-                                )}
+                                <AllVehicle vehicleType={vehicleType}/>
                             </TabPanel>
 
 
                         </div>
                     ))}
-                    {/* <div className=" flex justify-center">
-                                <Button variant="" className=" shadow-none hover:shadow-none bg-[#82BE23]">Show more</Button>
-                            </div> */}
                 </TabsBody>
             </Tabs>
         </div>

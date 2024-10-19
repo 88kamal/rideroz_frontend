@@ -77,11 +77,11 @@ const AllVehicle = () => {
 
 
                     }
-
-
-
                 </div>
 
+            </div>
+            <div className=" flex justify-center">
+                <Button variant="" className=" shadow-none hover:shadow-none bg-[#82BE23]">Show more</Button>
             </div>
         </section>
     )

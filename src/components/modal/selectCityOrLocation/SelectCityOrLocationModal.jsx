@@ -1613,6 +1613,7 @@
 //     );
 // }
 
+
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -1629,38 +1630,23 @@ import myContext from "../../../context/myContext";
 
 export default function SelectCityOrLocationModal({ selectedCity, setSelectedCity }) {
     const [open, setOpen] = useState(false);
-    const [locationPermission, setLocationPermission] = useState(null); // Track permission state
-
+    
     const handleOpen = () => setOpen(!open);
 
     const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity } = useContext(myContext);
 
     useEffect(() => {
-        // Check geolocation permissions
-        navigator.permissions.query({ name: 'geolocation' }).then(permission => {
-            setLocationPermission(permission.state); // Track permission state
-            if (permission.state === 'denied') {
-                // Open modal if geolocation is denied
-                setOpen(true);
-            }
-        });
-
-        // Listen for permission changes
-        navigator.permissions.query({ name: 'geolocation' }).then((permission) => {
-            permission.onchange = () => {
-                setLocationPermission(permission.state); // Update when permission changes
-                if (permission.state === 'denied') {
-                    setOpen(true); // Open the modal if denied
-                }
-            };
-        });
-
         // Retrieve stored values from localStorage on mount
         const storedLat = localStorage.getItem('lat');
         const storedLng = localStorage.getItem('lng');
         const storedCity = localStorage.getItem('selectedCity');
         const storedVehicleCity = localStorage.getItem('vehicleCity');
         
+        // If lat, lng, or city is not stored, open the modal
+        if (!storedLat || !storedLng || !storedCity) {
+            setOpen(true);
+        }
+
         if (storedLat && storedLng) {
             setLat(parseFloat(storedLat));
             setLng(parseFloat(storedLng));
@@ -1673,6 +1659,14 @@ export default function SelectCityOrLocationModal({ selectedCity, setSelectedCit
         if (storedVehicleCity) {
             setVehicleCity(storedVehicleCity);
         }
+
+        // Check geolocation permissions
+        navigator.permissions.query({ name: 'geolocation' }).then(permission => {
+            if (permission.state === 'denied') {
+                // Open modal if geolocation is denied
+                setOpen(true);
+            }
+        });
     }, [setLat, setLng, setSelectedCity, setVehicleCity]);
 
     const { data, error, isLoading } = useGetVehiclesNearbyQuery({
@@ -1734,6 +1728,7 @@ export default function SelectCityOrLocationModal({ selectedCity, setSelectedCit
             toast.error("Unable to detect location. Please try again.");
         }
     };
+
 
     const handleCitySelect = (cityName, _id) => {
         setSelectedCity(cityName);
