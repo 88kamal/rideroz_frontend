@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // // // /* eslint-disable no-unused-vars */
 // // // // // // // // // /* eslint-disable react/prop-types */
 // // // // // // // // // import { useState } from "react";
@@ -1011,14 +1012,14 @@
 // // //         }
 // // //     };
 
-// // //     const errorCallback = (error) => {
-// // //         if (error.code === error.PERMISSION_DENIED) {
-// // //             toast.error("Please enable location services in your device settings.");
-// // //         } else {
-// // //             console.error("Error detecting location: ", error);
-// // //             toast.error("Unable to detect location. Please try again.");
-// // //         }
-// // //     };
+    // const errorCallback = (error) => {
+    //     if (error.code === error.PERMISSION_DENIED) {
+    //         toast.error("Please enable location services in your device settings.");
+    //     } else {
+    //         console.error("Error detecting location: ", error);
+    //         toast.error("Unable to detect location. Please try again.");
+    //     }
+    // };
 
 
 // // // const CityCard = ({ cityImage, _id, cityName }) => (
@@ -1535,9 +1536,14 @@ export default function SelectCityOrLocationModal({ selectedCity, setSelectedCit
     };
 
     const errorCallback = (error) => {
-        console.error("Error detecting location: ", error);
-        toast.error("Unable to detect location. Please try again.");
+        if (error.code === error.PERMISSION_DENIED) {
+            toast.error("Please enable location services in your device settings.");
+        } else {
+            console.error("Error detecting location: ", error);
+            toast.error("Unable to detect location. Please try again.");
+        }
     };
+
 
     const handleCitySelect = (cityName, _id) => {
         setSelectedCity(cityName);
@@ -1569,9 +1575,9 @@ export default function SelectCityOrLocationModal({ selectedCity, setSelectedCit
                     readOnly
                     type="text"
                     placeholder={selectedCity ? selectedCity : "Select City"}
-                    className='border-green-300 border bg-white py-2 px-2 outline-none rounded-l-md'
+                    className='border-green-300 border bg-white w-52 py-2 px-2 outline-none rounded-l-md'
                 />
-                <button className='py-2 bg-green-400 text-white rounded-none px-5 lg:px-8 border border-green-600 rounded-r-md mx-1'>
+                <button className='py-2 bg-green-400 text-white rounded-none px-2 lg:px-8 border border-green-600 rounded-r-md mx-1'>
                     Search Vehicle
                 </button>
             </div>

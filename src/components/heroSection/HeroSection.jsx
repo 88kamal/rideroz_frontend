@@ -165,7 +165,7 @@ const HeroSection = () => {
             <p className="mb-8 leading-relaxed">
               Rideroz brings you the most reliable, hassle-free, and affordable mobility solutions across India.
             </p>
-            <div className="flex justify-center">
+            <div className="">
               {/* <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
                 Button
               </button>
