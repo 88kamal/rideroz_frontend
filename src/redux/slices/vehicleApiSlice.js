@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import apiSlice from "./apiSlice";
 
 export const vehicleApi = apiSlice.injectEndpoints({
@@ -95,7 +96,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
             refetchOnReconnect: true,
             refetchOnMountOrArgChange: true,
         }),
-        
+
         // addReview: builder.mutation({
         //     query: ({ vehicleId, rating, comment }) => ({
         //         url: `/vehicle/add-review/${vehicleId}`,
@@ -143,11 +144,33 @@ export const vehicleApi = apiSlice.injectEndpoints({
             refetchOnReconnect: true,
             // Automatically refetch data when the component is mounted or the argument changes
             refetchOnMountOrArgChange: true,
-          }),
-          
-        
+        }),
+        deleteReview: builder.mutation({
+            query: ({ vehicleId, reviewId }) => ({
+                url: `/vehicle/delete-review/${vehicleId}/${reviewId}`,
+                method: 'DELETE',
+                credentials: 'include', // Include this if you have authentication tokens
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                    'Content-Type': 'application/json',
+                },
+            }),
+            // Optional: Handle how to update the cache automatically after a successful delete operation
+            onQueryStarted: async ({ vehicleId, reviewId }, { dispatch, queryFulfilled }) => {
+                try {
+                    const { data } = await queryFulfilled;
+                    // If deletion succeeds, you can invalidate the cache or update the state accordingly
+                    dispatch(vehicleApi.util.invalidateTags([{ type: 'Vehicle', id: vehicleId }]));
+                    toast.success(data?.message);
+                } catch (error) {
+                    console.error('Error while deleting review:', error);
+                }
+            },
+        }),
+
+
 
     }),
 });
 
-export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery } = vehicleApi;
+export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery, useDeleteReviewMutation } = vehicleApi;

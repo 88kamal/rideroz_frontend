@@ -264,7 +264,12 @@ function ProductInfo() {
 
                     {/* Reviews and Ratings */}
                     <div className="">
-                        <VehicleReview vehicleId={id} vehicle={vehicle}/>
+                        <VehicleReview 
+                        vehicleId={id} 
+                        vehicle={vehicle}
+                        error={error} 
+                        isLoading={isLoading}
+                        />
                     </div>
 
                 </div>
