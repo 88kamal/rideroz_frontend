@@ -13,6 +13,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           // Store token in localStorage after successful login
           localStorage.setItem('token', JSON.stringify(data.token));
+          dispatch(apiSlice.util.resetApiState());
         } catch (error) {
           console.error("Login error:", error);
         }

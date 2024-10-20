@@ -1,79 +1,116 @@
-import React, { useContext } from "react";
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
 import {
     Button,
     Dialog,
     DialogBody,
     Rating,
+    Textarea,
 } from "@material-tailwind/react";
-import myContext from "../../context/myContext";
+import { useAddReviewMutation } from "../../redux/slices/vehicleApiSlice";
+import toast from "react-hot-toast";
+import authService from "../../services/authService";
+import { X } from "lucide-react";
 
-export function ReviewModal() {
-    const [open, setOpen] = React.useState(false);
+export function ReviewModal({ image, vehicleId, refetch }) {
+    const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(!open);
 
-    const context = useContext(myContext);
-    const { mode } = context;
+    const user = authService.getCurrentUser();
+
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+    const [addReview, { isLoading, isError, error, data, isSuccess }] = useAddReviewMutation();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await addReview({ vehicleId, rating, comment }).unwrap();
+        } catch (error) {
+            console.error('Failed to add review:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(error?.data?.error || 'Failed to add review, please try again');
+            handleOpen();
+        }
+
+        if (isSuccess) {
+            toast.success(data?.message);
+            handleOpen();
+            refetch();
+            // setRating("")
+            setComment("")
+        }
+    }, [isError, error, isSuccess, data]);
 
     return (
         <>
-            <Button
-                onClick={() => handleOpen("lg")}
-                className={`flex items-center fontPara justify-center rounded-md py-2.5  lg:px-5 lg:py-2 text-center text-[0.8em] lg:text-sm font-medium w-80 lg:w-full hover:shadow-none shadow-none  gap-3 bg-transparent border text-black border-green-100 `}
-            >
-                Write a Review
-            </Button>
-            <Dialog open={open} handler={handleOpen} style={{
-                    backgroundColor: mode === 'dark' ? '#182031' : 'white'
-                }}>
+            {user ? (
+                <Button
+                    onClick={() => handleOpen("lg")}
+                    className={`flex items-center fontPara justify-center rounded-md py-2.5 lg:px-5 lg:py-2 text-center text-[0.8em] lg:text-sm font-medium lg:w-full hover:shadow-none shadow-none gap-3 bg-transparent border text-black border-green-100 w-full`}
+                >
+                    Write a Review
+                </Button>
+            ) : (
+                <Button
+                    disabled
+                    className={`flex items-center fontPara justify-center rounded-md py-2.5 lg:px-5 lg:py-2 text-center text-[0.8em] lg:text-sm font-medium lg:w-full hover:shadow-none shadow-none gap-3 bg-gray-400 border border-green-100 w-full`}
+                >
+                    Login to Write a Review
+                </Button>
+            )}
+
+            <Dialog open={open} handler={handleOpen}>
                 <DialogBody>
                     <div className="">
-                        <h1 className={`font-bold text-xl mb-2 `}>Write A Review</h1>
+                        <h1 className="text-xl text-black font-bold">Employee Detail</h1>
+                        <div className="absolute top-2 right-2 py-1.5 px-1.5 bg-gray-200 cursor-pointer rounded-full" onClick={handleOpen}>
+                            <X size={20} className="text-gray-800 hover:text-green-900" />
+                        </div>
                     </div>
 
                     <div className="">
                         <div className="flex justify-center">
-                            <img className=" w-64 lg:w-72" src="https://res.cloudinary.com/dolajkbv5/image/upload/v1729315222/wsbcp4bihosgeo9mtfnr.png" alt="" />
+                            <img className="w-64 lg:w-72" src={image} alt="" />
                         </div>
                     </div>
 
-
-
                     <div className="mb-2">
-                        <h2 className={`fontPara mb-2 `}>Overall Rating <span className="text-red-600">*</span></h2>
-                        <Rating value={4} />
-                    </div>
-
-
-                    <div className="mb-2">
-                        <h2 className={`fontPara mb-2 `}>Your Name <span className="text-red-600">*</span></h2>
-                        <input type="text"
-                            placeholder="Name"
-                            className={`py-2 outline-none border w-full
-                             px-2 rounded
-                             mb-2`}
-                        />
+                        <h2 className=" app-font mb-2 text-black">
+                            Overall Rating <span className="text-red-600">*</span>
+                        </h2>
+                        <Rating value={rating} onChange={setRating} color="green" />
                     </div>
 
                     <div className="mb-2">
-                        <h2 className={`fontPara mb-2 `}>Description <span className="text-red-600">*</span></h2>
-                        <textarea type="text"
-                            placeholder="Description..."
-                            className={`py-2 outline-none border w-full
-                             px-2 rounded
-                             mb-2`}
+                        <h2 className=" app-font mb-2 text-black">
+                            Description <span className="text-red-600">*</span>
+                        </h2>
+
+                        <Textarea
+                            label="Write review"
+                            className="py-2 outline-none border w-full px-2 rounded mb-2 text-black"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            color="green"
                         />
                     </div>
 
                     <div className="">
                         <Button
-                            className="flex items-center justify-center rounded-md bg-slate-900 py-2.5  lg:px-5 lg:py-2 text-center text-[0.9em] lg:text-sm font-medium text-white primaryBgColor fontPara w-full hover:shadow-none shadow-none  "
+                            variant=""
+                            onClick={handleSubmit}
+                            className="flex items-center justify-center rounded-md bg-slate-900 py-2.5 lg:px-5 lg:py-2 text-center text-[0.9em] lg:text-sm font-medium bg-green-500 text-white primaryBgColor fontPara w-full hover:shadow-none shadow-none"
                         >
                             Submit Review
                         </Button>
                     </div>
                 </DialogBody>
-
             </Dialog>
         </>
     );

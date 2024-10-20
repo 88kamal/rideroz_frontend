@@ -408,6 +408,10 @@ const AddVehicleForm = () => {
         });
 
         await addVehicle(vehicleData);
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = null; // This clears the file input field
+        }
     };
 
     // Toggle dropdown open/close
@@ -444,8 +448,8 @@ const AddVehicleForm = () => {
                 vehicleImage: null,
                 vehicleAvailability: true,
             })
-             // Reset the file input manually
-             if (fileInputRef.current) {
+            // Reset the file input manually
+            if (fileInputRef.current) {
                 fileInputRef.current.value = null; // This clears the file input field
             }
         }

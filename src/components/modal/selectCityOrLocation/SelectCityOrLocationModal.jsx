@@ -2720,34 +2720,33 @@ export default function SelectCityOrLocationModal() {
 
     const CityCard = ({ cityImage, _id, cityName }) => (
         <div
-            className="relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer"
-            onClick={() => {
-                // Set selected city and vehicle city
-                setSelectedCity(cityName);
-                setVehicleCity(_id);
-    
-                // Remove current location from state
-                setLat(null);
-                setLng(null);
-                setCurrentLocationName("");
-    
-                // Update localStorage: store selected city, remove location data
-                localStorage.setItem('selectedCity', cityName);
-                localStorage.setItem('vehicleCity', _id);
-                localStorage.removeItem('lat');
-                localStorage.removeItem('lng');
-                localStorage.removeItem('currentLocationName');
-    
-                // Refetch vehicles for the newly selected city
-                refetch();
-    
-                handleOpen();  // Close the dialog
-            }}
-        >
+            className="relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer">
             <img
                 src={cityImage?.url}
                 alt={cityName}
                 className="w-full h-full object-cover transition-transform duration-200 hover:scale-110"
+                onClick={() => {
+                    // Set selected city and vehicle city
+                    setSelectedCity(cityName);
+                    setVehicleCity(_id);
+        
+                    // Remove current location from state
+                    setLat(null);
+                    setLng(null);
+                    setCurrentLocationName("");
+        
+                    // Update localStorage: store selected city, remove location data
+                    localStorage.setItem('selectedCity', cityName);
+                    localStorage.setItem('vehicleCity', _id);
+                    localStorage.removeItem('lat');
+                    localStorage.removeItem('lng');
+                    localStorage.removeItem('currentLocationName');
+        
+                    // Refetch vehicles for the newly selected city
+                    refetch();
+        
+                    handleOpen();  // Close the dialog
+                }}
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-1 transition-colors duration-300 hover:bg-green-600 hover:bg-opacity-80">
                 {cityName}

@@ -20,6 +20,9 @@ export const userApi = apiSlice.injectEndpoints({
             query: ({ search = '', page = 1, limit = 10 }) => ({
                 url: '/user/get-users',
                 params: { search, page, limit },
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                  },
             }),
             providesTags: (result) =>
                 result
@@ -37,6 +40,9 @@ export const userApi = apiSlice.injectEndpoints({
                 url: `/user/edit-user/${id}`,
                 method: 'PUT',
                 body: updatedData,
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                  },
             }),
             invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
             onQueryStarted: async ({ id, updatedData }, { dispatch, queryFulfilled }) => {
@@ -63,6 +69,9 @@ export const userApi = apiSlice.injectEndpoints({
             query: (id) => ({
               url: `/user/delete-user/${id}`,
               method: 'DELETE',
+              headers: {
+                "auth-token": JSON.parse(localStorage.getItem("token")),
+              },
             }),
             invalidatesTags: (result, error, id) => [{ type: 'User', id }],
             

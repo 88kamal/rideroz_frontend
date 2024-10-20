@@ -12,7 +12,7 @@ export const roleApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: roleData,
         headers: {
-          'Content-Type': 'application/json',
+          "auth-token": JSON.parse(localStorage.getItem("token")),
         },
       }),
       invalidatesTags: ['Role'], // Invalidate role cache to refetch updated roles
@@ -27,6 +27,9 @@ export const roleApi = apiSlice.injectEndpoints({
       query: () => ({
         url: 'role/get-role',
         method: 'GET',
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       transformResponse: (data) => {
         return data?.roles || [];
@@ -45,6 +48,9 @@ export const roleApi = apiSlice.injectEndpoints({
         url: `role/edit-role/${id}`,
         method: 'PUT',
         body: updatedData,
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       // Invalidate the cache to refetch roles after the update
       invalidatesTags: ['Role'],
@@ -73,6 +79,9 @@ export const roleApi = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `role/delete-role?id=${id}`,
         method: 'DELETE',
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       // Invalidate the cache to refetch roles after deletion
       invalidatesTags: ['Role'],

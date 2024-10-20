@@ -23,6 +23,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 }
             },
         }),
+
         getVehicles: builder.query({
             query: ({ search = '', vehicleAvailability, vehicalType, shop }) => {
                 const params = new URLSearchParams();
@@ -31,14 +32,20 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 if (vehicalType) params.append('vehicalType', vehicalType);
                 if (shop) params.append('shop', shop);
 
-                return `/vehicle/get-vehicles?${params.toString()}`;
+                return {
+                    url: `/vehicle/get-vehicles?${params.toString()}`,
+                    headers: {
+                        "auth-token": JSON.parse(localStorage.getItem("token")),
+                    },
+                };
             },
-            providesTags: ['Vehicle'], // Marks the data as cached under the Vehicle tag
+            providesTags: ['Vehicle'], // Marks the data as cached under the 'Vehicle' tag
             keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
             refetchOnFocus: true, // Refetch data when the window is focused
             refetchOnReconnect: true, // Refetch when the connection is re-established
             refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
         }),
+
 
         updateVehicleAvailability: builder.mutation({
             query: ({ id, vehicleAvailability }) => ({
@@ -52,13 +59,6 @@ export const vehicleApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Vehicle'], // Will re-fetch the vehicles after update
         }),
-        // getVehiclesNearby: builder.query({
-        //     query: ({ lat, lng, maxDistance }) => ({
-        //       url: 'vehicle/vehicles-nearby',
-        //       method: 'GET',
-        //       params: { lat, lng, maxDistance },  // Passing query parameters
-        //     }),
-        //   }),
 
         getVehiclesNearby: builder.query({
             query: ({ lat, lng, maxDistance = 300, vehicleCity, vehicleType }) => {
@@ -77,16 +77,77 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 return `/vehicle/vehicles-nearby?${params.toString()}`;
             },
         }),
+        // getVehicleById: builder.query({
+        //     query: (id) => `/vehicle/get-vehicle/${id}`,
+        //     transformResponse: (data) => data?.vehicle || [],
+        //     providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
+        //     keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
+        //     refetchOnFocus: true, // Refetch data when the window is focused
+        //     refetchOnReconnect: true, // Refetch when the connection is re-established
+        //     refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
+        // }),
         getVehicleById: builder.query({
             query: (id) => `/vehicle/get-vehicle/${id}`,
             transformResponse: (data) => data?.vehicle || [],
-            providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
-            keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
-            refetchOnFocus: true, // Refetch data when the window is focused
-            refetchOnReconnect: true, // Refetch when the connection is re-established
-            refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
+            providesTags: (result, error, id) => [{ type: 'Vehicle', id }], // Use specific vehicle ID in cache
+            keepUnusedDataFor: 60,
+            refetchOnFocus: true,
+            refetchOnReconnect: true,
+            refetchOnMountOrArgChange: true,
         }),
+        
+        // addReview: builder.mutation({
+        //     query: ({ vehicleId, rating, comment }) => ({
+        //         url: `/vehicle/add-review/${vehicleId}`,
+        //         method: 'POST',
+        //         body: { rating, comment },
+        //         credentials: 'include', // If you need to include cookies
+        //         headers: {
+        //             "auth-token": JSON.parse(localStorage.getItem("token")),
+        //             'Content-Type': 'application/json',
+        //         },
+        //     }),
+        //     invalidatesTags: ['Vehicle'], // This will trigger refetching of any queries providing the 'Vehicle' tag
+        //     keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
+        //     refetchOnFocus: true, // Refetch data when the window is focused
+        //     refetchOnReconnect: true, // Refetch when the connection is re-established
+        //     refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
+        // }),
+        addReview: builder.mutation({
+            query: ({ vehicleId, rating, comment }) => ({
+                url: `/vehicle/add-review/${vehicleId}`,
+                method: 'POST',
+                body: { rating, comment },
+                credentials: 'include', // Include cookies if needed
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                    'Content-Type': 'application/json',
+                },
+            }),
+            invalidatesTags: (result, error, { vehicleId }) => [{ type: 'Vehicle', id: vehicleId }], // Invalidate only the specific vehicle's cache
+            keepUnusedDataFor: 60, // Keep data in cache for 60 seconds
+            refetchOnFocus: true,
+            refetchOnReconnect: true,
+            refetchOnMountOrArgChange: true,
+        }),
+
+        getVehicleRating: builder.query({
+            query: (vehicleId) => `/vehicle/vehicle-rating/${vehicleId}`, // Define the endpoint
+            // Invalidate cache for the specific vehicle's rating when needed
+            invalidatesTags: (result, error, { vehicleId }) => [{ type: 'Vehicle', id: vehicleId }],
+            // Keep data in cache for 60 seconds
+            keepUnusedDataFor: 60,
+            // Automatically refetch data on focus
+            refetchOnFocus: true,
+            // Automatically refetch data when reconnecting to the network
+            refetchOnReconnect: true,
+            // Automatically refetch data when the component is mounted or the argument changes
+            refetchOnMountOrArgChange: true,
+          }),
+          
+        
+
     }),
 });
 
-export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery } = vehicleApi;
+export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery } = vehicleApi;

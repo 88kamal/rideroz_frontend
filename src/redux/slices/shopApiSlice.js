@@ -42,6 +42,9 @@ export const shopApi = apiSlice.injectEndpoints({
                 url: `/shop/get-shops`,
                 method: 'GET',
                 params: { search, page, limit, city },  // Query parameters for search, pagination, and city filter
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                  },
             }),
             transformResponse: (response) => ({
                 shops: response.shops, // Array of shops
@@ -66,6 +69,9 @@ export const shopApi = apiSlice.injectEndpoints({
                     method: 'PUT',
                     body: updatedData,
                     formData: true,
+                    headers: {
+                        "auth-token": JSON.parse(localStorage.getItem("token")),
+                      },
                 };
             },
             onQueryStarted: async ({ id, updatedData }, { dispatch, queryFulfilled }) => {
@@ -99,6 +105,9 @@ export const shopApi = apiSlice.injectEndpoints({
             query: (id) => ({
                 url: `/shop/delete-shop/${id}`,
                 method: 'DELETE',
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                  },
             }),
             onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
                 // Optimistic cache update: remove the shop from the cache before the mutation completes

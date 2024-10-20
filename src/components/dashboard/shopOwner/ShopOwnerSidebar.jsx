@@ -11,12 +11,19 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
 import { CarFront, CirclePlus } from "lucide-react";
+import { useDispatch } from "react-redux";
+import apiSlice from "../../../redux/slices/apiSlice";
 
 export default function ShopOwnerSidebar() {
 
+    const dispatch = useDispatch();
     const [logout] = useLogoutMutation();
 
     const navigate = useNavigate();
+
+
+    // Reset the RTK query cache
+    dispatch(apiSlice.util.resetApiState());
 
     const handleLogout = async () => {
         await logout(); // Call the logout mutation to remove token

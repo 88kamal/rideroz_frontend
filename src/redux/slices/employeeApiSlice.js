@@ -11,6 +11,9 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
         url: '/employee/add-employee',
         method: 'POST',
         body: employeeData,
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       invalidatesTags: [{ type: 'Employee', id: 'LIST' }], // Invalidate employee list to refetch
 
@@ -43,6 +46,9 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       query: ({ search = "", page = 1, limit = 10, department, role }) => ({
         url: `/employee/get-employees`,
         params: { search, page, limit, department, role },
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       providesTags: (result) =>
         result
@@ -63,6 +69,9 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
         url: `/employee/edit-employee/${id}`,
         method: 'PUT',
         body: employeeData, // Send the updated employee data
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       invalidatesTags: [{ type: 'Employee', id: 'LIST' }], // Invalidate employee list to refetch
 
@@ -98,6 +107,9 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `/employee/delete-employee/${id}`,
         method: 'DELETE',
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       invalidatesTags: [{ type: 'Employee', id: 'LIST' }], // Invalidate employee list to refetch
 

@@ -6,8 +6,22 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
   tagTypes: ['Department'], // Define the tags for cache invalidation
   endpoints: (builder) => ({
     // Get departments query
+    // getDepartments: builder.query({
+    //   query: () => '/department/get-departments', // API endpoint
+    //   transformResponse: (data) => data.departments,
+    //   providesTags: ['Department'], // Tags for cache invalidation
+    //   keepUnusedDataFor: 300, // Cache data for 5 minutes (300 seconds)
+    //   refetchOnMountOrArgChange: true, // Automatically refetch when the component remounts
+    //   refetchOnReconnect: true, // Automatically refetch when the browser regains connection
+    //   refetchOnFocus: true, // Automatically refetch when the window/tab regains focus
+    // }),
     getDepartments: builder.query({
-      query: () => '/department/get-departments', // API endpoint
+      query: () => ({
+        url: '/department/get-departments', // API endpoint
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
+      }),
       transformResponse: (data) => data.departments,
       providesTags: ['Department'], // Tags for cache invalidation
       keepUnusedDataFor: 300, // Cache data for 5 minutes (300 seconds)
@@ -15,6 +29,7 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
       refetchOnReconnect: true, // Automatically refetch when the browser regains connection
       refetchOnFocus: true, // Automatically refetch when the window/tab regains focus
     }),
+    
 
     // Add department mutation
     addDepartment: builder.mutation({
@@ -22,6 +37,9 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
         url: '/department/add-department',
         method: 'POST',
         body: newDepartment,
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+      },
       }),
       // Invalidate tags to automatically refetch departments after adding a new one
       invalidatesTags: ['Department'],
@@ -33,6 +51,9 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
         url: `/department/edit-department/${id}`,
         method: 'PUT',
         body: updatedData,
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+      },
       }),
       // Invalidate tags to refetch departments after editing
       invalidatesTags: ['Department'],
@@ -61,6 +82,9 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `/department/delete-department?id=${id}`,
         method: 'DELETE',
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+      },
       }),
       // Invalidate tags to refetch departments after deletion
       invalidatesTags: ['Department'],

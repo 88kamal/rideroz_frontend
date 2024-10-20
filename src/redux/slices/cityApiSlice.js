@@ -30,6 +30,9 @@ export const cityApi = apiSlice.injectEndpoints({
           url: 'city/add-city',
           method: 'POST',
           body: formData,
+          headers: {
+            "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
         };
       },
       invalidatesTags: ['GetCity'],
@@ -73,6 +76,9 @@ export const cityApi = apiSlice.injectEndpoints({
           url: `city/edit-city/${id}`,
           method: 'PUT',
           body: formData,
+          headers: {
+            "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
         };
       },
       invalidatesTags: ['GetCity'], 
@@ -121,6 +127,9 @@ export const cityApi = apiSlice.injectEndpoints({
         url: `city/delete-city`,
         method: 'DELETE',
         params: { id },
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+      },
       }),
       invalidatesTags: ['GetCity'],
       onQueryStarted: async (id, { dispatch, queryFulfilled }) => {

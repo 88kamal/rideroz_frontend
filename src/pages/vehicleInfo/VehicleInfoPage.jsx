@@ -33,21 +33,7 @@ import { useParams } from "react-router-dom";
 import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
 import { TicketMinus } from "lucide-react";
 import VehicleReview from "../../components/review/VehicleReview";
-
-const sizes = [
-    {
-        name: 'S'
-    },
-    {
-        name: 'M'
-    },
-    {
-        name: 'XL'
-    },
-    {
-        name: 'XXL'
-    }
-]
+import RatingStar from "../../components/review/RatingStar";
 
 
 function ProductInfo() {
@@ -173,8 +159,16 @@ function ProductInfo() {
                                     </div> */}
 
                                     <div className={` bg-green-600 px-2 app-font text-white text-sm animate-pulse`}>
-                                        {vehicle?.vehicleAvailability  && "Available"}
+                                        {vehicle?.vehicleAvailability && "Available"}
                                     </div>
+                                    {/* ratings, totalRating */}
+                                    <div className="">
+                                        <RatingStar 
+                                        ratings={vehicle?.vehicleRatings} 
+                                        totalRating={vehicle?.numOfReviews}
+                                        />
+                                    </div>
+                                    
                                 </div>
 
                                 {/* Social Media Icons  */}
@@ -266,10 +260,11 @@ function ProductInfo() {
                         </div>
                     </div>
 
+                    {/* <pre>{JSON.stringify(...vehicle)}</pre> */}
 
                     {/* Reviews and Ratings */}
                     <div className="">
-                        <VehicleReview/>
+                        <VehicleReview vehicleId={id} vehicle={vehicle}/>
                     </div>
 
                 </div>
