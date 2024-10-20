@@ -14,6 +14,13 @@ import ShareModal from "./ShareModal";
 import authService from "../../services/authService";
 import { FaUserCircle } from "react-icons/fa";
 
+const rolePaths = {
+    2: '/super-admin-dashboard/super-admin-home-page',
+    14: '/shop-owner-dashboard/shop-owner-home-page',
+    15: '/user-dashboard/user-home-page'
+};
+
+
 export default function Navbars() {
     const [openNav, setOpenNav] = React.useState(false);
     const [openServices, setOpenServices] = React.useState(false);
@@ -142,21 +149,19 @@ export default function Navbars() {
 
                         <ShareModal />
 
-                        {[2].includes(user?.role) ?
-
+                        {rolePaths[user?.role] ? (
                             <div className="hidden lg:block">
-                                <Link to={'/super-admin-dashboard/super-admin-home-page'}>
+                                <Link to={rolePaths[user.role]}>
                                     <FaUserCircle className="w-7 h-7" />
                                 </Link>
-
                             </div>
-
-                            :
-
+                        ) : (
                             <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">
                                 <LoginModal />
-                            </span>}
-                            
+                            </span>
+                        )}
+
+
 
                         <IconButton
                             variant=""

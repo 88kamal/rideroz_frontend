@@ -77,7 +77,7 @@ export default function ViewMoreVehicle({ id, location, vehicleType, vehicleNumb
 
                         <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
                             <span className=" font-bold">Vehicle Price : </span>
-                            <span className=" app-font capitalize">{vehiclePrice}</span>
+                            <span className=" app-font capitalize">₹ {vehiclePrice}</span>
                         </div>
                     </div>
 
@@ -91,7 +91,7 @@ export default function ViewMoreVehicle({ id, location, vehicleType, vehicleNumb
 
                         <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
                             <span className=" font-bold">Sitting Capacity : </span>
-                            <span className=" app-font">₹ {sittingCapacity}</span>
+                            <span className=" app-font"> {sittingCapacity}</span>
                         </div>
 
                     </div>
@@ -100,13 +100,18 @@ export default function ViewMoreVehicle({ id, location, vehicleType, vehicleNumb
 
                         <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
                             <span className=" font-bold">Num Of Reviews : </span>
-                            <span className=" app-font">₹ {numOfReviews}</span>
+                            <span className=" app-font">{numOfReviews}</span>
                         </div>
 
                         <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
                             <span className=" font-bold">Created Date : </span> 
                             <span className=" app-font">{readableDate}</span>
                         </div>
+                    </div>
+
+                    <div className="">
+                        {/* <pre>{JSON.stringify(reviews,null,2)}</pre> */}
+                        {/* {reviews} */}
                     </div>
 
                     {/* <pre>{JSON.stringify({ employeeAdharCard, employeePanCard, employeeAgreement }, null, 2)}</pre> */}

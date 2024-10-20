@@ -10,7 +10,7 @@ const AllVehicle = () => {
     const { lat, setLat,
         lng, setLng,
         vehicleType, setVehicleType,
-        vehicleCity, setVehicleCity, selectedCity, setSelectedCity } = useContext(myContext);
+        vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName } = useContext(myContext);
 
 
     const { data: vehicles, error, isLoading } = useGetVehiclesNearbyQuery({
@@ -25,7 +25,7 @@ const AllVehicle = () => {
         <section className=" body-font">
             {/* <pre>{JSON.stringify({ vehicleCity }, null, 2)}</pre>
             <pre>{JSON.stringify({ lat, lng }, null, 2)}</pre> */}
-            {/* <pre>{JSON.stringify(error,null,2)}</pre> */}
+            {/* <pre>{JSON.stringify(vehicleType,null,2)}</pre> */}
             <div className="container lg:px-5 py-10 mx-auto">
                 <div className="flex flex-wrap -m-4 justify-center">
                     {isLoading ? (
@@ -85,7 +85,9 @@ const AllVehicle = () => {
                 </div>
 
             </div>
-            <div className=" flex justify-center">
+            <div className=" flex justify-center" onClick={()=>{
+                navigate(`/all-vehicles/${selectedCity}/${currentLocationName}`)
+            }}>
                 <Button variant="" className=" shadow-none hover:shadow-none bg-[#82BE23]">Show more</Button>
             </div>
         </section>

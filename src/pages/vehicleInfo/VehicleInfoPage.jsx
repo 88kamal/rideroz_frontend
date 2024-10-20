@@ -1,27 +1,3 @@
-// import { useParams } from "react-router-dom";
-// import Layout from "../../components/layout/Layout"
-// import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
-
-// const VehicleInfoPage = () => {
-// const { id } = useParams();
-// const { data: vehicle, error, isLoading } = useGetVehicleByIdQuery(id);
-
-//     if (isLoading) return <div>Loading...</div>;
-//     if (error) return <div>Error: {error.message}</div>;
-//   return (
-//     <Layout>
-//          <div>
-//             <h1>Vehicle Details</h1>
-//             <pre>{JSON.stringify(vehicle,null,2)}</pre>
-//             <h2>{vehicle?.name}</h2> {/* Adjust based on vehicle data structure */}
-//             <p>{vehicle?.description}</p>
-//         </div>
-//     </Layout>
-//   )
-// }
-
-// export default VehicleInfoPage
-
 /* eslint-disable react/no-unescaped-entities */
 import { BsWhatsapp } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
@@ -73,12 +49,24 @@ function ProductInfo() {
                                         <div className="flex justify-center">
                                             {slideImage ? (
                                                 <img
+                                                style={{
+                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                    transition: '1s filter linear',
+                                                    // width: '100%',
+                                                    background: 'transparent',
+                                                  }}
                                                     className=" h-[20.2em] lg:h-[28em] w-96 lg:w-[32em] md:w-[15em]"
                                                     src={slideImage}
                                                     alt=""
                                                 />
                                             ) : (
                                                 <img
+                                                style={{
+                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                    transition: '1s filter linear',
+                                                    // width: '100%',
+                                                    background: 'transparent',
+                                                  }}
                                                     className=" h-[20.2em] lg:h-[28em] w-96 lg:w-[32em] md:w-[15em] "
                                                     src={image1}
                                                     alt=""
@@ -99,6 +87,12 @@ function ProductInfo() {
                                                  focus:border-[#b88ef6] border  text-center`}
                                             >
                                                 <img
+                                                 style={{
+                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                    transition: '1s filter linear',
+                                                    // width: '100%',
+                                                    background: 'transparent',
+                                                  }}
                                                     onClick={() => setslideImage(image1)}
                                                     className="h-full w-full"
                                                     src={image1}
@@ -115,6 +109,12 @@ function ProductInfo() {
                                                  focus:border-[#b88ef6] border  text-center`}
                                             >
                                                 <img
+                                                 style={{
+                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                    transition: '1s filter linear',
+                                                    // width: '100%',
+                                                    background: 'transparent',
+                                                  }}
                                                     onClick={() => setslideImage(image2)}
                                                     className="h-full w-full object-cover"
                                                     src={image2}
@@ -144,8 +144,16 @@ function ProductInfo() {
                                 {vehicle?.vehicleName}
                             </h1>
 
+                             {/* ratings, totalRating */}
+                             <div className="mt-2">
+                                        <RatingStar 
+                                        rating={vehicle?.vehicleRatings} 
+                                        totalRating={vehicle?.numOfReviews}
+                                        />
+                                    </div>
+
                             {/* Price, Discount Percentage  */}
-                            <div className="flex mt-5 items-center justify-between">
+                            <div className="flex flex-wrap mt-5 items-center justify-between">
                                 {/* main div  */}
                                 <div className="flex items-center space-x-3">
                                     {/* Price  */}
@@ -153,23 +161,16 @@ function ProductInfo() {
                                         <h1 className={`fontPara text-2xl `}> ₹ {vehicle?.vehiclePrice}</h1>
                                     </div>
 
-                                    {/* Line Through Price  */}
-                                    {/* <div className="">
-                                        <h1 className={`fontPara line-through `}> ₹ 2,999</h1>
-                                    </div> */}
-
+                                  
                                     <div className={` bg-green-600 px-2 app-font text-white text-sm animate-pulse`}>
                                         {vehicle?.vehicleAvailability && "Available"}
                                     </div>
-                                    {/* ratings, totalRating */}
-                                    <div className="">
-                                        <RatingStar 
-                                        rating={vehicle?.vehicleRatings} 
-                                        totalRating={vehicle?.numOfReviews}
-                                        />
-                                    </div>
+
+                                   
                                     
                                 </div>
+
+                                
 
                                 {/* Social Media Icons  */}
                                 <div className="flex items-center gap-2 cursor-pointer">
@@ -226,10 +227,11 @@ function ProductInfo() {
                                             <h1 className=" font-bold">VehicleType : </h1>
                                             <h1 className=" capitalize">{vehicle?.vehicleType}</h1>
                                         </div>
-                                        <div className="flex items-center gap-2 mt-2 border p-2 border-green-300">
+
+                                        {/* <div className="flex items-center gap-2 mt-2 border p-2 border-green-300">
                                             <h1 className=" font-bold"> VehicleNumber : </h1>
                                             <h1 className=" capitalize">{vehicle?.vehicleNumber}</h1>
-                                        </div>
+                                        </div> */}
 
                                         <div className="flex items-center gap-2 mt-2 border p-2 border-green-300">
                                             <h1 className=" font-bold"> VehicleModel: </h1>

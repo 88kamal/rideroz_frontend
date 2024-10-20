@@ -126,41 +126,39 @@ const VehicleReview = ({ vehicle, vehicleId, error, isLoading }) => {
                                         const isUserReview = user && item?.user?._id === user.id;
 
                                         return (
-                                            <div className="p-1 w-full  md:w-1/2" key={index}>
-                                                {/* <pre>{JSON.stringify(user,null,2)}</pre> */}
-                                                {/* <pre>{JSON.stringify(item,null,2)}</pre> */}
-                                                <div className={`border px-4 py-4 rounded shadow-md h-[8.2em] `}>
-                                                    <div className="flex items-center justify-between mb-3">
-                                                        <div className="flex items-center gap-2">
-                                                            <img className='w-5' src="https://cdn-icons-png.flaticon.com/128/727/727399.png" alt="alt" />
-                                                            <h2 className={`text-sm `}>{item?.user?.userName || "Rideroz User"}</h2>
-                                                        </div>
-
-                                                        <div>
-                                                            <h2 className={`text-sm `}>{readableDate}</h2>
-                                                        </div>
+                                            <div className="p-1 w-full md:w-1/2" key={index}>
+                                            <div className={`border px-4 py-4 rounded shadow-md min-h-[8.2em] md:h-auto`}>
+                                                <div className="flex items-center justify-between mb-3 flex-wrap">
+                                                    <div className="flex items-center gap-2">
+                                                        <img className='w-5' src="https://cdn-icons-png.flaticon.com/128/727/727399.png" alt="alt" />
+                                                        <h2 className={`text-sm break-words`}>{item?.user?.userName || "Rideroz User"}</h2>
                                                     </div>
-
-                                                    <div className="flex items-center gap-1 mb-2">
-                                                        <StarRating rating={item?.rating} />
+                                        
+                                                    <div>
+                                                        <h2 className={`text-sm text-right`}>{readableDate}</h2>
                                                     </div>
-
-                                                    <div className="">
-                                                        <h2 className={``}>{item.comment}</h2>
-                                                    </div>
-
-                                                    {/* Show delete button only if the review belongs to the logged-in user */}
-                                                    {isUserReview && (
-                                                        <div
-                                                            className="flex justify-end space-x-2 cursor-pointer"
-                                                            onClick={() => handleDelete(item._id)}
-                                                        >
-                                                            <Trash2 color="red" size={18} />
-                                                        </div>
-                                                    )}
-
                                                 </div>
+                                        
+                                                <div className="flex items-center gap-1 mb-2">
+                                                    <StarRating rating={item?.rating} />
+                                                </div>
+                                        
+                                                <div className="">
+                                                    <h2 className={`break-words`}>{item.comment}</h2>
+                                                </div>
+                                        
+                                                {/* Show delete button only if the review belongs to the logged-in user */}
+                                                {isUserReview && (
+                                                    <div
+                                                        className="flex justify-end space-x-2 cursor-pointer mt-2"
+                                                        onClick={() => handleDelete(item._id)}
+                                                    >
+                                                        <Trash2 color="red" size={18} />
+                                                    </div>
+                                                )}
                                             </div>
+                                        </div>
+                                        
                                         )
                                     })}
                                 </>
