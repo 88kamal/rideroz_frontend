@@ -27,6 +27,7 @@ export function ReviewModal({ image, vehicleId, refetch }) {
         e.preventDefault();
         try {
             await addReview({ vehicleId, rating, comment }).unwrap();
+            refetch();
         } catch (error) {
             console.error('Failed to add review:', error);
         }
@@ -42,7 +43,7 @@ export function ReviewModal({ image, vehicleId, refetch }) {
             toast.success(data?.message);
             handleOpen();
             refetch();
-            // setRating("")
+            setRating("")
             setComment("")
         }
     }, [isError, error, isSuccess, data]);
@@ -67,12 +68,12 @@ export function ReviewModal({ image, vehicleId, refetch }) {
 
             <Dialog open={open} handler={handleOpen}>
                 <DialogBody>
-                    <div className="">
-                        <h1 className="text-xl text-black font-bold">Employee Detail</h1>
-                        <div className="absolute top-2 right-2 py-1.5 px-1.5 bg-gray-200 cursor-pointer rounded-full" onClick={handleOpen}>
-                            <X size={20} className="text-gray-800 hover:text-green-900" />
-                        </div>
+                <div className="">
+                    <h1 className="text-xl text-black font-bold">Employee Detail</h1>
+                    <div className="absolute top-2 right-2 py-1.5 px-1.5 bg-gray-200 cursor-pointer rounded-full" onClick={handleOpen}>
+                        <X size={20} className="text-gray-800 hover:text-green-900" />
                     </div>
+                </div>
 
                     <div className="">
                         <div className="flex justify-center">

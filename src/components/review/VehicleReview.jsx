@@ -31,11 +31,26 @@ const VehicleReview = ({ vehicle, vehicleId }) => {
                             <div className="box flex flex-col gap-y-4 w-full ">
 
                                 <div className="box flex flex-col gap-y-4 w-full">
-                                    <RatingProgress stars={5} percentage={data?.ratingDistribution?.fiveStar ?? 0} />
-                                    <RatingProgress stars={4} percentage={data?.ratingDistribution?.fourStar ?? 0} />
-                                    <RatingProgress stars={3} percentage={data?.ratingDistribution?.threeStar ?? 0} />
-                                    <RatingProgress stars={2} percentage={data?.ratingDistribution?.twoStar ?? 0} />
-                                    <RatingProgress stars={1} percentage={data?.ratingDistribution?.oneStar ?? 0} />
+                                    <RatingProgress stars={5}
+                                        count={data?.ratingDistribution?.fiveStar?.count ?? 0} 
+                                        percentage={data?.ratingDistribution?.fiveStar?.percentage ?? 0}
+                                        />
+                                    <RatingProgress stars={4}
+                                        count={data?.ratingDistribution?.fourStar?.count ?? 0} 
+                                        percentage={data?.ratingDistribution?.fourStar?.percentage ?? 0}
+                                        />
+                                    <RatingProgress stars={3}
+                                        count={data?.ratingDistribution?.threeStar?.count ?? 0} 
+                                        percentage={data?.ratingDistribution?.threeStar?.percentage ?? 0}
+                                        />
+                                    <RatingProgress stars={2}
+                                        count={data?.ratingDistribution?.twoStar?.count ?? 0} 
+                                        percentage={data?.ratingDistribution?.twoStar?.percentage ?? 0}
+                                        />
+                                    <RatingProgress stars={1}
+                                        count={data?.ratingDistribution?.oneStar?.count ?? 0} 
+                                        percentage={data?.ratingDistribution?.oneStar?.percentage ?? 0}
+                                        />
                                 </div>
 
 
@@ -45,7 +60,7 @@ const VehicleReview = ({ vehicle, vehicleId }) => {
                                         vehicleId={vehicle?._id}
                                         image={vehicle?.vehicleImage[0]?.url}
                                         refetch={refetch}
-                                         />
+                                    />
                                 </div>
                             </div>
 
@@ -53,7 +68,7 @@ const VehicleReview = ({ vehicle, vehicleId }) => {
                             <div className={`p-8  rounded-3xl flex items-center justify-center flex-col bg-green-50`}>
                                 {/* Rating Text  */}
                                 <h2 className="font-manrope font-bold text-5xl primaryColor mb-6">
-                                {parseFloat(vehicle?.vehicleRatings || 0).toFixed(1)}
+                                    {parseFloat(vehicle?.vehicleRatings || 0).toFixed(1)}
 
                                 </h2>
 

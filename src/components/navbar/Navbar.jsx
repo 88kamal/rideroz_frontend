@@ -156,6 +156,7 @@ export default function Navbars() {
                             <span className="text-black hover:text-gray-900 cursor-pointer hidden lg:block app-font">
                                 <LoginModal />
                             </span>}
+                            
 
                         <IconButton
                             variant=""

@@ -1,4 +1,4 @@
-const RatingProgress = ({ stars, percentage }) => (
+const RatingProgress = ({ stars, count, percentage }) => (
     <div className="flex items-center">
         <p className="font-medium text-lg text-black mr-0.5">{stars}</p>
         <svg
@@ -26,7 +26,7 @@ const RatingProgress = ({ stars, percentage }) => (
                 style={{ width: `${percentage}%` }}
             />
         </div>
-        <p className="font-medium text-lg mr-0.5 app-font">{parseInt(percentage)}%</p>
+        <p className="font-medium text-lg mr-0.5 app-font">{count}</p>
     </div>
 );
 

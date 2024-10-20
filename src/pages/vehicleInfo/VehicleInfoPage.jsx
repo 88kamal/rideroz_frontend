@@ -164,7 +164,7 @@ function ProductInfo() {
                                     {/* ratings, totalRating */}
                                     <div className="">
                                         <RatingStar 
-                                        ratings={vehicle?.vehicleRatings} 
+                                        rating={vehicle?.vehicleRatings} 
                                         totalRating={vehicle?.numOfReviews}
                                         />
                                     </div>
