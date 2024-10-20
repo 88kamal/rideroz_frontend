@@ -42,7 +42,7 @@
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 
-const BigRatingStar = ({ rating, totalRating }) => {
+const RatingStar = ({ rating, totalRating }) => {
   // Function to render stars based on rating
   const renderStars = () => {
     const stars = [];
@@ -66,4 +66,4 @@ const BigRatingStar = ({ rating, totalRating }) => {
             </div>;
 };
 
-export default BigRatingStar;
+export default RatingStar;

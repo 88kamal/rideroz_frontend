@@ -26,6 +26,7 @@ import ShopOwnerViewVehicle from "./pages/dashboard/shopOwner/pages/ShopOwnerVie
 import MyState from "./context/myState";
 import VehicleInfoPage from "./pages/vehicleInfo/VehicleInfoPage";
 import AllVehiclePage from "./pages/allVehicles/AllVehiclePage";
+import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Route path="/list-shop-message" element={<ListShopMessage />} />
           <Route path="/vehicle-info/:city/:id" element={<VehicleInfoPage />} />
           <Route path="/all-vehicles/:city?/:currentLocation?" element={<AllVehiclePage />} />
+          <Route path="/checkout/:id" element={<CheckoutPage />} />
           <Route path="/*" element={<NoPage />} />
 
 

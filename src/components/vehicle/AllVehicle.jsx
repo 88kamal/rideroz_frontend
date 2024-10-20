@@ -4,7 +4,6 @@ import { Button, Card, Spinner } from "@material-tailwind/react";
 import { useContext } from "react";
 import myContext from "../../context/myContext";
 import { useNavigate } from "react-router-dom";
-import BuyNowModal from "../modal/buyNow/BuyNowModal";
 
 const AllVehicle = () => {
     const navigate = useNavigate();
@@ -46,7 +45,6 @@ const AllVehicle = () => {
                         <>
                             {vehicles?.vehicles?.map((item, index) => {
                                 const { _id, location, vehicleType, vehicleNumber, vehicleName, vehicleModel, vehiclePrice, bookingPrice, sittingCapacity, vehicleImage, vehicleAvailability, shop, numOfReviews, reviews, createdAt } = item
-
                                 return (
                                     <div key={index} className="p-4 w-full md:w-1/4">
                                         {/* <pre>{JSON.stringify(selectedCity, null, 2)}</pre> */}
@@ -70,13 +68,18 @@ const AllVehicle = () => {
 
                                                 <p className=" app-font ">₹ <span className=" font-bold text-black">{vehiclePrice}/-</span> per day</p>
 
-                                                <BuyNowModal
+                                                <Button onClick={()=> navigate(`/checkout/${_id}`)} variant="" className=" bg-[#82BE23] w-full mt-3 shadow-none hover:shadow-none">
+                                                    Book Now
+                                                </Button>
+
+                                                {/* <BuyNowModal
                                                     id={_id}
                                                     vehicleImage={vehicleImage}
                                                     vehicleName={vehicleName}
                                                     vehiclePrice={vehiclePrice}
                                                     vehicleType={vehicleType}
-                                                />
+                                                /> */}
+
                                             </div>
                                         </Card>
                                     </div>
@@ -90,7 +93,7 @@ const AllVehicle = () => {
                 </div>
 
             </div>
-            <div className=" flex justify-center" onClick={() => {
+            <div className=" flex justify-center" onClick={()=>{
                 navigate(`/all-vehicles/${selectedCity}/${currentLocationName}`)
             }}>
                 <Button variant="" className=" shadow-none hover:shadow-none bg-[#82BE23]">Show more</Button>
