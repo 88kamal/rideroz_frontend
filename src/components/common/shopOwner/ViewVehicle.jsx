@@ -48,7 +48,7 @@ import { Eye, Trash2 } from "lucide-react";
 import UpdateAvailabilityModal from "./modal/UpdateAvailabilityModal";
 import ViewMoreVehicle from "./modal/ViewMoreVehicle";
 
-const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Type", "Vehicle Number", "Vehicle Name", "vehiclePrice", "Change Availability", "Delete", "View More"];
+const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Number", "vehiclePrice", "Change Availability", "Delete", "View More"];
 
 export default function ViewVehicle() {
     const [search, setSearch] = useState('');
@@ -196,7 +196,7 @@ export default function ViewVehicle() {
                             </thead>
                             <tbody >
                                 {vehicals?.vehicals?.map(
-                                    ({ _id, location, vehicleType, vehicleNumber, vehicleName, vehicleModel, vehiclePrice, bookingPrice, sittingCapacity, vehicleImage, vehicleAvailability, shop, numOfReviews, reviews, createdAt }, index) => {
+                                    ({ _id, location, vehicleType, vehicleNumber, vehicleName, vehicleModel, vehiclePrice, bookingPrice, sittingCapacity, vehicleImage, vehicleAvailability, shop, numOfReviews, reviews, createdAt, bookedDates }, index) => {
                                         const isLast = index === vehicals?.vehicals?.length - 1;
                                         const classes = isLast
                                             ? "px-5 py-   border-l  border-r border-b border-green-300"
@@ -225,15 +225,7 @@ export default function ViewVehicle() {
                                                     </div>
                                                 </td>
 
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font capitalize"
-                                                    >
-                                                        {vehicleType}
-                                                    </Typography>
-                                                </td>
+                                              
 
                                                 <td className={classes}>
                                                     <Typography
@@ -245,16 +237,7 @@ export default function ViewVehicle() {
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font capitalize"
-                                                    >
-                                                        {vehicleName}
-                                                    </Typography>
-                                                </td>
-
+                                               
                                                 <td className={classes}>
                                                     <Typography
                                                         variant="small"
@@ -271,7 +254,12 @@ export default function ViewVehicle() {
                                                         color="blue-gray"
                                                         className="font-normal app-font"
                                                     >
-                                                        <UpdateAvailabilityModal id={_id} vehicleAvailability={vehicleAvailability} />
+                                                        <UpdateAvailabilityModal 
+                                                        id={_id} 
+                                                        vehicleAvailability={vehicleAvailability} 
+                                                        bookedDates={bookedDates}
+                                                        refetch={refetch}
+                                                        />
                                                     </Typography>
                                                 </td>
 

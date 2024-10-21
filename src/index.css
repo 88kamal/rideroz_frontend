@@ -49,3 +49,13 @@
     left: 0; /* Aligns the dropdown properly */
     width: 100%; /* Ensures it takes the same width as the parent */
   }
+
+  
+  /* Calendar.css */
+
+.booked-tile {
+    background-color: #ff6666 !important; /* Highlight booked dates with a light red color */
+    color: white; /* Change the text color for better visibility */
+    border-radius: 8px; /* Optional: Rounds the corners for a nicer look */
+  }
+  

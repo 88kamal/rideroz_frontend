@@ -167,10 +167,21 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 }
             },
         }),
-
+        bookWalkin: builder.mutation({
+            query: ({ vehicleId, startDate, endDate, startTime, endTime }) => ({
+              url: `/vehicle/book-Walkin/${vehicleId}`,
+              method: 'PUT',
+              body: {
+                startDate,
+                endDate,
+                startTime,
+                endTime,
+              },
+            }),
+          }),
 
 
     }),
 });
 
-export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery, useDeleteReviewMutation } = vehicleApi;
+export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery, useDeleteReviewMutation, useBookWalkinMutation } = vehicleApi;
