@@ -1,5 +1,6 @@
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import { Button } from '@material-tailwind/react'
 
 const PaymentSuccessPage = () => {
     const { width, height } = useWindowSize()
@@ -11,14 +12,18 @@ const PaymentSuccessPage = () => {
             />
             <div className="flex justify-center items-center h-screen">
                 <div className="">
-                    <div className="flex justify-center items-center">
-                       <img src="" alt="" />
+                    <div className="flex justify-center items-center mb-2">
+                        <img className='w-28' src="https://cdn-icons-png.flaticon.com/128/7518/7518748.png" alt="" />
                     </div>
-                    {/* <h1 className=" text-center app-font mb-3 text-xl">Congratulation Your Shop has been Listed</h1> */}
+                    <h1 className=" text-center app-font mb-4 text-xl">Payment Successfully</h1>
+                    <h1 className=' mb-3'>{"67153b907fc2c450a5bdd351"}</h1>
 
                     <div className=" flex justify-center items-center">
-                        {/* <Button variant='' className=' hover:shadow-none shadow-none bg-transparent border text-green-600 border-green-600'>Login Now</Button> */}
-                       
+                        <Button variant=''
+                            className=' py-3 hover:shadow-none shadow-none bg-transparent border text-green-600 border-green-600'>
+                            View Location
+                        </Button>
+
                     </div>
                 </div>
             </div>

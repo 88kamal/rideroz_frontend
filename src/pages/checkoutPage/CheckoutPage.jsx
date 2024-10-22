@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // // // import Layout from "../../components/layout/Layout";
 // // // import { BadgeIndianRupee } from 'lucide-react'
 // // // import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
@@ -705,7 +706,7 @@
 import Layout from "../../components/layout/Layout";
 import { BadgeIndianRupee } from 'lucide-react';
 import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import RatingStar from "../../components/review/RatingStar";
 import { Button, Input } from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
@@ -717,6 +718,7 @@ import toast from "react-hot-toast";
 
 const CartPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { data: vehicle } = useGetVehicleByIdQuery(id);
     const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName } = useContext(myContext);
 
@@ -737,7 +739,7 @@ const CartPage = () => {
         discountAmount: discountAmount
     });
 
-
+    const [isCouponApplied, setIsCouponApplied] = useState(false); // New state to track coupon application
 
     useEffect(() => {
         const storedCity = localStorage.getItem('selectedCity');
@@ -807,6 +809,10 @@ const CartPage = () => {
     };
 
     const applyCoupon = () => {
+        if (isCouponApplied) {
+            return; // Prevent applying the coupon more than once
+        }
+
         if (formData.couponCode === 'Rideroz234') {
             const discount = (5 / 100) * formData.shopAmount; // Calculate 5% discount
             const discountedValue = formData.shopAmount - discount; // Calculate discounted amount
@@ -818,15 +824,11 @@ const CartPage = () => {
             setFormData(prevState => ({
                 ...prevState,
                 shopAmount: Math.round(discountedValue), // Update shop amount
-                discountAmount: discountAmount
+                discountAmount: Math.round(discount) // Set the discount amount in formData
             }));
 
-            setFormData(prevState => ({
-                ...prevState,
-                discountAmount: Math.round(discount)
-            }));
-
-
+            setIsCouponApplied(true); // Mark the coupon as applied
+            toast.success('Coupon applied successfully!');
         } else {
             alert('Invalid Coupon Code');
             setDiscountedAmount(null); // Reset if invalid
@@ -877,8 +879,8 @@ const CartPage = () => {
         return { isBooked: false };
     };
 
-    const [createOrder, { isLoading, isError, error, data, isSuccess }] = useCreateOrderMutation();
-    const [verifyPayment, { isLoading: verifyPaymentLoading, error: verifyPaymentError, data: verifyPaymentData }] = useVerifyPaymentMutation();
+    const [createOrder, { isLoading, isError, error, data }] = useCreateOrderMutation();
+    const [verifyPayment, { isLoading: verifyPaymentLoading, isError: isVerifyPaymentError, error: verifyPaymentError, isSuccess }] = useVerifyPaymentMutation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -897,8 +899,6 @@ const CartPage = () => {
 
 
     const handlePaymentVerify = (order) => {
-
-        // console.log(order)
         const options = {
             key: 'rzp_test_4saMdxYboIyJ2n',
             amount: order.amount,
@@ -915,12 +915,15 @@ const CartPage = () => {
                         razorpay_signature: response.razorpay_signature,
                     };
 
-                    console.log("paymentDetails", paymentDetails)
+                    // console.log("paymentDetails", paymentDetails)
 
                     const verifyResponse = await verifyPayment(paymentDetails).unwrap();
 
+                    console.log("verifyResponse", verifyResponse)
+
                     if (verifyResponse.message) {
                         toast.success(verifyResponse.message);
+                        navigate(`success-payment/1234`)
                     } else {
                         toast.error('Payment verification failed');
                     }
@@ -940,9 +943,14 @@ const CartPage = () => {
 
     useEffect(() => {
         if (isError) {
-            toast.error(error?.data?.error || 'Failed to add employee, please try again');
+            toast.error(error?.data?.error || 'Failed to confirm payment, please try again');
         }
-    }, [isError, error, isSuccess, data]);
+
+        if (isVerifyPaymentError) {
+            toast.error(verifyPaymentError?.data?.error || 'Failed to confirm payment, please try again');
+        }
+
+    }, [isError, error, isSuccess, data, isVerifyPaymentError, verifyPaymentError]);
 
 
     return (
@@ -959,10 +967,6 @@ const CartPage = () => {
                             aria-labelledby="summary-heading"
                             className="mt-5 mb-5 lg:mt-0 lg:mb-0 rounded-md lg:col-span-4 bg-white drop-shadow p-5 order-first lg:order-last"
                         >
-                            {/* <div className="mb-8 lg:mb-8 flex justify-center pt-8">
-                                <img className="w-[12em] h-[5em]" src="../../logo/rideroz.png" alt="logo" />
-                            </div> */}
-
                             {/* Pickup/Dropoff Date and Time */}
                             <div>
                                 <div className="mb-2">
@@ -1015,7 +1019,7 @@ const CartPage = () => {
                             </div>
 
 
-                            <div className=" bg-green-50 p-2 mt-4 animate-pulse border border-green-100">
+                            <div className=" bg-green-50 p-2 mt-4 border border-green-100">
                                 <div className="flex justify-between items-center mb-1">
                                     <p className="text-black app-font">Coupons</p>
                                     <p className="app-font text-green-700">5% OFF</p>
@@ -1026,7 +1030,11 @@ const CartPage = () => {
                                             src="https://cdn-icons-png.flaticon.com/128/1041/1041885.png" alt="coupon" />
                                         <h1 className="text-green-500 app-font">Apply Coupon</h1>
                                     </div>
-                                    <button type="button" onClick={applyCoupon} className="bg-green-600 px-2 text-white text-sm py-[2px] app-font rounded-md">
+                                    <button
+                                        type="button"
+                                        onClick={applyCoupon}
+                                        disabled={isCouponApplied || !formData.startDate || !formData.endDate || !formData.startTime || !formData.endTime} // Disable button if coupon is applied or dates/times are missing
+                                        className="bg-green-600 px-2 text-white text-sm py-[2px] app-font rounded-md">
                                         Apply Now
                                     </button>
                                 </div>
@@ -1037,6 +1045,7 @@ const CartPage = () => {
                                         onChange={e => setFormData({ ...formData, couponCode: e.target.value })}
                                         placeholder="Apply Coupon Code"
                                         label="Apply Coupon Code"
+                                        disabled={isCouponApplied || !formData.startDate || !formData.endDate || !formData.startTime || !formData.endTime} // Disable input if coupon is applied or dates/times are missing
                                         className=""
                                         color="green"
                                     />
@@ -1048,7 +1057,7 @@ const CartPage = () => {
                             </div>
 
                             {/* Display the total shopAmount */}
-                            <div className="border mt-4 p-2 px-4 rounded-md border-green-400 text-black">
+                            <div className="border mt-4 p-2 px-4 rounded-md drop-shadow border-green-400 text-black">
                                 <h1 className="app-font">
                                     <span className="font-bold">Price Breakdown:</span>
                                 </h1>
@@ -1083,9 +1092,16 @@ const CartPage = () => {
                             </div>
 
                             <div className="mt-4">
-                                <Button onClick={handleSubmit} variant="" size="small" className="hover:shadow-none shadow-none w-full bg-green-500">
-                                    Confirm
+                                <Button
+                                    onClick={handleSubmit}
+                                    variant=""
+                                    size="small"
+                                    className="hover:shadow-none shadow-none w-full bg-green-500"
+                                    disabled={verifyPaymentLoading || !formData.startDate || !formData.endDate || !formData.startTime || !formData.endTime} // Disable if loading or fields are missing
+                                >
+                                    {verifyPaymentLoading ? "Confirmed" : "Confirm"}
                                 </Button>
+
                             </div>
                         </section>
 

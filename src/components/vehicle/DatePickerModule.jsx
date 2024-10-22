@@ -14,6 +14,76 @@ export default function DatePickerModule({ bookedDates }) {
   const [selectedMonth, setSelectedMonth] = useState(dayjs()); // Initial month is the current month
   const today = dayjs();
 
+  // const isDateBooked = (date) => {
+  //   const bookedDate = bookedDates.find((bookedDate) => {
+  //     const startDate = dayjs(bookedDate.startDate);
+  //     const endDate = dayjs(bookedDate.endDate);
+
+  //     // Ignore bookings with invalid date ranges
+  //     if (endDate.isBefore(startDate)) {
+  //       console.warn(`Invalid booking range for booking ID: ${bookedDate._id}`);
+  //       return false;
+  //     }
+
+  //     // Check if the selected date falls within the booking range
+  //     return dayjs(date).isBetween(startDate, endDate, 'day', '[]');
+  //   });
+
+  //   if (bookedDate) {
+  //     // Format date as DD-MM-YYYY and time in 12-hour format with AM/PM
+  //     const startTime = dayjs(bookedDate.startDate).format('hh:mm A');
+  //     const endTime = dayjs(bookedDate.endDate).format('hh:mm A');
+  //     const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
+  //     const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
+
+  //     return {
+  //       isBooked: true,
+  //       startTime,
+  //       endTime,
+  //       startDateFormatted,
+  //       endDateFormatted,
+  //     };
+  //   }
+  //   return { isBooked: false };
+  // };
+
+  // const isDateBooked = (date) => {
+  //   const bookedDate = bookedDates.find((bookedDate) => {
+  //     const startDate = dayjs(bookedDate.startDate);
+  //     const endDate = dayjs(bookedDate.endDate);
+
+  //     // Ignore bookings with invalid date ranges
+  //     if (endDate.isBefore(startDate)) {
+  //       console.warn(`Invalid booking range for booking ID: ${bookedDate._id}`);
+  //       return false;
+  //     }
+
+  //     // Check if the selected date falls within the booking range
+  //     return dayjs(date).isBetween(startDate, endDate, 'day', '[]');
+  //   });
+
+  //   if (bookedDate) {
+  //     const startTime = dayjs(bookedDate.startDate).format('hh:mm A');
+  //     const endTime = dayjs(bookedDate.endDate).format('hh:mm A');
+  //     const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
+  //     const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
+
+  //     // Check if the selected date is the end date of the booking
+  //     const isPartialBooking = dayjs(date).isSame(dayjs(bookedDate.endDate), 'day');
+
+  //     return {
+  //       isBooked: true,
+  //       startTime,
+  //       endTime,
+  //       startDateFormatted,
+  //       endDateFormatted,
+  //       isPartialBooking,
+  //     };
+  //   }
+
+  //   return { isBooked: false, isPartialBooking: false };
+  // };
+
   const isDateBooked = (date) => {
     const bookedDate = bookedDates.find((bookedDate) => {
       const startDate = dayjs(bookedDate.startDate);
@@ -30,11 +100,13 @@ export default function DatePickerModule({ bookedDates }) {
     });
 
     if (bookedDate) {
-      // Format date as DD-MM-YYYY and time in 12-hour format with AM/PM
       const startTime = dayjs(bookedDate.startDate).format('hh:mm A');
       const endTime = dayjs(bookedDate.endDate).format('hh:mm A');
       const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
       const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
+
+      // Check if the selected date is the end date of the booking
+      const isPartialBooking = dayjs(date).isSame(dayjs(bookedDate.endDate), 'day');
 
       return {
         isBooked: true,
@@ -42,10 +114,14 @@ export default function DatePickerModule({ bookedDates }) {
         endTime,
         startDateFormatted,
         endDateFormatted,
+        isPartialBooking,
       };
     }
-    return { isBooked: false };
+
+    return { isBooked: false, isPartialBooking: false };
   };
+
+
 
   const handlePrevMonth = () => {
     setSelectedMonth(selectedMonth.subtract(1, 'month'));
@@ -97,7 +173,6 @@ export default function DatePickerModule({ bookedDates }) {
 
         {/* <pre>{JSON.stringify(bookedDates,null,2)}</pre> */}
         <>
-
           <div className="overflow-y-scroll">
             {/* Current month title with navigation */}
             <div className="flex justify-between items-center mb-2 bg-blue-500 sticky top-0 z-50">
@@ -121,14 +196,26 @@ export default function DatePickerModule({ bookedDates }) {
               {/* Calendar view */}
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-2 sm:gap-4 mb-4">
                 {daysInMonth.map((day) => {
-                  const { isBooked, startTime, endTime, startDateFormatted, endDateFormatted } = isDateBooked(day);
+                  const {
+                    isBooked,
+                    startTime,
+                    endTime,
+                    startDateFormatted,
+                    endDateFormatted,
+                    isPartialBooking,
+                  } = isDateBooked(day);
                   const isPast = day.isBefore(today, 'day') && day.isSame(selectedMonth, 'month');
 
                   return (
                     <div
                       key={day}
-                      className={`p-2 sm:p-4 rounded-lg border transition-transform transform ${isPast ? 'bg-gray-200 border-gray-300 cursor-not-allowed' :
-                        isBooked ? 'bg-red-100 border-red-300' : 'bg-green-100 border-green-300 hover:scale-105'
+                      className={`p-2 sm:p-4 rounded-lg border transition-transform transform ${isPast
+                        ? 'bg-gray-100 border-gray-300 cursor-not-allowed' // Light gray background for past dates
+                        : isBooked && isPartialBooking
+                          ? 'bg-indigo-100 border-indigo-300' // Yellow background for partially booked days
+                          : isBooked
+                            ? 'bg-red-200 border-red-400' // Red background for fully booked days
+                            : 'bg-green-200 border-green-400 hover:scale-105' // Green background for available days
                         }`}
                     >
                       <div className="text-xs sm:text-sm font-semibold text-gray-700 text-center">
@@ -138,14 +225,22 @@ export default function DatePickerModule({ bookedDates }) {
                         {isPast ? (
                           <div className="font-bold text-gray-500">Not Available</div>
                         ) : isBooked ? (
-                          <div className="text-red-800">
-                            <p className=" font-bold mt-1 mb-1">Booked</p>
-                            <h1 className="app-font">
-                              From <span className=" font-semibold text-[10px]"> {startDateFormatted}, {startTime} </span> -
-                              <br className=" hidden lg:block md:block sm:block" />
-                             {" "}  To   <span className=" font-semibold text-[10px]">  {endDateFormatted} {endTime}</span>
-                            </h1>
-                          </div>
+                          isPartialBooking ? (
+                            <div className="text-indigo-800">
+                              <p className="font-bold mt-1 mb-1">Partially Booked</p>
+                              <div>Available after {endTime}</div>
+                              <div className="text-[10px]">From {endDateFormatted}</div>
+                            </div>
+                          ) : (
+                            <div className="text-red-800">
+                              <p className="font-bold mt-1 mb-1">Booked</p>
+                              <h1 className="app-font">
+                                From <span className="font-semibold text-[10px]">{startDateFormatted}, {startTime}</span> -
+                                <br className="hidden lg:block md:block sm:block" />
+                                {" "}To <span className="font-semibold text-[10px]">{endDateFormatted} {endTime}</span>
+                              </h1>
+                            </div>
+                          )
                         ) : (
                           <div className="font-bold text-green-500">Available</div>
                         )}
@@ -153,6 +248,8 @@ export default function DatePickerModule({ bookedDates }) {
                     </div>
                   );
                 })}
+
+
               </div>
 
               <Button
@@ -167,26 +264,7 @@ export default function DatePickerModule({ bookedDates }) {
 
 
           </div>
-
         </>
-        {/* <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button
-            variant="gradient"
-            color="green"
-          // onClick={handleDelete}
-          // disabled={verificationText !== requiredText} // Disable the button if text doesn't match
-          >
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter> */}
       </Dialog>
     </>
   );
