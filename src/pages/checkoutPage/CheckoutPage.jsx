@@ -923,7 +923,7 @@ const CartPage = () => {
 
                     if (verifyResponse.message) {
                         toast.success(verifyResponse.message);
-                        navigate(`success-payment/1234`)
+                        navigate(`/success-payment/1234`)
                     } else {
                         toast.error('Payment verification failed');
                     }
@@ -957,7 +957,7 @@ const CartPage = () => {
         <Layout>
             <div className="container mx-auto max-w-7xl px-2 lg:px-0">
                 {/* <pre>{JSON.stringify(vehicle?.vehiclePrice, null, 2)}</pre> */}
-                {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
+                <pre>{JSON.stringify(formData, null, 2)}</pre>
                 {/* <pre>{JSON.stringify(discountAmount,null,2)}</pre> */}
 
                 <div className="mx-auto max-w-2xl lg:max-w-7xl">
