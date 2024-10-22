@@ -2611,8 +2611,8 @@ export default function UpdateAvailabilityModal({ id, bookedDates, refetch }) {
                         : isBooked && isPartialBooking
                           ? 'bg-indigo-100 border-indigo-300' // Yellow background for partially booked days
                           : isBooked
-                            ? 'bg-red-200 border-red-400' // Red background for fully booked days
-                            : 'bg-green-200 border-green-400 hover:scale-105' // Green background for available days
+                            ? 'bg-red-100 border-red-300' // Red background for fully booked days
+                            : 'bg-green-100 border-green-400 hover:scale-105' // Green background for available days
                         }`}
                     >
                       <div className="text-xs sm:text-sm font-semibold text-gray-700 text-center">
