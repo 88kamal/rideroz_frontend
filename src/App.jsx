@@ -27,6 +27,7 @@ import MyState from "./context/myState";
 import VehicleInfoPage from "./pages/vehicleInfo/VehicleInfoPage";
 import AllVehiclePage from "./pages/allVehicles/AllVehiclePage";
 import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
+import PaymentSuccessPage from "./pages/paymentSuccessPage/PaymentSuccessPage";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           <Route path="/vehicle-info/:city/:id" element={<VehicleInfoPage />} />
           <Route path="/all-vehicles/:city?/:currentLocation?" element={<AllVehiclePage />} />
           <Route path="/checkout/:id" element={<CheckoutPage />} />
+          <Route path="/success-payment/:paymentId" element={<PaymentSuccessPage />} />
           <Route path="/*" element={<NoPage />} />
 
 
