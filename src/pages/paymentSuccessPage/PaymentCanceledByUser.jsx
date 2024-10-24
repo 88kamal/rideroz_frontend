@@ -1,11 +1,11 @@
+import { CircleAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ExclamationCircleIcon } from '@heroicons/react/24/outline'; // Correct path for Heroicons v2
 
 const PaymentCanceledByUser = () => {
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-pink-50 to-gray-100">
             <div className="bg-white p-10 rounded-lg shadow-lg text-center animate-fadeIn">
-                <ExclamationCircleIcon className="w-20 h-20 text-red-500 mx-auto" />
+                <CircleAlert className="w-20 h-20 text-red-500 mx-auto" />
                 <h1 className="mt-6 text-4xl font-bold text-red-600">
                     Payment Canceled
                 </h1>
