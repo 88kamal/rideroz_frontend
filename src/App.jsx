@@ -31,6 +31,8 @@ import PaymentSuccessPage from "./pages/paymentSuccessPage/PaymentSuccessPage";
 import PaymentCancelPage from "./pages/paymentSuccessPage/PaymentCancelPage";
 import PaymentCanceledByUser from "./pages/paymentSuccessPage/PaymentCanceledByUser";
 import UserVehicleBookPage from "./pages/dashboard/user/pages/UserVehicleBookPage";
+import TopAlert from "./components/alert/TopAlert";
+import LeftSidePopup from "./components/leftSidePop/LeftSidePop";
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
       <Router>
         <Toaster />
         <ScrollTop />
+        <TopAlert />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

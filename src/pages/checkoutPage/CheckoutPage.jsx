@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import Layout from "../../components/layout/Layout";
@@ -18,7 +19,7 @@ const CartPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: vehicle } = useGetVehicleByIdQuery(id);
-    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName } = useContext(myContext);
+    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName, showAlert } = useContext(myContext);
 
     const [bookedDates, setBookedDates] = useState([]);
     const [rentDuration, setRentDuration] = useState(0); // State to store rent duration in days
@@ -34,7 +35,10 @@ const CartPage = () => {
         platformAmount: 0,
         miscAmount: 0,
         couponCode: '',
-        discountAmount: discountAmount
+        discountAmount: discountAmount,
+        extraHours: 0,
+        extraHourCharge: 0,
+        rentDuration: ""
     });
 
     const [isCouponApplied, setIsCouponApplied] = useState(false); // New state to track coupon application
@@ -70,37 +74,66 @@ const CartPage = () => {
     const vehiclePricePerDay = vehicle?.vehiclePrice || 0;
 
     const calculateShopAmount = () => {
-        const { startDate, endDate } = formData;
+        const { startDate, endDate, startTime, endTime } = formData;
 
-        // Check if both dates are selected
-        if (startDate && endDate) {
-            const start = dayjs(startDate);
-            const end = dayjs(endDate);
+        // Ensure both dates and times are selected
+        // if (!startDate || !endDate || !startTime || !endTime) {
+        //     showAlert('Please select both start and end dates and times.', 'error');
+        // }
 
-            // Calculate the difference in hours
-            const hours = end.diff(start, 'hour');
+        // Validate that endDate is greater than startDate
+        if (dayjs(endDate).isBefore(dayjs(startDate))) {
+            showAlert('End date must be greater than start date.', 'error');
+        }
 
-            // Determine the base price based on hours
-            const days = Math.ceil(hours / 24); // Convert hours to full days (rounding up)
-            const basePrice = days * vehiclePricePerDay;
+        if (startDate && endDate && startTime && endTime) {
+            // Parse the start and end times with dates
+            const start = dayjs(`${startDate} ${startTime}`);
+            const end = dayjs(`${endDate} ${endTime}`);
+
+            // Calculate the total difference in hours
+            const totalHours = end.diff(start, 'hour', true); // Use true for floating point precision
+
+            // Base price calculation
+            const baseDays = Math.floor(totalHours / 24); // Full days
+            const extraHours = totalHours % 24; // Extra hours beyond full days (this includes fractional hours)
+
+            const basePrice = baseDays * vehiclePricePerDay; // Full day price
+
+            // Calculate additional charges for extra hours
+            let extraCharge = 0;
+            let extraHourRounded = Math.floor(extraHours); // Number of full extra hours
+
+            if (extraHours >= 1) {
+                // Charge ₹100 per full hour
+                extraCharge = extraHourRounded * 100;
+            }
+
+            if (extraHours % 1 >= 0.5) {
+                // Add ₹50 for half-hour increments
+                extraCharge += 50;
+            }
 
             // Calculate platform and misc charges
-            const platformAmount = (10 / 100) * basePrice; // 10% platform charge
-            const miscAmount = (5 / 100) * basePrice;      // 5% miscellaneous charge
+            const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
+            const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
 
-            // Calculate total amount
-            const totalAmount = basePrice + platformAmount + miscAmount;
+            // Calculate the total amount (base price + extra hours + platform + misc)
+            const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
 
             // Update the formData and rent duration with calculated values
             setFormData(prevState => ({
                 ...prevState,
                 platformAmount: platformAmount,
                 miscAmount: miscAmount,
-                shopAmount: totalAmount
+                shopAmount: totalAmount,
+                extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
+                extraHourCharge: extraCharge,        // Store the extra hour charge
+                rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`
             }));
 
-            // Update rent duration in days
-            setRentDuration(days);
+            // Update rent duration in days and exact extra hours (including fractional)
+            setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
             setDiscountedAmount(null); // Reset discountedAmount when dates change
             setDiscountAmount(0); // Reset discount amount when dates change
         }
@@ -125,9 +158,11 @@ const CartPage = () => {
             }));
 
             setIsCouponApplied(true);
-            toast.success('Coupon applied successfully!');
+            // toast.success('Coupon applied successfully!');
+            showAlert('Coupon applied successfully!', 'success')
         } else {
-            toast.error('Invalid Coupon Code');
+            // toast.error('Invalid Coupon Code');
+            showAlert('Invalid Coupon Code', 'error')
             setDiscountedAmount(null);
             setDiscountAmount(0);
         }
@@ -138,16 +173,10 @@ const CartPage = () => {
     // Recalculate shop amount whenever startDate or endDate changes
     useEffect(() => {
         calculateShopAmount();
-    }, [formData.startDate, formData.endDate]);
+    }, [formData.startDate, formData.endDate, formData.startTime, formData.endTime]);
 
 
     const today = dayjs();
-
-
-    const filterPassedDates = (date) => {
-        return dayjs(date).isSameOrAfter(today, 'day');
-    };
-
 
     const [createOrder, { isLoading, isError, error, data }] = useCreateOrderMutation();
     const [verifyPayment, { isLoading: verifyPaymentLoading, isError: isVerifyPaymentError, error: verifyPaymentError, isSuccess }] = useVerifyPaymentMutation();
@@ -189,7 +218,8 @@ const CartPage = () => {
                     if (verifyResponse) {
                         // Clear the flag when payment is successful
                         sessionStorage.removeItem('paymentInProgress');
-                        toast.success('Payment successful! Booking confirmed.');
+                        // toast.success('Payment successful! Booking confirmed.');
+                        showAlert('Payment successful! Booking confirmed.', 'success')
                         setFormData({
                             startDate: null,
                             endDate: null,
@@ -199,15 +229,20 @@ const CartPage = () => {
                             platformAmount: 0,
                             miscAmount: 0,
                             couponCode: '',
-                            discountAmount: 0
+                            discountAmount: 0,
+                            extraHours: 0,
+                            extraHourCharge: 0,
+                            rentDuration: ""
                         })
                         navigate(`/success-payment/${order.razorpayOrderId}`);
                     } else {
-                        toast.error('Payment verification failed. Please try again.');
+                        // toast.error('Payment verification failed. Please try again.');
+                        showAlert('Payment verification failed. Please try again.', 'error')
                     }
                 } catch (error) {
                     console.log('Error verifying payment:', error);
-                    toast.error('Payment verification failed. Please try again.');
+                    // toast.error('Payment verification failed. Please try again.');
+                    showAlert('Payment verification failed. Please try again.', 'error')
                 }
             },
             theme: {
@@ -253,7 +288,8 @@ const CartPage = () => {
 
     useEffect(() => {
         if (isError) {
-            toast.error(error?.data?.error || 'Failed to confirm payment, please try again');
+            // toast.error(error?.data?.error || 'Failed to confirm payment, please try again');
+            showAlert(error?.data?.error || 'Failed to confirm payment, please try again', 'error')
         }
 
         if (isVerifyPaymentError) {
@@ -414,35 +450,49 @@ const CartPage = () => {
                                 <h1 className="app-font">
                                     <span className="font-bold">Price Breakdown:</span>
                                 </h1>
-                                <p className="text-xs mt-1 mb-1  app-font">
+                                <p className="text-xs mt-1 mb-1 app-font">
                                     Base Price: ₹ {vehiclePricePerDay}
                                 </p>
 
-                                <p className="text-xs mb-1  app-font">
+                                <p className="text-xs mb-1 app-font">
                                     Misc Charge : ₹ {formData?.miscAmount || 0}
                                 </p>
 
-                                <p className="text-xs mb-1  app-font">
+                                <p className="text-xs mb-1 app-font">
                                     Platform Charge : ₹ {formData?.platformAmount || 0}
                                 </p>
 
-                                <p className="text-xs mb-1  app-font">
-                                    Rent Duration: {rentDuration} day(s)
+                                <p className="text-xs mb-1 app-font">
+                                    Rent Duration: {rentDuration}
                                 </p>
 
+                                {formData.extraHours > 0 && (
+                                    <>
+                                        <p className="text-xs mb-1 app-font">
+                                            {/* Extra Hours: {formData.extraHours} hour(s) Display exact extra hours */}
+                                            Extra Hours: {formData.extraHours === "0.50" ? formData.extraHours : parseInt(formData.extraHours)} hour(s) {/* Display exact extra hours */}
+
+                                        </p>
+                                        <p className="text-xs mb-1 app-font">
+                                            Extra Hour Charge: ₹ {formData.extraHourCharge} {/* Display extra hour charge */}
+                                        </p>
+                                    </>
+                                )}
+
                                 {discountedAmount ? <p className="text-green-500 text-sm">
-                                    Discount Amount: ₹ {discountAmount}  {/* Display the discount amount */}
+                                    Discount Amount: ₹ {discountAmount} {/* Display the discount amount */}
                                 </p> : ""}
 
                                 <p>
-                                    <span className=" font-bold">Total Shop Amount</span> :
-                                    <span className=" app-font"> ₹ {
+                                    <span className="font-bold">Total Shop Amount</span> :
+                                    <span className="app-font"> ₹ {
                                         discountedAmount !== null
                                             ? discountedAmount  // Show discounted amount if coupon applied
                                             : formData.shopAmount  // Show original amount if no coupon applied
                                     }</span>
                                 </p>
                             </div>
+
 
                             <div className="mt-4">
 
@@ -462,7 +512,7 @@ const CartPage = () => {
                         </section>
 
                         <section aria-labelledby="cart-heading"
-                            className=" drop-shadow bg-white py-4 border px-4 lg:col-span-8 ">
+                            className=" drop-shadow bg-white py-4 border px-4 lg:col-span-8 rounded ">
                             <div className=" hidden lg:block md:block sm:block">
                                 <div className="flex justify-between items-center mb-4">
                                     <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">

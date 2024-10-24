@@ -5,6 +5,7 @@ import Services from "../../components/services/Services"
 import Vehicle from "../../components/vehicle/Vehicle"
 import LoginModal from "../../components/registration/LoginModal"
 import { useSearchParams } from "react-router-dom";
+import LeftSidePopup from "../../components/leftSidePop/LeftSidePop"
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
@@ -23,6 +24,7 @@ const HomePage = () => {
         <Services/>
         <Vehicle/>
         {isLoginModalOpen && <LoginModal autoOpen={true} />}
+        <LeftSidePopup />
     </Layout>
   )
 }
