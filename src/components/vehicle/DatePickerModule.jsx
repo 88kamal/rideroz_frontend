@@ -199,44 +199,6 @@ export default function DatePickerModule({ bookedDates }) {
   const today = dayjs();
   const [dialogSize, setDialogSize] = useState("xl");
 
-  // const isDateBooked = (date) => {
-  //   const bookedDate = bookedDates.find((bookedDate) => {
-  //     const startDate = dayjs(bookedDate.startDate);
-  //     const endDate = dayjs(bookedDate.endDate);
-
-  //     if (endDate.isBefore(startDate)) {
-  //       console.warn(`Invalid booking range for booking ID: ${bookedDate._id}`);
-  //       return false;
-  //     }
-
-  //     const isDuringBooking = dayjs(date).isBetween(startDate, endDate, 'day', '[)');
-  //     const isEndDateWithTime = dayjs(date).isSame(endDate, 'day') && endDate.hour() > 0;
-
-  //     return isDuringBooking || isEndDateWithTime;
-  //   });
-
-  //   if (bookedDate) {
-  //     const startTime = dayjs(bookedDate.startDate).format('hh:mm A');
-  //     const endTime = dayjs(bookedDate.endDate).format('hh:mm A');
-  //     const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
-  //     const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
-
-  //     const isPartialBooking = dayjs(date).isSame(dayjs(bookedDate.endDate), 'day') &&
-  //       dayjs(bookedDate.endDate).hour() > 0;
-
-  //     return {
-  //       isBooked: true,
-  //       startTime,
-  //       endTime,
-  //       startDateFormatted,
-  //       endDateFormatted,
-  //       isPartialBooking,
-  //     };
-  //   }
-
-  //   return { isBooked: false, isPartialBooking: false };
-  // };
-
   const isDateBooked = (date) => {
     const bookedDate = bookedDates.find((bookedDate) => {
       const startDate = dayjs(bookedDate.startDate);

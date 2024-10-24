@@ -231,6 +231,7 @@ import { useLoginMutation } from '../../redux/slices/authApiSlice';
 import authService from '../../services/authService';
 import NeedChangePassword from './NeedChangePassword';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 
 const LoginForm = ({ switchToSignup, switchToLogin }) => {
@@ -297,10 +298,14 @@ const LoginForm = ({ switchToSignup, switchToLogin }) => {
                 const rolePaths = {
                     2: '/super-admin-dashboard/super-admin-home-page',
                     14: '/shop-owner-dashboard/shop-owner-home-page',
-                    15: '/user-dashboard/user-home-page'
+                    15: '/'
                 };
 
                 navigate(rolePaths[user?.role]);
+
+                if(rolePaths[15]){
+                    toast.success(data?.message)
+                }
                 // Hide the success message after 5 seconds
                 setTimeout(() => {
                     setSuccessMessage('');

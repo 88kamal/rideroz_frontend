@@ -11,7 +11,7 @@ import {
     UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
-import { ClipboardPlus, MapPinned } from "lucide-react";
+import { ClipboardPlus, MapPinned, TicketCheck } from "lucide-react";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
 
 export default function UserSidebar() {
@@ -21,10 +21,10 @@ export default function UserSidebar() {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-      await logout(); // Call the logout mutation to remove token
-      navigate('/');  // Redirect to the home page after logout
+        await logout(); // Call the logout mutation to remove token
+        navigate('/');  // Redirect to the home page after logout
     };
-  
+
 
     return (
         <div className=" h-screen fixed w-full max-w-[16rem] p-4 
@@ -54,12 +54,13 @@ export default function UserSidebar() {
 
                 </Link>
 
-                <Link >
-                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
+                <Link to={'user-vehicle-book'}>
+                    <ListItem
+                        className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
-                            <UserGroupIcon className="h-5 w-5" />
+                            <TicketCheck className="h-5 w-5" />
                         </ListItemPrefix>
-                        All Employee
+                        All Vehicle Book
                     </ListItem>
                 </Link>
                 <Link >

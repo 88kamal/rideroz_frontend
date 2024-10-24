@@ -28,6 +28,9 @@ import VehicleInfoPage from "./pages/vehicleInfo/VehicleInfoPage";
 import AllVehiclePage from "./pages/allVehicles/AllVehiclePage";
 import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
 import PaymentSuccessPage from "./pages/paymentSuccessPage/PaymentSuccessPage";
+import PaymentCancelPage from "./pages/paymentSuccessPage/PaymentCancelPage";
+import PaymentCanceledByUser from "./pages/paymentSuccessPage/PaymentCanceledByUser";
+import UserVehicleBookPage from "./pages/dashboard/user/pages/UserVehicleBookPage";
 
 
 function App() {
@@ -46,6 +49,8 @@ function App() {
           <Route path="/all-vehicles/:city?/:currentLocation?" element={<AllVehiclePage />} />
           <Route path="/checkout/:id" element={<CheckoutPage />} />
           <Route path="/success-payment/:paymentId" element={<PaymentSuccessPage />} />
+          <Route path="/payment-cancel" element={<PaymentCancelPage />} />
+          <Route path="/payment-cancel-by-user" element={<PaymentCanceledByUser />} />
           <Route path="/*" element={<NoPage />} />
 
 
@@ -88,12 +93,6 @@ function App() {
                 path="view-user-and-shop-owner"
                 element={<SuperAdminViewUserAndShopOwnerPage />}
               />
-
-              {/* <Route
-                index={true}
-                path="add-and-view-employee/edit-employee/:id"
-                element={<SuperAdminEditEmployee />}
-              /> */}
             </Route>
 
 
@@ -112,6 +111,12 @@ function App() {
                 index={true}
                 path="user-home-page"
                 element={<SuperAdminHomePage />}
+              />
+
+<Route
+                index={true}
+                path="user-vehicle-book"
+                element={<UserVehicleBookPage />}
               />
             </Route>
 

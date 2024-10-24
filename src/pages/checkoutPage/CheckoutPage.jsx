@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 import Layout from "../../components/layout/Layout";
 import { BadgeIndianRupee } from 'lucide-react';
 import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
@@ -7,9 +9,10 @@ import { Button, Input } from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
 import myContext from "../../context/myContext";
 import dayjs from "dayjs";
-import DatePicker from "react-datepicker";
 import { useCreateOrderMutation, useVerifyPaymentMutation } from "../../redux/slices/orderApiSlice";
 import toast from "react-hot-toast";
+import CustomTimeDropdown from "./CustomTimeDropdown";
+import VehicleAvailbilityModal from "../../components/modal/vehicleBookAvaibilityModal/VehicleAvailbilityModal";
 
 const CartPage = () => {
     const { id } = useParams();
@@ -105,31 +108,31 @@ const CartPage = () => {
 
     const applyCoupon = () => {
         if (isCouponApplied) {
-            return; // Prevent applying the coupon more than once
+            toast.error('Coupon already applied!');
+            return;
         }
 
         if (formData.couponCode === 'Rideroz234') {
-            const discount = (5 / 100) * formData.shopAmount; // Calculate 5% discount
-            const discountedValue = formData.shopAmount - discount; // Calculate discounted amount
+            const discount = (5 / 100) * formData.shopAmount;
+            const discountedValue = formData.shopAmount - discount;
 
-            setDiscountedAmount(Math.round(discountedValue)); // Round to the nearest integer
-            setDiscountAmount(Math.round(discount)); // Set the discount value
-
-            // Update the shopAmount with the discounted amount
+            setDiscountedAmount(Math.round(discountedValue));
+            setDiscountAmount(Math.round(discount));
             setFormData(prevState => ({
                 ...prevState,
-                shopAmount: Math.round(discountedValue), // Update shop amount
-                discountAmount: Math.round(discount) // Set the discount amount in formData
+                shopAmount: Math.round(discountedValue),
+                discountAmount: Math.round(discount),
             }));
 
-            setIsCouponApplied(true); // Mark the coupon as applied
+            setIsCouponApplied(true);
             toast.success('Coupon applied successfully!');
         } else {
-            alert('Invalid Coupon Code');
-            setDiscountedAmount(null); // Reset if invalid
-            setDiscountAmount(0); // Reset if invalid
+            toast.error('Invalid Coupon Code');
+            setDiscountedAmount(null);
+            setDiscountAmount(0);
         }
     };
+
 
 
     // Recalculate shop amount whenever startDate or endDate changes
@@ -140,60 +143,33 @@ const CartPage = () => {
 
     const today = dayjs();
 
+
     const filterPassedDates = (date) => {
-        return dayjs(date).isSameOrAfter(today, 'day') && !isDateBooked(date).isBooked;
+        return dayjs(date).isSameOrAfter(today, 'day');
     };
 
-    const isDateBooked = (date) => {
-        const bookedDate = bookedDates.find((bookedDate) => {
-            const startDate = dayjs(bookedDate.startDate);
-            const endDate = dayjs(bookedDate.endDate);
-
-            if (endDate.isBefore(startDate)) {
-                console.warn(`Invalid booking range for booking ID: ${bookedDate._id}`);
-                return false;
-            }
-
-            return dayjs(date).isBetween(startDate, endDate, 'day', '[]');
-        });
-
-        if (bookedDate) {
-            const startTime = dayjs(bookedDate.startDate).format('hh:mm A');
-            const endTime = dayjs(bookedDate.endDate).format('hh:mm A');
-            const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
-            const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
-
-            return {
-                isBooked: true,
-                startTime,
-                endTime,
-                startDateFormatted,
-                endDateFormatted,
-            };
-        }
-        return { isBooked: false };
-    };
 
     const [createOrder, { isLoading, isError, error, data }] = useCreateOrderMutation();
     const [verifyPayment, { isLoading: verifyPaymentLoading, isError: isVerifyPaymentError, error: verifyPaymentError, isSuccess }] = useVerifyPaymentMutation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const vehicleId = id;  // Replace with the actual vehicle ID
+        const vehicleId = id;
         try {
             const orderResponse = await createOrder({ vehicleId, body: formData }).unwrap();
 
-            console.log("orderResponse", orderResponse)
             if (orderResponse.success) {
                 handlePaymentVerify(orderResponse);
             }
         } catch (error) {
-            console.error('Failed to create order:', error);
+            console.log('Failed to create order:', error);
         }
     };
 
-
     const handlePaymentVerify = (order) => {
+        // Set a flag indicating that payment has started
+        sessionStorage.setItem('paymentInProgress', 'true');
+
         const options = {
             key: 'rzp_test_4saMdxYboIyJ2n',
             amount: order.amount,
@@ -202,39 +178,78 @@ const CartPage = () => {
             order_id: order.razorpayOrderId,
             handler: async (response) => {
                 try {
-
-                    console.log("response", response)
                     const paymentDetails = {
                         razorpay_order_id: response.razorpay_order_id,
                         razorpay_payment_id: response.razorpay_payment_id,
                         razorpay_signature: response.razorpay_signature,
                     };
 
-                    // console.log("paymentDetails", paymentDetails)
-
                     const verifyResponse = await verifyPayment(paymentDetails).unwrap();
 
-                    console.log("verifyResponse", verifyResponse)
-
-                    if (verifyResponse.message) {
-                        toast.success(verifyResponse.message);
-                        navigate(`/success-payment/1234`)
+                    if (verifyResponse) {
+                        // Clear the flag when payment is successful
+                        sessionStorage.removeItem('paymentInProgress');
+                        toast.success('Payment successful! Booking confirmed.');
+                        setFormData({
+                            startDate: null,
+                            endDate: null,
+                            startTime: '',
+                            endTime: '',
+                            shopAmount: 0,
+                            platformAmount: 0,
+                            miscAmount: 0,
+                            couponCode: '',
+                            discountAmount: 0
+                        })
+                        navigate(`/success-payment/${order.razorpayOrderId}`);
                     } else {
-                        toast.error('Payment verification failed');
+                        toast.error('Payment verification failed. Please try again.');
                     }
                 } catch (error) {
-                    console.error('Error verifying payment:', error);
-                    toast.error('Payment verification failed');
+                    console.log('Error verifying payment:', error);
+                    toast.error('Payment verification failed. Please try again.');
                 }
             },
             theme: {
                 color: '#5f63b8',
+            },
+            modal: {
+                ondismiss: () => {
+                    // Clear the flag when payment is canceled
+                    sessionStorage.removeItem('paymentInProgress');
+                    // toast.info('Payment canceled by user.');
+                    // Redirect to the payment cancel page
+                    navigate('/payment-cancel-by-user');
+                },
             },
         };
 
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
     };
+
+    // Check for payment status on page load or refresh
+    window.addEventListener('load', () => {
+        const paymentInProgress = sessionStorage.getItem('paymentInProgress');
+        if (paymentInProgress) {
+            // Show a message if the user refreshed the page during payment
+            // Redirect to the payment cancel page
+            // toast.error('It seems the payment process was interrupted. Please try again.');
+            // Optionally, you can also clear the session storage here if needed
+            sessionStorage.removeItem('paymentInProgress');
+        }
+    });
+
+    useEffect(() => {
+        const paymentInProgress = sessionStorage.getItem('paymentInProgress');
+        if (paymentInProgress) {
+            // Redirect to the payment cancel page
+            navigate('/payment-cancel');
+            // Optionally, clear the session storage here
+            sessionStorage.removeItem('paymentInProgress');
+        }
+    }, [navigate]);
+
 
     useEffect(() => {
         if (isError) {
@@ -248,11 +263,12 @@ const CartPage = () => {
     }, [isError, error, isSuccess, data, isVerifyPaymentError, verifyPaymentError]);
 
 
+
     return (
         <Layout>
             <div className="container mx-auto max-w-7xl px-2 lg:px-0">
-                {/* <pre>{JSON.stringify(vehicle?.vehiclePrice, null, 2)}</pre> */}
-                <pre>{JSON.stringify(formData, null, 2)}</pre>
+                {/* <pre>{JSON.stringify(vehicle, null, 2)}</pre> */}
+                {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(discountAmount,null,2)}</pre> */}
 
                 <div className="mx-auto max-w-2xl lg:max-w-7xl">
@@ -260,12 +276,22 @@ const CartPage = () => {
 
                         <section
                             aria-labelledby="summary-heading"
-                            className="mt-5 mb-5 lg:mt-0 lg:mb-0 rounded-md lg:col-span-4 bg-white drop-shadow p-5 order-first lg:order-last"
+                            className="mt-2.5 mb-5 lg:mt-0 lg:mb-0 rounded-md lg:col-span-4 bg-white drop-shadow p-5 order-first lg:order-last"
                         >
+
+                            <div className=" lg:hidden sm:hidden md:hidden">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                                        Checkout
+                                    </h1>
+
+                                    <VehicleAvailbilityModal bookedDates={bookedDates} />
+                                </div>
+                            </div>
                             {/* Pickup/Dropoff Date and Time */}
                             <div>
                                 <div className="mb-2">
-                                    <DatePicker
+                                    {/* <DatePicker
                                         selected={formData.startDate}
                                         onChange={(date) => handleDateChange(date, 'startDate')}
                                         filterDate={filterPassedDates}
@@ -273,11 +299,20 @@ const CartPage = () => {
                                         className="text-xs sm:text-sm p-2 w-[241%] md:w-[200%] lg:w-[216.4%] outline-none border-gray-500 border"
                                         placeholderText="Select Pickup Date"
                                         required
+                                    /> */}
+                                    <input
+                                        type="date"
+                                        value={formData.startDate}
+                                        onChange={(e) => handleDateChange(e.target.value, 'startDate')}
+                                        min={new Date().toISOString().split('T')[0]} // This will prevent selecting past dates
+                                        className="text-xs sm:text-sm p-2 w-full outline-none rounded border-gray-500 border"
+                                        placeholder="Select Pickup Date"
                                     />
+
                                 </div>
 
                                 <div className="mb-2">
-                                    <input
+                                    {/* <input
                                         label="Pickup Time"
                                         type="time"
                                         name="startTime"
@@ -285,11 +320,18 @@ const CartPage = () => {
                                         onChange={handleChange}
                                         required
                                         className="text-xs sm:text-sm border p-1.5 w-full outline-none border-gray-500"
+                                    /> */}
+
+                                    <CustomTimeDropdown
+                                        name="startTime"
+                                        value={formData.startTime}
+                                        onChange={handleChange}
                                     />
+
                                 </div>
 
                                 <div className="mb-2">
-                                    <DatePicker
+                                    {/* <DatePicker
                                         selected={formData.endDate}
                                         onChange={(date) => handleDateChange(date, 'endDate')}
                                         filterDate={filterPassedDates}
@@ -297,11 +339,21 @@ const CartPage = () => {
                                         className="text-xs sm:text-sm border p-2 w-[241%] md:w-[200%] lg:w-[216.4%] outline-none border-gray-500"
                                         placeholderText="Select Drop off Date"
                                         required
+                                    /> */}
+                                    <input
+                                        type="date"
+                                        value={formData.endDate}
+                                        onChange={(e) => handleDateChange(e.target.value, 'endDate')}
+                                        min={new Date().toISOString().split('T')[0]} // This will prevent selecting past dates
+                                        className="text-xs sm:text-sm border p-2 w-full outline-none rounded border-gray-500"
+                                        placeholder="Select Drop off Date"
                                     />
+
+
                                 </div>
 
                                 <div>
-                                    <input
+                                    {/* <input
                                         placeholder="Drop Off Time"
                                         type="time"
                                         name="endTime"
@@ -309,12 +361,18 @@ const CartPage = () => {
                                         onChange={handleChange}
                                         required
                                         className="text-xs sm:text-sm border p-1.5 w-full outline-none border-gray-500"
+                                    /> */}
+
+                                    <CustomTimeDropdown
+                                        name={"endTime"}
+                                        value={formData.endTime}
+                                        onChange={handleChange}
                                     />
                                 </div>
                             </div>
 
 
-                            <div className=" bg-green-50 p-2 mt-4 border border-green-100">
+                            <div className=" bg-green-50 p-2 mt-4 border border-green-100 rounded">
                                 <div className="flex justify-between items-center mb-1">
                                     <p className="text-black app-font">Coupons</p>
                                     <p className="app-font text-green-700">5% OFF</p>
@@ -387,31 +445,34 @@ const CartPage = () => {
                             </div>
 
                             <div className="mt-4">
+
+
                                 <Button
-                                    onClick={handleSubmit}
                                     variant=""
                                     size="small"
                                     className="hover:shadow-none shadow-none w-full bg-green-500"
-                                    disabled={verifyPaymentLoading || !formData.startDate || !formData.endDate || !formData.startTime || !formData.endTime} // Disable if loading or fields are missing
+
+                                    onClick={handleSubmit}
+                                    disabled={verifyPaymentLoading || !formData.startDate || !formData.endDate || !formData.startTime || !formData.endTime}
                                 >
-                                    {verifyPaymentLoading ? "Confirmed" : "Confirm"}
+                                    {verifyPaymentLoading ? "Processing..." : "Confirm"}
                                 </Button>
 
                             </div>
                         </section>
 
-
-
                         <section aria-labelledby="cart-heading"
                             className=" drop-shadow bg-white py-4 border px-4 lg:col-span-8 ">
-                            <div className="mb-4">
-                                <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                                    Checkout
-                                </h1>
-                                <div className=" app-font mt-2">
-                                    <span>Home</span> / <span>Renting</span> / <span>Checkout</span>
+                            <div className=" hidden lg:block md:block sm:block">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                                        Checkout
+                                    </h1>
+
+                                    <VehicleAvailbilityModal bookedDates={bookedDates} />
                                 </div>
                             </div>
+
                             <div className=" bg-white drop-shadow mb-4 px-4 py-4">
                                 <div className="">
                                     <h1 className=" mb-2 app-font">
@@ -486,15 +547,8 @@ const CartPage = () => {
                                     <p className=" app-font text-justify text-red-600">"If you don't arrive at the shop within 1 hour after booking the vehicle, your ride will be automatically canceled, and 50% of your amount will be refunded."</p>
                                 </div>
                             </div>
-                            {/* <pre>{JSON.stringify(vehicle, null, 2)}</pre> */}
-
-
                         </section>
-
-
                     </form>
-
-
                 </div>
             </div>
         </Layout>

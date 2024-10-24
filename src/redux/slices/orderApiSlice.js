@@ -21,7 +21,19 @@ export const orderApiSlice = apiSlice.injectEndpoints({
               body: paymentData,
             }),
           }),
+
+          saveOrder: builder.mutation({
+            query: (orderData) => ({
+              url: '/order/save-order',
+              method: 'POST',
+              body: orderData,
+              headers: {
+                "auth-token": JSON.parse(localStorage.getItem("token")),
+                'Content-Type': 'application/json',
+            },
+            }),
+          }),
     }),
 });
 
-export const { useCreateOrderMutation, useVerifyPaymentMutation } = orderApiSlice;
+export const { useCreateOrderMutation, useVerifyPaymentMutation, useSaveOrderMutation } = orderApiSlice;
