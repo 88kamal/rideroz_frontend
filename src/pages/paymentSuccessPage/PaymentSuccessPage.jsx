@@ -1,6 +1,7 @@
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import { Button } from '@material-tailwind/react'
+import { Link } from 'react-router-dom'
 
 const PaymentSuccessPage = () => {
     const { width, height } = useWindowSize()
@@ -19,10 +20,13 @@ const PaymentSuccessPage = () => {
                     <h1 className=' mb-3'>{"67153b907fc2c450a5bdd351"}</h1>
 
                     <div className=" flex justify-center items-center">
-                        <Button variant=''
+                        <Link to={'/user-dashboard/user-vehicle-book'}>
+                         <Button variant=''
                             className=' py-3 hover:shadow-none shadow-none bg-transparent border text-green-600 border-green-600'>
-                            View Location
+                            View Vehicle
                         </Button>
+                        </Link>
+                       
 
                     </div>
                 </div>

@@ -32,7 +32,7 @@ import PaymentCancelPage from "./pages/paymentSuccessPage/PaymentCancelPage";
 import PaymentCanceledByUser from "./pages/paymentSuccessPage/PaymentCanceledByUser";
 import UserVehicleBookPage from "./pages/dashboard/user/pages/UserVehicleBookPage";
 import TopAlert from "./components/alert/TopAlert";
-import LeftSidePopup from "./components/leftSidePop/LeftSidePop";
+import ViewUserBookingInvoice from "./components/common/bookedVehicles/pages/ViewUserBookingInvoice";
 
 
 function App() {
@@ -116,10 +116,17 @@ function App() {
                 element={<SuperAdminHomePage />}
               />
 
-<Route
+              <Route
                 index={true}
                 path="user-vehicle-book"
                 element={<UserVehicleBookPage />}
+              />
+
+
+              <Route
+                index={true}
+                path="user-home-page/user-vehicle-book/view-more-vehicle-book/:id"
+                element={<ViewUserBookingInvoice />}
               />
             </Route>
 

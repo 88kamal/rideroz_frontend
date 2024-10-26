@@ -1,0 +1,262 @@
+/* eslint-disable no-unsafe-optional-chaining */
+import { useGetOrderByIdQuery } from '../../../../redux/slices/orderApiSlice';
+import { useParams } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { Spinner } from '@material-tailwind/react';
+
+const ViewUserBookingInvoice = () => {
+    const { id } = useParams();
+    const { data, error, isLoading } = useGetOrderByIdQuery(id);
+
+    if (isLoading) {
+        return (
+            <div className=' flex justify-center items-center'>
+                <Spinner color="green" fontSize={90} />
+            </div>
+        );
+    }
+    
+    if (error) {
+        return <p>Error loading invoice details</p>;
+    }
+    
+    
+     // Ensure data is defined before destructuring
+     if (!data || !data.order) {
+        return <p>No order found.</p>;
+    }
+
+
+    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id } = data.order;
+
+    const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-US');
+
+    const formatDateTime = (dateString, timeString) => {
+        const date = new Date(dateString);
+
+        if (timeString) {
+            const [hours, minutes] = timeString.split(':');
+            date.setHours(hours);
+            date.setMinutes(minutes);
+        }
+
+        return date.toLocaleString('en-US', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+        });
+    };
+
+    const handleDownload = () => {
+        const element = document.getElementById('invoice');
+        html2canvas(element).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgWidth = 190;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+            pdf.save('invoice.pdf');
+        });
+    };
+
+    return (
+        <div className="" >
+            <div className="max-w-7xl mx-auto bg-white p- rounded-lg drop-shadow " id="invoice">
+                {/* Header with Company Logo and Name */}
+                <div className="">
+                    <div className="flex items-center justify-between mb- p-6">
+
+                        <div className="">
+                            <h1 className="text-3xl font-bold">Rideroz</h1>
+                            <p className="text-sm app-font">Your Trusted Vehicle Rental Service</p>
+                        </div>
+
+                        <img src="../../../../logo/rideroz.png" alt="Company Logo" className="w-28 h-12" />
+                    </div>
+
+                    <div className="border-b">
+                        <h2 className="text-2xl font-bold mb-4 text-center">Booking Invoice</h2>
+                    </div>
+
+
+                </div>
+
+                {/* User Information Table */}
+
+                <div className=" p-6">
+                    <div className="mb-6">
+                        <table className="w-full border border-gray-300 app-font">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="p-2 text-left">Customer Details</th>
+                                    <th className="p-2 text-left border border-gray-300">Vehicle Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Name : </span> {user.userName}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Name : </span> {vehicle.vehicleName}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Email : </span> {user.userEmail}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Model : </span> {vehicle.vehicleModel}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Phone : </span> {user.userPhoneNumber}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Number : </span> {vehicle.vehicleNumber}
+                                    </td>
+                                </tr>
+
+                                <tr className="border-t">
+                                    <td className="p-2 font-semibold"></td>
+                                    <td className="p-2  border border-gray-300">
+                                        <span >Price Per Day : </span> ₹ {vehicle.vehiclePrice}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                    {/* Booking Details Table */}
+                    <div className="mb-6 app-font">
+                        <table className="w-full border border-gray-300 app-font">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="p-2 text-left">Booking Details</th>
+                                    <th className="p-2 text-left border border-gray-300">Razorpay Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Pickup Date : </span>
+                                        {formatDateTime(startDate, data.order.startTime || '')}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Order ID : </span>
+                                        {razorpay_order_id}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Drop Off Date : </span>
+                                        {formatDateTime(endDate, data.order.endTime || '')}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Payment ID : </span>
+                                        {razorpay_payment_id}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Status :</span> {status}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                    {/* Payment Details */}
+                    <div className="mb-6 app-font">
+                        <h3 className="text-lg font-semibold mb-2">Payment Details</h3>
+                        <table className="w-full border border-gray-300">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="p-2 text-left">Description</th>
+                                    <th className="p-2 text-right border border-gray-300">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">Vehicle Amount</td>
+                                    <td className="p-2 text-right border border-gray-300">₹{vehicle?.vehiclePrice}</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">Platform Fee</td>
+                                    <td className="p-2 text-right border border-gray-300">₹{platformAmount}</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">Miscellaneous Charges</td>
+                                    <td className="p-2 text-right border border-gray-300">₹{miscAmount}</td>
+                                </tr>
+                                {discountAmount && (
+                                    <tr>
+                                        <td className="p-2 border border-gray-300">Discount</td>
+                                        <td className="p-2 text-right border border-gray-300">-₹{discountAmount}</td>
+                                    </tr>
+                                )}
+                                <tr className="border-t">
+                                    <td className="p-2 font-semibold">Total Amount</td>
+                                    <td className="p-2 text-right font-semibold border border-gray-300">₹{totalAmount}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    {/* Coupon Details */}
+                    {coupon && (
+                        <div className="pb-4 app-font">
+                            <h3 className="text-lg font-semibold">Coupon</h3>
+                            <table className="min-w-full border-collapse border border-gray-300 mt-2">
+                                <thead>
+                                    <tr className="bg-gray-200">
+                                        <th className="border border-gray-300 px-4 py-2 text-left">Detail</th>
+                                        <th className="border border-gray-300 px-4 py-2 text-left">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="border border-gray-300 px-4 py-2"><span>Code : </span></td>
+                                        <td className="border border-gray-300 px-4 py-2">{coupon.code}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border border-gray-300 px-4 py-2"><span>Discount Value : </span></td>
+                                        <td className="border border-gray-300 px-4 py-2">{coupon.discountValue}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border border-gray-300 px-4 py-2"><span>Expires on : </span></td>
+                                        <td className="border border-gray-300 px-4 py-2">{formatDate(coupon.expirationDate)}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+
+
+                    {/* Signature */}
+                    <div className="mt-6 text-center">
+                        <p className="italic">Thank you for choosing Rideroz!</p>
+                        <p className="mt-2">Signature: ___________________________</p>
+
+                    </div>
+                </div>
+            </div>
+
+            {/* Download Button */}
+            <div className="text-center mt-4">
+                <button onClick={handleDownload} className="bg-blue-500 text-white px-4 py-2 rounded">
+                    Download Invoice as PDF
+                </button>
+            </div>
+        </div>
+
+    );
+};
+
+export default ViewUserBookingInvoice;

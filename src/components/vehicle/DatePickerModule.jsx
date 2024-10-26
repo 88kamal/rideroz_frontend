@@ -272,7 +272,7 @@ export default function DatePickerModule({ bookedDates }) {
         onClick={handleOpen}
         className="bg-green-500 text-white w-full mt-1 py-2 hover:shadow-none shadow-none rounded shadow-none hover:bg-green-600 transition duration-300"
       >
-        Check Availability
+         Availability
       </Button>
 
       <Dialog open={open} size={dialogSize} className="shadow-none hover:shadow-none rounded-md">

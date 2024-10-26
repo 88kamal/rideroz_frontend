@@ -9,7 +9,7 @@ function MyState(props) {
   const [vehicleType, setVehicleType] = useState('');  // Optional type
   const [selectedCity, setSelectedCity] = useState('');
   const [currentLocationName, setCurrentLocationName] = useState('');
-
+  const [autoOpenLogin, setAutoOpenLogin] = useState(false);
 
   const [alert, setAlert] = useState({
     show: false,
@@ -35,7 +35,8 @@ function MyState(props) {
       vehicleCity, setVehicleCity,
       selectedCity, setSelectedCity,
       currentLocationName, setCurrentLocationName,
-      alert, showAlert
+      alert, showAlert,
+      autoOpenLogin, setAutoOpenLogin
     }}>
       {props.children}
     </MyContext.Provider>

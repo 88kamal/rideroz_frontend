@@ -3,17 +3,20 @@ import { BsWhatsapp } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import { Button } from "@material-tailwind/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { useParams } from "react-router-dom";
 import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
 import { TicketMinus } from "lucide-react";
 import VehicleReview from "../../components/review/VehicleReview";
 import RatingStar from "../../components/review/RatingStar";
+import LoginModal from "../../components/registration/LoginModal";
+import myContext from "../../context/myContext";
 
 
 function ProductInfo() {
     const { id } = useParams();
+    const {autoOpenLogin, setAutoOpenLogin} = useContext(myContext)
     const { data: vehicle, error, isLoading } = useGetVehicleByIdQuery(id);
 
     // console.log(imageData)
@@ -30,6 +33,7 @@ function ProductInfo() {
 
     // console.log(imageData.image2)
 
+    const handleLoginModalClose = () => setAutoOpenLogin(false);
 
     return (
         <Layout>
@@ -275,6 +279,7 @@ function ProductInfo() {
                     </div>
 
                 </div>
+                <LoginModal showLoginButton={false} autoOpen={autoOpenLogin} onClose={handleLoginModalClose} />
             </section>
         </Layout>
     );

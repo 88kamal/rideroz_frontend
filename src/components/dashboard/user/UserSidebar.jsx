@@ -13,12 +13,19 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { ClipboardPlus, MapPinned, TicketCheck } from "lucide-react";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
+import apiSlice from "../../../redux/slices/apiSlice";
+import { useDispatch } from "react-redux";
 
 export default function UserSidebar() {
 
+    const dispatch = useDispatch();
     const [logout] = useLogoutMutation();
 
     const navigate = useNavigate();
+
+     // Reset the RTK query cache
+     dispatch(apiSlice.util.resetApiState());
+
 
     const handleLogout = async () => {
         await logout(); // Call the logout mutation to remove token

@@ -14,12 +14,16 @@ import { useCreateOrderMutation, useVerifyPaymentMutation } from "../../redux/sl
 import toast from "react-hot-toast";
 import CustomTimeDropdown from "./CustomTimeDropdown";
 import VehicleAvailbilityModal from "../../components/modal/vehicleBookAvaibilityModal/VehicleAvailbilityModal";
+import UploadAdharImage from "./UploadAdharImage";
+import authService from "../../services/authService";
+import LoginModal from "../../components/registration/LoginModal";
 
 const CartPage = () => {
+    const user = authService.getCurrentUser()
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: vehicle } = useGetVehicleByIdQuery(id);
-    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName, showAlert } = useContext(myContext);
+    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName, showAlert, autoOpenLogin, setAutoOpenLogin } = useContext(myContext);
 
     const [bookedDates, setBookedDates] = useState([]);
     const [rentDuration, setRentDuration] = useState(0); // State to store rent duration in days
@@ -38,7 +42,8 @@ const CartPage = () => {
         discountAmount: discountAmount,
         extraHours: 0,
         extraHourCharge: 0,
-        rentDuration: ""
+        rentDuration: "",
+        adharcardImg: null
     });
 
     const [isCouponApplied, setIsCouponApplied] = useState(false); // New state to track coupon application
@@ -184,16 +189,32 @@ const CartPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const vehicleId = id;
+
+        const data = new FormData();
+        Object.keys(formData).forEach((key) => {
+          // Append only if the value is not null or undefined
+          if (formData[key]) {
+            data.append(key, formData[key]);
+          }
+        });
+
         try {
-            const orderResponse = await createOrder({ vehicleId, body: formData }).unwrap();
+            const orderResponse = await createOrder({ vehicleId, body: data }).unwrap();
 
             if (orderResponse.success) {
                 handlePaymentVerify(orderResponse);
             }
         } catch (error) {
             console.log('Failed to create order:', error);
+
+            // Check for user not found error and show login modal
+            if (error.status === 500 && error.data?.error === "Access denied. Re-login") {
+                setAutoOpenLogin(true);
+            }
         }
     };
+
+    const handleLoginModalClose = () => setAutoOpenLogin(false);
 
     const handlePaymentVerify = (order) => {
         // Set a flag indicating that payment has started
@@ -303,7 +324,8 @@ const CartPage = () => {
     return (
         <Layout>
             <div className="container mx-auto max-w-7xl px-2 lg:px-0">
-                {/* <pre>{JSON.stringify(vehicle, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(autoOpenLogin, null, 2)}</pre> */}
+                {/* <pre>{JSON.stringify(error, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(discountAmount,null,2)}</pre> */}
 
@@ -403,6 +425,14 @@ const CartPage = () => {
                                         name={"endTime"}
                                         value={formData.endTime}
                                         onChange={handleChange}
+                                    />
+                                </div>
+
+                                <div className="">
+                                    <UploadAdharImage
+                                        formData={formData}
+                                        setFormData={setFormData}
+
                                     />
                                 </div>
                             </div>
@@ -600,6 +630,7 @@ const CartPage = () => {
                         </section>
                     </form>
                 </div>
+                <LoginModal showLoginButton={false} autoOpen={autoOpenLogin} onClose={handleLoginModalClose} />
             </div>
         </Layout>
     );

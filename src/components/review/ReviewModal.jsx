@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
     Button,
     Dialog,
@@ -9,19 +9,28 @@ import {
 } from "@material-tailwind/react";
 import { useAddReviewMutation } from "../../redux/slices/vehicleApiSlice";
 import toast from "react-hot-toast";
-import authService from "../../services/authService";
 import { X } from "lucide-react";
+import myContext from "../../context/myContext";
+import authService from "../../services/authService";
 
 export function ReviewModal({ image, vehicleId, refetch }) {
     const [open, setOpen] = useState(false);
 
-    const handleOpen = () => setOpen(!open);
+    const user = authService.getCurrentUser()
 
-    const user = authService.getCurrentUser();
+    const {setAutoOpenLogin} = useContext(myContext);
+
+    const handleOpen = () => {
+        setOpen(!open)
+        if(!user){
+            setAutoOpenLogin(true)
+        }
+    };
+
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-    const [addReview, { isLoading, isError, error, data, isSuccess }] = useAddReviewMutation();
+    const [addReview, { isError, error, data, isSuccess }] = useAddReviewMutation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -50,30 +59,21 @@ export function ReviewModal({ image, vehicleId, refetch }) {
 
     return (
         <>
-            {user ? (
-                <Button
-                    onClick={() => handleOpen("lg")}
-                    className={`flex items-center fontPara justify-center rounded-md py-2.5 lg:px-5 lg:py-2 text-center text-[0.8em] lg:text-sm font-medium lg:w-full hover:shadow-none shadow-none gap-3 bg-transparent border text-black border-green-100 w-full`}
-                >
-                    Write a Review
-                </Button>
-            ) : (
-                <Button
-                    disabled
-                    className={`flex items-center fontPara justify-center rounded-md py-2.5 lg:px-5 lg:py-2 text-center text-[0.8em] lg:text-sm font-medium lg:w-full hover:shadow-none shadow-none gap-3 bg-gray-400 border border-green-100 w-full`}
-                >
-                    Login to Write a Review
-                </Button>
-            )}
+            <Button
+                onClick={() => handleOpen("lg")}
+                className={`flex items-center fontPara justify-center rounded-md py-2.5 lg:px-5 lg:py-2 text-center text-[0.8em] lg:text-sm font-medium lg:w-full hover:shadow-none shadow-none gap-3 bg-transparent border text-black border-green-100 w-full`}
+            >
+                Write a Review
+            </Button>
 
             <Dialog open={open} handler={handleOpen}>
                 <DialogBody>
-                <div className="">
-                    <h1 className="text-xl text-black font-bold">Employee Detail</h1>
-                    <div className="absolute top-2 right-2 py-1.5 px-1.5 bg-gray-200 cursor-pointer rounded-full" onClick={handleOpen}>
-                        <X size={20} className="text-gray-800 hover:text-green-900" />
+                    <div className="">
+                        <h1 className="text-xl text-black font-bold">Employee Detail</h1>
+                        <div className="absolute top-2 right-2 py-1.5 px-1.5 bg-gray-200 cursor-pointer rounded-full" onClick={handleOpen}>
+                            <X size={20} className="text-gray-800 hover:text-green-900" />
+                        </div>
                     </div>
-                </div>
 
                     <div className="">
                         <div className="flex justify-center">

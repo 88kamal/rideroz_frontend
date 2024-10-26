@@ -112,7 +112,7 @@ export default function Navbars() {
             })}
             <>
                 {/* Show the LoginModal in the mobile menu */}
-                <LoginModal />
+                <LoginModal showLoginButton={true}  />
             </>
         </ul>
     );

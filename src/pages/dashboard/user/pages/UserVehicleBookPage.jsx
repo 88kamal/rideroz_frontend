@@ -1,6 +1,10 @@
+import BookedVehicles from "../../../../components/common/bookedVehicles/BookedVehicles"
+
 const UserVehicleBookPage = () => {
   return (
-    <div>UserVehicleBookPage</div>
+    <div>
+      <BookedVehicles/>
+    </div>
   )
 }
 
