@@ -15,11 +15,9 @@ import toast from "react-hot-toast";
 import CustomTimeDropdown from "./CustomTimeDropdown";
 import VehicleAvailbilityModal from "../../components/modal/vehicleBookAvaibilityModal/VehicleAvailbilityModal";
 import UploadAdharImage from "./UploadAdharImage";
-import authService from "../../services/authService";
 import LoginModal from "../../components/registration/LoginModal";
 
 const CartPage = () => {
-    const user = authService.getCurrentUser()
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: vehicle } = useGetVehicleByIdQuery(id);

@@ -12,17 +12,20 @@ import toast from "react-hot-toast";
 import { X } from "lucide-react";
 import myContext from "../../context/myContext";
 import authService from "../../services/authService";
+import LoginModal from "../registration/LoginModal";
 
 export function ReviewModal({ image, vehicleId, refetch }) {
     const [open, setOpen] = useState(false);
 
     const user = authService.getCurrentUser()
 
-    const {setAutoOpenLogin} = useContext(myContext);
+    const { autoOpenLogin, setAutoOpenLogin } = useContext(myContext);
 
     const handleOpen = () => {
-        setOpen(!open)
-        if(!user){
+        if (user) {
+            setOpen(!open)
+        }
+        else {
             setAutoOpenLogin(true)
         }
     };
@@ -56,6 +59,7 @@ export function ReviewModal({ image, vehicleId, refetch }) {
             setComment("")
         }
     }, [isError, error, isSuccess, data]);
+
 
     return (
         <>
@@ -113,6 +117,8 @@ export function ReviewModal({ image, vehicleId, refetch }) {
                     </div>
                 </DialogBody>
             </Dialog>
+
+            {!user && <LoginModal showLoginButton={false} autoOpen={autoOpenLogin} />}
         </>
     );
 }
