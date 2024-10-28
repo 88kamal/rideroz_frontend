@@ -16,6 +16,15 @@ const AllVehicle = () => {
     });    
     return (
         <section className="py-5">
+              {/* <pre>{JSON.stringify({
+                    lat,
+                    lng,
+                    vehicleType,
+                    vehicleCity, selectedCity, currentLocationName
+                },null,2)}</pre> */}
+
+                {/* <pre>{JSON.stringify(vehicles,null,2)}</pre> */}
+                
             <div className="container mx-auto px-">
                 <div className="flex flex-wrap -m-4 justify-center">
                     {isLoading ? (

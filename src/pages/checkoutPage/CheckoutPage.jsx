@@ -211,6 +211,12 @@ const CartPage = () => {
             if (error.status === 500 && error.data?.error === "Access denied. Re-login") {
                 setAutoOpenLogin(true);
             }
+
+            if (error.status === 404 && error.data?.error === "User not found") {
+                setAutoOpenLogin(true);
+            }
+
+
         }
     };
 
@@ -325,8 +331,8 @@ const CartPage = () => {
         <Layout>
             <div className="container mx-auto max-w-7xl px-2 lg:px-0">
             {/* <pre>{JSON.stringify(autoOpenLogin, null, 2)}</pre> */}
-                {/* <pre>{JSON.stringify(error, null, 2)}</pre> */}
-                {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
+                <pre>{JSON.stringify(error, null, 2)}</pre>
+                <pre>{JSON.stringify(formData, null, 2)}</pre>
                 {/* <pre>{JSON.stringify(discountAmount,null,2)}</pre> */}
 
                 <div className="mx-auto max-w-2xl lg:max-w-7xl">
@@ -540,94 +546,6 @@ const CartPage = () => {
 
                             </div>
                         </section>
-
-                        <section aria-labelledby="cart-heading"
-                            className=" drop-shadow bg-white py-4 border px-4 lg:col-span-8 rounded ">
-                            <div className=" hidden lg:block md:block sm:block">
-                                <div className="flex justify-between items-center mb-4">
-                                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                                        Checkout
-                                    </h1>
-
-                                    <VehicleAvailbilityModal bookedDates={bookedDates} />
-                                </div>
-                            </div>
-
-                            <div className=" bg-white drop-shadow mb-4 px-4 py-4">
-                                <div className="">
-                                    <h1 className=" mb-2 app-font">
-                                        <span className=" font-bold">City : </span>
-                                        <span>{selectedCity}</span>
-                                    </h1>
-
-                                    <h1 className=" mb-2 app-font">
-                                        <span className=" font-bold">Current Location : </span>
-                                        <span>{currentLocationName || "N/A"}</span>
-                                    </h1>
-                                </div>
-                            </div>
-                            <div className=" bg-white drop-shadow mb-2">
-                                <ul role="list" className="divide-y divide-gray-200">
-                                    <div className="">
-                                        <li className="flex py-6 sm:py-6 ">
-                                            <div className="flex-shrink-0">
-                                                <img
-                                                    src={vehicle?.vehicleImage[0]?.url}
-                                                    alt={vehicle?.vehicleName}
-                                                    className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
-                                                />
-                                            </div>
-
-                                            <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                                                <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                                                    <div>
-                                                        <div className="flex justify-between">
-                                                            <h3 className="text-sm">
-                                                                <a className="font-semibold text-black app-font">
-                                                                    {vehicle?.vehicleName}
-                                                                </a>
-                                                            </h3>
-                                                        </div>
-
-                                                        <div className="mt-1 flex items-center space-x-2">
-
-                                                            <p className="text-sm app-font font-medium text-gray-900">
-                                                                ₹ {vehicle?.vehiclePrice}
-                                                            </p>
-                                                            <div className={` bg-green-600 px-2 app-font text-white  animate-pulse text-[10px]`}>
-                                                                {vehicle?.vehicleAvailability && "Available"}
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div className="mt-2">
-                                                            <RatingStar
-                                                                rating={vehicle?.vehicleRatings}
-                                                                totalRating={vehicle?.numOfReviews}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </div>
-                                </ul>
-                            </div>
-
-                            <div className=" bg-white drop-shadow mb-4 px-4 py-4">
-                                <div className="flex items-center gap-2">
-                                    <BadgeIndianRupee color="green" /> Excess Hourly Charges 100/hr
-                                </div>
-                            </div>
-
-                            <div className=" bg-white drop-shadow mb-4 px-4 py-4">
-                                <div className="">
-                                    <p className=" app-font text-justify mb-1 text-red-600">"Vehicle book करने के बाद अगर आप 1 घंटे के अंदर Shop पर नहीं पहुँचते हैं, तो आपकी ride अपने आप cancel हो जाएगी और आपके amount का 50% refund कर दिया जाएगा।"</p>
-                                    <p className=" app-font text-justify text-red-600">"If you don't arrive at the shop within 1 hour after booking the vehicle, your ride will be automatically canceled, and 50% of your amount will be refunded."</p>
-                                </div>
-                            </div>
-                        </section>
                     </form>
                 </div>
                 {!user && <LoginModal showLoginButton={false} autoOpen={autoOpenLogin} onClose={handleLoginModalClose} />}
@@ -637,3 +555,5 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+

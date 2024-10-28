@@ -43,6 +43,7 @@ const AllVehiclePage = () => {
                     vehicleType, setVehicleType,
                     vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName
                 },null,2)}</pre> */}
+                
                 <div className="flex flex-col lg:flex-row lg:space-x-6 space-y-4 lg:space-y-0">
                     {/* Filter Section */}
                     <div className=" h-[23em] lg:w-1/4 drop-shadow bg-white rounded-md">

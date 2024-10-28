@@ -191,6 +191,9 @@ import { useEffect, useState } from "react";
 import "react-day-picker/style.css";
 import { Button, Dialog } from "@material-tailwind/react";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 export default function DatePickerModule({ bookedDates }) {
   const [open, setOpen] = useState(false);
@@ -199,30 +202,33 @@ export default function DatePickerModule({ bookedDates }) {
   const today = dayjs();
   const [dialogSize, setDialogSize] = useState("xl");
 
+
   const isDateBooked = (date) => {
     const bookedDate = bookedDates.find((bookedDate) => {
       const startDate = dayjs(bookedDate.startDate);
       const endDate = dayjs(bookedDate.endDate);
-
+  
       // Ignore bookings with invalid date ranges
       if (endDate.isBefore(startDate)) {
         console.warn(`Invalid booking range for booking ID: ${bookedDate._id}`);
         return false;
       }
-
+  
       // Check if the selected date falls within the booking range
       return dayjs(date).isBetween(startDate, endDate, 'day', '[]');
     });
-
+  
     if (bookedDate) {
-      const startTime = dayjs(bookedDate.startDate).format('hh:mm A');
-      const endTime = dayjs(bookedDate.endDate).format('hh:mm A');
+      // Parse and adjust the time based on the time zone or desired format
+      const startTime = dayjs(bookedDate.startDate).utc().format('hh:mm A');
+      const endTime = dayjs(bookedDate.endDate).utc().format('hh:mm A');
+  
       const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
       const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
-
+  
       // Check if the selected date is the end date of the booking
       const isPartialBooking = dayjs(date).isSame(dayjs(bookedDate.endDate), 'day');
-
+  
       return {
         isBooked: true,
         startTime,
@@ -232,10 +238,11 @@ export default function DatePickerModule({ bookedDates }) {
         isPartialBooking,
       };
     }
-
+  
     return { isBooked: false, isPartialBooking: false };
   };
-
+  
+  
 
   const handlePrevMonth = () => {
     setSelectedMonth(selectedMonth.subtract(1, 'month'));
@@ -270,13 +277,13 @@ export default function DatePickerModule({ bookedDates }) {
     <>
       <Button
         onClick={handleOpen}
-        className="bg-green-500 text-white w-full py-2 hover:shadow-none shadow-none rounded shadow-none hover:bg-green-600 transition duration-300"
+        className="bg-pink-500 text-white w-full py-2 hover:shadow-none shadow-none rounded shadow-none hover:bg-green-600 transition duration-300"
       >
          Availability
       </Button>
 
       <Dialog open={open} size={dialogSize} className="shadow-none hover:shadow-none rounded-md">
-        {/* <pre>{JSON.stringify(bookedDates)}</pre> */}
+        {/* <pre>{JSON.stringify(bookedDates, null,2)}</pre> */}
         <div className="overflow-y-scroll">
           <div className="flex justify-between items-center mb-2 bg-blue-500 sticky top-0 z-50">
             <Button
@@ -344,6 +351,7 @@ export default function DatePickerModule({ bookedDates }) {
                               <br className="hidden lg:block md:block sm:block" />
                               {" "}To <span className="font-semibold text-[10px]">{endDateFormatted} {endTime}</span>
                             </h1>
+                            <pre>{JSON.stringify(startTime)}</pre>
                           </div>
                         )
                       ) : (
