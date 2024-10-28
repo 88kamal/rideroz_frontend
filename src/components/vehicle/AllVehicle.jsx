@@ -13,18 +13,18 @@ const AllVehicle = () => {
         lng,
         vehicleCity,
         vehicleType,
-    });    
+    });
     return (
         <section className="py-5">
-              {/* <pre>{JSON.stringify({
+            {/* <pre>{JSON.stringify({
                     lat,
                     lng,
                     vehicleType,
                     vehicleCity, selectedCity, currentLocationName
                 },null,2)}</pre> */}
 
-                {/* <pre>{JSON.stringify(vehicles,null,2)}</pre> */}
-                
+            {/* <pre>{JSON.stringify(vehicles,null,2)}</pre> */}
+
             <div className="container mx-auto px-">
                 <div className="flex flex-wrap -m-4 justify-center">
                     {isLoading ? (
@@ -51,29 +51,31 @@ const AllVehicle = () => {
                                                 src={vehicleImage[0]?.url}
                                                 alt="Vehicle"
                                             />
-                                           
+
                                         </div>
                                         <div className="p-4">
-                                            <h2 className="text-sm app-font text-gray-600 mb-1">
+                                            <h2 className=" tracking-widest text-sm app-font text-gray-600 mb-1">
                                                 Rideroz
                                             </h2>
-                                            
+
                                             <h1 className="text-xl font-bold text-gray-900 mb-2">
                                                 {vehicleName}
                                             </h1>
-                                            <p className="text-green-600 text-lg app-font">
-                                                ₹ {vehiclePrice}/- per day
+
+                                            <p className="text-gray-600 font-medium">
+                                                ₹ <span className="font-bold text-black ">{vehiclePrice} /-</span>
+                                                <span className=" app-font"> per day</span>
                                             </p>
                                             <div className="flex w-full gap-2 mt-4">
-                                                <DatePickerModule bookedDates={item?.bookedDates}/>
-                                            <Button
-                                                onClick={() => navigate(`/checkout/${_id}`)}
-                                                className="bg-indigo-500 text-white w-full py-2 rounded shadow-none hover:bg-indigo-600 transition duration-300"
-                                            >
-                                                Book Now
-                                            </Button>
+                                                <DatePickerModule bookedDates={item?.bookedDates} />
+                                                <Button
+                                                    onClick={() => navigate(`/checkout/${_id}`)}
+                                                    className="bg-indigo-500 text-white w-full py-2 rounded shadow-none hover:bg-indigo-600 transition duration-300"
+                                                >
+                                                    Book Now
+                                                </Button>
                                             </div>
-                                          
+
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +85,7 @@ const AllVehicle = () => {
                 </div>
                 <div className="flex justify-center mt-8">
                     <Button
-                    variant=""
+                        variant=""
                         onClick={() => navigate(`/all-vehicles/${selectedCity}/${currentLocationName}`)}
                         className="bg-green-500 text-white px-8 py-3 rounded-full hover:shadow-none shadow-none hover:bg-green-600  "
                     >

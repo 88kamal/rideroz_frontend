@@ -76,23 +76,24 @@ const VehicleTypeDropdown = () => {
     return (
         <div className="relative">
             {/* Dropdown Trigger */}
-            <div 
-                className="border px-2 py-2 rounded-lg shadow-sm cursor-pointer w-full lg:w-[15.5em]"
+            <div
+                className="border px-2 py-2 rounded-md cursor-pointer w-full border-gray-300 "
                 onClick={() => setIsOpen(!isOpen)} // Toggle dropdown
             >
-                <h1 className="text-gray-700 font-semibold">
-                    Vehicle Type: <span className="text-green-600">{selectedType}</span>
+                <h1 className="text-black app-font ">
+                    Vehicle Type : <span className="text-green-600">{selectedType}</span>
                 </h1>
             </div>
 
             {/* Dropdown Menu */}
             {isOpen && (
-                <div className="absolute mt-2 w-full lg:w-[15.5em] bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                <div className="absolute mt-2 w-full lg:w-[15.5em] bg-white border border-gray-300 rounded-lg 
+                drop-shadow z-10">
                     <ul className="py-2">
                         {vehicleTypes.map((type, index) => (
                             <li
                                 key={index}
-                                className={`px-4 py-2 hover:bg-green-100 cursor-pointer ${selectedType === type.label ? 'bg-green-100 font-bold' : ''}`}
+                                className={`px-4 py-2 hover:bg-gray-200 cursor-pointer ${selectedType === type.label ? 'bg-gray-100 font-bold' : ''}`}
                                 onClick={() => handleSelectType(type)}
                             >
                                 {type.label}

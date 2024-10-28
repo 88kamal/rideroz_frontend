@@ -33,6 +33,9 @@ import PaymentCanceledByUser from "./pages/paymentSuccessPage/PaymentCanceledByU
 import UserVehicleBookPage from "./pages/dashboard/user/pages/UserVehicleBookPage";
 import TopAlert from "./components/alert/TopAlert";
 import ViewUserBookingInvoice from "./components/common/bookedVehicles/pages/ViewUserBookingInvoice";
+import UserProfilePage from "./pages/dashboard/user/pages/UserProfilePage";
+import ShopOwnerUserProfilePage from "./pages/dashboard/shopOwner/pages/ShopOwnerUserProfilePage";
+import SuperAdminUserProfilePage from "./pages/dashboard/super-admin/pages/SuperAdminUserProfilePage";
 
 
 function App() {
@@ -96,6 +99,11 @@ function App() {
                 path="view-user-and-shop-owner"
                 element={<SuperAdminViewUserAndShopOwnerPage />}
               />
+               <Route
+                index={true}
+                path="super-admin-profile"
+                element={<SuperAdminUserProfilePage />}
+              />
             </Route>
 
 
@@ -128,6 +136,12 @@ function App() {
                 path="user-home-page/user-vehicle-book/view-more-vehicle-book/:id"
                 element={<ViewUserBookingInvoice />}
               />
+
+              <Route
+                index={true}
+                path="user-profile"
+                element={<UserProfilePage />}
+              />
             </Route>
 
 
@@ -153,10 +167,17 @@ function App() {
                 path="shop-owner-add-vehicle"
                 element={<ShopOwnerAddVehiclePage />}
               />
+
               <Route
                 index={true}
                 path="shop-owner-all-vehicle"
                 element={<ShopOwnerViewVehicle />}
+              />
+
+              <Route
+                index={true}
+                path="shop-owner-profile"
+                element={<ShopOwnerUserProfilePage />}
               />
 
             </Route>

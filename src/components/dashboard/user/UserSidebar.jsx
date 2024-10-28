@@ -8,10 +8,9 @@ import {
     UserCircleIcon,
     PowerIcon,
     HomeIcon,
-    UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
-import { ClipboardPlus, MapPinned, TicketCheck } from "lucide-react";
+import { TicketCheck } from "lucide-react";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
 import apiSlice from "../../../redux/slices/apiSlice";
 import { useDispatch } from "react-redux";
@@ -70,34 +69,8 @@ export default function UserSidebar() {
                         All Vehicle Book
                     </ListItem>
                 </Link>
-                <Link >
-                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
-                        <ListItemPrefix>
-                            <UserGroupIcon className="h-5 w-5" />
-                        </ListItemPrefix>
-                        View Visitors
-                    </ListItem>
-                </Link>
 
-                <Link>
-                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
-                        <ListItemPrefix>
-                            <ClipboardPlus className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Report
-                    </ListItem>
-                </Link>
-
-                <Link>
-                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
-                        <ListItemPrefix>
-                            <MapPinned className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Track Employee
-                    </ListItem>
-                </Link>
-
-                <Link >
+                <Link to={'user-profile'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <UserCircleIcon className="h-5 w-5" />

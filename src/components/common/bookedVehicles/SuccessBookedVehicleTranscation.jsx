@@ -26,7 +26,7 @@ export default function SuccessBookedVehicleTranscation() {
   const navigate = useNavigate();
 
   // Pass the search, page, and limit as parameters to the query
-  const { data, error, isLoading, refetch } = useGetOrdersQuery();
+  const { data, error, isLoading, refetch, isError } = useGetOrdersQuery();
 
   const handlePrevious = () => {
     // if (page > 1) setPage(page - 1);
@@ -76,7 +76,7 @@ export default function SuccessBookedVehicleTranscation() {
 
       </CardHeader>
 
-      {/* <pre>{JSON.stringify(error,null,2)}</pre> */}
+      {/* <pre>{JSON.stringify(isError,null,2)}</pre> */}
 
       <div className="overflow-scroll p-2">
         {isLoading ? (
@@ -115,7 +115,6 @@ export default function SuccessBookedVehicleTranscation() {
                   ))}
                 </tr>
               </thead>
-              {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
               <tbody >
                 {data?.orders?.map(
                   ({ _id,

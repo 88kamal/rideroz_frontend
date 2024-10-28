@@ -1,11 +1,11 @@
 import UserProfile from "../../../../components/common/userProfile/UserProfile"
 
-const ShopOwnerUserProfilePage = () => {
+const SuperAdminUserProfilePage = () => {
   return (
     <div>
-      <UserProfile/>
+        <UserProfile/>
     </div>
   )
 }
 
-export default ShopOwnerUserProfilePage
+export default SuperAdminUserProfilePage

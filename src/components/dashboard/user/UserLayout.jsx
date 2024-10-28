@@ -10,7 +10,7 @@ const UserLayout = () => {
     return (
         <div className=" min-h-screen">
             <div className=" lg:hidden sm:hidden md:hidden xl:hidden sticky top-0  z-50">
-                <TopNavbar image={"https://cdn-icons-png.flaticon.com/128/6835/6835890.png"} name={"User"} />
+                <TopNavbar image={"https://cdn-icons-png.flaticon.com/128/5432/5432747.png"} name={"User"} />
             </div>
             <div className="min-h-screen flex ">
 

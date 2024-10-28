@@ -89,7 +89,7 @@ export default function SuperAdminSidebar() {
                     </ListItem>
                 </Link>
 
-                <Link >
+                <Link to={'super-admin-profile'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <UserCircleIcon className="h-5 w-5" />

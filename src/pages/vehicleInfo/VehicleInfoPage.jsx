@@ -5,18 +5,16 @@ import { RiInstagramFill } from "react-icons/ri";
 import { Button } from "@material-tailwind/react";
 import { useState } from "react";
 import Layout from "../../components/layout/Layout";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
 import { TicketMinus } from "lucide-react";
 import VehicleReview from "../../components/review/VehicleReview";
 import RatingStar from "../../components/review/RatingStar";
 
-
-
 function ProductInfo() {
     const { id } = useParams();
     const { data: vehicle, error, isLoading } = useGetVehicleByIdQuery(id);
-
+    const navigate = useNavigate();
     // console.log(imageData)
     const [slideImage, setslideImage] = useState("")
 
@@ -27,7 +25,7 @@ function ProductInfo() {
         image2: vehicle?.vehicleImage[1]?.url,
     }
 
-    const { image1, image2, image3, image4, image5 } = imageData;
+    const { image1, image2 } = imageData;
 
     // console.log(imageData.image2)
 
@@ -49,24 +47,24 @@ function ProductInfo() {
                                         <div className="flex justify-center">
                                             {slideImage ? (
                                                 <img
-                                                style={{
-                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
-                                                    transition: '1s filter linear',
-                                                    // width: '100%',
-                                                    background: 'transparent',
-                                                  }}
+                                                    style={{
+                                                        filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                        transition: '1s filter linear',
+                                                        // width: '100%',
+                                                        background: 'transparent',
+                                                    }}
                                                     className=" h-[20.2em] lg:h-[28em] w-96 lg:w-[32em] md:w-[15em]"
                                                     src={slideImage}
                                                     alt=""
                                                 />
                                             ) : (
                                                 <img
-                                                style={{
-                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
-                                                    transition: '1s filter linear',
-                                                    // width: '100%',
-                                                    background: 'transparent',
-                                                  }}
+                                                    style={{
+                                                        filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                        transition: '1s filter linear',
+                                                        // width: '100%',
+                                                        background: 'transparent',
+                                                    }}
                                                     className=" h-[20.2em] lg:h-[28em] w-96 lg:w-[32em] md:w-[15em] "
                                                     src={image1}
                                                     alt=""
@@ -87,12 +85,12 @@ function ProductInfo() {
                                                  focus:border-[#b88ef6] border  text-center`}
                                             >
                                                 <img
-                                                 style={{
-                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
-                                                    transition: '1s filter linear',
-                                                    // width: '100%',
-                                                    background: 'transparent',
-                                                  }}
+                                                    style={{
+                                                        filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                        transition: '1s filter linear',
+                                                        // width: '100%',
+                                                        background: 'transparent',
+                                                    }}
                                                     onClick={() => setslideImage(image1)}
                                                     className="h-full w-full"
                                                     src={image1}
@@ -109,12 +107,12 @@ function ProductInfo() {
                                                  focus:border-[#b88ef6] border  text-center`}
                                             >
                                                 <img
-                                                 style={{
-                                                    filter: `${isLoading ? 'blur(20px)' : ''}`,
-                                                    transition: '1s filter linear',
-                                                    // width: '100%',
-                                                    background: 'transparent',
-                                                  }}
+                                                    style={{
+                                                        filter: `${isLoading ? 'blur(20px)' : ''}`,
+                                                        transition: '1s filter linear',
+                                                        // width: '100%',
+                                                        background: 'transparent',
+                                                    }}
                                                     onClick={() => setslideImage(image2)}
                                                     className="h-full w-full object-cover"
                                                     src={image2}
@@ -144,13 +142,13 @@ function ProductInfo() {
                                 {vehicle?.vehicleName}
                             </h1>
 
-                             {/* ratings, totalRating */}
-                             <div className="mt-2">
-                                        <RatingStar 
-                                        rating={vehicle?.vehicleRatings} 
-                                        totalRating={vehicle?.numOfReviews}
-                                        />
-                                    </div>
+                            {/* ratings, totalRating */}
+                            <div className="mt-2">
+                                <RatingStar
+                                    rating={vehicle?.vehicleRatings}
+                                    totalRating={vehicle?.numOfReviews}
+                                />
+                            </div>
 
                             {/* Price, Discount Percentage  */}
                             <div className="flex flex-wrap mt-5 items-center justify-between">
@@ -161,16 +159,16 @@ function ProductInfo() {
                                         <h1 className={`fontPara text-2xl `}> ₹ {vehicle?.vehiclePrice}</h1>
                                     </div>
 
-                                  
+
                                     <div className={` bg-green-600 px-2 app-font text-white text-sm animate-pulse`}>
                                         {vehicle?.vehicleAvailability && "Available"}
                                     </div>
 
-                                   
-                                    
+
+
                                 </div>
 
-                                
+
 
                                 {/* Social Media Icons  */}
                                 <div className="flex items-center gap-2 cursor-pointer">
@@ -203,6 +201,7 @@ function ProductInfo() {
 
                                     {/* Add To Cart Button  */}
                                     <Button
+                                        onClick={() => navigate(`/checkout/${vehicle?._id}`)}
                                         className="flex items-center justify-center rounded-md bg-slate-900 py-2.5  lg:px-5 lg:py-2 text-center text-[0.6em] lg:text-sm font-medium text-white primaryBgColor w-full hover:shadow-none shadow-none bg-green-500  "
                                     >
 
@@ -266,11 +265,11 @@ function ProductInfo() {
 
                     {/* Reviews and Ratings */}
                     <div className="">
-                        <VehicleReview 
-                        vehicleId={id} 
-                        vehicle={vehicle}
-                        error={error} 
-                        isLoading={isLoading}
+                        <VehicleReview
+                            vehicleId={id}
+                            vehicle={vehicle}
+                            error={error}
+                            isLoading={isLoading}
                         />
                     </div>
 

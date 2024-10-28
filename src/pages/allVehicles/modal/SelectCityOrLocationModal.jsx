@@ -181,7 +181,7 @@ export default function SelectCityOrLocationModal() {
 
     return (
         <>
-            <div onClick={handleOpen} className="flex items-center justify-between border border-gray-300 rounded-md px-3 py-2 w-full lg:w-[15.5em] mb-2 lg:mb-0 cursor-pointer">
+            <div onClick={handleOpen} className="flex items-center justify-between border border-gray-300 rounded-md px-3 py-2 w-full  mb-2 lg:mb-0 cursor-pointer app-font">
                 {selectedCity ? <p>{selectedCity}</p> : <p>Select City</p>}
                 <AiOutlineEnvironment className="text-gray-500" size={20} />
             </div>
