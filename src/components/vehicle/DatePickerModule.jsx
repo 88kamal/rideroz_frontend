@@ -270,7 +270,7 @@ export default function DatePickerModule({ bookedDates }) {
     <>
       <Button
         onClick={handleOpen}
-        className="bg-pink-500 text-white w-full py-2 hover:shadow-none shadow-none rounded shadow-none hover:bg-green-600 transition duration-300"
+        className="bg-green-500 text-white w-full py-2 hover:shadow-none shadow-none rounded shadow-none hover:bg-green-600 transition duration-300"
       >
          Availability
       </Button>

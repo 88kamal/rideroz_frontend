@@ -16,8 +16,10 @@ import CustomTimeDropdown from "./CustomTimeDropdown";
 import VehicleAvailbilityModal from "../../components/modal/vehicleBookAvaibilityModal/VehicleAvailbilityModal";
 import UploadAdharImage from "./UploadAdharImage";
 import LoginModal from "../../components/registration/LoginModal";
+import authService from "../../services/authService";
 
 const CartPage = () => {
+    const user = authService.getCurrentUser();
     const { id } = useParams();
     const navigate = useNavigate();
     const { data: vehicle } = useGetVehicleByIdQuery(id);
@@ -628,7 +630,7 @@ const CartPage = () => {
                         </section>
                     </form>
                 </div>
-                <LoginModal showLoginButton={false} autoOpen={autoOpenLogin} onClose={handleLoginModalClose} />
+                {!user && <LoginModal showLoginButton={false} autoOpen={autoOpenLogin} onClose={handleLoginModalClose} />}
             </div>
         </Layout>
     );

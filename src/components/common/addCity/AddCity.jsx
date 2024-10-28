@@ -66,6 +66,8 @@ const AddCity = () => {
         <div className="flex justify-center items-center ">
             <div className="w-full max-w-2xl border border-green-300 bg-white rounded-md">
 
+                <pre>{JSON.stringify(error)}</pre>
+
                 <div className=" flex justify-center items-center pt-5">
                     <h2 className="text-black text-2xl font-semibold app-font">Add New City</h2>
                 </div>
