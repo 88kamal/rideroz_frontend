@@ -485,11 +485,11 @@ const CartPage = () => {
                                 </p>
 
                                 <p className="text-xs mb-1 app-font">
-                                    Misc Charge : ₹ {formData?.miscAmount || 0}
+                                    Misc Charge : ₹ {formData?.miscAmount.toFixed(2) || 0}
                                 </p>
 
                                 <p className="text-xs mb-1 app-font">
-                                    Platform Charge : ₹ {formData?.platformAmount || 0}
+                                    Platform Charge : ₹ {formData?.platformAmount.toFixed(2) || 0}
                                 </p>
 
                                 <p className="text-xs mb-1 app-font">
