@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import "react-day-picker/style.css";
 import { Button, Dialog } from "@material-tailwind/react";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 export default function VehicleAvailbilityModal({ bookedDates }) {
   const [open, setOpen] = useState(false);
@@ -16,26 +19,28 @@ export default function VehicleAvailbilityModal({ bookedDates }) {
     const bookedDate = bookedDates.find((bookedDate) => {
       const startDate = dayjs(bookedDate.startDate);
       const endDate = dayjs(bookedDate.endDate);
-
+  
       // Ignore bookings with invalid date ranges
       if (endDate.isBefore(startDate)) {
         console.warn(`Invalid booking range for booking ID: ${bookedDate._id}`);
         return false;
       }
-
+  
       // Check if the selected date falls within the booking range
       return dayjs(date).isBetween(startDate, endDate, 'day', '[]');
     });
-
+  
     if (bookedDate) {
-      const startTime = dayjs(bookedDate.startDate).format('hh:mm A');
-      const endTime = dayjs(bookedDate.endDate).format('hh:mm A');
+      // Parse and adjust the time based on the time zone or desired format
+      const startTime = dayjs(bookedDate.startDate).utc().format('hh:mm A');
+      const endTime = dayjs(bookedDate.endDate).utc().format('hh:mm A');
+  
       const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
       const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
-
+  
       // Check if the selected date is the end date of the booking
       const isPartialBooking = dayjs(date).isSame(dayjs(bookedDate.endDate), 'day');
-
+  
       return {
         isBooked: true,
         startTime,
@@ -45,10 +50,10 @@ export default function VehicleAvailbilityModal({ bookedDates }) {
         isPartialBooking,
       };
     }
-
+  
     return { isBooked: false, isPartialBooking: false };
   };
-
+  
 
   const handlePrevMonth = () => {
     setSelectedMonth(selectedMonth.subtract(1, 'month'));

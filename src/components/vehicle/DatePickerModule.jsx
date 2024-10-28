@@ -351,7 +351,6 @@ export default function DatePickerModule({ bookedDates }) {
                               <br className="hidden lg:block md:block sm:block" />
                               {" "}To <span className="font-semibold text-[10px]">{endDateFormatted} {endTime}</span>
                             </h1>
-                            <pre>{JSON.stringify(startTime)}</pre>
                           </div>
                         )
                       ) : (
