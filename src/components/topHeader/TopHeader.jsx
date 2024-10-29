@@ -9,7 +9,7 @@ const Header = () => {
       <div className="flex items-center space-x-4 ml-auto">
         <div className="flex items-center space-x-2">
           <FaEnvelope className="text-lime-300" />
-          <span className='app-font'>example@gmail.com</span>
+          <span className='app-font'>rideroz234@gmail.com</span>
         </div>
         <div className="flex items-center space-x-2">
           <FaPhoneAlt className="text-lime-300" />
