@@ -36,6 +36,8 @@ import ViewUserBookingInvoice from "./components/common/bookedVehicles/pages/Vie
 import UserProfilePage from "./pages/dashboard/user/pages/UserProfilePage";
 import ShopOwnerUserProfilePage from "./pages/dashboard/shopOwner/pages/ShopOwnerUserProfilePage";
 import SuperAdminUserProfilePage from "./pages/dashboard/super-admin/pages/SuperAdminUserProfilePage";
+import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
+import RefundPolicy from "./pages/refundPolicy.jsx/RefundPolicy";
 
 
 function App() {
@@ -57,6 +59,8 @@ function App() {
           <Route path="/success-payment/:paymentId" element={<PaymentSuccessPage />} />
           <Route path="/payment-cancel" element={<PaymentCancelPage />} />
           <Route path="/payment-cancel-by-user" element={<PaymentCanceledByUser />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/*" element={<NoPage />} />
 
 
