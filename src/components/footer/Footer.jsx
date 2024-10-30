@@ -221,6 +221,14 @@ const Footer = () => {
                     </p>
                   </Link>
                 </li>
+                <li>
+
+                  <Link to={'/terms-and-condition'} >
+                    <p className="text-gray-500 hover:text-gray-800 app-font cursor-pointer">
+                      Terms And Condition
+                    </p>
+                  </Link>
+                </li>
               </nav>
             </div>
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">

@@ -38,6 +38,8 @@ import ShopOwnerUserProfilePage from "./pages/dashboard/shopOwner/pages/ShopOwne
 import SuperAdminUserProfilePage from "./pages/dashboard/super-admin/pages/SuperAdminUserProfilePage";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import RefundPolicy from "./pages/refundPolicy.jsx/RefundPolicy";
+import TermsAndConditionPage from "./pages/termsAndConditionPage/TermsAndConditionPage";
+import ShippingAndDelivery from "./pages/shippingAndDelivery/ShippingAndDelivery";
 
 
 function App() {
@@ -61,6 +63,8 @@ function App() {
           <Route path="/payment-cancel-by-user" element={<PaymentCanceledByUser />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/terms-and-condition" element={<TermsAndConditionPage />} />
+          <Route path="/shipping-and-delivery" element={<ShippingAndDelivery />} />
           <Route path="/*" element={<NoPage />} />
 
 

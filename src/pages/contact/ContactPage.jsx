@@ -55,6 +55,7 @@ const ContactPage = () => {
         <p>Or reach us at:</p>
         <p>Email: riderozofficial@gmail.com</p>
         <p>Phone: +91 8292417430</p>
+        <p>Address : Kehri Gaon, Prem Nagar, Dehradun, Uttarakhand 248007, India</p>
       </div>
     </div>
     </Layout>
