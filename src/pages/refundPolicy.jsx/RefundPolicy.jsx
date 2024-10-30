@@ -1,70 +1,73 @@
 import Layout from '../../components/layout/Layout';
 
+
+
+// RefundPolicy.js
+import React from 'react';
+
 const RefundPolicy = () => {
-    return (
-        <Layout>
-            <div className={`container mx-auto py-4 px-4 fontPara`}>
+  return (
+    <Layout>
+        <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+      <h1 className="text-4xl font-bold text-gray-800 mb-8">Refund Policy</h1>
+      <div className="max-w-3xl bg-white shadow-md rounded-lg p-8">
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Overview</h2>
+          <p className="text-gray-600">
+            At Rideroz, we strive to ensure a smooth and satisfactory rental experience. However, we
+            understand that there may be situations where a refund is necessary. This policy outlines
+            the terms and conditions for refunds.
+          </p>
+        </section>
+        
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Eligibility for Refunds</h2>
+          <ul className="list-disc list-inside text-gray-600 space-y-2">
+            <li>
+              **Cancellation Before Pickup**: Full refund if canceled 24 hours before the scheduled pickup time.
+            </li>
+            <li>
+              **Partial Refund**: If canceled within 24 hours of pickup, a 50% refund will be provided.
+            </li>
+            <li>
+              **No Show**: No refund will be issued if the customer does not show up at the scheduled pickup time.
+            </li>
+            <li>
+              **Faulty Vehicle**: In case of mechanical issues with the vehicle provided, we will arrange a replacement or offer a full refund.
+            </li>
+          </ul>
+        </section>
 
-                <h2 className='text-xl font-bold'>Refund Policy - Rideroz</h2>
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Non-Refundable Cases</h2>
+          <p className="text-gray-600">
+            No refund will be issued in cases of customer negligence, accidents, or improper handling of the vehicle. 
+            Rideroz is not liable for refunds due to traffic delays, weather conditions, or other unavoidable circumstances.
+          </p>
+        </section>
 
-                <br />
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Refund Process</h2>
+          <p className="text-gray-600">
+            Refunds are processed within 7-10 business days. Once approved, you will receive a notification, and the
+            refund will be issued to the original payment method.
+          </p>
+        </section>
 
-
-        <p className=' text-justify'>        
-                At Rideroz, our priority is to provide students with comfortable and hassle-free accommodation solutions. We understand that circumstances may change, and therefore we have implemented a comprehensive refund policy to ensure your satisfaction.
-
-                <br />
-                <br />
-
-                <b>Refund Eligibility:</b>
-                <br />
-                <br />
-
-                1. Refunds are applicable for cancellations made within 7 days of booking.
-                <br />
-                2. Cancellations beyond this period may be subject to a cancellation fee.
-                <br />
-                3. Refunds will not be issued for bookings canceled within 48 hours of the check-in date.
-
-                <br />
-                <br />
-
-
-                <b>Refund Process:</b>
-                <br />
-                <br />
-
-                1. To request a refund, please contact our customer support team via email or phone, providing your booking details.
-                <br />
-                2. Refunds will be processed back to the original payment method within 5-7 business days of approval.
-
-                <br />
-                <br />
-
-                <b>Terms and Conditions:</b>
-                <br />
-                <br />
-
-                1. Cancellation Fees:* Cancellations made beyond the initial 7-day period may be subject to a cancellation fee, which will be deducted from the refund amount.
-                <br />
-                2. Late Cancellations:* Refunds will not be issued for bookings canceled within 48 hours of the scheduled check-in date.
-                <br />
-                3. Non-Refundable Deposits:* Certain properties may require non-refundable deposits or payments for specific amenities. These amounts are not eligible for refund.
-                <br />
-                4. Changes to Booking:* Modifications to the booking, such as changing the check-in date or accommodation type, may be subject to availability and additional charges.
-                <br />
-                5. Damages and Cleanliness:* Guests are responsible for any damages caused during their stay. Charges for damages or additional cleaning may apply and will be deducted from the security deposit, if applicable.
-                <br />
-                6. Force Majeure:* In cases of unforeseen circumstances or force majeure events, such as natural disasters or government restrictions, Rideroz reserves the right to modify or cancel bookings without penalty.
-
-                <br />
-                <br />
-
-
-                By booking accommodation through Rideroz, you agree to abide by the terms and conditions outlined in this refund policy. For further inquiries or clarification regarding our refund policy, please refer to our website or contact our customer support team.     </p>       
-                </div>
-        </Layout>
-    );
-}
+        <section>
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Contact Us</h2>
+          <p className="text-gray-600">
+            For any questions or assistance with refunds, feel free to reach out to us at:
+            <br />
+            Email: riderozofficial@gmail.com
+            <br />
+            Phone: +91 8292417430
+          </p>
+        </section>
+      </div>
+    </div>
+    </Layout>
+  );
+};
 
 export default RefundPolicy;
