@@ -32,6 +32,25 @@ export default function SelectCityOrLocationModal() {
         vehicleCity,
         vehicleType,
     });
+    const [dialogSize, setDialogSize] = useState("lg");
+
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setDialogSize("xxl"); // Adjust size for mobile
+            } else {
+                setDialogSize("xl"); // Adjust size for desktop
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Call resize function initially to set the right size
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, [])
 
     useEffect(() => {
         const storedCity = localStorage.getItem('selectedCity');
@@ -219,7 +238,7 @@ export default function SelectCityOrLocationModal() {
                 <AiOutlineEnvironment className="text-gray-500" size={20} />
             </div>
             
-            <Dialog open={open} handler={handleOpen} size="xl" className="lg:max-w-[90%] max-w-full outline-none shadow-none hover:shadow-none rounded-md bg-white">
+            <Dialog open={open} handler={handleOpen} size={dialogSize} className="lg:max-w-[90%] max-w-full outline-none shadow-none hover:shadow-none rounded-md bg-white">
                 <div className="flex flex-wrap justify-between items-center px-4 lg:px-6 py-4 lg:py-0 rounded-xl">
                     <p className="text-lg font-semibold text-black">Select City or Location</p>
                     <div className="flex items-center gap-3 mt-3">
