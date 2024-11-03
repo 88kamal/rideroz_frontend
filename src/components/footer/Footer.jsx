@@ -1,3 +1,4 @@
+import { HeartIcon } from "@heroicons/react/24/solid"
 import { Link } from "react-router-dom"
 
 const Footer = () => {
@@ -185,6 +186,11 @@ const Footer = () => {
               </a>
             </span>
           </div>
+        </div>
+
+        <div className=" bg-gray-800 p-2">
+          <h1 className=" text-center text-white flex items-center justify-center gap-1 app-font">
+            Made with <HeartIcon className=" w-6 h-6 text-red-400"/> by Team Rideroz</h1>
         </div>
       </footer>
     </div>

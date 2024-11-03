@@ -627,12 +627,12 @@ const CartPage = () => {
                                 </div>
                             </div>
 
-                            <div className=" bg-white drop-shadow mb-4 px-4 py-4">
+                            {/* <div className=" bg-white drop-shadow mb-4 px-4 py-4">
                                 <div className="">
                                     <p className=" app-font text-justify mb-1 text-red-600">"Vehicle book करने के बाद अगर आप 1 घंटे के अंदर Shop पर नहीं पहुँचते हैं, तो आपकी ride अपने आप cancel हो जाएगी और आपके amount का 50% refund कर दिया जाएगा।"</p>
                                     <p className=" app-font text-justify text-red-600">"If you don't arrive at the shop within 1 hour after booking the vehicle, your ride will be automatically canceled, and 50% of your amount will be refunded."</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </section>
                     </form>
                 </div>
