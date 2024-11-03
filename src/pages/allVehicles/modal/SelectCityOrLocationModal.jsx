@@ -20,7 +20,7 @@ export default function SelectCityOrLocationModal() {
 
     const handleOpen = () => setOpen(!open);
 
-    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName } = useContext(myContext);
+    const { lat, setLat, lng, setLng, vehicleType, setVehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName, showAlert } = useContext(myContext);
 
     // Fetch cities using the appropriate hooks
     const { data: cities, error: citiesError, isLoading: isCitiesLoading } = useGetCitiesQuery();
@@ -61,34 +61,67 @@ export default function SelectCityOrLocationModal() {
         }
     }, [selectedCity, vehicleCity, lat, lng]);
 
+    // Detect current location function
+    // const detectLocation = async () => {
+    //     if (!navigator.geolocation) {
+    //         showAlert("Geolocation is not supported by your browser.", "error", 2000);
+    //         return;
+    //     }
 
+    //     try {
+    //         // Check if permission for geolocation is granted or prompt if denied
+    //         const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+
+    //         if (permissionStatus.state === 'denied') {
+    //             showAlert("Location permission denied. Please enable GPS in your device settings.", "error", 2000);
+    //             return;
+    //         } else if (permissionStatus.state === 'prompt') {
+    //             showAlert("Please allow location access.", "warning", 2000);
+    //         }
+
+    //         // Request the current position
+    //         showAlert("Detecting your location...", "success", 2000);
+    //         navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    //         handleOpen();
+    //     } catch (error) {
+    //         console.error("Error detecting location permissions: ", error);
+    //         showAlert("An error occurred while checking location permissions.", "error", 2000);
+    //     }
+    // };
     // Detect current location function
     const detectLocation = async () => {
         if (!navigator.geolocation) {
-            toast.error("Geolocation is not supported by your browser.");
+            showAlert("Geolocation is not supported by your browser.", "error", 2000);
             return;
         }
 
         try {
-            // Check if permission for geolocation is granted or prompt if denied
+            // Check if permission for geolocation is granted, denied, or needs to be prompted
             const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
 
             if (permissionStatus.state === 'denied') {
-                toast.error("Location permission denied. Please enable location permissions in your browser settings.");
+                // If permission is denied, alert the user to enable location services
+                showAlert("Location permission is denied. Please enable GPS in your device settings.", "error", 3000);
                 return;
             } else if (permissionStatus.state === 'prompt') {
-                toast("Please allow location access.");
+                // If permission is in the "prompt" state, show a message to allow location access
+                showAlert("Please allow location access.", "warning", 3000);
             }
 
-            // Request the current position
-            toast.success("Detecting your location...");
-            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-            handleOpen();
+            if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
+                // Once permission is granted or prompted, try to detect location
+                showAlert("Detecting your location...", "success", 2000);
+                navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+                handleOpen();
+            }
+
         } catch (error) {
             console.error("Error detecting location permissions: ", error);
-            toast.error("An error occurred while checking location permissions.");
+            showAlert("An error occurred while checking location permissions.", "error", 2000);
         }
     };
+
+
 
 
     const successCallback = async (position) => {
@@ -129,17 +162,17 @@ export default function SelectCityOrLocationModal() {
 
                 handleOpen(); // Close the dialog after detection
             } else {
-                toast.error("Could not determine the city from your location.");
+                showAlert("Could not determine the city from your location.", "error", 2000);
             }
         } catch (error) {
-            toast.error("Failed to fetch location details.");
+            showAlert("Failed to fetch location details.", "error", 2000);
             console.error("Error fetching location details: ", error);
         }
     };
 
     const errorCallback = (error) => {
         console.error("Error detecting location: ", error);
-        toast.error("Unable to detect location. Please try again.");
+        showAlert("Unable to detect location. Please try again.", "error", 2000);
     };
 
 

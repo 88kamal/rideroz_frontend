@@ -88,37 +88,37 @@ export default function SelectCityOrLocationModal() {
     //     }
     // };
     // Detect current location function
-const detectLocation = async () => {
-    if (!navigator.geolocation) {
-        showAlert("Geolocation is not supported by your browser.", "error", 2000);
-        return;
-    }
-
-    try {
-        // Check if permission for geolocation is granted, denied, or needs to be prompted
-        const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-
-        if (permissionStatus.state === 'denied') {
-            // If permission is denied, alert the user to enable location services
-            showAlert("Location permission is denied. Please enable GPS in your device settings.", "error", 3000);
+    const detectLocation = async () => {
+        if (!navigator.geolocation) {
+            showAlert("Geolocation is not supported by your browser.", "error", 2000);
             return;
-        } else if (permissionStatus.state === 'prompt') {
-            // If permission is in the "prompt" state, show a message to allow location access
-            showAlert("Please allow location access.", "warning", 3000);
         }
 
-        if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
-            // Once permission is granted or prompted, try to detect location
-            showAlert("Detecting your location...", "success", 2000);
-            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-            handleOpen();
-        }
+        try {
+            // Check if permission for geolocation is granted, denied, or needs to be prompted
+            const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
 
-    } catch (error) {
-        console.error("Error detecting location permissions: ", error);
-        showAlert("An error occurred while checking location permissions.", "error", 2000);
-    }
-};
+            if (permissionStatus.state === 'denied') {
+                // If permission is denied, alert the user to enable location services
+                showAlert("Location permission is denied. Please enable GPS in your device settings.", "error", 3000);
+                return;
+            } else if (permissionStatus.state === 'prompt') {
+                // If permission is in the "prompt" state, show a message to allow location access
+                showAlert("Please allow location access.", "warning", 3000);
+            }
+
+            if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
+                // Once permission is granted or prompted, try to detect location
+                showAlert("Detecting your location...", "success", 2000);
+                navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+                handleOpen();
+            }
+
+        } catch (error) {
+            console.error("Error detecting location permissions: ", error);
+            showAlert("An error occurred while checking location permissions.", "error", 2000);
+        }
+    };
 
 
 
