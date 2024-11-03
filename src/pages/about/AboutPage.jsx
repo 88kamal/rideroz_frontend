@@ -3,55 +3,89 @@ import Layout from "../../components/layout/Layout"
 const AboutPage = () => {
   return (
     <Layout>
-         <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8">About Us</h1>
-      <div className="max-w-4xl bg-white shadow-md rounded-lg p-8">
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Who We Are</h2>
-          <p className="text-gray-600">
-            Rideroz is a bike, scooty, and car rental service company based in India. We provide
-            a seamless rental experience by connecting customers with vehicle owners, allowing 
-            you to explore and travel on your terms. We charge only a 10% commission on each rental.
-          </p>
-        </section>
-        
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Our Mission</h2>
-          <p className="text-gray-600">
-            At Rideroz, we aim to offer a reliable and convenient platform for vehicle rentals,
-            helping travelers and residents find affordable and quality rental options without
-            the hassle of ownership.
-          </p>
-        </section>
+      <div className=" px-4 lg:px-6 py-4 lg:py-6">
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-blue-600 mb-4">What We Do</h2>
-          <p className="text-gray-600">
-            Rideroz connects you with bike, scooty, and car owners to ensure you have access to 
-            reliable transportation wherever you need it. We handle all rental logistics, so you can 
-            focus on the journey, not the paperwork.
-          </p>
-        </section>
+        <div className=" drop-shadow bg-white p-4">
+        <h1 className=" font-bold text-xl mb-2">About Us</h1>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Our Values</h2>
-          <ul className="list-disc list-inside text-gray-600 space-y-2">
-            <li>Customer-centric service</li>
-            <li>Trust and transparency</li>
-            <li>Reliability and quality assurance</li>
-            <li>Support for local vehicle owners</li>
-          </ul>
-        </section>
+<div className="">
+  <p className=" text-justify ">Rideroz is a premier vehicle rental service platform based in India, offering easy access to a variety of <b>bikes</b>, <b>scooters</b>, and <b>cars</b> for rent. We aim to provide travelers, commuters, and explorers with reliable, cost-effective, and accessible vehicle options. Unlike traditional rental agencies, Rideroz serves as a platform that connects vehicle owners and users, operating on a commission-based model that benefits both parties.</p>
+</div>
 
-        <section>
-          <h2 className="text-2xl font-semibold text-blue-600 mb-4">Our 6-D Process</h2>
-          <p className="text-gray-600">
-            We follow a structured 6-D process: Define, Design, Develop, Deliver, Deploy, and
-            Drive to continuously enhance our platform, making it user-friendly and efficient.
-          </p>
-        </section>
+<div className=" mt-5">
+  <h2 className=" text-xl font-bold mb-2">Our Services          </h2>
+  <ul className=" list-disc list-inside px-2 ">
+    <li className=" mb-2"><b>Bike Rentals:</b> <span className=" "> A perfect option for quick trips or solo travelers looking to beat the city traffic.</span>
+    </li>
+    <li className=" mb-2"><b>Scooter Rentals:</b>
+      <span className=" "> Ideal for comfortable and budget-friendly city commuting.</span>
+    </li>
+    <li className=" mb-2"><b>Car Rentals:</b>
+      <span className=" "> Great for family trips, long-distance journeys, or anyone looking for a comfortable ride.</span>
+    </li>
+  </ul>
+
+  <p className=" ">Rideroz ensures quality and reliability in all our rental options, making it easy for customers to choose what best suits their travel needs.
+
+  </p>
+</div>
+
+<div className="mt-5">
+  <h2 className=" text-xl font-bold mb-2">
+    Our Mission
+  </h2>
+
+  <p className="  text-justify">Our mission is to empower people to explore India in the way that suits them best, whether it’s for a quick city ride or a scenic road trip. We strive to offer the best-in-class rental experience by partnering with vehicle owners to provide users with safe, well-maintained options that fit their travel style and budget.</p>
+</div>
+
+<div className="mt-5">
+  <h2 className=" text-xl font-bold mb-2">Why Choose Rideroz?
+  </h2>
+
+  <ul className=" list-disc list-inside px-2 ">
+    <li className=" mb-2">
+      <b>Variety of Options:</b> <span className=" ">From bikes to cars, choose the vehicle that fits your travel plan.</span>
+    </li>
+
+    <li className=" mb-2">
+      <b>Affordable Rates:</b>
+      <span className=" "> Enjoy competitive pricing with Rideroz’s commission-based model.</span>
+    </li>
+
+    <li className=" mb-2">
+      <b>Secure Payments:</b> <span>Complete transactions safely using the Razorpay payment gateway.</span>
+    </li>
+
+    <li className=" mb-2">
+      <b> Easy Booking Process:</b> <span> Find, book, and pay for rentals in just a few steps.</span>
+    </li>
+
+    <li className=" mb-2">
+      <b>Reliable Service:</b> <span>Our quality standards ensure that every rental vehicle is in optimal condition.</span>
+    </li>
+  </ul>
+</div>
+
+<div className="mt-5">
+  <h2 className="text-xl font-bold mb-2">How It Works
+  </h2>
+
+  <ul className=" list-decimal list-inside px-2 ">
+    <li className=" mb-2"><b>Browse Vehicles:</b> Visit our website or app to browse available bikes, scooters, and cars.
+    </li>
+
+    <li className=" mb-2"><b>Select & Book:</b> Choose the vehicle that best suits your needs and submit your booking request.
+    </li>
+
+    <li className=" mb-2"><b>Complete Payment:</b> Pay securely via Razorpay for a fast, secure transaction.
+    </li>
+
+    <li className=" mb-2"><b>Enjoy Your Ride:</b> Pick up your rental and hit the road with confidence.
+    </li>
+  </ul>
+</div>
+        </div>
       </div>
-    </div>
     </Layout>
   )
 }

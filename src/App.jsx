@@ -36,10 +36,13 @@ import ViewUserBookingInvoice from "./components/common/bookedVehicles/pages/Vie
 import UserProfilePage from "./pages/dashboard/user/pages/UserProfilePage";
 import ShopOwnerUserProfilePage from "./pages/dashboard/shopOwner/pages/ShopOwnerUserProfilePage";
 import SuperAdminUserProfilePage from "./pages/dashboard/super-admin/pages/SuperAdminUserProfilePage";
-import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
-import RefundPolicy from "./pages/refundPolicy.jsx/RefundPolicy";
-import TermsAndConditionPage from "./pages/termsAndConditionPage/TermsAndConditionPage";
-import ShippingAndDelivery from "./pages/shippingAndDelivery/ShippingAndDelivery";
+import PrivacyPolicy from "./pages/companyInfo/privacyPolicy/PrivacyPolicy";
+import RefundPolicy from "./pages/companyInfo/refundPolicy.jsx/RefundPolicy";
+import TermsAndConditionPage from "./pages/companyInfo/termsAndConditionPage/TermsAndConditionPage";
+import ShippingAndDelivery from "./pages/companyInfo/shippingAndDelivery/ShippingAndDelivery";
+import WhyRideroz from "./pages/companyInfo/whyRideroz/WhyRideroz";
+import HowItWorks from "./pages/companyInfo/howItWorks/HowItWorks";
+import Safety from "./pages/companyInfo/safety/Safety";
 
 
 function App() {
@@ -65,6 +68,9 @@ function App() {
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/terms-and-condition" element={<TermsAndConditionPage />} />
           <Route path="/shipping-and-delivery" element={<ShippingAndDelivery />} />
+          <Route path="/why-rideroz" element={<WhyRideroz />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/safety" element={<Safety />} />
           <Route path="/*" element={<NoPage />} />
 
 

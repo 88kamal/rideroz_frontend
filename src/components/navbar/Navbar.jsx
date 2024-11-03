@@ -136,7 +136,7 @@ export default function Navbars() {
                     <div className="flex items-center gap-3 lg:gap-3">
                         <div className="hidden lg:block">{navList}</div>
 
-                        <Link to={'/list-shop'} target="_blank">
+                        <Link to={'/list-shop'}>
                             <Button
                                 variant=""
                                 className="bg-[#E6FFF3] border shadow-none hover:shadow-none border-green-300 rounded-lg py-2 px-4 flex items-center space-x-2">

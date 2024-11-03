@@ -13,7 +13,7 @@ const Header = () => {
         </div>
         <div className="flex items-center space-x-2">
           <FaPhoneAlt className="text-lime-300" />
-          <span className='app-font'>8292417430</span>
+          <span className='app-font'>7505847229</span>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import Layout from "../../components/layout/Layout";
+import Layout from "../../../components/layout/Layout";
+
 
 const PrivacyPolicy = () => {
   return (
