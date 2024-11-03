@@ -215,7 +215,8 @@ function ListShopPage() {
                 <div className="main flex flex-wrap  justify-between bg-green-100 ">
                     <div className="left w-full md:w-1/2 p-5">
                         <div className="">
-                            <img className=" h-72 lg:h-[30em] w-full mb-4 rounded-md" src="https://files.oaiusercontent.com/file-UJlTTbsgYOg0jk9Xvo4kKrqM?se=2024-11-02T07%3A15%3A56Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dd50718fc-cb94-4caa-8cff-92f0965ff044.webp&sig=IHwMfn8FCXfMjTHNgH7L0%2BW6aWt5T6/ZideXqIYqtlA%3D" alt="img" />
+                            <img className=" h-72 lg:h-[30em] w-full mb-4 rounded-md" 
+                            src="https://files.oaiusercontent.com/file-OF64NKThJbz5dqAykxzIOQYU?se=2024-11-03T07%3A03%3A28Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Da5d33fdc-5b25-4369-b56c-7f1d2334aee3.webp&sig=fZkxyVxBpNLYdFw/gZcT2F6oQ%2BD44TtrI5yzvj/MMFM%3D" alt="img" />
                         </div>
                         <div className=" bg-green-700 text-white p-4 mb-4 rounded-md">
                             <h2 className=" text-xl mb-2 font-bold">Become a Rideroz Partner

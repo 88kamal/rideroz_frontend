@@ -23,7 +23,7 @@ const TermsAndConditionPage = () => {
             <h1 className=" font-bold mb-3">1. Platform Responsibility and
               Disclaimer</h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className="list-disc px-4">
               <li className=" mb-2">
                 Rideroz acts solely as an intermediary
                 platform, connecting renters with vehicle
@@ -52,7 +52,7 @@ const TermsAndConditionPage = () => {
               2. Damage, Loss, and Liability
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b>Damage Responsibility:</b> Renters are
                 solely responsible for any damage or
@@ -86,7 +86,7 @@ const TermsAndConditionPage = () => {
               3. Vehicle Usage Policy
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b>Legal Compliance:</b> Renters must hold a
                 valid driver's license for the vehicle type
@@ -125,7 +125,7 @@ const TermsAndConditionPage = () => {
               3. Vehicle Usage Policy
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b>Legal Compliance:</b> Renters must hold a
                 valid driver's license for the vehicle type
@@ -165,7 +165,7 @@ const TermsAndConditionPage = () => {
               Documents
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b>Document Privacy:</b> Rideroz maintains
                 strict confidentiality of any personal
@@ -193,7 +193,7 @@ const TermsAndConditionPage = () => {
               Liability
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b> Direct Financial Liability: </b> If the vehicle
                 sustains damage or is lost during the
@@ -204,7 +204,7 @@ const TermsAndConditionPage = () => {
               </li>
 
               <li className=" mb-2">
-                <b>NoPlatform Involvementin Disputes:</b>
+                <b>No Platform Involvementin Disputes: </b>
                 Rideroz is not a mediator in any claims
                 related to damage, theft, or loss. Any
                 financial settlement or dispute regarding
@@ -220,7 +220,7 @@ const TermsAndConditionPage = () => {
               Coverage
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b> No Insurance Provision by Rideroz:</b>
                 Rideroz does not offer any form of
@@ -247,7 +247,7 @@ const TermsAndConditionPage = () => {
               Responsibility
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b> Identity Verification:</b> Rideroz reserves
                 the right to verify the identity of all
@@ -273,7 +273,7 @@ const TermsAndConditionPage = () => {
               8. Additional Charges andFees
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 <b>Late Fees:</b> Failure to return the vehicle at
                 the agreed time may result in late fees,
@@ -301,7 +301,7 @@ const TermsAndConditionPage = () => {
               Platform Policies
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
                 Rideroz reserves the right to modify or
                 update these Terms and Conditions
@@ -326,12 +326,12 @@ const TermsAndConditionPage = () => {
 
           <div className="mt-5">
             <h1 className=" font-bold mb-3">
-              10. Acceptance ofTerms
+              10. Acceptance of Terms
             </h1>
 
-            <ul className=" list-inside list-disc px-2">
+            <ul className=" list-disc px-4">
               <li className=" mb-2">
-              <b>Binding Agreement:</b> By using Rideroz,
+              <b>Binding Agreement: </b> By using Rideroz,
 users confirm that they have read,
 understood, and accepted these Terms
 and Conditions in full. Non-compliance

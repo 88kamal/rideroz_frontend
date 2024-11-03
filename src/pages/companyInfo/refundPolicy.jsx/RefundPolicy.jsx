@@ -13,10 +13,10 @@ const RefundPolicy = () => {
           </h2>
           <div className="p-3">
 
-          <ul className=' list-disc px-2 list-inside'>
+          <ul className=' list-disc px-4 '>
             <li className=' mb-2'> <b>Standard Cancellations: </b> Cancellations
               made within 1 hour of the booking time
-              are eligible fora 50%refund of the rental
+              are eligible for a 50% refund of the rental
               fee. Note that platform fees, service fees,
               and any additional charges are non
               refundable.</li>
@@ -29,7 +29,7 @@ const RefundPolicy = () => {
             </li>
 
             <li className=' mb-2'>
-              <b>Non-Refundable Circumstances:</b>
+              <b>Non-Refundable Circumstances: </b>
               Cancellations due to failure to present ID,
               license, or other required documentation,
               late arrival for pickup, or violating these
@@ -43,7 +43,7 @@ const RefundPolicy = () => {
           <h2 className='text-lg font-bold mb-3 bg-gray-100 p-3 rounded-t-md '>Booking and Collection Policy</h2>
 
           <div className="p-3">
-          <ul className=' list-disc px-2 list-inside'>
+          <ul className=' list-disc px-4'>
             <li className=' mb-2'>
 
               <b>Timely Pickup: </b> Renters are required to
@@ -55,7 +55,7 @@ const RefundPolicy = () => {
             </li>
 
             <li className=' mb-2'>
-              <b>Verification on Collection:</b> Renters must
+              <b>Verification on Collection: </b> Renters must
               present avalid ID and booking
               confirmation at the time of pickup.
               Failure to provide necessary
@@ -64,7 +64,7 @@ const RefundPolicy = () => {
             </li>
 
             <li className=' mb-2'>
-              <b>Return Policy:</b> The vehicle must be
+              <b>Return Policy: </b> The vehicle must be
               returned by the specified end time to
               avoid additional charges or penalties.
             </li>
