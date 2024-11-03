@@ -9,7 +9,7 @@ import {
     Spinner,
 } from "@material-tailwind/react";
 import { AiOutlineEnvironment } from "react-icons/ai";
-import { Locate } from "lucide-react";
+import { Locate, X } from "lucide-react";
 import toast from 'react-hot-toast';
 import myContext from "../../../context/myContext";
 import { useGetCitiesQuery } from "../../../redux/slices/cityApiSlice";
@@ -190,14 +190,18 @@ export default function SelectCityOrLocationModal() {
                 <div className="flex flex-wrap justify-between items-center px-4 lg:px-6 py-4 lg:py-0 rounded-xl">
                     <p className="text-lg font-semibold text-black">Select City or Location</p>
                     <div className="flex items-center gap-3 mt-3">
-                        <Button
+                    <Button
                             variant=""
                             onClick={detectLocation}
-                            className="flex items-center gap-2 py-2 px-4 text-black border border-green-200 bg-green-50 shadow-none hover:shadow-none outline-none"
+                            className="flex rounded-none items-center gap-2 py-2 px-4 text-black border border-green-200 bg-green-50 shadow-none hover:shadow-none outline-none"
                         >
                             <Locate size={20} />
                             Detect Current Location
                         </Button>
+
+                        <div onClick={handleOpen} className=" cursor-pointer py-1.5 px-2 border border-green-200 bg-green-50 shadow-none hover:shadow-none outline-none">
+                            <X color="black"/>
+                        </div>
                     </div>
                 </div>
                 <DialogBody className="max-h-[78vh] overflow-y-auto">
