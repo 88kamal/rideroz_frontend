@@ -43,6 +43,7 @@ import ShippingAndDelivery from "./pages/companyInfo/shippingAndDelivery/Shippin
 import WhyRideroz from "./pages/companyInfo/whyRideroz/WhyRideroz";
 import HowItWorks from "./pages/companyInfo/howItWorks/HowItWorks";
 import Safety from "./pages/companyInfo/safety/Safety";
+import FAQSection from "./pages/faq/FAQSection";
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
           <Route path="/why-rideroz" element={<WhyRideroz />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/safety" element={<Safety />} />
+          <Route path="/faqs" element={<FAQSection />} />
           <Route path="/*" element={<NoPage />} />
 
 
