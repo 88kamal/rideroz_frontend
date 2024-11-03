@@ -57,6 +57,17 @@ const Footer = () => {
                     </p>
                   </Link>
                 </li>
+
+                <li>
+
+<Link to={'/contact'} >
+  <p className="text-black mb-3 app-font cursor-pointer">
+    Contact Us
+  </p>
+</Link>
+</li>
+
+               
               </nav>
             </div>
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">
@@ -95,6 +106,15 @@ const Footer = () => {
                     </p>
                   </Link>
                 </li>
+
+                <li>
+
+<Link to={'/discount-coupons'} >
+  <p className="text-black mb-3 app-font cursor-pointer">
+   Discount And Coupons
+  </p>
+</Link>
+</li>
               </nav>
             </div>
 

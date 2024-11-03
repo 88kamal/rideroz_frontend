@@ -1,16 +1,17 @@
 import { Card } from "@material-tailwind/react";
 
 const services = [
-    { icon: './icon1.png', title: `Govt. Compliant Vehicles` },
-    { icon: './icon2.png', title: 'Doorstep Delivery of Vehicles' },
-    { icon: './icon3.png', title: 'Instant & Secure Payments' },
-    { icon: './icon4.png', title: 'Services & Maintenance' },
-    { icon: './icon5.png', title: 'Verified Dealers' },
+    { icon: 'https://cdn-icons-png.flaticon.com/128/3343/3343387.png', title: `Affordable Prices
+` },
+    { icon: 'https://cdn-icons-png.flaticon.com/128/854/854894.png', title: 'Multiple Locations' },
+    { icon: 'https://cdn-icons-png.flaticon.com/128/11328/11328453.png', title: 'Instant & Secure Payments' },
+    { icon: 'https://cdn-icons-png.flaticon.com/128/2173/2173566.png', title: 'Wide Range' },
+    { icon: 'https://cdn-icons-png.flaticon.com/128/3912/3912012.png', title: 'Verified Dealers' },
 ];
 
 const Services = () => {
     return (
-        <div className="flex flex-wrap justify-center gap-4 lg:gap-6 lg:py-8 px-4 lg:px-0">
+        <div className="flex flex-wrap justify-center gap-4 lg:gap-6 lg:py-5 px-4 lg:px-0">
             {services.map((service, index) => (
                 <Card
                     key={index}

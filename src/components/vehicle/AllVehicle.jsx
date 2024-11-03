@@ -43,7 +43,7 @@ const AllVehicle = () => {
                             const { _id, vehicleName, vehiclePrice, vehicleImage } = item;
 
                             return (
-                                <div key={index} className="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+                                <div key={index} className="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                                     <div className="bg-white rounded-lg border border-gray-300 drop-shadow ">
                                         <div className="relative cursor-pointer" onClick={() => navigate(`/vehicle-info/${selectedCity}/${_id}`)}>
                                             <img

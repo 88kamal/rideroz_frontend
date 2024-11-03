@@ -227,6 +227,10 @@ const detectLocation = async () => {
                             <Locate size={20} />
                             Detect Current Location
                         </Button>
+
+                        <div className="">
+                            
+                        </div>
                     </div>
                 </div>
                 <DialogBody className="max-h-[78vh] overflow-y-auto">
