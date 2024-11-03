@@ -12,18 +12,13 @@ const Footer = () => {
                 <img className=" w-48" src="../../logo/rideroz.png" alt="" />
               </div>
             </a>
-            {/* <p className="mt-2 text-sm text-gray-500">
-            Your Journey, Our Wheels
-
-
-            </p> */}
           </div>
-          
 
-          <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+
+          <div className="flex-grow flex flex-wrap  md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
+            <div className="lg:w-1/4 md:w-1/2 w-1/2 px-4">
               <h2 className="title-font font-bold text-black  tracking-widest text-sm mb-3">
-              MY INFORMATION
+                MY INFORMATION
 
               </h2>
               <nav className="list-none mb-10">
@@ -37,7 +32,7 @@ const Footer = () => {
 
                   <Link to={'/why-rideroz'} >
                     <p className="text-black mb-3 app-font cursor-pointer">
-                    Why Rideroz?
+                      Why Rideroz?
                     </p>
                   </Link>
                 </li>
@@ -60,17 +55,18 @@ const Footer = () => {
 
                 <li>
 
-<Link to={'/contact'} >
-  <p className="text-black mb-3 app-font cursor-pointer">
-    Contact Us
-  </p>
-</Link>
-</li>
+                  <Link to={'/contact'} >
+                    <p className="text-black mb-3 app-font cursor-pointer">
+                      Contact Us
+                    </p>
+                  </Link>
+                </li>
 
-               
+
               </nav>
             </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+
+            <div className="lg:w-1/4 md:w-1/2 w-1/2 px-4">
               <h2 className="title-font font-bold uppercase text-black tracking-widest text-sm mb-3">
                 Privacy & Legal
               </h2>
@@ -109,27 +105,27 @@ const Footer = () => {
 
                 <li>
 
-<Link to={'/discount-coupons'} >
-  <p className="text-black mb-3 app-font cursor-pointer">
-   Discount And Coupons
-  </p>
-</Link>
-</li>
+                  <Link to={'/discount-coupons'} >
+                    <p className="text-black mb-3 app-font cursor-pointer">
+                      Discount And Coupons
+                    </p>
+                  </Link>
+                </li>
               </nav>
             </div>
 
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
+            <div className="lg:w-1/4 md:w-1/2 w-1/2 px-4">
               <h2 className="title-font font-bold uppercase text-black tracking-widest text-sm mb-3">
                 Call Us & Mail
               </h2>
               <nav className="list-none mb-10">
                 <li>
-                    <p className="text-black mb-3 app-font cursor-pointer">Mail</p>
+                  <p className="text-black mb-3 app-font cursor-pointer">Mail</p>
                 </li>
                 <li>
-                    <p className="text-black mb-3 app-font cursor-pointer text-2xl">
-                      +91 7505847229
-                    </p>
+                  <p className="text-black mb-3 app-font cursor-pointer text-2xl">
+                    +91 7505847229
+                  </p>
                 </li>
               </nav>
             </div>
@@ -210,7 +206,7 @@ const Footer = () => {
 
         <div className=" bg-gray-800 p-2">
           <h1 className=" text-center text-white flex items-center justify-center gap-1 app-font">
-            Made with <HeartIcon className=" w-6 h-6 text-red-400"/> by Team Rideroz</h1>
+            Made with <HeartIcon className=" w-6 h-6 text-red-400" /> by Team Rideroz</h1>
         </div>
       </footer>
     </div>
