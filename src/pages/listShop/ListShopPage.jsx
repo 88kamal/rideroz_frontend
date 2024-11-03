@@ -552,7 +552,7 @@ function ListShopPage() {
                                         )}
                                     </>
 
-                                    <div className="flex gap-2 items-center app-font">
+                                    {/* <div className="flex gap-2 items-center app-font">
                                         <input type="checkbox" className="w-4 h-4 checked:bg-green-500 checked:border-transparent rounded cursor-pointer" />
                                         <p>
                                             I accept the
@@ -563,7 +563,7 @@ function ListShopPage() {
                                                 <span className=" text-green-700">Privacy Policy</span>
                                             </Link>
                                         </p>
-                                    </div>
+                                    </div> */}
 
                                     <div className="text-center">
                                         <Button

@@ -10,6 +10,7 @@ import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
 import { TicketMinus } from "lucide-react";
 import VehicleReview from "../../components/review/VehicleReview";
 import RatingStar from "../../components/review/RatingStar";
+import VehicleAvailbilityModal from "./modal/VehicleAvailbilityModal";
 
 function ProductInfo() {
     const { id } = useParams();
@@ -191,13 +192,8 @@ function ProductInfo() {
                                 {/* Buttons  */}
                                 <div className="flex gap-4">
                                     {/*Enquiry button  */}
-                                    <Button
-                                        variant=""
-                                        className={`flex items-center justify-center rounded-md py-2.5  lg:px-5 lg:py-2 text-center text-[0.6em] lg:text-sm font-medium w-full hover:shadow-none shadow-none  gap-3 bg-transparent border text-black  `}
-                                    >
-                                        <BsWhatsapp className={`text-[1.9em] lg:text-md `} />
-                                        <span className="fontPara">More Enquiry</span>
-                                    </Button>
+                                
+                                    <VehicleAvailbilityModal bookedDates={vehicle?.bookedDates}/>
 
                                     {/* Add To Cart Button  */}
                                     <Button
