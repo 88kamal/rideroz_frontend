@@ -120,7 +120,8 @@ const Footer = () => {
               </h2>
               <nav className="list-none mb-10">
                 <li>
-                  <p className="text-black mb-3 app-font cursor-pointer">Mail</p>
+                  <p className="text-black mb-3 app-font cursor-pointer">riderozofficial@gmail.com
+                  </p>
                 </li>
                 <li>
                   <p className="text-black mb-3 app-font cursor-pointer text-2xl">

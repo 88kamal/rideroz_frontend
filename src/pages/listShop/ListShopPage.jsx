@@ -277,7 +277,10 @@ function ListShopPage() {
                             <div className="mail w-1/2 rounded-md border bg-white drop-shadow px-2 py-1">
                                 <p className=" text-sm mb-2 app-font">Mail</p>
                                 <div className=" flex items-center gap-2 ">
-                                    <Mail className=" text-green-600" size={23} /> <p className=" text-green-600 text-xl">Mail</p>
+                                    <Mail className=" text-green-600" size={23} /> <p className=" text-green-600 text-xl">
+                                    riderozofficial@gmail.com
+
+                                    </p>
                                 </div>
 
 
