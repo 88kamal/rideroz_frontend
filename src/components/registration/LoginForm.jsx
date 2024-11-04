@@ -226,12 +226,13 @@ import { Button, Input } from '@material-tailwind/react';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLoginMutation } from '../../redux/slices/authApiSlice';
 import authService from '../../services/authService';
 import NeedChangePassword from './NeedChangePassword';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import myContext from '../../context/myContext';
 
 
 const LoginForm = ({ switchToSignup, switchToLogin }) => {
@@ -240,6 +241,8 @@ const LoginForm = ({ switchToSignup, switchToLogin }) => {
         email: '',
         password: '',
     });
+
+    const {showAlert} = useContext(myContext);
 
     const [needPassword, setNeedPassword] = useState(false); // Track if the user needs a password
 
@@ -304,7 +307,8 @@ const LoginForm = ({ switchToSignup, switchToLogin }) => {
                 navigate(rolePaths[user?.role]);
 
                 if(rolePaths[15]){
-                    toast.success(data?.message)
+                    showAlert(data?.message, "success", 2000)
+                    navigate('/');
                 }
                 // Hide the success message after 5 seconds
                 setTimeout(() => {
