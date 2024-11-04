@@ -11,7 +11,10 @@ const FAQSection = () => {
     { question: "How can I rent a two-wheeler online?", answer: "You can rent a two-wheeler by visiting our website and following the steps provided." },
     // { question: "Do I need to pay a security deposit to rent a Freedo?", answer: "Yes, a security deposit is required when renting a Freedo." },
     { question: "What is the condition of the vehicles?", answer: "All vehicles are regularly maintained and serviced for your safety and comfort." },
-    { question: "Is home delivery possible for the vehicle?", answer: "Yes, we offer home delivery at selected locations. Please check our service areas." },
+    {
+      "question": "Is home delivery possible for the vehicle?",
+      "answer": "No, we currently do not offer home delivery services. Please visit our location for pickup."
+    },    
     { question: "What documents are required for renting a scooter/bike?", answer: "You need to provide a valid driving license and a government-issued ID proof." },
   ];
 

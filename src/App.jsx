@@ -45,6 +45,7 @@ import HowItWorks from "./pages/companyInfo/howItWorks/HowItWorks";
 import Safety from "./pages/companyInfo/safety/Safety";
 import FAQSection from "./pages/faq/FAQSection";
 import DiscountCoupon from "./pages/companyInfo/discountCoupon/DiscountCoupon";
+import PickUpAndDropOff from "./pages/companyInfo/pickUpAndDropOff/PickUpAndDropOff";
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
           <Route path="/safety" element={<Safety />} />
           <Route path="/discount-coupons" element={<DiscountCoupon />} />
           <Route path="/faqs" element={<FAQSection />} />
+          <Route path="/rental-pickup-and-drop-off" element={<PickUpAndDropOff />} />
           <Route path="/*" element={<NoPage />} />
 
 
