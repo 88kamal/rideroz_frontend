@@ -235,7 +235,7 @@ import toast from 'react-hot-toast';
 import myContext from '../../context/myContext';
 
 
-const LoginForm = ({ switchToSignup, switchToLogin }) => {
+const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
     const navigate = useNavigate();
     const [loginState, setLoginState] = useState({
         email: '',
@@ -308,12 +308,14 @@ const LoginForm = ({ switchToSignup, switchToLogin }) => {
 
                 if(rolePaths[15]){
                     showAlert(data?.message, "success", 2000)
-                    navigate('/');
                 }
+
                 // Hide the success message after 5 seconds
                 setTimeout(() => {
                     setSuccessMessage('');
                 }, 1000);
+
+                handleOpen()
             }
 
 

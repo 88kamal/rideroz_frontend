@@ -452,7 +452,7 @@ export default function LoginModal({ autoOpen = false, showLoginButton = true })
                                     </>
                                 ) : (
                                     <>
-                                        <LoginForm switchToSignup={switchToSignup} switchToLogin={switchToLogin} />
+                                        <LoginForm handleOpen={handleOpen} switchToSignup={switchToSignup} switchToLogin={switchToLogin} />
                                     </>
                                 )}
                             </div>
