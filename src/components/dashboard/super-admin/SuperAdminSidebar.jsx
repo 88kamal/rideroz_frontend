@@ -11,7 +11,7 @@ import {
     UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
-import { ClipboardPlus, MapPinned } from "lucide-react";
+import { ClipboardPlus, MapPinned, TicketCheck } from "lucide-react";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
 
 export default function SuperAdminSidebar() {
@@ -52,6 +52,16 @@ export default function SuperAdminSidebar() {
                         Home
                     </ListItem>
 
+                </Link>
+
+                <Link to={'super-admin-vehicle-book'}>
+                    <ListItem
+                        className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
+                        <ListItemPrefix>
+                            <TicketCheck className="h-5 w-5" />
+                        </ListItemPrefix>
+                        All Vehicle Book
+                    </ListItem>
                 </Link>
 
                 <Link >

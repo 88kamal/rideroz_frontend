@@ -233,6 +233,19 @@ export default function SuccessBookedVehicleTranscation() {
 
                           </td>}
 
+                        {[2].includes(user?.role) &&
+                          <td className={classes}>
+                            <IconButton
+                              onClick={() => navigate(`/super-admin-dashboard/super-admin-home-page/super-admin-vehicle-book/vehicle-book-invoice/${_id}`)}
+                              variant="text"
+                              className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                            >
+                              <Eye className="h-5 w-5" />
+                            </IconButton>
+
+                          </td>
+                        }
+
 
                       </tr>
                     );

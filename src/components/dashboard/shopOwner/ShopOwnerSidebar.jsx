@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../redux/slices/authApiSlice";
-import { CarFront, CirclePlus, TicketCheck, UserCircleIcon } from "lucide-react";
+import { CarFront, CheckCheck, CirclePlus, TicketCheck, UserCircleIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import apiSlice from "../../../redux/slices/apiSlice";
 
@@ -87,6 +87,14 @@ export default function ShopOwnerSidebar() {
                     </ListItem>
                 </Link>
 
+                <Link to={'shop-owner-settlement'}>
+                    <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
+                        <ListItemPrefix>
+                        <CheckCheck className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Settlements
+                    </ListItem>
+                </Link>
 
                 <Link to={'shop-owner-profile'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">

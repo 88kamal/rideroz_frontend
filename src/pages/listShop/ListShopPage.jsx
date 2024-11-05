@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Button, Spinner } from "@material-tailwind/react";
+import { Button, Input, Spinner } from "@material-tailwind/react";
 import { useEffect, useRef, useState } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { Eye, EyeOff, Locate, Mail, Phone, PlusCircleIcon } from "lucide-react";
@@ -10,6 +10,7 @@ import { useGetCitiesQuery } from "../../redux/slices/cityApiSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { ClipboardDocumentListIcon, CurrencyRupeeIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
 
 
 function ListShopPage() {
@@ -24,7 +25,16 @@ function ListShopPage() {
         selectCity: "",
         lat: null,
         lng: null,
-        legalDoc: ""
+        legalDoc: "",
+        account_holder_name: "",
+        ifsc: "",
+        account_number: ""
+    });
+
+    const [bankDetails, setBankDetails] = useState({
+        ifsc : "",
+        bankName: "",
+        branch: ""
     });
 
     const navigate = useNavigate();
@@ -207,16 +217,51 @@ function ListShopPage() {
     }, [addShopError, isSuccess]);
 
 
+    const handleChangeForBankDetail = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+
+        setBankDetails((prevDetails) => ({
+            ...prevDetails,
+            [name]: value,
+            ...(name === 'ifsc' && value.length !== 11
+                ? { bankName: '', branch: '' }
+                : {}),
+        }));
+
+        if (name === 'ifsc' && value.length === 11) {
+            fetchBankDetails(value);
+        }
+    };
+
+    const fetchBankDetails = async (ifscCode) => {
+        try {
+            const response = await axios.get(`https://ifsc.razorpay.com/${ifscCode}`);
+            setBankDetails((prevDetails) => ({
+                ...prevDetails,
+                bankName: response.data.BANK,
+                branch: response.data.BRANCH,
+            }));
+        } catch (error) {
+            console.error("Error fetching bank details:", error);
+        }
+    };
+
     return (
         <Layout>
             <div className="">
 
+{/* <pre>{JSON.stringify(formData,null,2)}</pre>
+<pre>{JSON.stringify(bankDetails,null,2)}</pre> */}
 
                 <div className="main flex flex-wrap  justify-between bg-green-100 ">
                     <div className="left w-full md:w-1/2 p-5">
                         <div className="">
-                            <img className=" h-72 lg:h-[30em] w-full mb-4 rounded-md" 
-                            src="../../../rideroz-images.png" alt="img" />
+                            <img className=" h-72 lg:h-[30em] w-full mb-4 rounded-md"
+                                src="../../../rideroz-images.png" alt="img" />
                         </div>
                         <div className=" bg-green-700 text-white p-4 mb-4 rounded-md">
                             <h2 className=" text-xl mb-2 font-bold">Become a Rideroz Partner
@@ -278,7 +323,7 @@ function ListShopPage() {
                                 <p className=" text-sm mb-2 app-font">Mail</p>
                                 <div className=" flex items-center gap-2 ">
                                     <Mail className=" text-green-600" size={23} /> <p className=" text-green-600 text-xl">
-                                    riderozofficial@gmail.com
+                                        riderozofficial@gmail.com
 
                                     </p>
                                 </div>
@@ -501,6 +546,54 @@ function ListShopPage() {
                                                     alt="Preview"
                                                     className="w-full h-auto max-h-64 object-contain border border-gray-400 rounded-md"
                                                 />
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="">
+                                        <div className=" mb-3">
+                                            <Input
+                                                label='Account Holder Name'
+                                                type="text"
+                                                id="account_holder_name"
+                                                name="account_holder_name"
+                                                value={bankDetails.account_holder_name}
+                                                onChange={handleChangeForBankDetail}
+                                                color='green'
+                                                className="block w-full rounded-md sm:text-sm"
+                                                required
+                                            />
+                                        </div>
+                                        <div className=" mb-3">
+                                            <Input
+                                                label='Account Number'
+                                                type="text"
+                                                id="account_number"
+                                                name="account_number"
+                                                value={bankDetails.account_number}
+                                                onChange={handleChangeForBankDetail}
+                                                color='green'
+                                                className="block w-full rounded-md sm:text-sm"
+                                                required
+                                            />
+                                        </div>
+                                        <div className=" mb-3">
+                                            <Input
+                                                label='IFSC Code'
+                                                type="text"
+                                                id="ifsc"
+                                                name="ifsc"
+                                                value={bankDetails.ifsc}
+                                                onChange={handleChangeForBankDetail}
+                                                color='green'
+                                                className="block w-full rounded-md sm:text-sm uppercase"
+                                                required
+                                            />
+                                        </div>
+                                        {bankDetails.bankName && bankDetails.branch && (
+                                            <div className="text-sm flex items-center gap-1 mt-2">
+                                                <p className="text-gray-700 font-semibold">{bankDetails.bankName},</p>
+                                                <p className="text-gray-700">{bankDetails.branch}</p>
                                             </div>
                                         )}
                                     </div>

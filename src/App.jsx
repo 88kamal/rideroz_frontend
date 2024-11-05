@@ -47,6 +47,7 @@ import FAQSection from "./pages/faq/FAQSection";
 import DiscountCoupon from "./pages/companyInfo/discountCoupon/DiscountCoupon";
 import PickUpAndDropOff from "./pages/companyInfo/pickUpAndDropOff/PickUpAndDropOff";
 import ShopOwnerVehicleBookPage from "./pages/dashboard/shopOwner/pages/ShopOwnerVehicleBookPage";
+import ShopOwnerSettelementPage from "./pages/dashboard/shopOwner/pages/ShopOwnerSettelementPage";
 
 
 function App() {
@@ -120,10 +121,22 @@ function App() {
                 path="view-user-and-shop-owner"
                 element={<SuperAdminViewUserAndShopOwnerPage />}
               />
-               <Route
+              <Route
                 index={true}
                 path="super-admin-profile"
                 element={<SuperAdminUserProfilePage />}
+              />
+
+              <Route
+                index={true}
+                path="super-admin-vehicle-book"
+                element={<ShopOwnerVehicleBookPage />}
+              />
+
+              <Route
+                index={true}
+                path="super-admin-home-page/super-admin-vehicle-book/vehicle-book-invoice/:id"
+                element={<ViewUserBookingInvoice />}
               />
             </Route>
 
@@ -200,16 +213,22 @@ function App() {
                 path="shop-owner-profile"
                 element={<ShopOwnerUserProfilePage />}
               />
-                 <Route
+              <Route
                 index={true}
                 path="shop-owner-vehicle-book"
                 element={<ShopOwnerVehicleBookPage />}
               />
 
-<Route
+              <Route
                 index={true}
                 path="shop-owner-home-page/shop-owner-vehicle-book/vehicle-book-invoice/:id"
                 element={<ViewUserBookingInvoice />}
+              />
+
+<Route
+                index={true}
+                path="shop-owner-settlement"
+                element={<ShopOwnerSettelementPage />}
               />
 
 

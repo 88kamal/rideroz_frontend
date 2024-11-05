@@ -17,7 +17,7 @@ export default function VehicleAvailbilityModal({ bookedDates }) {
     const [dialogSize, setDialogSize] = useState("xl");
 
     const isDateBooked = (date) => {
-        const bookedDate = bookedDates.find((bookedDate) => {
+        const bookedDate = bookedDates?.find((bookedDate) => {
             const startDate = dayjs(bookedDate.startDate);
             const endDate = dayjs(bookedDate.endDate);
 

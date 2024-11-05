@@ -1,6 +1,10 @@
+import ViewAllSettlements from "../../../../components/common/shopOwner/settlements/ViewAllSettlements"
+
 const ShopOwnerHomePage = () => {
   return (
-    <div>ShopOwnerHomePage</div>
+    <div>
+      <ViewAllSettlements/>
+    </div>
   )
 }
 
