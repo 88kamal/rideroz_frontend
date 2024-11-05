@@ -106,7 +106,7 @@ function UserProfile() {
     const userId = user?.id;
     const { data: getUserById, error, isLoading } = useGetUserByIdQuery(userId)
 
-    const date = new Date(getUserById?.user?.updatedAt);
+    const date = new Date(getUserById?.user?.createdAt);
 
     // Formatting Options
     const options = {
@@ -222,7 +222,7 @@ function UserProfile() {
                         <span className="text-gray-600 ">{getUserById?.user?.ownerEmail}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700  app-font font-bold">Gender</span>
+                        <span className="text-gray-700 app-font font-bold">Gender</span>
                         <span className="text-gray-600 ">{getUserById?.user?.gender}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
@@ -233,18 +233,35 @@ function UserProfile() {
                     </div>
                 </div>
 
+                <div className="border-t pt-4 space-y-3">
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Bank Account Details</h2>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font font-bold">Account Holder Name</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.account_holder_name}</span>
+                    </div>
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font font-bold">Account Number</span>
+                        <span className="text-gray-600 blur  hover:blur-0 cursor-pointer">{getUserById?.user?.account_number}</span>
+                    </div>
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font font-bold">IFSC Code</span>
+                        <span className="text-gray-600 blur  hover:blur-0 cursor-pointer ">{getUserById?.user?.ifsc}</span>
+                    </div>
+                </div>
+
                 {/* Aadhaar Card Image */}
                 <div className="mt-6">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Documents</h2>
                     <div className=" border border-gray-300 bg-white drop-shadow p-2 rounded-md flex justify-center items-center">
 
-                                    <div className="w-full">
-                                        <img
-                                            src={getUserById?.user?.legalDoc?.url}
-                                            alt="Aadhaar Card"
-                                            className="w-80 h-auto rounded-lg shadow-md object-cover"
-                                        />
-                                    </div>
+                        <div className="w-full">
+                            <img
+                                src={getUserById?.user?.legalDoc?.url}
+                                alt="Aadhaar Card"
+                                className="w-80 h-auto rounded-lg shadow-md object-cover"
+                            />
+                        </div>
 
                     </div>
                 </div>
