@@ -141,11 +141,11 @@ function UserProfile() {
                 {/* User Information */}
                 <div className="border-t pt-4 space-y-3">
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700  app-font font-bold">Email</span>
+                        <span className="text-gray-700  app-font">Email</span>
                         <span className="text-gray-600 ">{getUserById?.user?.userEmail}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700 app-font font-bold">Updated At</span>
+                        <span className="text-gray-700 app-font">Updated At</span>
                         <span className="text-gray-600">{
                             formattedDate
                         }</span>
@@ -199,7 +199,7 @@ function UserProfile() {
 
                     <div className=" border border-gray-300 bg-white drop-shadow rounded-full">
                         <img
-                            className=' w-20 h-20'
+                            className=' w-20 h-20 rounded-full'
                             src={getUserById?.user?.shopImage?.url}
                             alt={getUserById?.user?.shopName}
                         />
@@ -214,19 +214,19 @@ function UserProfile() {
                 {/* User Information */}
                 <div className="border-t pt-4 space-y-3">
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700  app-font font-bold">Shop Owner Name</span>
+                        <span className="text-gray-700  app-font ">Shop Owner Name</span>
                         <span className="text-gray-600 ">{getUserById?.user?.ownerName}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700  app-font font-bold">Email</span>
+                        <span className="text-gray-700  app-font ">Email</span>
                         <span className="text-gray-600 ">{getUserById?.user?.ownerEmail}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700 app-font font-bold">Gender</span>
+                        <span className="text-gray-700 app-font ">Gender</span>
                         <span className="text-gray-600 ">{getUserById?.user?.gender}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700 app-font font-bold">Updated At</span>
+                        <span className="text-gray-700 app-font ">Updated At</span>
                         <span className="text-gray-600">{
                             formattedDate
                         }</span>
@@ -237,15 +237,15 @@ function UserProfile() {
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Bank Account Details</h2>
 
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700  app-font font-bold">Account Holder Name</span>
+                        <span className="text-gray-700  app-font">Account Holder Name</span>
                         <span className="text-gray-600 ">{getUserById?.user?.account_holder_name}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700  app-font font-bold">Account Number</span>
+                        <span className="text-gray-700  app-font">Account Number</span>
                         <span className="text-gray-600 blur  hover:blur-0 cursor-pointer">{getUserById?.user?.account_number}</span>
                     </div>
                     <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
-                        <span className="text-gray-700  app-font font-bold">IFSC Code</span>
+                        <span className="text-gray-700  app-font">IFSC Code</span>
                         <span className="text-gray-600 blur  hover:blur-0 cursor-pointer ">{getUserById?.user?.ifsc}</span>
                     </div>
                 </div>
