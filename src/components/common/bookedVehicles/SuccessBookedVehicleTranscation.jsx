@@ -139,7 +139,7 @@ export default function SuccessBookedVehicleTranscation() {
                   ({ _id,
                     extraHours, extraHourCharge, vehicle, shopAmount, startDate, endDate, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, razorpay_signature,
                   }, index) => {
-                    const { vehicleType, vehicleImage, vehicleNumber, vehicleName, vehicleModel, vehiclePrice, bookingPrice, sittingCapacity, } = vehicle
+                    const { vehicleType, vehicleImage, vehicleNumber, vehicleName, vehicleModel, vehiclePrice, bookingPrice, sittingCapacity, } = vehicle || {}
                     const isLast = index === data?.orders?.length - 1;
                     const classes = isLast
                       ? "px-5 py-   border-l  border-r border-b border-green-300"
@@ -158,7 +158,7 @@ export default function SuccessBookedVehicleTranscation() {
                         </td>
 
                         <td className={classes}>
-                          <img className="w-10 h-10" src={vehicleImage[0]?.url} alt={vehicleName} />
+                          <img className="w-10 h-10" src={vehicleImage?.[0]?.url} alt={vehicleName} />
                         </td>
 
                         <td className={classes}>
@@ -186,7 +186,12 @@ export default function SuccessBookedVehicleTranscation() {
                             size="sm"
                             variant="ghost"
                             value={status}
-                            color={status === "pending" ? "red" : "green"}
+                            color={
+                              status === "failed" ? "red" :
+                              status === "pending" ? "orange" : 
+                              "green"
+                            }
+                            
                             className="px-3 text-center w-28"
                           />
                         </td>

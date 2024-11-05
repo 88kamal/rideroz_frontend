@@ -240,6 +240,8 @@ const CartPage = () => {
                         razorpay_signature: response.razorpay_signature,
                     };
 
+                    console.log("paymentDetails", paymentDetails)
+
                     const verifyResponse = await verifyPayment(paymentDetails).unwrap();
 
                     if (verifyResponse) {
