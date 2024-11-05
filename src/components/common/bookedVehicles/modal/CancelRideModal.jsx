@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -11,6 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { TicketX } from "lucide-react";
 
+// eslint-disable-next-line no-unused-vars
 export default function CancelRideModal({ id, vehicleBasePrice, bookingTime }) {
   const [open, setOpen] = useState(false);
   const [verificationText, setVerificationText] = useState("");

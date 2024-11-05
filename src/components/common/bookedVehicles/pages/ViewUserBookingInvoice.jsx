@@ -1,13 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unsafe-optional-chaining */
 import { useGetOrderByIdQuery } from '../../../../redux/slices/orderApiSlice';
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { Spinner } from '@material-tailwind/react';
+import { Chip, Spinner } from '@material-tailwind/react';
+import authService from '../../../../services/authService';
 
 const ViewUserBookingInvoice = () => {
     const { id } = useParams();
     const { data, error, isLoading } = useGetOrderByIdQuery(id);
+
+    const appUser = authService.getCurrentUser()
 
     if (isLoading) {
         return (
@@ -16,19 +20,19 @@ const ViewUserBookingInvoice = () => {
             </div>
         );
     }
-    
+
     if (error) {
         return <p>Error loading invoice details</p>;
     }
-    
-    
-     // Ensure data is defined before destructuring
-     if (!data || !data.order) {
+
+
+    // Ensure data is defined before destructuring
+    if (!data || !data.order) {
         return <p>No order found.</p>;
     }
 
 
-    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id } = data.order;
+    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge } = data.order;
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-US');
 
@@ -80,6 +84,7 @@ const ViewUserBookingInvoice = () => {
 
 
                 </div>
+
 
                 {/* User Information Table */}
 
@@ -160,9 +165,43 @@ const ViewUserBookingInvoice = () => {
                                         {razorpay_payment_id}
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td className="p-2 border border-gray-300">
-                                        <span >Status :</span> {status}
+                                        <span >Rent Duration : </span>
+                                        {rentDuration}
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Extra Hours : </span>
+                                        {extraHours}
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Extra Hour Charge : </span>
+                                        ₹ {extraHourCharge}
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <p >Status :</p>
+                                            <Chip
+                                                size="sm"
+                                                variant="ghost"
+                                                value={status}
+                                                color={status === "pending" ? "red" : "green"}
+                                                className="px-3 text-center w-28"
+                                            />
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -186,24 +225,32 @@ const ViewUserBookingInvoice = () => {
                                     <td className="p-2 border border-gray-300">Vehicle Amount</td>
                                     <td className="p-2 text-right border border-gray-300">₹{vehicle?.vehiclePrice}</td>
                                 </tr>
-                                <tr>
-                                    <td className="p-2 border border-gray-300">Platform Fee</td>
-                                    <td className="p-2 text-right border border-gray-300">₹{platformAmount}</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-2 border border-gray-300">Miscellaneous Charges</td>
-                                    <td className="p-2 text-right border border-gray-300">₹{miscAmount}</td>
-                                </tr>
-                                {discountAmount && (
-                                    <tr>
-                                        <td className="p-2 border border-gray-300">Discount</td>
-                                        <td className="p-2 text-right border border-gray-300">-₹{discountAmount}</td>
-                                    </tr>
-                                )}
-                                <tr className="border-t">
-                                    <td className="p-2 font-semibold">Total Amount</td>
-                                    <td className="p-2 text-right font-semibold border border-gray-300">₹{totalAmount}</td>
-                                </tr>
+
+                                {[2, 3, 15].includes(appUser?.role) &&
+                                    <>
+                                        <tr>
+                                            <td className="p-2 border border-gray-300">Platform Fee</td>
+                                            <td className="p-2 text-right border border-gray-300">₹{platformAmount}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td className="p-2 border border-gray-300">Miscellaneous Charges</td>
+                                            <td className="p-2 text-right border border-gray-300">₹{miscAmount}</td>
+                                        </tr>
+
+                                        {discountAmount && (
+                                            <tr>
+                                                <td className="p-2 border border-gray-300">Discount</td>
+                                                <td className="p-2 text-right border border-gray-300">-₹{discountAmount}</td>
+                                            </tr>
+                                        )}
+
+                                        <tr className="border-t">
+                                            <td className="p-2 font-semibold">Total Amount</td>
+                                            <td className="p-2 text-right font-semibold border border-gray-300">₹{totalAmount}</td>
+                                        </tr>
+                                    </>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -238,6 +285,37 @@ const ViewUserBookingInvoice = () => {
                         </div>
                     )}
 
+                    {/* User Legal Docs */}
+
+                    <div className="pb-4 app-font" hidden={[15].includes(appUser?.role)}
+                    >
+                        <h3 className="text-lg font-semibold">User Legal Docs (Aadhar Card)</h3>
+                        <table className="min-w-full border-collapse border border-gray-300 mt-2">
+                            <thead>
+                                <tr className="bg-gray-200">
+                                    <th className="border border-gray-300 px-4 py-2 text-left">Front</th>
+                                    <th className="border border-gray-300 px-4 py-2 text-left">Back</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {user?.adharcardImg.map((item, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td className="border border-gray-300 px-4 py-2">
+                                                <img src={item?.url} alt="" className='w-80 rounded-md' />
+                                            </td>
+                                            <td className="border border-gray-300 px-4 py-2">
+                                                <img src={item?.url} alt="" className='w-80 rounded-md' />
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
 
                     {/* Signature */}
                     <div className="mt-6 text-center">
@@ -249,11 +327,11 @@ const ViewUserBookingInvoice = () => {
             </div>
 
             {/* Download Button */}
-            <div className="text-center mt-4">
+            {/* <div className="text-center mt-4">
                 <button onClick={handleDownload} className="bg-blue-500 text-white px-4 py-2 rounded">
                     Download Invoice as PDF
                 </button>
-            </div>
+            </div> */}
         </div>
 
     );

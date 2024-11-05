@@ -15,13 +15,19 @@ import { useNavigate } from "react-router-dom";
 import { Eye, MapPinHouse } from "lucide-react";
 import CancelRideModal from "./modal/CancelRideModal";
 import ShowLocationModal from "./modal/ShowLocationModal";
+import authService from "../../../services/authService";
+import VerifyRideModal from "./modal/VerifyRideModal";
 
-const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Name", "Vehicle Number", "Status", "View Location", "Cancel Ride", "View invoice"];
+// const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Name", "Vehicle Number", "Status", "View Location", "Cancel Ride", "View invoice"];
+
+
 
 export default function SuccessBookedVehicleTranscation() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+
+  const user = authService.getCurrentUser()
 
   const navigate = useNavigate();
 
@@ -36,6 +42,19 @@ export default function SuccessBookedVehicleTranscation() {
     // const totalPages = Math.ceil((cities?.totalCities ?? 0) / limit);
     // if (page < totalPages) setPage(page + 1);
   };
+
+
+  const TABLE_HEAD = [
+    "S.No",
+    "Vehicle Image",
+    "Vehicle Name",
+    "Vehicle Number",
+    "Status",
+    "View Location",
+    ...(user.role === 15 ? ["Cancel Ride"] : []),
+    ...(user.role === 14 ? ["Verify Otp"] : []),
+    "View Invoice",
+  ];
 
   return (
     <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
@@ -76,7 +95,7 @@ export default function SuccessBookedVehicleTranscation() {
 
       </CardHeader>
 
-      {/* <pre>{JSON.stringify(isError,null,2)}</pre> */}
+      {/* <pre>{JSON.stringify(user,null,2)}</pre> */}
 
       <div className="overflow-scroll p-2">
         {isLoading ? (
@@ -178,15 +197,21 @@ export default function SuccessBookedVehicleTranscation() {
 
                         </td>
 
-                        <td className={classes}>
+                        <td className={classes} hidden={[2, 3, 14].includes(user?.role)}>
                           <CancelRideModal id={_id} vehicleBasePrice={vehiclePrice} />
+                        </td>
+
+                        <td className={classes} hidden={[2, 3, 15].includes(user?.role)}>
+
+                          <VerifyRideModal vehicle={vehicle} />
+
                         </td>
 
 
 
-                        <td className={classes}>
+                        {[15].includes(user?.role) && <td className={classes}>
                           <IconButton
-                            onClick={() => navigate(`/user-dashboard/user-home-page/user-vehicle-book/view-more-vehicle-book/${_id}`)}
+                            onClick={() => navigate(`/user-dashboard/user-home-page/user-vehicle-book/vehicle-book-invoice/${_id}`)}
                             variant="text"
                             className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
                           >
@@ -194,6 +219,19 @@ export default function SuccessBookedVehicleTranscation() {
                           </IconButton>
 
                         </td>
+                        }
+
+                        {[14].includes(user?.role) &&
+                          <td className={classes}>
+                            <IconButton
+                              onClick={() => navigate(`/shop-owner-dashboard/shop-owner-home-page/shop-owner-vehicle-book/vehicle-book-invoice/${_id}`)}
+                              variant="text"
+                              className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                            >
+                              <Eye className="h-5 w-5" />
+                            </IconButton>
+
+                          </td>}
 
 
                       </tr>

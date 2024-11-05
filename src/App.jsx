@@ -46,6 +46,7 @@ import Safety from "./pages/companyInfo/safety/Safety";
 import FAQSection from "./pages/faq/FAQSection";
 import DiscountCoupon from "./pages/companyInfo/discountCoupon/DiscountCoupon";
 import PickUpAndDropOff from "./pages/companyInfo/pickUpAndDropOff/PickUpAndDropOff";
+import ShopOwnerVehicleBookPage from "./pages/dashboard/shopOwner/pages/ShopOwnerVehicleBookPage";
 
 
 function App() {
@@ -153,7 +154,7 @@ function App() {
 
               <Route
                 index={true}
-                path="user-home-page/user-vehicle-book/view-more-vehicle-book/:id"
+                path="user-home-page/user-vehicle-book/vehicle-book-invoice/:id"
                 element={<ViewUserBookingInvoice />}
               />
 
@@ -199,6 +200,18 @@ function App() {
                 path="shop-owner-profile"
                 element={<ShopOwnerUserProfilePage />}
               />
+                 <Route
+                index={true}
+                path="shop-owner-vehicle-book"
+                element={<ShopOwnerVehicleBookPage />}
+              />
+
+<Route
+                index={true}
+                path="shop-owner-home-page/shop-owner-vehicle-book/vehicle-book-invoice/:id"
+                element={<ViewUserBookingInvoice />}
+              />
+
 
             </Route>
 
