@@ -21,13 +21,11 @@ export default function ShopOwnerSidebar() {
 
     const navigate = useNavigate();
 
-
-    // Reset the RTK query cache
-    dispatch(apiSlice.util.resetApiState());
-
     const handleLogout = async () => {
         await logout(); // Call the logout mutation to remove token
         navigate('/');  // Redirect to the home page after logout
+        // Reset the RTK query cache
+        dispatch(apiSlice.util.resetApiState());
     };
 
 
@@ -57,7 +55,7 @@ export default function ShopOwnerSidebar() {
                         Home
                     </ListItem>
                 </Link>
-                
+
 
                 <Link to={'shop-owner-vehicle-book'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
@@ -77,7 +75,7 @@ export default function ShopOwnerSidebar() {
                     </ListItem>
                 </Link>
 
-               
+
                 <Link to={'shop-owner-add-vehicle'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
@@ -90,7 +88,7 @@ export default function ShopOwnerSidebar() {
                 <Link to={'shop-owner-settlement'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
-                        <CheckCheck className="h-5 w-5" />
+                            <CheckCheck className="h-5 w-5" />
                         </ListItemPrefix>
                         Settlements
                     </ListItem>
@@ -104,7 +102,7 @@ export default function ShopOwnerSidebar() {
                         Profile
                     </ListItem>
                 </Link>
-                
+
 
 
 

@@ -2,6 +2,7 @@ import apiSlice from "./apiSlice";
 
 // Define your API slice
 export const orderApiSlice = apiSlice.injectEndpoints({
+  tagTypes: "Order",
   endpoints: (builder) => ({
     createOrder: builder.mutation({
       query: ({ vehicleId, body }) => ({
@@ -55,7 +56,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
           "auth-token": JSON.parse(localStorage.getItem("token")),
         },
       }),
-      providesTags: (result, error, orderId) => 
+      providesTags: (result, error, orderId) =>
         result ? [{ type: 'Order', id: orderId }] : [{ type: 'Order' }],
       keepUnusedDataFor: 300, // Cache data for 5 minutes
       refetchOnMountOrArgChange: true,

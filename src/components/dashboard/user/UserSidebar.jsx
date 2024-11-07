@@ -22,13 +22,10 @@ export default function UserSidebar() {
 
     const navigate = useNavigate();
 
-     // Reset the RTK query cache
-     dispatch(apiSlice.util.resetApiState());
-
-
     const handleLogout = async () => {
         await logout(); // Call the logout mutation to remove token
         navigate('/');  // Redirect to the home page after logout
+        dispatch(apiSlice.util.resetApiState());
     };
 
 

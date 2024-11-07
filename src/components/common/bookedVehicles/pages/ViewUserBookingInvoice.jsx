@@ -32,7 +32,7 @@ const ViewUserBookingInvoice = () => {
     }
 
 
-    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge } = data.order;
+    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge } = data?.order || {};
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-US');
 
@@ -100,33 +100,33 @@ const ViewUserBookingInvoice = () => {
                             <tbody>
                                 <tr>
                                     <td className="p-2 border border-gray-300">
-                                        <span >Name : </span> {user.userName}
+                                        <span >Name : </span> {user?.userName}
                                     </td>
                                     <td className="p-2 border border-gray-300">
-                                        <span >Name : </span> {vehicle.vehicleName}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="p-2 border border-gray-300">
-                                        <span >Email : </span> {user.userEmail}
-                                    </td>
-                                    <td className="p-2 border border-gray-300">
-                                        <span >Model : </span> {vehicle.vehicleModel}
+                                        <span >Name : </span> {vehicle?.vehicleName}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="p-2 border border-gray-300">
-                                        <span >Phone : </span> {user.userPhoneNumber}
+                                        <span >Email : </span> {user?.userEmail}
                                     </td>
                                     <td className="p-2 border border-gray-300">
-                                        <span >Number : </span> {vehicle.vehicleNumber}
+                                        <span >Model : </span> {vehicle?.vehicleModel}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Phone : </span> {user?.userPhoneNumber}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <span >Number : </span> {vehicle?.vehicleNumber}
                                     </td>
                                 </tr>
 
                                 <tr className="border-t">
                                     <td className="p-2 font-semibold"></td>
                                     <td className="p-2  border border-gray-300">
-                                        <span >Price Per Day : </span> ₹ {vehicle.vehiclePrice}
+                                        <span >Price Per Day : </span> ₹ {vehicle?.vehiclePrice}
                                     </td>
                                 </tr>
                             </tbody>
@@ -148,7 +148,7 @@ const ViewUserBookingInvoice = () => {
                                 <tr>
                                     <td className="p-2 border border-gray-300">
                                         <span >Pickup Date : </span>
-                                        {formatDateTime(startDate, data.order.startTime || '')}
+                                        {formatDateTime(startDate, data?.order?.startTime || '')}
                                     </td>
                                     <td className="p-2 border border-gray-300">
                                         <span >Order ID : </span>
@@ -158,7 +158,7 @@ const ViewUserBookingInvoice = () => {
                                 <tr>
                                     <td className="p-2 border border-gray-300">
                                         <span >Drop Off Date : </span>
-                                        {formatDateTime(endDate, data.order.endTime || '')}
+                                        {formatDateTime(endDate, data?.order?.endTime || '')}
                                     </td>
                                     <td className="p-2 border border-gray-300">
                                         <span >Payment ID : </span>
@@ -198,7 +198,12 @@ const ViewUserBookingInvoice = () => {
                                                 size="sm"
                                                 variant="ghost"
                                                 value={status}
-                                                color={status === "pending" ? "red" : "green"}
+                                                color={
+                                                    status === "failed" ? "red" :
+                                                    status === "pending" ? "orange" : 
+                                                    "green"
+                                                  }
+                                                  
                                                 className="px-3 text-center w-28"
                                             />
                                         </div>
@@ -238,12 +243,12 @@ const ViewUserBookingInvoice = () => {
                                             <td className="p-2 text-right border border-gray-300">₹{miscAmount}</td>
                                         </tr>
 
-                                        {discountAmount && (
+                                        {/* {discountAmount && ( */}
                                             <tr>
                                                 <td className="p-2 border border-gray-300">Discount</td>
                                                 <td className="p-2 text-right border border-gray-300">-₹{discountAmount}</td>
                                             </tr>
-                                        )}
+                                        {/* )} */}
 
                                         <tr className="border-t">
                                             <td className="p-2 font-semibold">Total Amount</td>
@@ -270,15 +275,15 @@ const ViewUserBookingInvoice = () => {
                                 <tbody>
                                     <tr>
                                         <td className="border border-gray-300 px-4 py-2"><span>Code : </span></td>
-                                        <td className="border border-gray-300 px-4 py-2">{coupon.code}</td>
+                                        <td className="border border-gray-300 px-4 py-2">{coupon?.code}</td>
                                     </tr>
                                     <tr>
                                         <td className="border border-gray-300 px-4 py-2"><span>Discount Value : </span></td>
-                                        <td className="border border-gray-300 px-4 py-2">{coupon.discountValue}%</td>
+                                        <td className="border border-gray-300 px-4 py-2">{coupon?.discountValue}%</td>
                                     </tr>
                                     <tr>
                                         <td className="border border-gray-300 px-4 py-2"><span>Expires on : </span></td>
-                                        <td className="border border-gray-300 px-4 py-2">{formatDate(coupon.expirationDate)}</td>
+                                        <td className="border border-gray-300 px-4 py-2">{formatDate(coupon?.expirationDate)}</td>
                                     </tr>
                                 </tbody>
                             </table>

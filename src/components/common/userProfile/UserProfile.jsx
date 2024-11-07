@@ -124,7 +124,7 @@ function UserProfile() {
 
     return (
         <div className="flex flex-col items-center min-h-screen">
-            {/* Profile Card */}
+            {/* For USER  */}
             {[getUserById?.userType].includes('User') && <div className="bg-white drop-shadow border border-gray-300 rounded-md w-full p-6">
                 {/* Profile Header */}
                 <div className="flex items-center space-x-4 mb-6">
@@ -191,8 +191,9 @@ function UserProfile() {
                 </div>
             </div>}
 
-            {/* <pre>{JSON.stringify(getUserById, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(getUserById?.user, null, 2)}</pre> */}
 
+            {/* For SHOP OWNER  */}
             {[getUserById?.userType].includes('Shop') && <div className="bg-white drop-shadow border border-gray-300 rounded-md w-full p-6">
                 {/* Profile Header */}
                 <div className="flex items-center space-x-4 mb-6">
@@ -263,6 +264,125 @@ function UserProfile() {
                             />
                         </div>
 
+                    </div>
+                </div>
+            </div>}
+
+            {/* FOR EMPLOYEE  */}
+            {[getUserById?.userType].includes('Employee') && <div className="bg-white drop-shadow border border-gray-300 rounded-md w-full p-6">
+                {/* Profile Header */}
+                <div className="flex items-center space-x-4 mb-6">
+
+                    <div className=" border border-gray-300 bg-white drop-shadow rounded-full">
+                        <img
+                            className=' w-20 h-20 rounded-full'
+                            src={getUserById?.user?.employeePhoto?.url}
+                            alt={getUserById?.user?.employeeName}
+                        />
+                    </div>
+
+                    <div>
+                        <h1 className=" text-xl lg:text-2xl font-bold text-gray-800">{getUserById?.user?.employeeName}</h1>
+                        <p className="text-gray-500 app-font">Phone: {getUserById?.user?.employeeMobileNumber}</p>
+                    </div>
+                </div>
+
+                {/* User Information */}
+                <div className="border-t pt-4 space-y-3">
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font ">father/Husband Name</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.fatherOrHusbandName || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font ">Email</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.employeeEmail || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font ">Department</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.department || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font ">Role</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.role?.roleName || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Gender</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.sex || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Marital Status</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.maritalStatus || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Blood Group</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.bloodGroup || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Present Address</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.presentAddress || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Permanent Address</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.permanentAddress || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Date Of Birth</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.dateOfBirth || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Date Of Birth</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.dateOfJoining || "N/A"}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Updated At</span>
+                        <span className="text-gray-600">{
+                            formattedDate
+                        }</span>
+                    </div>
+                </div>
+
+
+                {/* Aadhaar Card Image */}
+                <div className="mt-6">
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Documents</h2>
+                    <div className="flex flex-wrap space-y-2 lg:space-y-0 justify-between items-center">
+
+                        <div className=" w-full lg:w-1/3 border border-gray-300 bg-white drop-shadow p-2 ">
+                            <div className="w-full">
+                                <a href={getUserById?.user?.employeeAdharCard?.url} target="_blank">
+                                    <p className=" text-center app-font text-black">View Aadhar Card </p>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <div className=" w-full lg:w-1/3 border border-gray-300 bg-white drop-shadow p-2 ">
+                            <div className="w-full">
+                                <a href={getUserById?.user?.employeePanCard?.url} target="_blank">
+                                    <p className=" text-center app-font text-black">View Pan Card </p>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div className=" w-full lg:w-1/3 border border-gray-300 bg-white drop-shadow p-2 ">
+                            <div className="w-full">
+                                <a href={getUserById?.user?.employeeAgreement?.url} target="_blank">
+                                    <p className=" text-center app-font text-black">View Employee Agreement </p>
+                                </a>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>}

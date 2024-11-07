@@ -51,8 +51,8 @@ export default function SuccessBookedVehicleTranscation() {
     "Vehicle Number",
     "Status",
     "View Location",
-    ...(user.role === 15 ? ["Cancel Ride"] : []),
-    ...(user.role === 14 ? ["Verify Otp"] : []),
+    ...(user?.role === 15 ? ["Cancel Ride"] : []),
+    ...(user?.role === 14 ? ["Verify Otp"] : []),
     "View Invoice",
   ];
 

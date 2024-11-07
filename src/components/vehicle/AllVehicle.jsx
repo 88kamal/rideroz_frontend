@@ -67,7 +67,7 @@ const AllVehicle = () => {
                                                 <span className=" app-font"> per day</span>
                                             </p>
                                             <div className="flex w-full gap-2 mt-4">
-                                                <DatePickerModule bookedDates={item?.bookedDates} />
+                                                <DatePickerModule vehicleId={_id} month={"2024-11"} />
                                                 <Button
                                                     onClick={() => navigate(`/checkout/${_id}`)}
                                                     className="bg-indigo-500 text-white w-full py-2 rounded shadow-none hover:bg-indigo-600 transition duration-300"
