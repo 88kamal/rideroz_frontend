@@ -877,7 +877,7 @@ export default function DatePickerModule({ vehicleId, initialMonth }) {
           </div>
           <div className="p-3">
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-4">
-              {data.availabilityStatus.map((day, index) => (
+              {data?.availabilityStatus?.map((day, index) => (
                 <div
                   key={index}
                   className={`relative h-28 flex border justify-center items-center p-2 rounded-lg transition-all ${day.status === "Available"
