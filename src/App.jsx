@@ -139,19 +139,19 @@ function App() {
   
     requestPermission();
   
-    // Handle foreground messages
-    onMessage(messaging, (payload) => {
-      if (document.visibilityState === 'visible') {
-        // App is in the foreground
-        console.log("Message received in the foreground:", payload);
+    // // Handle foreground messages
+    // onMessage(messaging, (payload) => {
+    //   if (document.visibilityState === 'visible') {
+    //     // App is in the foreground
+    //     console.log("Message received in the foreground:", payload);
         
-        // Handle the notification in the app UI (without showing a system-level notification)
-        setNotification({
-          title: payload.notification?.title,
-          body: payload.notification?.body,
-        });
-      }
-    });
+    //     // Handle the notification in the app UI (without showing a system-level notification)
+    //     setNotification({
+    //       title: payload.notification?.title,
+    //       body: payload.notification?.body,
+    //     });
+    //   }
+    // });
   }, []);
   
   return (
@@ -163,13 +163,13 @@ function App() {
 
         <pre>{JSON.stringify(notificationToken,null,2)}</pre>
 
-        {notification && (
+        {/* {notification && (
         <CustomNotification
           title={notification.title}
           body={notification.body}
           onClose={handleNotificationClose}
         />
-      )}
+      )} */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
