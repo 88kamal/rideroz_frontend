@@ -7,7 +7,7 @@ import HomePage from "./pages/home/HomePage";
 import AboutPage from "./pages/about/AboutPage";
 import ContactPage from "./pages/contact/ContactPage";
 import NoPage from "./pages/noPage/NoPage";
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import ListShopPage from "./pages/listShop/ListShopPage";
 import SuperAdminDashboard from "./pages/dashboard/super-admin/SuperAdminDashboard";
 import SuperAdminHomePage from "./pages/dashboard/super-admin/pages/SuperAdminHomePage";
@@ -48,15 +48,71 @@ import DiscountCoupon from "./pages/companyInfo/discountCoupon/DiscountCoupon";
 import PickUpAndDropOff from "./pages/companyInfo/pickUpAndDropOff/PickUpAndDropOff";
 import ShopOwnerVehicleBookPage from "./pages/dashboard/shopOwner/pages/ShopOwnerVehicleBookPage";
 import ShopOwnerSettelementPage from "./pages/dashboard/shopOwner/pages/ShopOwnerSettelementPage";
+import { useContext, useEffect, useState } from "react";
+import { messaging } from "./firebase/firebaseConfig";
+import { getToken, onMessage } from "firebase/messaging";
+import CustomNotification from "./helper/CustomNotification";
+import myContext from "./context/myContext";
 
 
 function App() {
+  const [notification, setNotification] = useState(null);
+  const [notificationToken, setNotificationToken] = useState('')
+
+  useEffect(() => {
+    const requestPermission = async () => {
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+          const currentToken = await getToken(messaging, {
+            vapidKey: "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w",
+          });
+          if (currentToken) {
+            console.log("FCM Token:", currentToken);
+            setNotificationToken(currentToken)
+          } else {
+            console.warn("No registration token available.");
+          }
+        } else {
+          console.error("Notification permission not granted.");
+        }
+      } catch (error) {
+        console.error("Error during token retrieval:", error);
+      }
+    };
+
+    requestPermission();
+
+    // Handle foreground messages
+    onMessage(messaging, (payload) => {
+      console.log("Message received in the foreground:", payload);
+      // Set the notification state with the received message
+      setNotification({
+        title: payload.notification?.title,
+        body: payload.notification?.body,
+      });
+    });
+  }, []);
+
+  const handleNotificationClose = () => {
+    setNotification(null); // Hide the notification
+  };
   return (
     <MyState>
       <Router>
         <Toaster />
         <ScrollTop />
         <TopAlert />
+
+        <pre>{JSON.stringify(notificationToken,null,2)}</pre>
+
+        {notification && (
+        <CustomNotification
+          title={notification.title}
+          body={notification.body}
+          onClose={handleNotificationClose}
+        />
+      )}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

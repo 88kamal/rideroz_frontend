@@ -1,30 +1,28 @@
 import { useGetVehiclesNearbyQuery } from "../../redux/slices/vehicleApiSlice";
 import { Button, Spinner } from "@material-tailwind/react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import myContext from "../../context/myContext";
 import { useNavigate } from "react-router-dom";
 import DatePickerModule from "./DatePickerModule";
+import RatingBadge from "./RatingBadge";
 
 const AllVehicle = () => {
     const navigate = useNavigate();
     const { lat, lng, vehicleType, vehicleCity, selectedCity, currentLocationName } = useContext(myContext);
-    const { data: vehicles, error, isLoading } = useGetVehiclesNearbyQuery({
+    const { data: vehicles, error, isLoading, refetch } = useGetVehiclesNearbyQuery({
         lat,
         lng,
         vehicleCity,
         vehicleType,
     });
+
+    // Auto-refetch every 5 minutes (300000 ms)
+    useEffect(() => {
+            refetch();
+    }, [refetch]);
+
     return (
         <section className="py-5">
-            {/* <pre>{JSON.stringify({
-                    lat,
-                    lng,
-                    vehicleType,
-                    vehicleCity, selectedCity, currentLocationName
-                },null,2)}</pre> */}
-
-            {/* <pre>{JSON.stringify(vehicles,null,2)}</pre> */}
-
             <div className="container mx-auto px-">
                 <div className="flex flex-wrap -m-4 justify-center">
                     {isLoading ? (
@@ -40,7 +38,7 @@ const AllVehicle = () => {
                         </div>
                     ) : (
                         vehicles?.vehicles?.map((item, index) => {
-                            const { _id, vehicleName, vehiclePrice, vehicleImage } = item;
+                            const { _id, vehicleName, vehiclePrice, vehicleImage, vehicleRatings, distance } = item;
 
                             return (
                                 <div key={index} className="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
@@ -51,21 +49,24 @@ const AllVehicle = () => {
                                                 src={vehicleImage[0]?.url}
                                                 alt="Vehicle"
                                             />
-
                                         </div>
                                         <div className="p-4">
-                                            <h2 className=" tracking-widest text-sm app-font text-gray-600 mb-1">
+                                            <h2 className="tracking-widest text-sm app-font text-gray-600 mb-1">
                                                 Rideroz
                                             </h2>
-
-                                            <h1 className="text-xl font-bold text-gray-900 mb-2">
-                                                {vehicleName}
-                                            </h1>
-
-                                            <p className="text-gray-600 font-medium">
-                                                ₹ <span className="font-bold text-black ">{vehiclePrice} /-</span>
-                                                <span className=" app-font"> per day</span>
-                                            </p>
+                                            <div className="flex justify-between items-center mb-2">
+                                                <h1 className="text-xl font-bold text-gray-900">
+                                                    {vehicleName}
+                                                </h1>
+                                                <RatingBadge vehicleRatings={vehicleRatings} />
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <p className="text-gray-600 font-medium">
+                                                    ₹ <span className="font-bold text-black ">{vehiclePrice} /-</span>
+                                                    <span className="app-font"> per day</span>
+                                                </p>
+                                                <span className="font-medium text-sm">{distance}</span>
+                                            </div>
                                             <div className="flex w-full gap-2 mt-4">
                                                 <DatePickerModule vehicleId={_id} month={"2024-11"} />
                                                 <Button
@@ -75,7 +76,6 @@ const AllVehicle = () => {
                                                     Book Now
                                                 </Button>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -85,9 +85,8 @@ const AllVehicle = () => {
                 </div>
                 <div className="flex justify-center mt-8">
                     <Button
-                        variant=""
                         onClick={() => navigate(`/all-vehicles/${selectedCity}/${currentLocationName}`)}
-                        className="bg-green-500 text-white px-8 py-3 rounded-full hover:shadow-none shadow-none hover:bg-green-600  "
+                        className="bg-green-500 text-white px-8 py-3 rounded-full hover:shadow-none shadow-none hover:bg-green-600"
                     >
                         Show More
                     </Button>

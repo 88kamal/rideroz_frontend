@@ -193,7 +193,7 @@ function ProductInfo() {
                                 <div className="flex gap-4">
                                     {/*Enquiry button  */}
                                 
-                                    <VehicleAvailbilityModal bookedDates={vehicle?.bookedDates}/>
+                                    <VehicleAvailbilityModal vehicleId={vehicle?._id}/>
 
                                     {/* Add To Cart Button  */}
                                     <Button

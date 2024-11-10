@@ -366,7 +366,7 @@ const CartPage = () => {
                                         Checkout
                                     </h1>
 
-                                    <VehicleAvailbilityModal bookedDates={bookedDates} />
+                                    <VehicleAvailbilityModal vehicleId={vehicle?._id} />
                                 </div>
                             </div>
                             {/* Pickup/Dropoff Date and Time */}

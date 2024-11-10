@@ -10,6 +10,7 @@ function MyState(props) {
   const [selectedCity, setSelectedCity] = useState('');
   const [currentLocationName, setCurrentLocationName] = useState('');
   const [autoOpenLogin, setAutoOpenLogin] = useState(false);
+  const [notificationToken, setNotificationToken] = useState('');
 
   const [alert, setAlert] = useState({
     show: false,
@@ -36,7 +37,8 @@ function MyState(props) {
       selectedCity, setSelectedCity,
       currentLocationName, setCurrentLocationName,
       alert, showAlert,
-      autoOpenLogin, setAutoOpenLogin
+      autoOpenLogin, setAutoOpenLogin,
+      notificationToken, setNotificationToken
     }}>
       {props.children}
     </MyContext.Provider>
