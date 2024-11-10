@@ -6,16 +6,8 @@ import "./index.css";
 import { ThemeProvider } from "@material-tailwind/react";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'; // Assuming you have this
 
-// Register the Firebase service worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/firebase-messaging-sw.js')
-  .then((registration) => {
-      console.log('Service Worker registered with scope:', registration.scope);
-  }).catch((error) => {
-      console.error('Service Worker registration failed:', error);
-  });
-}
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -27,3 +19,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </Provider>
   </React.StrictMode>
 );
+
+// Register the service worker
+serviceWorkerRegistration.register(); // This registers your firebase-messaging-sw.js
