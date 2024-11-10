@@ -83,15 +83,32 @@ function App() {
 
     requestPermission();
 
-    // Handle foreground messages
+    // // Handle foreground messages
+    // onMessage(messaging, (payload) => {
+    //   console.log("Message received in the foreground:", payload);
+    //   // Set the notification state with the received message
+    //   setNotification({
+    //     title: payload.notification?.title,
+    //     body: payload.notification?.body,
+    //   });
+    // });
+
     onMessage(messaging, (payload) => {
-      console.log("Message received in the foreground:", payload);
-      // Set the notification state with the received message
-      setNotification({
-        title: payload.notification?.title,
-        body: payload.notification?.body,
-      });
+      if (document.visibilityState === 'visible') {
+        console.log("App is in the foreground. Handle the message differently.");
+        console.log("Message received in the foreground:", payload);
+        // Set the notification state with the received message
+        setNotification({
+          title: payload.notification?.title,
+          body: payload.notification?.body,
+        });
+        // Display custom UI or log the message without triggering a new notification
+      } else {
+        console.log("App is in the background.");
+        // Here, `firebase-messaging-sw.js` will handle the notification display
+      }
     });
+    
   }, []);
 
   const handleNotificationClose = () => {
