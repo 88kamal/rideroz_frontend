@@ -108,13 +108,13 @@ function App() {
 
         <pre>{JSON.stringify(notificationToken,null,2)}</pre>
 
-        {notification && (
+        {/* {notification && (
         <CustomNotification
           title={notification.title}
           body={notification.body}
           onClose={handleNotificationClose}
         />
-      )}
+      )} */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
