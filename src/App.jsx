@@ -48,11 +48,10 @@ import DiscountCoupon from "./pages/companyInfo/discountCoupon/DiscountCoupon";
 import PickUpAndDropOff from "./pages/companyInfo/pickUpAndDropOff/PickUpAndDropOff";
 import ShopOwnerVehicleBookPage from "./pages/dashboard/shopOwner/pages/ShopOwnerVehicleBookPage";
 import ShopOwnerSettelementPage from "./pages/dashboard/shopOwner/pages/ShopOwnerSettelementPage";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { messaging } from "./firebase/firebaseConfig";
 import { getToken, onMessage } from "firebase/messaging";
 import CustomNotification from "./helper/CustomNotification";
-import myContext from "./context/myContext";
 
 
 function App() {
@@ -65,11 +64,11 @@ function App() {
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
           const currentToken = await getToken(messaging, {
-            vapidKey: "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w",
+            vapidKey: "YOUR_VAPID_KEY",
           });
           if (currentToken) {
             console.log("FCM Token:", currentToken);
-            setNotificationToken(currentToken)
+            setNotificationToken(currentToken);
           } else {
             console.warn("No registration token available.");
           }
@@ -80,40 +79,26 @@ function App() {
         console.error("Error during token retrieval:", error);
       }
     };
-
+  
     requestPermission();
-
-    // // Handle foreground messages
-    // onMessage(messaging, (payload) => {
-    //   console.log("Message received in the foreground:", payload);
-    //   // Set the notification state with the received message
-    //   setNotification({
-    //     title: payload.notification?.title,
-    //     body: payload.notification?.body,
-    //   });
-    // });
-
+  
+    // Handle foreground messages
     onMessage(messaging, (payload) => {
       if (document.visibilityState === 'visible') {
-        console.log("App is in the foreground. Handle the message differently.");
+        // App is in the foreground
         console.log("Message received in the foreground:", payload);
-        // Set the notification state with the received message
+        // Optionally set the notification in the state to show in the UI (without system notification)
         setNotification({
           title: payload.notification?.title,
           body: payload.notification?.body,
         });
-        // Display custom UI or log the message without triggering a new notification
       } else {
-        console.log("App is in the background.");
-        // Here, `firebase-messaging-sw.js` will handle the notification display
+        // App is in the background, do nothing, let the service worker handle it
+        console.log("App is in the background. No notification shown here.");
       }
     });
-    
   }, []);
-
-  const handleNotificationClose = () => {
-    setNotification(null); // Hide the notification
-  };
+  
   return (
     <MyState>
       <Router>
