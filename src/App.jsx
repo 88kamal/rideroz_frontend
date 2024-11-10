@@ -161,7 +161,7 @@ function App() {
         <ScrollTop />
         <TopAlert />
 
-        <pre>{JSON.stringify(notificationToken,null,2)}</pre>
+        {/* <pre>{JSON.stringify(notificationToken,null,2)}</pre> */}
 
         {notification && (
         <CustomNotification
