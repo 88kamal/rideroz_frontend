@@ -55,17 +55,17 @@ function MoreButton() {
 
                 <List>
                     <Link onClick={() => setOpen(false)} to={'view-and-add-city'}>
-                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300'>
+                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300 app-font text-black'>
                             <ListItemPrefix>
                                 <PlusCircleIcon className="h-5 w-5" />
                             </ListItemPrefix>
-                            Add Or View
+                            Add Or View City
                         </ListItem>
                     </Link>
 
 
                     <Link onClick={() => setOpen(false)} to={'view-and-add-roles-and-department'}>
-                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300'>
+                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300 app-font text-black'>
                             <ListItemPrefix>
                                 <Network />
                             </ListItemPrefix>
@@ -74,7 +74,7 @@ function MoreButton() {
                     </Link>
 
                     <Link onClick={() => setOpen(false)} to={'add-and-view-employee'}>
-                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300'>
+                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300 app-font text-black'>
                             <ListItemPrefix>
                                 <UserRoundPlus />
                             </ListItemPrefix>
@@ -83,7 +83,7 @@ function MoreButton() {
                     </Link>
 
                     <Link onClick={() => setOpen(false)} to={'view-user-and-shop-owner'}>
-                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300'>
+                        <ListItem className='hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300 app-font text-black'>
                             <ListItemPrefix>
                                 <Users />
                             </ListItemPrefix>

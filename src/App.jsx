@@ -53,6 +53,7 @@ import { messaging } from "./firebase/firebaseConfig";
 import { getToken, onMessage } from "firebase/messaging";
 import CustomNotification from "./helper/CustomNotification";
 import myContext from "./context/myContext";
+import SuperAdminGetOrderByShopOwner from "./pages/dashboard/super-admin/pages/SuperAdminGetOrderByShopOwner";
 
 
 function App() {
@@ -108,7 +109,7 @@ function App() {
   //       // Here, `firebase-messaging-sw.js` will handle the notification display
   //     }
   //   });
-    
+
   // }, []);
 
   const handleNotificationClose = () => {
@@ -136,15 +137,15 @@ function App() {
         console.error("Error during token retrieval:", error);
       }
     };
-  
+
     requestPermission();
-  
+
     // Handle foreground messages
     onMessage(messaging, (payload) => {
       if (document.visibilityState === 'visible') {
         // App is in the foreground
         console.log("Message received in the foreground:", payload);
-        
+
         // Handle the notification in the app UI (without showing a system-level notification)
         setNotification({
           title: payload.notification?.title,
@@ -153,7 +154,7 @@ function App() {
       }
     });
   }, []);
-  
+
   return (
     <MyState>
       <Router>
@@ -164,12 +165,12 @@ function App() {
         {/* <pre>{JSON.stringify(notificationToken,null,2)}</pre> */}
 
         {notification && (
-        <CustomNotification
-          title={notification.title}
-          body={notification.body}
-          onClose={handleNotificationClose}
-        />
-      )}
+          <CustomNotification
+            title={notification.title}
+            body={notification.body}
+            onClose={handleNotificationClose}
+          />
+        )}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -250,6 +251,13 @@ function App() {
                 index={true}
                 path="super-admin-home-page/super-admin-vehicle-book/vehicle-book-invoice/:id"
                 element={<ViewUserBookingInvoice />}
+              />
+              
+
+              <Route
+                index={true}
+                path="view-user-and-shop-owner/super-admin-get-order-by-shop-owner/:shopId"
+                element={<SuperAdminGetOrderByShopOwner />}
               />
             </Route>
 
@@ -338,7 +346,7 @@ function App() {
                 element={<ViewUserBookingInvoice />}
               />
 
-<Route
+              <Route
                 index={true}
                 path="shop-owner-settlement"
                 element={<ShopOwnerSettelementPage />}

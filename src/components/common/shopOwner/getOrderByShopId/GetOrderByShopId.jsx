@@ -1,3 +1,23 @@
+// import { useParams } from "react-router-dom"
+// import { useGetOrdersByShopQuery } from "../../../../redux/slices/orderApiSlice";
+
+// const GetOrderByShopId = () => {
+//     const {shopId} = useParams()
+//     // Trigger the query with the shop ID
+//   const { data, error, isLoading } = useGetOrdersByShopQuery(shopId);
+
+//   return (
+//     <div>
+//         GetOrderByShopId
+//         {shopId}
+
+//         <pre>{JSON.stringify(data,null,2)}</pre>
+//     </div>
+//   )
+// }
+
+// export default GetOrderByShopId
+
 /* eslint-disable no-unused-vars */
 import { ArrowPathIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
@@ -7,19 +27,19 @@ import {
     Button,
     Spinner,
     IconButton,
+    Chip,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { Eye, Logs } from "lucide-react";
-import { useGetShopsQuery } from "../../../redux/slices/shopApiSlice";
+import { Logs } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import DeleteShopOwnerModal from "./modal/shopOwner/DeleteShopOwnerModal";
-import ViewShopOwnerDetailModal from "./modal/shopOwner/ViewShopOwnerDetailModal";
-import EditShopOwnerModal from "./modal/shopOwner/EditShopOwnerModal";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetOrdersByShopQuery } from "../../../../redux/slices/orderApiSlice";
+import SettelementModal from "./modal/SettelementModal";
+import ViewMoreOrderByShopIdModal from "./modal/ViewMoreOrderByShopIdModal";
 
 
-const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Owner Name", "Email", "Order", "Edit", "Delete", "View"];
+const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Settlement Status", "Settled", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState('');
@@ -27,18 +47,19 @@ export default function ViewShopOwnerTable() {
     const [limit, setLimit] = useState(10);
     const [city, setCity] = useState('');
 
+    const { shopId } = useParams()
     const navigate = useNavigate();
 
     // Pass the search, page, and limit as parameters to the query
-    const { data: shops, error, isLoading, refetch } = useGetShopsQuery({ search, page, limit, city });
+    const { data: getOrderByShopId, error, isLoading, refetch } = useGetOrdersByShopQuery(shopId);
 
     const handlePrevious = () => {
         if (page > 1) setPage(page - 1);
     };
 
     const handleNext = () => {
-        const totalPages = Math.ceil((shops?.totalShops ?? 0) / limit);
-        if (page < totalPages) setPage(page + 1);
+        // const totalPages = Math.ceil((getOrderByShopId?.totalShops ?? 0) / limit);
+        // if (page < totalPages) setPage(page + 1);
     };
 
 
@@ -53,10 +74,10 @@ export default function ViewShopOwnerTable() {
                 <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-8">
                     <div>
                         <Typography variant="h5" color="blue-gray">
-                            All Shop
+                            All Shop Order
                         </Typography>
                         <Typography color="gray" className="mt-1 font-normal">
-                            See information about all shops
+                            See information about all Shop order
                         </Typography>
                     </div>
 
@@ -123,10 +144,11 @@ export default function ViewShopOwnerTable() {
                                     ))}
                                 </tr>
                             </thead>
+                            {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
                             <tbody >
-                                {shops?.shops?.map(
-                                    ({ _id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng }, index) => {
-                                        const isLast = index === shops?.shops?.length - 1;
+                                {getOrderByShopId?.orders?.map(
+                                    (order, index) => {
+                                        const isLast = index === getOrderByShopId?.orders?.length - 1;
                                         const classes = isLast
                                             ? "px-5 py-   border-l  border-r border-b border-green-300"
                                             : "px-5 py-  border-l  border-r border-b border-green-300";
@@ -146,7 +168,7 @@ export default function ViewShopOwnerTable() {
                                                 <td className={classes}>
                                                     <LazyLoadImage
                                                         alt={"img"}
-                                                        src={shopImage?.url}
+                                                        src={order?.vehicle?.vehicleImage[0]?.url}
                                                         className=" w-10 h-10 rounded-full"
                                                         effect="opacity"
                                                         wrapperProps={{
@@ -162,7 +184,7 @@ export default function ViewShopOwnerTable() {
                                                         color="blue-gray"
                                                         className="font-normal app-font"
                                                     >
-                                                        {shopName}
+                                                        {order?.vehicle?.vehicleName}
                                                     </Typography>
                                                 </td>
 
@@ -170,77 +192,67 @@ export default function ViewShopOwnerTable() {
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font capitalize"
+                                                        className="font-normal app-font"
                                                     >
-                                                        {ownerName}
+                                                        {order?.vehicle?.vehicleNumber}
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes} onClick={() => handleCopy(ownerEmail)}>
+                                                <td className={classes}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
-                                                        className="font-normal app-font hovertext-green-700 "
+                                                        className="font-normal app-font"
                                                     >
-                                                        {ownerEmail}
+                                                        {order?.vehicle?.vehiclePrice}
                                                     </Typography>
                                                 </td>
 
-                                                {/* /super-admin-dashboard/super-admin-home-page/super-admin-vehicle-book */}
-                                                <td className={classes} onClick={()=> {
-                                                    navigate(`/super-admin-dashboard/view-user-and-shop-owner/super-admin-get-order-by-shop-owner/${_id}`)
-                                                }}>
-                                                    {/* <Link 
-                                                    to={`/super-admin-dashboard/super-admin-home-page/view-user-and-shop-owner/super-admin-get-order-by-shop-owner/${_id}`}> */}
-                                                       
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal app-font capitalize hover:text-green-700"
-                                                        >
-                                                            <Logs className=" h-5" />
-                                                        </Typography>
-                                                    {/* </Link> */}
-                                                </td>
-
 
                                                 <td className={classes}>
-                                                    <EditShopOwnerModal
-                                                        id={_id}
-                                                        shopImage={shopImage}
-                                                        legalDoc={legalDoc}
-                                                        shopName={shopName}
-                                                        ownerName={ownerName}
-                                                        ownerEmail={ownerEmail}
-                                                        ownerPhoneNumber={ownerPhoneNumber}
-                                                        gender={gender}
-                                                        selectCity={selectCity}
-                                                        lat={lat}
-                                                        lng={lng}
-                                                    />
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal app-font"
+                                                    >
+                                                        <Chip
+                                                            size="sm"
+                                                            variant="ghost"
+                                                            value={order?.settled === false ? "pending" : "confirm"}
+                                                            color={
+                                                                order?.settled === false ? "red" :
+                                                                    "green"
+                                                            }
+
+                                                            className="px-3 text-center w-28"
+                                                        />
+                                                    </Typography>
                                                 </td>
 
                                                 <td className={classes}>
-                                                    <DeleteShopOwnerModal
-                                                        id={_id}
-                                                    />
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal app-font"
+                                                    >
+                                                        <SettelementModal />
+                                                    </Typography>
                                                 </td>
-
 
                                                 <td className={classes}>
-                                                    <ViewShopOwnerDetailModal
-                                                        id={_id}
-                                                        shopImage={shopImage}
-                                                        legalDoc={legalDoc}
-                                                        shopName={shopName}
-                                                        ownerName={ownerName}
-                                                        ownerEmail={ownerEmail}
-                                                        ownerPhoneNumber={ownerPhoneNumber}
-                                                        gender={gender}
-                                                        selectCity={selectCity}
-                                                        lat={lat}
-                                                        lng={lng} />
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal app-font"
+                                                    >
+                                                        <ViewMoreOrderByShopIdModal order={order} />
+                                                    </Typography>
                                                 </td>
+
+
+
+
+
                                             </tr>
                                         );
                                     },
@@ -254,14 +266,16 @@ export default function ViewShopOwnerTable() {
             </div>
             <div className="flex items-center justify-between border-t border-green-300 p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    Page {page} of {Math.ceil((shops?.totalShops ?? 0) / limit)}
+                    {/* Page {page} of {Math.ceil((shops?.totalShops ?? 0) / limit)} */}
+                    Page 1 Of  1
                 </Typography>
                 <div className="flex gap-2">
                     <Button
                         variant=""
                         size="sm"
                         className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200 "
-                        onClick={handlePrevious} disabled={page === 1}>
+                    // onClick={handlePrevious} disabled={page === 1}
+                    >
                         Previous
                     </Button>
 
@@ -270,7 +284,8 @@ export default function ViewShopOwnerTable() {
                         size="sm"
                         className=" hover:shadow-none shadow-none   bg-green-500 "
                         onClick={handleNext}
-                        disabled={page === Math.ceil((shops?.totalShops ?? 0) / limit)}>
+                    // disabled={page === Math.ceil((shops?.totalShops ?? 0) / limit)}
+                    >
                         Next
                     </Button>
                 </div>

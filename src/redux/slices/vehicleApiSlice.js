@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import toast from "react-hot-toast";
 import apiSlice from "./apiSlice";
 
@@ -61,6 +62,23 @@ export const vehicleApi = apiSlice.injectEndpoints({
             invalidatesTags: ['Vehicle'], // Will re-fetch the vehicles after update
         }),
 
+        // getVehiclesNearby: builder.query({
+        //     query: ({ lat, lng, maxDistance = 300, vehicleCity, vehicleType }) => {
+        //         const params = new URLSearchParams();
+
+        //         // Add query parameters
+        //         if (lat && lng) {
+        //             params.append('lat', lat);
+        //             params.append('lng', lng);
+        //             params.append('maxDistance', maxDistance);
+        //         }
+
+        //         if (vehicleCity) params.append('vehicleCity', vehicleCity);
+        //         if (vehicleType) params.append('vehicleType', vehicleType);
+
+        //         return `/vehicle/vehicles-nearby?${params.toString()}`;
+        //     },
+        // }),
         getVehiclesNearby: builder.query({
             query: ({ lat, lng, maxDistance = 300, vehicleCity, vehicleType }) => {
                 const params = new URLSearchParams();
@@ -77,15 +95,20 @@ export const vehicleApi = apiSlice.injectEndpoints({
 
                 return `/vehicle/vehicles-nearby?${params.toString()}`;
             },
+            providesTags: ['Vehicle'],
+            keepUnusedDataFor: 60,
+            refetchOnFocus: true,
+            refetchOnReconnect: true,
+            refetchOnMountOrArgChange: true,
         }),
         // getVehicleById: builder.query({
         //     query: (id) => `/vehicle/get-vehicle/${id}`,
         //     transformResponse: (data) => data?.vehicle || [],
-        //     providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
-        //     keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
-        //     refetchOnFocus: true, // Refetch data when the window is focused
-        //     refetchOnReconnect: true, // Refetch when the connection is re-established
-        //     refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
+            // providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
+            // keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
+            // refetchOnFocus: true, // Refetch data when the window is focused
+            // refetchOnReconnect: true, // Refetch when the connection is re-established
+            // refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
         // }),
         getVehicleById: builder.query({
             query: (id) => `/vehicle/get-vehicle/${id}`,

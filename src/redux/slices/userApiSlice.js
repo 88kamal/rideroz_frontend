@@ -101,12 +101,18 @@ export const userApi = apiSlice.injectEndpoints({
 
     getUserById: builder.query({
       query: (id) => ({
-        url: `/user/get-user/${id}`,
+        url: `/user/get-user/${id}`, // Dynamically include the user ID
         headers: {
-          "auth-token": JSON.parse(localStorage.getItem("token")),
+          "auth-token": JSON.parse(localStorage.getItem("token")), // Fetch auth token from localStorage
         },
-      }), // Dynamically includes the user ID in the URL
+      }),
+      providesTags: (result, error, id) => [{ type: 'User', id }], // Tagging for cache updates
+      keepUnusedDataFor: 60, // Cache data for 60 seconds after the component unmounts
+      refetchOnFocus: true, // Refetch data when the window is focused
+      refetchOnReconnect: true, // Refetch when the connection is re-established
+      refetchOnMountOrArgChange: true, // Refetch when the component remounts or query arguments change
     }),
+
   }),
 });
 

@@ -63,7 +63,22 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       refetchOnReconnect: true,
       refetchOnFocus: true,
     }),
+    getOrdersByShop: builder.query({
+      query: (shopId) => `/order/get-orders/${shopId}`,
+      providesTags: (result, error, shopId) =>
+        result
+          ? [
+            // If the query returns data, tag it with the shop ID for caching
+            { type: 'Order', id: shopId },
+            ...result.orders.map(({ _id }) => ({ type: 'Order', id: _id })),
+          ]
+          : [{ type: 'Order', id: shopId }],
+      keepUnusedDataFor: 60, // Data remains cached for 60 seconds after the component using it unmounts
+      refetchOnFocus: true, // Automatically refetch when the app regains focus
+      refetchOnReconnect: true, // Automatically refetch when the app reconnects to the internet
+      refetchOnMountOrArgChange: true, // Refetch when the query argument changes or the component remounts
+    }),
   }),
 });
 
-export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery } = orderApiSlice;
+export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetOrdersByShopQuery } = orderApiSlice;
