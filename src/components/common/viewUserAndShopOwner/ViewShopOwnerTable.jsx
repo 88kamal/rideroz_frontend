@@ -17,9 +17,10 @@ import ViewShopOwnerDetailModal from "./modal/shopOwner/ViewShopOwnerDetailModal
 import EditShopOwnerModal from "./modal/shopOwner/EditShopOwnerModal";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import VerifyAccountModal from "./modal/shopOwner/VerifyAccountModal";
 
 
-const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Owner Name", "Email", "Order", "Edit", "Delete", "View"];
+const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Owner Name", "Verify Account", "Order", "Edit", "Delete", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState('');
@@ -123,9 +124,10 @@ export default function ViewShopOwnerTable() {
                                     ))}
                                 </tr>
                             </thead>
+                            {/* <pre>{JSON.stringify(shops, null, 2)}</pre> */}
                             <tbody >
                                 {shops?.shops?.map(
-                                    ({ _id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng }, index) => {
+                                    ({ _id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng, account_holder_name, ifsc, account_number }, index) => {
                                         const isLast = index === shops?.shops?.length - 1;
                                         const classes = isLast
                                             ? "px-5 py-   border-l  border-r border-b border-green-300"
@@ -176,30 +178,34 @@ export default function ViewShopOwnerTable() {
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes} onClick={() => handleCopy(ownerEmail)}>
+                                                <td className={classes}>
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
                                                         className="font-normal app-font hovertext-green-700 "
                                                     >
-                                                        {ownerEmail}
+                                                        <VerifyAccountModal
+                                                            id={_id}
+                                                            account_holder_name={account_holder_name}
+                                                            ifsc={ifsc}
+                                                            account_number={account_number} />
                                                     </Typography>
                                                 </td>
 
                                                 {/* /super-admin-dashboard/super-admin-home-page/super-admin-vehicle-book */}
-                                                <td className={classes} onClick={()=> {
+                                                <td className={classes} onClick={() => {
                                                     navigate(`/super-admin-dashboard/view-user-and-shop-owner/super-admin-get-order-by-shop-owner/${_id}`)
                                                 }}>
                                                     {/* <Link 
                                                     to={`/super-admin-dashboard/super-admin-home-page/view-user-and-shop-owner/super-admin-get-order-by-shop-owner/${_id}`}> */}
-                                                       
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal app-font capitalize hover:text-green-700"
-                                                        >
-                                                            <Logs className=" h-5" />
-                                                        </Typography>
+
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal app-font capitalize hover:text-green-700"
+                                                    >
+                                                        <Logs className=" h-5" />
+                                                    </Typography>
                                                     {/* </Link> */}
                                                 </td>
 

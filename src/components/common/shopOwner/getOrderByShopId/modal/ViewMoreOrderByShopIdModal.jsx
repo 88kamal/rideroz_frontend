@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    Button,
     Chip,
     Dialog,
     DialogBody,
@@ -13,13 +12,30 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 // eslint-disable-next-line no-unused-vars
 export default function ViewMoreOrderByShopIdModal({ order }) {
     const [open, setOpen] = useState(false);
-
+    const [dialogSize, setDialogSize] = useState("xl");
     const handleOpen = () => setOpen(!open);
 
     // Format the date to be readable
     const readableStartDate = new Date(order.startDate).toLocaleString();
     const readableEndDate = new Date(order.endDate).toLocaleString();
     const readableCreatedAt = new Date(order.createdAt).toLocaleString();
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setDialogSize("xxl"); // Adjust size for mobile
+            } else {
+                setDialogSize("xl"); // Adjust size for desktop
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Call resize function initially to set the right size
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, [])
 
     return (
         <>
@@ -31,9 +47,9 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                 <Eye className="h-4 w-4" />
             </IconButton>
 
-            <Dialog open={open} size="xxl" 
+            <Dialog open={open} size={dialogSize} 
             className="shadow-none hover:shadow-none rounded-none bg-green-100 overflow-y-scroll max-h-screen lg:max-h-[80vh]">
-                <div className="px-4 py-4">
+                <div className="px-4 py-4 top-0 sticky z-50 bg-green-100">
                     <h1 className="text-xl text-black font-bold">Order Details</h1>
                     <div className="absolute top-0 right-0 py-1.5 px-1.5 bg-green-200 cursor-pointer" onClick={handleOpen}>
                         <X size={20} className="text-green-800 hover:text-green-900" />
@@ -66,7 +82,7 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                             <span className="font-bold">Coupon Code: </span> <span>{order.coupon.code}</span>
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Shop Amount: </span> <span>₹ {order.shopAmount}</span>
+                            <span className="font-bold">Shop Amount: </span> <span>₹ {order.vehicle.vehiclePrice}</span>
                         </div>
                     </div>
 

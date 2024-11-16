@@ -30,7 +30,7 @@ import {
     Chip,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { Logs } from "lucide-react";
+import { Logs, Store } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -81,13 +81,14 @@ export default function ViewShopOwnerTable() {
                         </Typography>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                        <div className=" w-64 md:w-72">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <div className=" w-full md:w-72">
                             <Input
                                 label="Search"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 color="green"
+                                className=""
                                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                             />
                         </div>
@@ -99,16 +100,85 @@ export default function ViewShopOwnerTable() {
                             onClick={refetch}
                         >
                             <ArrowPathIcon className="h-5 w-5" />
-                            <p className=" hidden lg:block md:block sm:block">Refresh</p>
+                            <p className=" ">Refresh</p>
                         </Button>
+
+                        <Button
+                            variant=""
+                            color="green"
+                            size="sm"
+                            className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+                            onClick={()=> navigate('/super-admin-dashboard/view-user-and-shop-owner')}
+                        >
+                            <Store className="h-5 w-5" />
+                            <p className=" ">
+                                View Shop Owner
+                            </p>
+                        </Button>
+
                     </div>
                 </div>
 
             </CardHeader>
 
-            {/* <pre>{JSON.stringify(shops, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(getOrderByShopId?.shop, null, 2)}</pre> */}
 
             <div className="overflow-scroll p-2">
+                <div className=" mb-2">
+                    <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Shop Name:</h1>
+                            <h1>{getOrderByShopId?.shop?.shopName}</h1>
+                        </div>
+
+                        {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Owner Name:</h1>
+                            <h1>{getOrderByShopId?.shop?.ownerName}</h1>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Account holder name:</h1>
+                            <h1>{getOrderByShopId?.shop?.account_holder_name || "N/A"}</h1>
+                        </div>
+
+                        {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Account Number:</h1>
+                            <h1>{getOrderByShopId?.shop?.account_number || "N/A"}</h1>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">IFSC Code:</h1>
+                            <h1>{getOrderByShopId?.shop?.ifsc || "N/A"}</h1>
+                        </div>
+
+                        {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Account verified:</h1>
+                            {/* <h1>{getOrderByShopId?.shop?.account_verified || "N/A"}</h1> */}
+                              <Chip
+                                                            size="sm"
+                                                            variant="ghost"
+                                                            value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
+                                                            color={
+                                                                getOrderByShopId?.shop?.account_verified === false ? "red" :
+                                                                    "green"
+                                                            }
+
+                                                            className="px-3 text-center w-28"
+                                                        />
+                        </div>
+                    </div>
+                </div>
+
                 {isLoading ? (
                     <div className="flex justify-center p-4">
                         <Spinner className="h-8 w-8 text-green-500" />
@@ -204,7 +274,7 @@ export default function ViewShopOwnerTable() {
                                                         color="blue-gray"
                                                         className="font-normal app-font"
                                                     >
-                                                        {order?.vehicle?.vehiclePrice}
+                                                        ₹{order?.vehicle?.vehiclePrice}
                                                     </Typography>
                                                 </td>
 
@@ -235,7 +305,7 @@ export default function ViewShopOwnerTable() {
                                                         color="blue-gray"
                                                         className="font-normal app-font"
                                                     >
-                                                        <SettelementModal />
+                                                        <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} />
                                                     </Typography>
                                                 </td>
 

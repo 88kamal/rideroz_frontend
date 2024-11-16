@@ -44,7 +44,7 @@ export const shopApi = apiSlice.injectEndpoints({
                 params: { search, page, limit, city },  // Query parameters for search, pagination, and city filter
                 headers: {
                     "auth-token": JSON.parse(localStorage.getItem("token")),
-                  },
+                },
             }),
             transformResponse: (response) => ({
                 shops: response.shops, // Array of shops
@@ -71,7 +71,7 @@ export const shopApi = apiSlice.injectEndpoints({
                     formData: true,
                     headers: {
                         "auth-token": JSON.parse(localStorage.getItem("token")),
-                      },
+                    },
                 };
             },
             onQueryStarted: async ({ id, updatedData }, { dispatch, queryFulfilled }) => {
@@ -107,7 +107,7 @@ export const shopApi = apiSlice.injectEndpoints({
                 method: 'DELETE',
                 headers: {
                     "auth-token": JSON.parse(localStorage.getItem("token")),
-                  },
+                },
             }),
             onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
                 // Optimistic cache update: remove the shop from the cache before the mutation completes
@@ -131,6 +131,14 @@ export const shopApi = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, { id }) => [{ type: 'Shop', id }],
         }),
 
+        verifyShopOwner: builder.mutation({
+            query: (shopId) => ({
+                url: `/shop/shop-owner-account-verify/${shopId}`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Shop'], // Invalidate cache if related data is used elsewhere
+        }),
+
     }),
     refetchOnReconnect: true,  // Ensure data refetches when connection is restored
 });
@@ -140,4 +148,5 @@ export const {
     useGetShopsQuery,
     useEditShopMutation,
     useDeleteShopMutation,
+    useVerifyShopOwnerMutation
 } = shopApi;
