@@ -461,7 +461,7 @@ export default function ViewEmployee() {
                                     : "px-5 border-l border-r border-b border-green-300";
 
                                 return (
-                                    <tr key={employee._id} className="hover:bg-green-50/50 cursor-pointer">
+                                    <tr key={employee._id} className="hover:bg-green-50/50 cursor-pointer text-black">
                                         <td className={classes}>{index + 1 + (page - 1) * limit}.</td>
                                         <td className={classes}>
                                             <LazyLoadImage alt="img" src={employee.employeePhoto?.url} className="w-9 h-9 rounded-full" />

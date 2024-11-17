@@ -85,14 +85,14 @@ export default function ShopOwnerSidebar() {
                     </ListItem>
                 </Link>
 
-                <Link to={'shop-owner-settlement'}>
+                {/* <Link to={'shop-owner-settlement'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">
                         <ListItemPrefix>
                             <CheckCheck className="h-5 w-5" />
                         </ListItemPrefix>
                         Settlements
                     </ListItem>
-                </Link>
+                </Link> */}
 
                 <Link to={'shop-owner-profile'}>
                     <ListItem className="hover:bg-green-50 active:bg-green-100 focus:bg-green-100 transition-colors duration-300">

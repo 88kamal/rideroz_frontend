@@ -43,6 +43,7 @@
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.26.2",
     "react-share-social": "^0.1.60",
+    "react-tooltip": "^5.28.0",
     "react-use": "^17.5.1",
     "sweetalert2": "^11.14.1"
   },

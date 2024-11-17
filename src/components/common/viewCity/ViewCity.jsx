@@ -372,7 +372,7 @@ export default function ViewCity() {
                     <>
                         {/* Render Table or List */}
                         {viewMode === "table" ? (
-                            <table className="w-full min-w-max table-auto text-left">
+                            <table className="w-full min-w-max table-auto text-left text-black">
                                 <thead>
                                     <tr>
                                         {TABLE_HEAD.map((head) => (
@@ -420,7 +420,7 @@ export default function ViewCity() {
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {cities?.cities?.map(({ _id, cityImage, cityName, cityState }, index) => (
-                                    <div key={index} className="bg-white rounded-md border border-green-200">
+                                    <div key={index} className="bg-white text-black rounded-md border border-green-200">
                                         <div className="p-2 flex justify-between">
                                             <div className="flex items-center gap-3">
                                                 <div>

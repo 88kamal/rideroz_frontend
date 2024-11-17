@@ -320,12 +320,12 @@ export default function ViewDepartment() {
                                         : "px-5 border-l border-r border-b border-green-300";
 
                                     return (
-                                        <tr key={index} className="hover:bg-green-50/50 cursor-pointer">
+                                        <tr key={index} className="hover:bg-green-50/50 cursor-pointer ">
                                             <td className={classes}>
                                                 <Typography
                                                     variant="small"
                                                     color="blue-gray"
-                                                    className="font-normal app-font"
+                                                    className="font-normal app-font "
                                                 >
                                                     {index + 1}.
                                                 </Typography>
@@ -351,7 +351,7 @@ export default function ViewDepartment() {
                             </tbody>
                         </table>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-black ">
                             {departments?.map(({ _id, departmentName }, index) => (
                                 <div
                                     key={_id}

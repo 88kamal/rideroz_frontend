@@ -29,7 +29,7 @@ const BottomNavigation = () => {
 
 const NavItem = ({ icon, label, link }) => (
     <Link to={link}>
-    <button type='button' className="flex flex-col items-center text-green-600 hover:text-teal-700">
+    <button type='button' className="flex flex-col items-center text-blacj hover:text-green-800">
         {icon}
         <span className="text-xs mt-1">{label}</span>
     </button>

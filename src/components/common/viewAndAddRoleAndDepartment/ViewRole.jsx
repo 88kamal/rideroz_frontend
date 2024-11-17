@@ -394,14 +394,14 @@ export default function ViewCity() {
                         </tbody>
                     </table>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-black">
                         {roles?.map(({ _id, roleName, roleCode, departmentName }, index) => (
                             <div
                                 key={index}
                                 className="p-2 border border-green-300 rounded-lg "
                             >
                                 <div className="">
-                                    <h1 className="mb-2 app-font capitalize text-green-500">
+                                    <h1 className="mb-2 app-font capitalize text-green-800">
                                         {roleName}
                                     </h1>
                                     <div className="flex items-center justify-between">

@@ -311,6 +311,7 @@ import ShowLocationModal from "./modal/ShowLocationModal";
 import authService from "../../../services/authService";
 import VerifyRideModal from "./modal/VerifyRideModal";
 import RatingBadge from "../../vehicle/RatingBadge";
+import ViewSettlementProofModal from "./modal/ViewSettlementProofModal";
 
 export default function SuccessBookedVehicleTranscation() {
   const [search, setSearch] = useState('');
@@ -334,10 +335,12 @@ export default function SuccessBookedVehicleTranscation() {
     "Vehicle Image",
     "Vehicle Name",
     "Vehicle Number",
-    "Status",
+    "Payment Status",
     "View Location",
     ...(user?.role === 15 ? ["Cancel Ride"] : []),
     ...(user?.role === 14 ? ["Verify Otp"] : []),
+    ...(user?.role === 14 ? ["Settle Status"] : []),
+    ...(user?.role === 14 ? ["Settlement"] : []),
     "View Invoice",
   ];
 
@@ -367,6 +370,8 @@ export default function SuccessBookedVehicleTranscation() {
 
   return (
     <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
+
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
       <div className="rounded-none  border-b border-green-300 px-2 py-1">
         <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-8">
           <div>
@@ -459,8 +464,8 @@ export default function SuccessBookedVehicleTranscation() {
                 </tr>
               </thead>
               <tbody>
-                {data?.orders?.map(({ _id, vehicle, status }, index) => {
-                  const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
+                {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId }, index) => {
+                  const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice, settled } = vehicle || {};
                   const isLast = index === data?.orders?.length - 1;
                   const classes = isLast
                     ? "px-5 border-l border-r border-b border-green-300"
@@ -513,6 +518,36 @@ export default function SuccessBookedVehicleTranscation() {
                       </td>
                       }
 
+
+                      {[14].includes(user?.role) &&
+                        <td className={classes}>
+
+                          <Chip
+                            size="sm"
+                            variant="ghost"
+                            value={settled === false ? "pending" : "fullfill"}
+                            color={
+                              settled === false ? "red" :
+                                "green"
+                            }
+
+                            className="px-3 text-center w-28"
+                          />
+
+                        </td>}
+
+
+                      {[14].includes(user?.role) &&
+                        <td className={classes}>
+                          <ViewSettlementProofModal
+                            settlementProofImage={settlementProofImage}
+                            settlementAmount={settlementAmount}
+                            settlementDate={settlementDate}
+                            settlementPlatformUsed={settlementPlatformUsed}
+                            settlementTransactionId={settlementTransactionId}
+                          />
+                        </td>}
+
                       {[14].includes(user?.role) &&
                         <td className={classes}>
                           <IconButton
@@ -524,6 +559,7 @@ export default function SuccessBookedVehicleTranscation() {
                           </IconButton>
 
                         </td>}
+
 
                       {[2].includes(user?.role) &&
                         <td className={classes}>
@@ -543,10 +579,10 @@ export default function SuccessBookedVehicleTranscation() {
             </table>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {data?.orders?.map(({ _id, vehicle, status }, index) => {
-                const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
+              {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId }, index) => {
+                const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice, settled } = vehicle || {};
                 return (
-                  <div key={index} className="p-4 border border-green-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                  <div key={index} className="p-4 border border-green-200 rounded-lg ">
                     <img className="w-full  h-44 object-cover rounded-md" src={vehicleImage?.[0]?.url} alt={vehicleName} />
                     <div className="mt-2">
                       <Typography variant="h6" className="capitalize font-bold text-green-700">
@@ -563,59 +599,123 @@ export default function SuccessBookedVehicleTranscation() {
                         <Typography variant="body2" className="capitalize text-gray-900 app-font">
                           ₹ {vehiclePrice}
                         </Typography>
-                        <Chip size="sm" variant="ghost" value={status} color={status === "failed" ? "red" : status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
+
                         <RatingBadge vehicleRatings={vehicle?.vehicleRatings} />
 
                       </div>
+
+                      <div className="flex justify-between items-center mt-2">
+                        <h1 className=" font-bold">Payment Status: </h1>
+                        <Chip size="sm" variant="ghost" value={status} color={status === "failed" ? "red" : status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
+                      </div>
+
+                      {[14].includes(user?.role) &&
+
+                        <div className="flex justify-between items-center mt-2">
+                          <h1 className=" font-bold">Settlement Status: </h1>
+                          <Chip
+                            size="sm"
+                            variant="ghost"
+                            value={settled === false ? "pending" : "fullfill"}
+                            color={
+                              settled === false ? "red" :
+                                "green"
+                            }
+
+                            className="px-3 text-center w-28"
+                          />
+                        </div>
+                      }
+
+
                       <div className="flex items-center bg-green-50 rounded-b-lg mt-3 justify-between">
                         <td>
+                          <Tooltip text="Location">
                           <ShowLocationModal vehicle={vehicle} />
+                          </Tooltip>
                         </td>
+
                         {/* Add further cells based on the user role */}
                         <td hidden={[2, 3, 14].includes(user?.role)}>
-                          <CancelRideModal id={_id} vehicleBasePrice={vehiclePrice} />
+                          <Tooltip text="Cancel Ride">
+                            <CancelRideModal id={_id} vehicleBasePrice={vehiclePrice} />
+                          </Tooltip>
                         </td>
 
                         <td hidden={[2, 3, 15].includes(user?.role)}>
-                          <VerifyRideModal vehicle={vehicle} />
+                          <Tooltip text="Verify Ride">
+                            <VerifyRideModal vehicle={vehicle} />
+                          </Tooltip>
                         </td>
 
-                        {[15].includes(user?.role) && <td >
-                          <IconButton
-                            onClick={() => navigate(`/user-dashboard/user-home-page/user-vehicle-book/vehicle-book-invoice/${_id}`)}
-                            variant="text"
-                            className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
-                          >
-                            <Eye className="h-5 w-5" />
-                          </IconButton>
-
-                        </td>
-                        }
-
-                        {[14].includes(user?.role) &&
+                        {[15].includes(user?.role) && (
                           <td>
-                            <IconButton
-                              onClick={() => navigate(`/shop-owner-dashboard/shop-owner-home-page/shop-owner-vehicle-book/vehicle-book-invoice/${_id}`)}
-                              variant="text"
-                              className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
-                            >
-                              <Eye className="h-5 w-5" />
-                            </IconButton>
-
-                          </td>}
-
-                        {[2].includes(user?.role) &&
-                          <td>
-                            <IconButton
-                              onClick={() => navigate(`/super-admin-dashboard/super-admin-home-page/super-admin-vehicle-book/vehicle-book-invoice/${_id}`)}
-                              variant="text"
-                              className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
-                            >
-                              <Eye className="h-5 w-5" />
-                            </IconButton>
+                            <Tooltip text="View Invoice">
+                              <IconButton
+                                onClick={() =>
+                                  navigate(
+                                    `/user-dashboard/user-home-page/user-vehicle-book/vehicle-book-invoice/${_id}`
+                                  )
+                                }
+                                variant="text"
+                                className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                              >
+                                <Eye className="h-5 w-5" />
+                              </IconButton>
+                            </Tooltip>
                           </td>
-                        }
+                        )}
+
+                        {[14].includes(user?.role) && (
+                          <>
+                            <td>
+                              <Tooltip text="Settlement Proof">
+                                <ViewSettlementProofModal
+                                  settlementProofImage={settlementProofImage}
+                                  settlementAmount={settlementAmount}
+                                  settlementDate={settlementDate}
+                                  settlementPlatformUsed={settlementPlatformUsed}
+                                  settlementTransactionId={settlementTransactionId}
+                                />
+                              </Tooltip>
+                            </td>
+                            <td>
+                              <Tooltip text="View Invoice">
+                                <IconButton
+                                  onClick={() =>
+                                    navigate(
+                                      `/shop-owner-dashboard/shop-owner-home-page/shop-owner-vehicle-book/vehicle-book-invoice/${_id}`
+                                    )
+                                  }
+                                  variant="text"
+                                  className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                                >
+                                  <Eye className="h-5 w-5" />
+                                </IconButton>
+                              </Tooltip>
+                            </td>
+                          </>
+                        )}
+
+                        {[2].includes(user?.role) && (
+                          <td>
+                            <Tooltip text="View Invoice">
+                              <IconButton
+                                onClick={() =>
+                                  navigate(
+                                    `/super-admin-dashboard/super-admin-home-page/super-admin-vehicle-book/vehicle-book-invoice/${_id}`
+                                  )
+                                }
+                                variant="text"
+                                className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                              >
+                                <Eye className="h-5 w-5" />
+                              </IconButton>
+                            </Tooltip>
+                          </td>
+                        )}
                       </div>
+
                     </div>
                   </div>
                 );
@@ -627,3 +727,13 @@ export default function SuccessBookedVehicleTranscation() {
     </div>
   );
 }
+
+
+const Tooltip = ({ children, text }) => (
+  <div className="relative group">
+    {children}
+    <div className="absolute bottom-full w-[7em] text-center left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 shadow-lg">
+      {text}
+    </div>
+  </div>
+);
