@@ -44,11 +44,11 @@ export default function AddAndViewEmployee() {
                 </TabsHeader>
 
                 <TabsBody className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap">
-                    <TabPanel key={'add Employee'} value={"Add Employee"}>
+                    <TabPanel key={'add Employee'} value={"Add Employee"} className=" -p-9">
                         <AddEmployee />
                     </TabPanel>
 
-                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap"  
+                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap -p-9"  
                     key={'view Employee'} value={"View Employee"}>
                         <ViewEmployee />
                     </TabPanel>

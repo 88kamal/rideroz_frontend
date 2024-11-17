@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import {
@@ -13,7 +14,7 @@ import { BookOpenCheck } from "lucide-react";
 import { useVerifyShopOwnerMutation } from "../../../../../redux/slices/shopApiSlice";
 import toast from "react-hot-toast";
 
-export default function VerifyAccountModal({ id, account_holder_name, ifsc, account_number }) {
+export default function VerifyAccountModal({ shopId, account_holder_name, ifsc, account_number,refetch }) {
     const [open, setOpen] = useState(false);
     const [verifyShopOwner, { isLoading, isSuccess, isError, error, data }] =
         useVerifyShopOwnerMutation();
@@ -27,8 +28,9 @@ export default function VerifyAccountModal({ id, account_holder_name, ifsc, acco
 
     const handleVerify = async () => {
         try {
-            await verifyShopOwner(id).unwrap(); // Call the mutation with the shop ID
+            await verifyShopOwner(shopId).unwrap(); // Call the mutation with the shop ID
             handleOpen(); // Close the modal after successful verification
+            refetch()
         } catch (err) {
             console.error("Failed to verify:", err);
             toast.error("Verification failed. Please try again.");

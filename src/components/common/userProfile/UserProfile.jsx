@@ -1,103 +1,4 @@
-// // import { useGetUserByIdQuery } from "../../../redux/slices/userApiSlice";
-// // import authService from "../../../services/authService";
-
-// // const UserProfile = () => {
-// const user = authService.getCurrentUser();
-// const userId = user?.id;
-// const { data: getUserById, error, isLoading } = useGetUserByIdQuery(userId);
-// //   return (
-// //     <div>
-// //         <pre>{JSON.stringify(getUserById,null,2)}</pre>
-// //     </div>
-// //   )
-// // }
-
-// // export default UserProfile
-
-// import React from "react";
-// import { FaUser, FaEnvelope, FaPhone, FaIdBadge, FaCalendarAlt } from "react-icons/fa";
-
-// const UserProfile = () => {
-//     const user = {
-//         _id: "67095624d480a6569f58ad4f",
-//         userName: "Kamal Nayan Upadhyay",
-//         userEmail: "testuser@gmail.com",
-//         role: 15,
-//         userPhoneNumber: "8292417430",
-//         adharcardImg: [
-//             {
-//                 public_id: "kb3qliwedy1dv8mcxgud",
-//                 url: "https://res.cloudinary.com/dolajkbv5/image/upload/v1729930590/kb3qliwedy1dv8mcxgud.jpg",
-//                 _id: "671ca55eb82ff71a422bfead",
-//             },
-//         ],
-//         updatedAt: "2024-10-26T08:16:30.688Z",
-//     };
-
-//     return (
-//         <div className="flex justify-center items-center min-h-screen">
-//             <div className="bg-white p-6 rounded-2xl shadow-2xl w-full ">
-//                 <div className="text-center mb-6">
-//                     <div className="inline-block bg-blue-500 text-white rounded-full p-3 shadow-lg">
-//                         <FaUser className="text-3xl" />
-//                     </div>
-//                     <h2 className="text-3xl font-semibold text-gray-800 mt-4">{user.userName}</h2>
-//                     <p className="text-sm text-gray-500">Role ID: {user.role}</p>
-//                 </div>
-
-//                 <div className="space-y-4">
-//                     <div className="flex  space-x-3 bg-gray-100 rounded-lg p-4 shadow-sm">
-//                         <FaEnvelope className="text-blue-500 text-lg" />
-//                         <div>
-//                             <label className="text-gray-600">Email</label>
-//                             <p className="text-gray-800">{user.userEmail}</p>
-//                         </div>
-//                     </div>
-
-//                     <div className="flex items-center space-x-3 bg-gray-100 rounded-lg p-4 shadow-sm">
-//                         <FaPhone className="text-blue-500 text-lg" />
-//                         <div>
-//                             <label className="text-gray-600">Phone Number</label>
-//                             <p className="text-gray-800">{user.userPhoneNumber}</p>
-//                         </div>
-//                     </div>
-
-//                     <div className="flex items-center space-x-3 bg-gray-100 rounded-lg p-4 shadow-sm">
-//                         <FaIdBadge className="text-blue-500 text-lg" />
-//                         <div>
-//                             <label className="text-gray-600">Role</label>
-//                             <p className="text-gray-800">{user.role}</p>
-//                         </div>
-//                     </div>
-
-//                     <div className="flex items-center space-x-3 bg-gray-100 rounded-lg p-4 shadow-sm">
-//                         <FaCalendarAlt className="text-blue-500 text-lg" />
-//                         <div>
-//                             <label className="text-gray-600">Last Updated</label>
-//                             <p className="text-gray-800">
-//                                 {new Date(user.updatedAt).toLocaleString()}
-//                             </p>
-//                         </div>
-//                     </div>
-
-//                     <div className="mt-6">
-//                         <label className="block text-gray-600 mb-2">Aadhar Card</label>
-//                         {user.adharcardImg && user.adharcardImg[0]?.url && (
-//                             <img
-//                                 src={user.adharcardImg[0].url}
-//                                 alt="Aadhar Card"
-//                                 className="rounded-xl shadow-lg w-full"
-//                             />
-//                         )}
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default UserProfile;
-
+import { Chip } from '@material-tailwind/react';
 import { useGetUserByIdQuery } from '../../../redux/slices/userApiSlice';
 import authService from '../../../services/authService';
 
@@ -205,11 +106,11 @@ function UserProfile() {
                             alt={getUserById?.user?.shopName}
                         />
                     </div>
-
                     <div>
                         <h1 className=" text-xl lg:text-2xl font-bold text-gray-800">{getUserById?.user?.shopName}</h1>
                         <p className="text-gray-500 app-font">Phone: {getUserById?.user?.ownerPhoneNumber}</p>
                     </div>
+
                 </div>
 
                 {/* User Information */}
@@ -232,6 +133,25 @@ function UserProfile() {
                             formattedDate
                         }</span>
                     </div>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700 app-font ">Account Verification</span>
+                        <span className="text-gray-600">{
+                            <Chip
+                            size="sm"
+                            variant="ghost"
+                            value={getUserById?.user?.account_verified === false ? "Account Not Verified" : "Account Verified"}
+                            color={
+                                getUserById?.user?.account_verified === false ? "red" :
+                                    "green"
+                            }
+    
+                            className="px-3 text-center w-44"
+                        />
+                        }</span>
+                    </div>
+
+                    
                 </div>
 
                 <div className="border-t pt-4 space-y-3">

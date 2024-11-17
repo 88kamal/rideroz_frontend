@@ -46,11 +46,11 @@ export default function ViewUserAndShopOwner() {
                 </TabsHeader>
 
                 <TabsBody className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap">
-                    <TabPanel key={'view User'} value={"View User"}>
+                    <TabPanel key={'view User'} value={"View User"} className="-p-9">
                         <ViewUserTable />
                     </TabPanel>
 
-                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap"
+                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap -p-9"
                         key={'view ShopOwner'} value={"View ShopOwner"}>
                         <ViewShopOwnerTable />
                     </TabPanel>

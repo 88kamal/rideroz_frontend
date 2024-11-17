@@ -5,11 +5,14 @@ import { EllipsisVertical, Network, UserRoundPlus, Users } from 'lucide-react';
 import { Drawer, Typography, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
 import { useState } from 'react';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import authService from '../../../services/authService';
 
 function MoreButton() {
     const [open, setOpen] = useState(false);
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => setOpen(false);
+
+    const user = authService.getCurrentUser();
 
     return (
         <div className=''>
@@ -30,7 +33,7 @@ function MoreButton() {
             </div>
 
             {/* Drawer Component */}
-            <Drawer placement='top' className=' shadow-none drop-shadow bg-green-50' overlay={true} open={open} onClose={closeDrawer}>
+            {[2].includes(user?.role) && <Drawer placement='top' className=' shadow-none drop-shadow bg-green-50' overlay={true} open={open} onClose={closeDrawer}>
                 <div className="mb-2 flex items-center justify-between p-4">
                     <Typography variant="h5" color="blue-gray">
                         More Services.....
@@ -94,7 +97,7 @@ function MoreButton() {
                 </List>
 
 
-            </Drawer>
+            </Drawer>}
         </div>
     );
 }

@@ -66,19 +66,19 @@ export default function ViewAndAddRoleAndDepartment() {
                 </TabsHeader>
 
                 <TabsBody className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap">
-                    <TabPanel key={'add Department'} value={"Add Department"}>
+                    <TabPanel key={'add Department'} value={"Add Department"} className=" -p-9">
                         <AddDepartment />
                     </TabPanel>
 
-                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap"  key={'view Department'} value={"View Department"}>
+                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap -p-9"  key={'view Department'} value={"View Department"}>
                         <ViewDepartment />
                     </TabPanel>
 
-                    <TabPanel  className=" h-screen" key={'add Role'} value={"Add Role"}>
+                    <TabPanel  className=" h-screen -p-9" key={'add Role'} value={"Add Role"}>
                         <AddRole />
                     </TabPanel>
 
-                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap" key={'view Role'} value={"View Role"}>
+                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap -p-9" key={'view Role'} value={"View Role"}>
                         <ViewRole />
                     </TabPanel>
                 </TabsBody>

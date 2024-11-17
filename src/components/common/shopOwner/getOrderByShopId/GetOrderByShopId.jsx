@@ -108,7 +108,7 @@ export default function ViewShopOwnerTable() {
                             color="green"
                             size="sm"
                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
-                            onClick={()=> navigate('/super-admin-dashboard/view-user-and-shop-owner')}
+                            onClick={() => navigate('/super-admin-dashboard/view-user-and-shop-owner')}
                         >
                             <Store className="h-5 w-5" />
                             <p className=" ">
@@ -124,18 +124,18 @@ export default function ViewShopOwnerTable() {
             {/* <pre>{JSON.stringify(getOrderByShopId?.shop, null, 2)}</pre> */}
 
             <div className="overflow-scroll p-2">
-                <div className=" mb-2">
+              {error?.data ? "" :   <div className=" mb-2">
                     <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
                         <div className="flex items-center gap-1">
                             <h1 className="font-bold">Shop Name:</h1>
-                            <h1>{getOrderByShopId?.shop?.shopName}</h1>
+                            <h1>{getOrderByShopId?.shop?.shopName ||  "N/A"}</h1>
                         </div>
 
                         {/* <div className=" border-r h-10 border-green-300"></div> */}
 
                         <div className="flex items-center gap-1">
                             <h1 className="font-bold">Owner Name:</h1>
-                            <h1>{getOrderByShopId?.shop?.ownerName}</h1>
+                            <h1>{getOrderByShopId?.shop?.ownerName ||  "N/A"}</h1>
                         </div>
                     </div>
 
@@ -163,21 +163,17 @@ export default function ViewShopOwnerTable() {
 
                         <div className="flex items-center gap-1">
                             <h1 className="font-bold">Account verified:</h1>
-                            {/* <h1>{getOrderByShopId?.shop?.account_verified || "N/A"}</h1> */}
-                              <Chip
-                                                            size="sm"
-                                                            variant="ghost"
-                                                            value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
-                                                            color={
-                                                                getOrderByShopId?.shop?.account_verified === false ? "red" :
-                                                                    "green"
-                                                            }
+                            {error?.data ? "N/A" : <Chip
+                                size="sm"
+                                variant="ghost"
+                                value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
+                                color={getOrderByShopId?.shop?.account_verified === false ? "red" : "green"}
+                                className="px-3 text-center w-28"
+                            />}
 
-                                                            className="px-3 text-center w-28"
-                                                        />
                         </div>
                     </div>
-                </div>
+                </div>}
 
                 {isLoading ? (
                     <div className="flex justify-center p-4">

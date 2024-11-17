@@ -45,12 +45,12 @@ export default function ViewAndAddCity() {
                 </TabsHeader>
 
                 <TabsBody className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap">
-                    <TabPanel key={'add City'} value={"Add City"}>
+                    <TabPanel key={'add City'} value={"Add City"} className=" -p-9">
                         <AddCity />
                     </TabPanel>
 
-                    <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap"  
-                    key={'view City'} value={"View City"}>
+                    <TabPanel className=" -p-9"  
+                    key={'view City'} value={"View City"} >
                         <ViewCity />
                     </TabPanel>
 

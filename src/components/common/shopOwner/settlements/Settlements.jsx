@@ -1,10 +1,7 @@
-import NotBankDetail from "./NotBankDetail"
 
 const Settlements = () => {
   return (
-    <div>
-        <NotBankDetail/>
-    </div>
+    <div>Settlements</div>
   )
 }
 
