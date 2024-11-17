@@ -6,6 +6,13 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Chip, Spinner } from '@material-tailwind/react';
 import authService from '../../../../services/authService';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 
 const ViewUserBookingInvoice = () => {
     const { id } = useParams();
@@ -35,22 +42,31 @@ const ViewUserBookingInvoice = () => {
     const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge } = data?.order || {};
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-US');
-
-    const formatDateTime = (dateString, timeString) => {
+    // const formatDateTime = (dateString, timeString) => {
+    //     let date = dayjs(dateString);
+    
+    //     if (timeString) {
+    //         const [hours, minutes] = timeString.split(':');
+    //         date = date.hour(hours).minute(minutes);
+    //     }
+    
+    //     return date.format('MMM D, YYYY h:mm A'); // Example: "Nov 17, 2024 3:45 PM"
+    // };
+    
+    const formatDateTime = (dateString) => {
         const date = new Date(dateString);
-
-        if (timeString) {
-            const [hours, minutes] = timeString.split(':');
-            date.setHours(hours);
-            date.setMinutes(minutes);
-        }
-
         return date.toLocaleString('en-US', {
-            dateStyle: 'medium',
-            timeStyle: 'short',
+            timeZone: 'UTC',
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
         });
     };
-
+    
     const handleDownload = () => {
         const element = document.getElementById('invoice');
         html2canvas(element).then((canvas) => {
@@ -148,7 +164,9 @@ const ViewUserBookingInvoice = () => {
                                 <tr>
                                     <td className="p-2 border border-gray-300">
                                         <span >Pickup Date : </span>
-                                        {formatDateTime(startDate, data?.order?.startTime || '')}
+                                        {/* {formatDateTime(startDate, data?.order?.startTime || '')} */}
+                                        {formatDateTime(startDate)}
+
                                     </td>
                                     <td className="p-2 border border-gray-300">
                                         <span >Order ID : </span>
@@ -158,7 +176,9 @@ const ViewUserBookingInvoice = () => {
                                 <tr>
                                     <td className="p-2 border border-gray-300">
                                         <span >Drop Off Date : </span>
-                                        {formatDateTime(endDate, data?.order?.endTime || '')}
+                                        {/* {formatDateTime(endDate, data?.order?.endTime || '')} */}
+                                        {formatDateTime(endDate)}
+
                                     </td>
                                     <td className="p-2 border border-gray-300">
                                         <span >Payment ID : </span>

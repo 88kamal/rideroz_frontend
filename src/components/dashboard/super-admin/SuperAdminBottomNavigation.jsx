@@ -20,12 +20,7 @@ const ShopOwnerBottomNavigation = () => {
 
               
 
-                <NavItem
-                    icon={<CarFront className="w-6 h-6" />}
-                    label="All Vehicle"
-                    link={'shop-owner-all-vehicle'}
-                />
-
+             
                 <NavItem
                     icon={<UsersIcon className="w-6 h-6" />}
                     label="Profile"

@@ -36,6 +36,10 @@ export default function ViewShopOwnerTable() {
         shopId, // Replace with dynamic shopId if needed
         status: "",
         settled: true,
+        startDate: '',
+        endDate: '',
+        limit: limit,
+        page: page,
       });
     
 
@@ -47,8 +51,8 @@ export default function ViewShopOwnerTable() {
     };
 
     const handleNext = () => {
-        // const totalPages = Math.ceil((getOrderByShopId?.totalShops ?? 0) / limit);
-        // if (page < totalPages) setPage(page + 1);
+        const totalPages = Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit);
+        if (page < totalPages) setPage(page + 1);
     };
 
 
@@ -58,10 +62,18 @@ export default function ViewShopOwnerTable() {
     };
 
    
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [name]: value,
+        }));
+      };
+      
     
     return (
         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
-            {/* <pre>{JSON.stringify(error, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
             <div className="rounded-none  border-b border-green-300 px-2 py-1">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
@@ -74,7 +86,7 @@ export default function ViewShopOwnerTable() {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <div className=" w-full md:w-72">
+                        {/* <div className=" w-full md:w-72">
                             <Input
                                 label="Search"
                                 value={search}
@@ -83,7 +95,29 @@ export default function ViewShopOwnerTable() {
                                 className=""
                                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                             />
-                        </div>
+                        </div> */}
+                       <div className="">
+                       <Input
+                        label="Start Date"
+          type="date"
+          name="startDate"
+          value={filters.startDate}
+          onChange={handleFilterChange}
+          color="green"
+        />
+        
+       
+                       </div>
+                       <div className="">
+                       <Input
+         label="End Date"
+          type="date"
+          name="endDate"
+          value={filters.endDate}
+          onChange={handleFilterChange}
+          color="green"
+        />
+                       </div>
                         <Button
                             variant=""
                             color="green"
@@ -342,15 +376,14 @@ export default function ViewShopOwnerTable() {
             </div>
             <div className="flex items-center justify-between border-t border-green-300 p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    {/* Page {page} of {Math.ceil((shops?.totalShops ?? 0) / limit)} */}
-                    Page 1 Of  1
+                    Page {page} of {Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)}
                 </Typography>
                 <div className="flex gap-2">
                     <Button
                         variant=""
                         size="sm"
                         className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200 "
-                    // onClick={handlePrevious} disabled={page === 1}
+                    onClick={handlePrevious} disabled={page === 1}
                     >
                         Previous
                     </Button>
@@ -360,7 +393,7 @@ export default function ViewShopOwnerTable() {
                         size="sm"
                         className=" hover:shadow-none shadow-none   bg-green-500 "
                         onClick={handleNext}
-                    // disabled={page === Math.ceil((shops?.totalShops ?? 0) / limit)}
+                    disabled={page === Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)}
                     >
                         Next
                     </Button>

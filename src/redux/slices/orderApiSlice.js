@@ -78,15 +78,42 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     //   refetchOnReconnect: true, // Automatically refetch when the app reconnects to the internet
     //   refetchOnMountOrArgChange: true, // Refetch when the query argument changes or the component remounts
     // }),
+    // getOrdersByShop: builder.query({
+    //   query: ({ shopId, status, settled,  }) => {
+    //     // console.log({
+    //     //   shopId, status, settled, 
+    //     // })
+    //     // Build the query string dynamically
+    //     const queryParams = new URLSearchParams();
+    //     if (status) queryParams.append('status', status);
+    //     if (settled !== undefined) queryParams.append('settled', settled);
+    
+    //     // Construct the final URL
+    //     return `/order/get-orders/${shopId}?${queryParams.toString()}`;
+    //   },
+    //   providesTags: (result, error, { shopId }) =>
+    //     result
+    //       ? [
+    //           { type: 'Order', id: shopId },
+    //           ...result.orders.map(({ _id }) => ({ type: 'Order', id: _id })),
+    //         ]
+    //       : [{ type: 'Order', id: shopId }],
+    //   keepUnusedDataFor: 60, // Cache duration
+    //   refetchOnFocus: true,
+    //   refetchOnReconnect: true,
+    //   refetchOnMountOrArgChange: true,
+    // }),
+
     getOrdersByShop: builder.query({
-      query: ({ shopId, status, settled }) => {
-        console.log({
-          shopId, status, settled
-        })
+      query: ({ shopId, status, settled, startDate, endDate, limit, page }) => {
         // Build the query string dynamically
         const queryParams = new URLSearchParams();
         if (status) queryParams.append('status', status);
         if (settled !== undefined) queryParams.append('settled', settled);
+        if (startDate) queryParams.append('startDate', startDate);
+        if (endDate) queryParams.append('endDate', endDate);
+        queryParams.append('limit', limit);
+        queryParams.append('page', page);
     
         // Construct the final URL
         return `/order/get-orders/${shopId}?${queryParams.toString()}`;
@@ -103,6 +130,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       refetchOnReconnect: true,
       refetchOnMountOrArgChange: true,
     }),
+    
     
   }),
 });

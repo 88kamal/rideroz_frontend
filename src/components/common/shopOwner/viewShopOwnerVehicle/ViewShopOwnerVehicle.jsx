@@ -53,6 +53,8 @@ const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Number", "Vehicle Price", 
 export default function ViewVehicle() {
     const [search, setSearch] = useState('');
     const [vehicalType, setVehicalType] = useState('');
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
     const [viewType, setViewType] = useState(() => {
         // Initialize from localStorage or default to 'table'
         return localStorage.getItem("viewType") || "table";
@@ -65,7 +67,13 @@ export default function ViewVehicle() {
 
 
     // Pass the search, page, and limit as parameters to the query
-    const { data: vehicals, error, isLoading, refetch } = useGetVehiclesByShopIdQuery(shopId);
+    const { data: vehicals, error, isLoading, refetch } = useGetVehiclesByShopIdQuery({
+        shopId,
+        vehicleType: vehicalType, // Optional vehicle type filter
+        search,
+        page,
+        limit
+    });
 
     const [selectedOption, setSelectedOption] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -101,14 +109,24 @@ export default function ViewVehicle() {
         setIsFullscreen(!isFullscreen);
     };
 
+
+    const handlePrevious = () => {
+        if (page > 1) setPage(page - 1);
+    };
+
+    const handleNext = () => {
+        const totalPages = Math.ceil((vehicals?.totalVehicles ?? 0) / limit);
+        if (page < totalPages) setPage(page + 1);
+    };
+
     return (
         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
-            {/* <pre>{JSON.stringify(vehicals,null,2)}</pre> */}
+            {/* <pre>{JSON.stringify(vehicalType, null, 2)}</pre> */}
             <div className="rounded-none  border-b border-green-300 px-2 py-1">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
                         <Typography variant="h5" color="blue-gray">
-                           Shop Owner All Vehicles
+                            Shop Owner All Vehicles
                         </Typography>
                         <Typography color="gray" className="mt-1 font-normal">
                             See information about shop owner all vehicles
@@ -226,57 +244,57 @@ export default function ViewVehicle() {
             <div className="overflow-scroll p-2">
                 {/* <pre>{JSON.stringify(vehicals,null,2)}</pre> */}
 
-                {error?.data 
-  ? "" :   <div className=" mb-1 ">
-        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Shop Name:</h1>
-                <h1>{vehicals?.shop?.shopName ||  "N/A"}</h1>
-            </div>
+                {error?.data
+                    ? "" : <div className=" mb-2 ">
+                        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+                            <div className="flex items-center gap-1">
+                                <h1 className="font-bold">Shop Name:</h1>
+                                <h1>{vehicals?.shop?.shopName || "N/A"}</h1>
+                            </div>
 
-            {/* <div className=" border-r h-10 border-green-300"></div> */}
+                            {/* <div className=" border-r h-10 border-green-300"></div> */}
 
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Owner Name:</h1>
-                <h1>{vehicals?.shop?.ownerName ||  "N/A"}</h1>
-            </div>
-        </div>
+                            <div className="flex items-center gap-1">
+                                <h1 className="font-bold">Owner Name:</h1>
+                                <h1>{vehicals?.shop?.ownerName || "N/A"}</h1>
+                            </div>
+                        </div>
 
-        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Account holder name:</h1>
-                <h1>{vehicals?.shop?.account_holder_name || "N/A"}</h1>
-            </div>
+                        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+                            <div className="flex items-center gap-1">
+                                <h1 className="font-bold">Account holder name:</h1>
+                                <h1>{vehicals?.shop?.account_holder_name || "N/A"}</h1>
+                            </div>
 
-            {/* <div className=" border-r h-10 border-green-300"></div> */}
+                            {/* <div className=" border-r h-10 border-green-300"></div> */}
 
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Account Number:</h1>
-                <h1>{vehicals?.shop?.account_number || "N/A"}</h1>
-            </div>
-        </div>
+                            <div className="flex items-center gap-1">
+                                <h1 className="font-bold">Account Number:</h1>
+                                <h1>{vehicals?.shop?.account_number || "N/A"}</h1>
+                            </div>
+                        </div>
 
-        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">IFSC Code:</h1>
-                <h1>{vehicals?.shop?.ifsc || "N/A"}</h1>
-            </div>
+                        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
+                            <div className="flex items-center gap-1">
+                                <h1 className="font-bold">IFSC Code:</h1>
+                                <h1>{vehicals?.shop?.ifsc || "N/A"}</h1>
+                            </div>
 
-            {/* <div className=" border-r h-10 border-green-300"></div> */}
+                            {/* <div className=" border-r h-10 border-green-300"></div> */}
 
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Account verified:</h1>
-                {error?.data ? "N/A" : <Chip
-                    size="sm"
-                    variant="ghost"
-                    value={vehicals?.shop?.account_verified === false ? "Not Verified" : "Verified"}
-                    color={vehicals?.shop?.account_verified === false ? "red" : "green"}
-                    className="px-3 text-center w-28"
-                />}
+                            <div className="flex items-center gap-1">
+                                <h1 className="font-bold">Account verified:</h1>
+                                {error?.data ? "N/A" : <Chip
+                                    size="sm"
+                                    variant="ghost"
+                                    value={vehicals?.shop?.account_verified === false ? "Not Verified" : "Verified"}
+                                    color={vehicals?.shop?.account_verified === false ? "red" : "green"}
+                                    className="px-3 text-center w-28"
+                                />}
 
-            </div>
-        </div>
-    </div>}
+                            </div>
+                        </div>
+                    </div>}
 
                 {isLoading ? (
                     <div className="flex justify-center p-4">
@@ -368,6 +386,8 @@ export default function ViewVehicle() {
 
                                     </div>
 
+                                    {/* <pre>{JSON.stringify(vehicle,null,2)}</pre> */}
+
                                     <div className="flex justify-between items-center mt-2 bg-green-50 rounded-b-lg">
                                         <td>
                                             <IconButton
@@ -388,6 +408,33 @@ export default function ViewVehicle() {
                         </div>
                     )
                 )}
+            </div>
+
+            <div className="flex items-center justify-between border-t border-green-300 p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                    Page {page} of {Math.ceil((vehicals?.totalVehicles ?? 0) / limit)}
+                </Typography>
+                <div className="flex gap-2">
+                    <Button
+                        variant=""
+                        size="sm"
+                        className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200"
+                        onClick={handlePrevious}
+                        disabled={page === 1}
+                    >
+                        Previous
+                    </Button>
+
+                    <Button
+                        variant=""
+                        size="sm"
+                        className="hover:shadow-none shadow-none bg-green-500"
+                        onClick={handleNext}
+                        disabled={page === Math.ceil((vehicals?.totalVehicles ?? 0) / limit)}
+                    >
+                        Next
+                    </Button>
+                </div>
             </div>
         </div>
     );

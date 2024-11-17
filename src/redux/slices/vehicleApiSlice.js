@@ -207,14 +207,41 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 `/availability/${vehicleId}?month=${month}&year=${year}`,
         }),
 
+        // getVehiclesByShopId: builder.query({
+        //     query: (shopId) => `/vehicle/get-vehicles-by-shop-id/${shopId}`,
+        //     providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
+        //     keepUnusedDataFor: 60, // Cache for 60 seconds after last unmount
+        //     refetchOnFocus: true, // Refetch on window focus
+        //     refetchOnReconnect: true, // Refetch on reconnect
+        //     refetchOnMountOrArgChange: true, // Refetch on remount or argument change
+        // }),
         getVehiclesByShopId: builder.query({
-            query: (shopId) => `/vehicle/get-vehicles-by-shop-id/${shopId}`,
-            providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
-            keepUnusedDataFor: 60, // Cache for 60 seconds after last unmount
+            query: ({ shopId, search = '', vehicleType, page = 1, limit = 10 }) => {
+                console.log({
+                    shopId, search, vehicleType, page, limit 
+                })
+              // Construct the query string with the provided parameters
+              const queryParams = new URLSearchParams();
+              if (search) queryParams.append('search', search);
+              if (vehicleType) queryParams.append('vehicleType', vehicleType);
+              queryParams.append('page', page);
+              queryParams.append('limit', limit);
+      
+              // Construct the final URL
+              return `/vehicle/get-vehicles-by-shop-id/${shopId}?${queryParams.toString()}`;
+            },
+            providesTags: (result, error, { shopId }) =>
+              result
+                ? [
+                    { type: 'Vehicle', id: shopId },
+                    ...result.vehicles.map(({ _id }) => ({ type: 'Vehicle', id: _id })),
+                  ]
+                : [{ type: 'Vehicle', id: shopId }],
+            keepUnusedDataFor: 60, // Cache data for 60 seconds after last unmount
             refetchOnFocus: true, // Refetch on window focus
             refetchOnReconnect: true, // Refetch on reconnect
             refetchOnMountOrArgChange: true, // Refetch on remount or argument change
-        }),
+          }),
 
 
     }),

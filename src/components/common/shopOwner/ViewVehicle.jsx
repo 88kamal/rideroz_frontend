@@ -339,6 +339,8 @@ const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Number", "Vehicle Price", 
 export default function ViewVehicle() {
     const [search, setSearch] = useState('');
     const [vehicalType, setVehicalType] = useState('');
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
     const [viewType, setViewType] = useState(() => {
         // Initialize from localStorage or default to 'table'
         return localStorage.getItem("viewType") || "table";
@@ -348,8 +350,15 @@ export default function ViewVehicle() {
     const [isFullscreen, setIsFullscreen] = useState(false); // Track fullscreen status
 
 
+
     // Pass the search, page, and limit as parameters to the query
-    const { data: vehicals, error, isLoading, refetch } = useGetVehiclesByShopIdQuery(user?.id);
+    const { data: vehicals, error, isLoading, refetch } = useGetVehiclesByShopIdQuery({
+        shopId: user?.id,
+        search: search, // Optional search filter
+        vehicleType: vehicalType, // Optional vehicle type filter
+        page: page, // Pagination: page number
+        limit: limit, // Pagination: items per page
+    });
 
     const [selectedOption, setSelectedOption] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -384,6 +393,16 @@ export default function ViewVehicle() {
         }
         setIsFullscreen(!isFullscreen);
     };
+
+    const handlePrevious = () => {
+        if (page > 1) setPage(page - 1);
+    };
+
+    const handleNext = () => {
+        const totalPages = Math.ceil((vehicals?.totalVehicles ?? 0) / limit);
+        if (page < totalPages) setPage(page + 1);
+    };
+
 
     return (
         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
@@ -610,6 +629,33 @@ export default function ViewVehicle() {
                         </div>
                     )
                 )}
+            </div>
+
+            <div className="flex items-center justify-between border-t border-green-300 p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                    Page {page} of {Math.ceil((vehicals?.totalVehicles ?? 0) / limit)}
+                </Typography>
+                <div className="flex gap-2">
+                    <Button
+                        variant=""
+                        size="sm"
+                        className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200"
+                        onClick={handlePrevious}
+                        disabled={page === 1}
+                    >
+                        Previous
+                    </Button>
+
+                    <Button
+                        variant=""
+                        size="sm"
+                        className="hover:shadow-none shadow-none bg-green-500"
+                        onClick={handleNext}
+                        disabled={page === Math.ceil((vehicals?.totalVehicles ?? 0) / limit)}
+                    >
+                        Next
+                    </Button>
+                </div>
             </div>
         </div>
     );

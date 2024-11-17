@@ -9,7 +9,7 @@ const RatingBadge = ({ vehicleRatings }) => {
       value={
         <div className="flex items-center text-white">
           <span className="text-xs mr-1 app-font">
-            {vehicleRatings.toFixed(1)} {/* Display rating with one decimal place */}
+            {vehicleRatings?.toFixed(1)} {/* Display rating with one decimal place */}
           </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"

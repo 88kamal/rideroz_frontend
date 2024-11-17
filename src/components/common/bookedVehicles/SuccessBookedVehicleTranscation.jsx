@@ -376,10 +376,10 @@ export default function SuccessBookedVehicleTranscation() {
         <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              All Vehicle Transactions
+              All Vehicle Order 
             </Typography>
             <Typography color="gray" className="mt-1 font-normal app-font">
-              See information about all vehicle transactions
+              See information about all vehicle order
             </Typography>
           </div>
           <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -579,6 +579,8 @@ export default function SuccessBookedVehicleTranscation() {
             </table>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
+
               {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId }, index) => {
                 const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice, settled } = vehicle || {};
                 return (
