@@ -338,7 +338,7 @@ export default function SuccessBookedVehicleTranscation() {
     "Payment Status",
     "View Location",
     ...(user?.role === 15 ? ["Cancel Ride"] : []),
-    ...(user?.role === 14 ? ["Verify Otp"] : []),
+    // ...(user?.role === 14 ? ["Verify Otp"] : []),
     ...(user?.role === 14 ? ["Settle Status"] : []),
     ...(user?.role === 14 ? ["Settlement"] : []),
     "View Invoice",
@@ -502,9 +502,9 @@ export default function SuccessBookedVehicleTranscation() {
                         <CancelRideModal id={_id} vehicleBasePrice={vehiclePrice} />
                       </td>
 
-                      <td className={classes} hidden={[2, 3, 15].includes(user?.role)}>
+                      {/* <td className={classes} hidden={[2, 3, 15].includes(user?.role)}>
                         <VerifyRideModal vehicle={vehicle} />
-                      </td>
+                      </td> */}
 
                       {[15].includes(user?.role) && <td className={classes}>
                         <IconButton
@@ -642,11 +642,11 @@ export default function SuccessBookedVehicleTranscation() {
                           </Tooltip>
                         </td>
 
-                        <td hidden={[2, 3, 15].includes(user?.role)}>
+                        {/* <td hidden={[2, 3, 15].includes(user?.role)}>
                           <Tooltip text="Verify Ride">
                             <VerifyRideModal vehicle={vehicle} />
                           </Tooltip>
-                        </td>
+                        </td> */}
 
                         {[15].includes(user?.role) && (
                           <td>

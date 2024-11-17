@@ -327,11 +327,12 @@ import {
     IconButton,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { useGetVehiclesQuery } from "../../../redux/slices/vehicleApiSlice";
+import { useGetVehiclesByShopIdQuery, useGetVehiclesQuery } from "../../../redux/slices/vehicleApiSlice";
 import { Eye, Trash2, Table, List } from "lucide-react";
 import UpdateAvailabilityModal from "./modal/UpdateAvailabilityModal";
 import ViewMoreVehicle from "./modal/ViewMoreVehicle";
 import RatingBadge from "../../vehicle/RatingBadge";
+import authService from "../../../services/authService";
 
 const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Number", "Vehicle Price", "Change Availability", "Delete", "View More"];
 
@@ -343,15 +344,12 @@ export default function ViewVehicle() {
         return localStorage.getItem("viewType") || "table";
     });
 
+    const user = authService.getCurrentUser();
     const [isFullscreen, setIsFullscreen] = useState(false); // Track fullscreen status
 
 
     // Pass the search, page, and limit as parameters to the query
-    const { data: vehicals, error, isLoading, refetch } = useGetVehiclesQuery({
-        search,
-        vehicalType,
-        shop: '',
-    });
+    const { data: vehicals, error, isLoading, refetch } = useGetVehiclesByShopIdQuery(user?.id);
 
     const [selectedOption, setSelectedOption] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -399,6 +397,8 @@ export default function ViewVehicle() {
                             See information about all vehicles
                         </Typography>
                     </div>
+
+                    {/* <pre>{JSON.stringify(vehicals,null,2)}</pre> */}
 
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                         <div className="w-full md:w-72">
@@ -528,9 +528,9 @@ export default function ViewVehicle() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {vehicals?.vehicals?.map((vehicle, index) => {
+                                {vehicals?.vehicles?.map((vehicle, index) => {
                                     const { _id, vehicleNumber, vehiclePrice, vehicleImage, vehicleAvailability, bookedDates } = vehicle;
-                                    const isLast = index === vehicals?.vehicals?.length - 1;
+                                    const isLast = index === vehicals?.vehicles?.length - 1;
                                     const classes = isLast
                                         ? "px-5 border-l border-r border-b border-green-300"
                                         : "px-5 border-l border-r border-b border-green-300";
@@ -572,7 +572,7 @@ export default function ViewVehicle() {
                         </table>
                     ) : (
                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                            {vehicals?.vehicals?.map((vehicle, index) => (
+                            {vehicals?.vehicles?.map((vehicle, index) => (
                                 <div
                                     key={index}
                                     className="border border-green-200 rounded-lg p-2 "

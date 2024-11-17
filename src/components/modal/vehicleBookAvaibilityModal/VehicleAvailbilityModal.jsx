@@ -227,8 +227,8 @@ export default function DatePickerModule({ vehicleId, initialMonth }) {
     return () => window.removeEventListener("resize", updateDialogSize);
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>An error occurred: {error.message}</p>;
+  // if (isLoading) return <p>Loading...</p>;
+  // if (error) return <p>An error occurred: {error}</p>;
 
   return (
     <>
@@ -245,6 +245,7 @@ export default function DatePickerModule({ vehicleId, initialMonth }) {
         className="bg-white max-w-md mx-auto shadow-none hover:shadow-none rounded-md"
         onClose={handleOpen}
       >
+        {/* <pre>{JSON.stringify(error,null,2)}</pre> */}
         <div className="overflow-y-scroll max-h-screen lg:max-h-[80vh]">
           <div className="flex justify-between items-center bg-blue-500 sticky top-0 z-50">
             <Button

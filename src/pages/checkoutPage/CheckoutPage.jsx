@@ -347,7 +347,7 @@ const CartPage = () => {
     return (
         <Layout>
             <div className="container mx-auto max-w-7xl px-2 lg:px-0">
-            {/* <pre>{JSON.stringify(autoOpenLogin, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(vehicle, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(error, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(discountAmount,null,2)}</pre> */}
@@ -365,8 +365,10 @@ const CartPage = () => {
                                     <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                                         Checkout
                                     </h1>
+                                    
 
-                                    <VehicleAvailbilityModal vehicleId={vehicle?._id} />
+
+                                    <VehicleAvailbilityModal vehicleId={vehicle?._id} initialMonth={""} />
                                 </div>
                             </div>
                             {/* Pickup/Dropoff Date and Time */}
@@ -572,7 +574,7 @@ const CartPage = () => {
                                         Checkout
                                     </h1>
 
-                                    <VehicleAvailbilityModal bookedDates={bookedDates} />
+                                    <VehicleAvailbilityModal vehicleId={vehicle?._id} />
                                 </div>
                             </div>
 

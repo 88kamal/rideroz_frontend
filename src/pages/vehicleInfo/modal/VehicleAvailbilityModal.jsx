@@ -41,8 +41,8 @@ export default function VehicleAvailbilityModal({ vehicleId, initialMonth }) {
     return () => window.removeEventListener("resize", updateDialogSize);
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>An error occurred: {error.message}</p>;
+  // if (isLoading) return <p>Loading...</p>;
+  // if (error) return <p>An error occurred: {error.message}</p>;
 
   return (
     <>
