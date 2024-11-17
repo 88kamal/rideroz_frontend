@@ -80,7 +80,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
         //     },
         // }),
         getVehiclesNearby: builder.query({
-            query: ({ lat, lng, maxDistance = 300, vehicleCity, vehicleType }) => {
+            query: ({ lat, lng, maxDistance, vehicleCity, vehicleType }) => {
                 const params = new URLSearchParams();
 
                 // Add query parameters
