@@ -299,7 +299,7 @@ import {
     Chip,
 } from "@material-tailwind/react";
 import { ArrowPathIcon, ArrowsPointingInIcon, ArrowsPointingOutIcon, ListBulletIcon, MagnifyingGlassIcon, TableCellsIcon } from "@heroicons/react/24/outline";
-import { Logs } from "lucide-react";
+import { Bike, Logs } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -311,7 +311,7 @@ import DeleteShopOwnerModal from "./modal/shopOwner/DeleteShopOwnerModal";
 import ViewShopOwnerDetailModal from "./modal/shopOwner/ViewShopOwnerDetailModal";
 import EditShopOwnerModal from "./modal/shopOwner/EditShopOwnerModal";
 
-const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Owner Name", "Verify Account", "Order", "Edit", "Delete", "View"];
+const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Account Verified", "Verify Account", "View Vehicles", "Order", "Edit", "Delete", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState("");
@@ -483,7 +483,16 @@ export default function ViewShopOwnerTable() {
                                             />
                                         </td>
                                         <td className={classes}>{shop.shopName}</td>
-                                        <td className={classes}>{shop.ownerName}</td>
+
+                                        <td className={classes}>
+                                        <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={shop.account_verified === false ? "Not Verified" : "Verified"}
+                                        color={shop.account_verified === false ? "red" : "green"}
+                                        className="px-3 text-center w-28"
+                                    />
+                                        </td>
                                         <td className={classes}>
                                             <VerifyAccountModal
                                                 shopId={shop._id}
@@ -492,11 +501,19 @@ export default function ViewShopOwnerTable() {
                                                 account_number={shop.account_number}
                                             />
                                         </td>
+
+                                        <td className={classes} onClick={() => {
+                                            navigate(`/super-admin-dashboard/view-user-and-shop-owner/super-admin-view-shop-owner-vehicle/${shop._id}`)
+                                        }}>
+                                            <Bike className="h-5" />
+                                        </td>
+
                                         <td className={classes} onClick={() => {
                                             navigate(`/super-admin-dashboard/view-user-and-shop-owner/super-admin-get-order-by-shop-owner/${shop._id}`)
                                         }}>
                                             <Logs className="h-5" />
                                         </td>
+
                                         <td className={classes}>
                                             <EditShopOwnerModal
                                                 id={shop._id}
@@ -540,48 +557,95 @@ export default function ViewShopOwnerTable() {
                                 </Typography>
 
                                 {/* <pre>{JSON.stringify(shop.account_verified)}</pre> */}
-                               <div className="flex justify-center mt-2">
-                               <Chip
-                                    size="sm"
-                                    variant="ghost"
-                                    value={shop.account_verified === false ? "Not Verified" : "Verified"}
-                                    color={shop.account_verified === false ? "red" : "green"}
-                                    className="px-3 text-center w-28"
-                                />
-
-                               </div>
-                                <div className="flex justify-between gap-2 mt-4 bg-green-50 rounded-b-lg">
-                                    <VerifyAccountModal
-                                        shopId={shop._id}
-                                        account_holder_name={shop.account_holder_name}
-                                        ifsc={shop.ifsc}
-                                        account_number={shop.account_number}
-                                        refetch={refetch}
+                                <div className="flex justify-center mt-2">
+                                    <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={shop.account_verified === false ? "Not Verified" : "Verified"}
+                                        color={shop.account_verified === false ? "red" : "green"}
+                                        className="px-3 text-center w-28"
                                     />
 
-                                    <IconButton
-                                        onClick={() => {
-                                            navigate(`/super-admin-dashboard/view-user-and-shop-owner/super-admin-get-order-by-shop-owner/${shop._id}`)
-                                        }}
-                                        variant="text"
-                                        className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
-                                    >
-                                        <Logs className="h-4 w-4" />
-                                    </IconButton>
-                                    <EditShopOwnerModal id={shop._id}
-                                        shopImage={shop.shopImage}
-                                        legalDoc={shop.legalDoc}
-                                        shopName={shop.shopName}
-                                        ownerName={shop.ownerName}
-                                        ownerEmail={shop.ownerEmail}
-                                        ownerPhoneNumber={shop.ownerPhoneNumber}
-                                        gender={shop.gender}
-                                        selectCity={shop.selectCity}
-                                        lat={shop.lat}
-                                        lng={shop.lng} />
-                                    <DeleteShopOwnerModal id={shop._id} />
-                                    <ViewShopOwnerDetailModal {...shop} />
                                 </div>
+
+                                <div className="flex justify-between mt-4 bg-green-50 rounded-b-lg">
+                                    <div className="relative group z-50">
+                                        <VerifyAccountModal
+                                            shopId={shop._id}
+                                            account_holder_name={shop.account_holder_name}
+                                            ifsc={shop.ifsc}
+                                            account_number={shop.account_number}
+                                            refetch={refetch}
+                                        />
+                                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 left-1/2 transform -translate-x-1/2 -top-6">
+                                            Verify Account
+                                        </div>
+                                    </div>
+
+                                    <div className="relative group">
+                                        <IconButton
+                                            onClick={() => {
+                                                navigate(`/super-admin-dashboard/view-user-and-shop-owner/super-admin-view-shop-owner-vehicle/${shop._id}`)
+                                            }}
+                                            variant="text"
+                                            className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                                        >
+                                            <Bike className="h-4 w-4" />
+                                        </IconButton>
+                                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 left-1/2 transform -translate-x-1/2 -top-6">
+                                            View Vehicles
+                                        </div>
+                                    </div>
+
+                                    <div className="relative group">
+                                        <IconButton
+                                            onClick={() => {
+                                                navigate(`/super-admin-dashboard/view-user-and-shop-owner/super-admin-get-order-by-shop-owner/${shop._id}`)
+                                            }}
+                                            variant="text"
+                                            className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                                        >
+                                            <Logs className="h-4 w-4" />
+                                        </IconButton>
+                                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 left-1/2 transform -translate-x-1/2 -top-6">
+                                            View Orders
+                                        </div>
+                                    </div>
+
+                                    <div className="relative group">
+                                        <EditShopOwnerModal
+                                            id={shop._id}
+                                            shopImage={shop.shopImage}
+                                            legalDoc={shop.legalDoc}
+                                            shopName={shop.shopName}
+                                            ownerName={shop.ownerName}
+                                            ownerEmail={shop.ownerEmail}
+                                            ownerPhoneNumber={shop.ownerPhoneNumber}
+                                            gender={shop.gender}
+                                            selectCity={shop.selectCity}
+                                            lat={shop.lat}
+                                            lng={shop.lng}
+                                        />
+                                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 left-1/2 transform -translate-x-1/2 -top-6">
+                                            Edit Shop Owner
+                                        </div>
+                                    </div>
+
+                                    <div className="relative group">
+                                        <DeleteShopOwnerModal id={shop._id} />
+                                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 left-1/2 transform -translate-x-1/2 -top-6">
+                                            Delete Shop Owner
+                                        </div>
+                                    </div>
+
+                                    <div className="relative group">
+                                        <ViewShopOwnerDetailModal {...shop} />
+                                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 left-1/2 transform -translate-x-1/2 -top-6">
+                                            View Details
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         ))}
                     </div>

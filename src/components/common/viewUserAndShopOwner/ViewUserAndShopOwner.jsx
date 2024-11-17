@@ -12,7 +12,7 @@ import ViewUserTable from "./ViewUserTable";
 import ViewShopOwnerTable from "./ViewShopOwnerTable";
 
 export default function ViewUserAndShopOwner() {
-    const [activeTab, setActiveTab] = React.useState("View User");
+    const [activeTab, setActiveTab] = React.useState("View ShopOwner");
 
     return (
         <div>
@@ -24,6 +24,17 @@ export default function ViewUserAndShopOwner() {
                             "bg-transparent border-b-2 border-green-500 shadow-none rounded-none",
                     }}
                 >
+                
+                    <Tab
+                        key={'view ShopOwner'}
+                        value={"View ShopOwner"}
+                        onClick={() => setActiveTab('View ShopOwner')}
+                        className={`${activeTab === 'View ShopOwner' ? 'text-green-700' : ''
+                            } px-2 sm:px-4 md:px-6 lg:px-8 py-2 font-bold`}
+                    >
+                        View Shop Owner
+                    </Tab>
+
                     <Tab
                         key={'view User'}
                         value={"View User"}
@@ -34,26 +45,19 @@ export default function ViewUserAndShopOwner() {
                         View User
                     </Tab>
 
-                    <Tab
-                        key={'view ShopOwner'}
-                        value={"View ShopOwner"}
-                        onClick={() => setActiveTab('View ShopOwner')}
-                        className={`${activeTab === 'View ShopOwner' ? 'text-green-700' : ''
-                            } px-2 sm:px-4 md:px-6 lg:px-8 py-2 font-bold`}
-                    >
-                        View Shop Owner
-                    </Tab>
                 </TabsHeader>
 
                 <TabsBody className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap">
-                    <TabPanel key={'view User'} value={"View User"} className="-p-9">
-                        <ViewUserTable />
-                    </TabPanel>
-
+                   
                     <TabPanel className="h-full w-full overflow-scroll scrollbar-hide whitespace-nowrap -p-9"
                         key={'view ShopOwner'} value={"View ShopOwner"}>
                         <ViewShopOwnerTable />
                     </TabPanel>
+
+                    <TabPanel key={'view User'} value={"View User"} className="-p-9">
+                        <ViewUserTable />
+                    </TabPanel>
+
 
 
                 </TabsBody>

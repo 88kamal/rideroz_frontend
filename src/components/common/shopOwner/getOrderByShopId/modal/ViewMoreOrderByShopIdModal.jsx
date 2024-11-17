@@ -47,8 +47,8 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                 <Eye className="h-4 w-4" />
             </IconButton>
 
-            <Dialog open={open} size={dialogSize} 
-            className="shadow-none hover:shadow-none rounded-none bg-green-100 overflow-y-scroll max-h-screen lg:max-h-[80vh]">
+            <Dialog open={open} size={dialogSize}
+                className="shadow-none hover:shadow-none rounded-none bg-green-100 overflow-y-scroll max-h-screen lg:max-h-[80vh]">
                 <div className="px-4 py-4 top-0 sticky z-50 bg-green-100">
                     <h1 className="text-xl text-black font-bold">Order Details</h1>
                     <div className="absolute top-0 right-0 py-1.5 px-1.5 bg-green-200 cursor-pointer" onClick={handleOpen}>
@@ -56,6 +56,7 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                     </div>
                 </div>
                 <DialogBody>
+                    {/* <pre>{JSON.stringify(order, null, 2)}</pre> */}
                     <div className="mb-8">
                         <div className="flex justify-center items-center mb-1">
                             <LazyLoadImage
@@ -140,24 +141,72 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                     </div>
 
                     <div className="flex flex-wrap justify-between items-center">
-                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full ">
-                           <div className="flex items-center gap-4">
-                           <span className="font-bold">Settled : </span> 
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2 flex items-center gap-2">
+                            <span className="font-bold">Settlement Status: </span> 
                             <Chip
-                                                            size="sm"
-                                                            variant="ghost"
-                                                            value={order?.settled === false ? "pending" : "confirm"}
-                                                            color={
-                                                                order?.settled === false ? "red" :
-                                                                    "green"
-                                                            }
+                                    size="sm"
+                                    variant="ghost"
+                                    value={order?.settled === false ? "pending" : "confirm"}
+                                    color={
+                                        order?.settled === false ? "red" :
+                                            "green"
+                                    }
 
-                                                            className="px-3 text-center w-28"
-                                                        />
-                           </div>
+                                    className="px-3 text-center w-28"
+                                />
                         </div>
-                    
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Coupon Code: </span> <span>{order.coupon?.code}</span>
+                        </div>
                     </div>
+
+                    {/* <div className="flex flex-wrap justify-between items-center">
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full ">
+                            <div className="flex items-center gap-4">
+                                <span className="font-bold">Settled : </span>
+                                <Chip
+                                    size="sm"
+                                    variant="ghost"
+                                    value={order?.settled === false ? "pending" : "confirm"}
+                                    color={
+                                        order?.settled === false ? "red" :
+                                            "green"
+                                    }
+
+                                    className="px-3 text-center w-28"
+                                />
+                            </div>
+                            
+                        </div>
+                    </div> */}
+
+                    <div className="">
+                        <h1 className=" text-black font-bold">Settlement</h1>
+                    </div>
+
+                    <div className="flex flex-wrap justify-between items-center">
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Settlement Amount: </span> <span>{order.settlementAmount}</span>
+                        </div>
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Settlement Date: </span> <span>{order.settlementDate}</span>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap justify-between items-center">
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Settlement Platform Used: </span> <span className=" capitalize">{order.settlementPlatformUsed}</span>
+                        </div>
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Settlement Transaction Id: </span> <span>{order.settlementTransactionId}</span>
+                        </div>
+                    </div>
+
+                    <div className="">
+                        <h1 className=" font-bold text-black mb-1">Settlement Proof Image</h1>
+                        <img src={order?.settlementProofImage?.url} alt="img" className=" rounded-md" />
+                    </div>
+
                 </DialogBody>
             </Dialog>
         </>

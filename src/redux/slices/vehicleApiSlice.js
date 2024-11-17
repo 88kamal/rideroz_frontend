@@ -104,11 +104,11 @@ export const vehicleApi = apiSlice.injectEndpoints({
         // getVehicleById: builder.query({
         //     query: (id) => `/vehicle/get-vehicle/${id}`,
         //     transformResponse: (data) => data?.vehicle || [],
-            // providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
-            // keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
-            // refetchOnFocus: true, // Refetch data when the window is focused
-            // refetchOnReconnect: true, // Refetch when the connection is re-established
-            // refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
+        // providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
+        // keepUnusedDataFor: 60, // Keep data in cache for 60 seconds after the last component unmounts
+        // refetchOnFocus: true, // Refetch data when the window is focused
+        // refetchOnReconnect: true, // Refetch when the connection is re-established
+        // refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
         // }),
         getVehicleById: builder.query({
             query: (id) => `/vehicle/get-vehicle/${id}`,
@@ -203,12 +203,21 @@ export const vehicleApi = apiSlice.injectEndpoints({
             }),
         }),
         getVehicleAvailability: builder.query({
-            query: ({ vehicleId, month, year }) => 
-              `/availability/${vehicleId}?month=${month}&year=${year}`,
-          }),
+            query: ({ vehicleId, month, year }) =>
+                `/availability/${vehicleId}?month=${month}&year=${year}`,
+        }),
+
+        getVehiclesByShopId: builder.query({
+            query: (shopId) => `/vehicle/get-vehicles-by-shop-id/${shopId}`,
+            providesTags: ['Vehicle'], // Cache under the 'Vehicle' tag
+            keepUnusedDataFor: 60, // Cache for 60 seconds after last unmount
+            refetchOnFocus: true, // Refetch on window focus
+            refetchOnReconnect: true, // Refetch on reconnect
+            refetchOnMountOrArgChange: true, // Refetch on remount or argument change
+        }),
 
 
     }),
 });
 
-export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery, useDeleteReviewMutation, useBookWalkinMutation } = vehicleApi;
+export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery, useDeleteReviewMutation, useBookWalkinMutation, useGetVehiclesByShopIdQuery } = vehicleApi;

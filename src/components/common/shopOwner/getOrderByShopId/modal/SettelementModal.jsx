@@ -15,7 +15,7 @@ import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { useSettleOrderMutation } from "../../../../../redux/slices/settlementApiSlice";
 import toast from "react-hot-toast";
 
-export default function SettlementModal({ id, amount, refetch }) {
+export default function SettlementModal({ id, amount, refetch, settled }) {
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({
         settlementDate: '',
@@ -109,12 +109,15 @@ export default function SettlementModal({ id, amount, refetch }) {
     return (
         <>
             <IconButton
-                onClick={handleOpen}
-                variant="text"
-                className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
-            >
-                <BanknotesIcon className="h-5 w-5 text-green-600" />
-            </IconButton>
+    onClick={handleOpen}
+    variant="text"
+    className={`hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300 ${
+        settled ? 'opacity-50 cursor-not-allowed' : ''
+    }`}
+    disabled={settled}
+>
+    <BanknotesIcon className="h-5 w-5 text-green-600" />
+</IconButton>
 
             <Dialog open={open} size={dialogSize} handler={handleOpen} className="shadow-none rounded-md bg-white">
                 <DialogHeader>Settle Order</DialogHeader>

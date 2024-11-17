@@ -54,6 +54,7 @@ import { getToken, onMessage } from "firebase/messaging";
 import CustomNotification from "./helper/CustomNotification";
 import myContext from "./context/myContext";
 import SuperAdminGetOrderByShopOwner from "./pages/dashboard/super-admin/pages/SuperAdminGetOrderByShopOwner";
+import SuperAdminViewShopOwnerVehiclePage from "./pages/dashboard/super-admin/pages/SuperAdminViewShopOwnerVehiclePage";
 
 
 function App() {
@@ -259,6 +260,12 @@ function App() {
                 path="view-user-and-shop-owner/super-admin-get-order-by-shop-owner/:shopId"
                 element={<SuperAdminGetOrderByShopOwner />}
               />
+               <Route
+                index={true}
+                path="view-user-and-shop-owner/super-admin-view-shop-owner-vehicle/:shopId"
+                element={<SuperAdminViewShopOwnerVehiclePage />}
+              />
+    
             </Route>
 
 
