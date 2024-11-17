@@ -41,9 +41,9 @@ const UploadAdharImage = ({ formData, setFormData }) => {
 
     return (
         <div>
-            {/* <pre>{JSON.stringify(formData, null, 2)}</pre>
-            <pre>{JSON.stringify(error, null, 2)}</pre>
-            <pre>{JSON.stringify(getUserById, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(formData.adharcardImg, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(error, null, 2)}</pre> */}
+            {/* <pre>{JSON.stringify(getUserById, null, 2)}</pre> */}
 
             {canUploadAdharcard && (
                 <div>
