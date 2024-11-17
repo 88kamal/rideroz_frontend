@@ -29,7 +29,7 @@ const ShopOwnerBottomNavigation = () => {
                 <NavItem
                     icon={<UsersIcon className="w-6 h-6" />}
                     label="Profile"
-                    link={'shop-owner-profile'}
+                    link={'super-admin-profile'}
                 />
             </div>
         </div>
