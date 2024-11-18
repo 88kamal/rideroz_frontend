@@ -286,20 +286,20 @@ const CartPage = () => {
         } catch (error) {
             console.log('Failed to create order:', error);
 
-            setFormData({
-                startDate: "",
-                endDate: "",
-                startTime: '',
-                endTime: '',
-                shopAmount: 0,
-                platformAmount: 0,
-                miscAmount: 0,
-                couponCode: '',
-                discountAmount: 0,
-                extraHours: 0,
-                extraHourCharge: 0,
-                rentDuration: "",
-            })
+            // setFormData({
+            //     startDate: "",
+            //     endDate: "",
+            //     startTime: '',
+            //     endTime: '',
+            //     shopAmount: 0,
+            //     platformAmount: 0,
+            //     miscAmount: 0,
+            //     couponCode: '',
+            //     discountAmount: 0,
+            //     extraHours: 0,
+            //     extraHourCharge: 0,
+            //     rentDuration: "",
+            // })
 
             // Check for user not found error and show login modal
             if (error.status === 500 && error.data?.error === "Access denied. Re-login") {
