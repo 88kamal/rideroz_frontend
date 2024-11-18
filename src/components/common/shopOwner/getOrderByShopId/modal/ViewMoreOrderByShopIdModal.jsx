@@ -74,16 +74,17 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                             <span className="font-bold">Vehicle Name: </span> <span>{order.vehicle.vehicleName}</span>
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Vehicle Number: </span> <span>{order.vehicle.vehicleNumber}</span>
+                            <span className="font-bold">Vehicle Number: </span> <span>{order?.vehicle?.vehicleNumber}</span>
                         </div>
                     </div>
 
                     <div className="flex flex-wrap justify-between items-center">
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Coupon Code: </span> <span>{order.coupon.code}</span>
+                            <span className="font-bold">Coupon Code: </span> <span>{order?.coupon?.code}</span>
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Shop Amount: </span> <span>₹ {order.vehicle.vehiclePrice}</span>
+                            <span className="font-bold">Shop Amount: </span> <span>₹ {order
+                            ?.vehicle?.vehiclePrice}</span>
                         </div>
                     </div>
 
@@ -98,10 +99,10 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
 
                     <div className="flex flex-wrap justify-between items-center">
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Rent Duration: </span> <span>{order.rentDuration}</span>
+                            <span className="font-bold">Rent Duration: </span> <span>{order?.rentDuration}</span>
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Total Amount: </span> <span>₹ {order.totalAmount}</span>
+                            <span className="font-bold">Total Amount: </span> <span>₹ {order?.totalAmount}</span>
                         </div>
                     </div>
 
@@ -156,7 +157,7 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                                 />
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Coupon Code: </span> <span>{order.coupon?.code}</span>
+                            <span className="font-bold">Coupon Code: </span> <span>{order?.coupon?.code}</span>
                         </div>
                     </div>
 
