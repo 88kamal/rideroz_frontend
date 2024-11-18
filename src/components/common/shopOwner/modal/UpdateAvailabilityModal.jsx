@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Button, Dialog, DialogFooter, IconButton, Input } from "@material-tailwind/react";
+import { Button, Dialog, DialogFooter, IconButton } from "@material-tailwind/react";
 import { SquarePen } from "lucide-react";
 import { useBookWalkinMutation } from "../../../../redux/slices/vehicleApiSlice";
 import toast from "react-hot-toast";
@@ -9,13 +10,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import CustomTimeDropdown from "../../../../pages/checkoutPage/CustomTimeDropdown";
 import utc from "dayjs/plugin/utc";
+import ShopAvailbility from "../shopOwnerAvailbility/ShopAvailbility";
 
 dayjs.extend(isBetween);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(utc);
 
 
-export default function UpdateAvailabilityModal({ id, bookedDates, refetch }) {
+export default function UpdateAvailabilityModal({ id, refetch }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     startDate: null,
@@ -24,8 +26,6 @@ export default function UpdateAvailabilityModal({ id, bookedDates, refetch }) {
     endTime: '',
   });
 
-  const [selectedMonth, setSelectedMonth] = useState(dayjs()); // Initial month is the current month
-  const today = dayjs();
   const [bookWalkin, { isLoading, isError, isSuccess, data, error }] = useBookWalkinMutation();
 
   const handleOpen = () => setOpen(!open);
@@ -71,70 +71,6 @@ export default function UpdateAvailabilityModal({ id, bookedDates, refetch }) {
       handleOpen();
     }
   }, [isError, error, isSuccess, data]);
-
-
-  const isDateBooked = (date) => {
-    const bookedDate = bookedDates.find((bookedDate) => {
-      const startDate = dayjs(bookedDate.startDate);
-      const endDate = dayjs(bookedDate.endDate);
-  
-      // Ignore bookings with invalid date ranges
-      if (endDate.isBefore(startDate)) {
-        console.warn(`Invalid booking range for booking ID: ${bookedDate._id}`);
-        return false;
-      }
-  
-      // Check if the selected date falls within the booking range
-      return dayjs(date).isBetween(startDate, endDate, 'day', '[]');
-    });
-  
-    if (bookedDate) {
-      // Parse and adjust the time based on the time zone or desired format
-      const startTime = dayjs(bookedDate.startDate).utc().format('hh:mm A');
-      const endTime = dayjs(bookedDate.endDate).utc().format('hh:mm A');
-  
-      const startDateFormatted = dayjs(bookedDate.startDate).format('DD-MM-YYYY');
-      const endDateFormatted = dayjs(bookedDate.endDate).format('DD-MM-YYYY');
-  
-      // Check if the selected date is the end date of the booking
-      const isPartialBooking = dayjs(date).isSame(dayjs(bookedDate.endDate), 'day');
-  
-      return {
-        isBooked: true,
-        startTime,
-        endTime,
-        startDateFormatted,
-        endDateFormatted,
-        isPartialBooking,
-      };
-    }
-  
-    return { isBooked: false, isPartialBooking: false };
-  };
-  
-  // Disable past and booked dates
-  // const filterPassedDates = (date) => {
-  //     return dayjs(date).isAfter(today) && !isDateBooked(date).isBooked;
-  // };
-  const filterPassedDates = (date) => {
-    return dayjs(date).isSameOrAfter(today, 'day') && !isDateBooked(date).isBooked;
-  };
-
-
-  const handlePrevMonth = () => {
-    setSelectedMonth(selectedMonth.subtract(1, 'month'));
-  };
-
-  const handleNextMonth = () => {
-    setSelectedMonth(selectedMonth.add(1, 'month'));
-  };
-
-  const daysInMonth = Array.from(
-    { length: selectedMonth.daysInMonth() },
-    (_, i) => selectedMonth.startOf('month').add(i, 'day')
-  );
-  const currentMonth = selectedMonth.format('MMMM YYYY');
-
   return (
     <>
       <IconButton
@@ -148,8 +84,10 @@ export default function UpdateAvailabilityModal({ id, bookedDates, refetch }) {
       <Dialog open={open} size="xxl" className="shadow-none hover:shadow-none rounded-none bg-white">
         {/* <pre>{JSON.stringify(formData,null,2)}</pre> */}
         <div className="overflow-y-scroll">
+
+          <ShopAvailbility vehicleId={id}/>
           {/* Current month title with navigation */}
-          <div className="flex justify-between items-center mb-2 bg-blue-500">
+          {/* <div className="flex justify-between items-center mb-2 bg-blue-500">
             <Button variant="text"
               onClick={handlePrevMonth}
               className="text-xs hover:shadow-none shadow-none rounded-none text-white">
@@ -163,12 +101,12 @@ export default function UpdateAvailabilityModal({ id, bookedDates, refetch }) {
               className="text-xs hover:shadow-none shadow-none rounded-none text-white">
               Next
             </Button>
-          </div>
+          </div> */}
 
           {/* <pre>{JSON.stringify(formData,null,2)}</pre> */}
           <div className="p-3">
             {/* Calendar view */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2 sm:gap-4 mb-4">
+            {/* <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2 sm:gap-4 mb-4">
               {daysInMonth.map((day) => {
                 const {
                   isBooked,
@@ -222,7 +160,7 @@ export default function UpdateAvailabilityModal({ id, bookedDates, refetch }) {
                   </div>
                 );
               })}
-            </div>
+            </div> */}
 
             {/* Form for adding new booking */}
             <form onSubmit={handleSubmit} className="space-y-4 flex justify-end mb-20">

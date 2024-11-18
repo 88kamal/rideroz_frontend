@@ -116,7 +116,7 @@ export default function SettlementModal({ id, amount, refetch, settled }) {
     }`}
     disabled={settled}
 >
-    <BanknotesIcon className="h-5 w-5 text-green-600" />
+    <BanknotesIcon className="h-5 w-5 text-black" />
 </IconButton>
 
             <Dialog open={open} size={dialogSize} handler={handleOpen} className="shadow-none rounded-md bg-white">

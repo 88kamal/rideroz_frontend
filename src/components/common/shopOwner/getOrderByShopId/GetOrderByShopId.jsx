@@ -1,49 +1,730 @@
+// /* eslint-disable no-unused-vars */
+// import { ArrowPathIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+// import {
+//     Input,
+//     Typography,
+//     Button,
+//     Spinner,
+//     Chip,
+// } from "@material-tailwind/react";
+// import { useState } from "react";
+// import { Store } from "lucide-react";
+// import { LazyLoadImage } from "react-lazy-load-image-component";
+// import { useNavigate, useParams } from "react-router-dom";
+// import { useGetOrdersByShopQuery } from "../../../../redux/slices/orderApiSlice";
+// import SettelementModal from "./modal/SettelementModal";
+// import ViewMoreOrderByShopIdModal from "./modal/ViewMoreOrderByShopIdModal";
+// import CustomDropdown from "./custom/CustomDropDown";
+// import SettleCustomDropDown from "./custom/SettleCustomDropDown";
+
+
+// const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Settled", "View"];
+
+// export default function ViewShopOwnerTable() {
+//     const [search, setSearch] = useState('');
+//     const [page, setPage] = useState(1);
+//     const [limit, setLimit] = useState(10);
+//     const [city, setCity] = useState('');
+
+//     const { shopId } = useParams()
+//     const navigate = useNavigate();
+
+//     const [filters, setFilters] = useState({
+//         shopId, // Replace with dynamic shopId if needed
+//         status: "",
+//         settled: true,
+//         startDate: '',
+//         endDate: '',
+//         limit: limit,
+//         page: page,
+//       });
+
+
+//     // Pass the search, page, and limit as parameters to the query
+//     const { data: getOrderByShopId, error, isLoading, refetch } = useGetOrdersByShopQuery(filters);
+
+//     const handlePrevious = () => {
+//         if (page > 1) setPage(page - 1);
+//     };
+
+//     const handleNext = () => {
+//         const totalPages = Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit);
+//         if (page < totalPages) setPage(page + 1);
+//     };
+
+//     const handleFilterChange = (e) => {
+//         const { name, value } = e.target;
+//         setFilters((prevFilters) => ({
+//           ...prevFilters,
+//           [name]: value,
+//         }));
+//       };
+
+
+//     return (
+//         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
+//             {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
+//             <div className="rounded-none  border-b border-green-300 px-2 py-1">
+//                 <div className="flex flex-wrap items-center justify-between gap-4">
+//                     <div>
+//                         <Typography variant="h5" color="blue-gray">
+//                             All Shop Order
+//                         </Typography>
+//                         <Typography color="gray" className="mt-1 font-normal">
+//                             See information about all Shop order
+//                         </Typography>
+//                     </div>
+
+//                     <div className="flex flex-wrap items-center gap-2 mb-2">
+//                         {/* <div className=" w-full md:w-72">
+//                             <Input
+//                                 label="Search"
+//                                 value={search}
+//                                 onChange={(e) => setSearch(e.target.value)}
+//                                 color="green"
+//                                 className=""
+//                                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+//                             />
+//                         </div> */}
+//                        <div className="">
+//                        <Input
+//                         label="Start Date"
+//           type="date"
+//           name="startDate"
+//           value={filters.startDate}
+//           onChange={handleFilterChange}
+//           color="green"
+//         />
+
+
+//                        </div>
+//                        <div className="">
+//                        <Input
+//          label="End Date"
+//           type="date"
+//           name="endDate"
+//           value={filters.endDate}
+//           onChange={handleFilterChange}
+//           color="green"
+//         />
+//                        </div>
+
+
+//                        <CustomDropdown filters={filters} setFilters={setFilters}/>
+//                        <SettleCustomDropDown filters={filters} setFilters={setFilters}/>
+
+//                        <Button
+//                             variant=""
+//                             color="green"
+//                             size="sm"
+//                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+//                             onClick={refetch}
+//                         >
+//                             <ArrowPathIcon className="h-5 w-5" />
+//                         </Button>
+//                         <Button
+//                             variant=""
+//                             color="green"
+//                             size="sm"
+//                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+//                             onClick={() => navigate('/super-admin-dashboard/view-user-and-shop-owner')}
+//                         >
+//                             <Store className="h-5 w-5" />
+//                             <p className=" ">
+//                                 View Shop Owner
+//                             </p>
+//                         </Button>
+
+//                     </div>
+//                 </div>
+
+//             </div>
+
+//             {/* <pre>{JSON.stringify(getOrderByShopId?.shop, null, 2)}</pre> */}
+
+//             <div className="overflow-scroll p-2 ">
+//   {error?.data 
+//   ? "" :   <div className=" mb-1 ">
+//         <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+//             <div className="flex items-center gap-1">
+//                 <h1 className="font-bold">Shop Name:</h1>
+//                 <h1>{getOrderByShopId?.shop?.shopName ||  "N/A"}</h1>
+//             </div>
+
+//             {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+//             <div className="flex items-center gap-1">
+//                 <h1 className="font-bold">Owner Name:</h1>
+//                 <h1>{getOrderByShopId?.shop?.ownerName ||  "N/A"}</h1>
+//             </div>
+//         </div>
+
+//         <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+//             <div className="flex items-center gap-1">
+//                 <h1 className="font-bold">Account holder name:</h1>
+//                 <h1>{getOrderByShopId?.shop?.account_holder_name || "N/A"}</h1>
+//             </div>
+
+//             {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+//             <div className="flex items-center gap-1">
+//                 <h1 className="font-bold">Account Number:</h1>
+//                 <h1>{getOrderByShopId?.shop?.account_number || "N/A"}</h1>
+//             </div>
+//         </div>
+
+//         <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
+//             <div className="flex items-center gap-1">
+//                 <h1 className="font-bold">IFSC Code:</h1>
+//                 <h1>{getOrderByShopId?.shop?.ifsc || "N/A"}</h1>
+//             </div>
+
+//             {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+//             <div className="flex items-center gap-1">
+//                 <h1 className="font-bold">Account verified:</h1>
+//                 {error?.data ? "N/A" : <Chip
+//                     size="sm"
+//                     variant="ghost"
+//                     value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
+//                     color={getOrderByShopId?.shop?.account_verified === false ? "red" : "green"}
+//                     className="px-3 text-center w-28"
+//                 />}
+
+//             </div>
+//         </div>
+//     </div>}
+//     {error?.data ? "" :
+//                     <div className="">
+//                         {/* <pre>{JSON.stringify(getOrderByShopId?.stats,null,2)}</pre> */}
+//                         <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+//                             <p><b>Total Orders:</b> {getOrderByShopId?.stats?.totalOrders}</p>
+//                             <p><b>Total Completed:</b> {getOrderByShopId?.stats?.totalCompleted}</p>
+//                             <p><b>Total Pending:</b> {getOrderByShopId?.stats?.totalPending}</p>
+//                             <p><b>Total Failed:</b> {getOrderByShopId?.stats?.totalFailed}</p>
+//                             <p><b>Total Cancelled:</b> {getOrderByShopId?.stats?.totalCancelled}</p>
+//                         </div>
+//                     </div>
+
+//                 }
+
+//                 {isLoading ? (
+//                     <div className="flex justify-center p-4">
+//                         <Spinner className="h-8 w-8 text-green-500" />
+
+//                     </div>
+//                 ) : error ? (
+//                     <div className="p-4">
+//                         <div className=" flex justify-center items-center">
+//                             <img className="w-20" src="https://cdn-icons-png.flaticon.com/128/9961/9961360.png" alt="" />
+//                         </div>
+//                         <h1 className=" text-center" color="red">{error?.data?.error}</h1>
+//                     </div>
+//                 )
+//                     :
+
+//                     (
+//                         <table className=" w-full min-w-max table-auto text-left ">
+//                             <thead>
+//                                 <tr>
+//                                     {TABLE_HEAD.map((head) => (
+//                                         <th
+//                                             key={head}
+//                                             className="border-y border-l border-r border-green-200 bg-green-50 p-4"
+//                                         >
+//                                             <Typography
+//                                                 variant="small"
+//                                                 color="blue-gray"
+//                                                 className="font-bold leading-none text-green-700 "
+//                                             >
+//                                                 {head}
+//                                             </Typography>
+//                                         </th>
+//                                     ))}
+//                                 </tr>
+//                             </thead>
+//                             {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
+//                             <tbody >
+//                                 {getOrderByShopId?.orders?.map(
+//                                     (order, index) => {
+//                                         const isLast = index === getOrderByShopId?.orders?.length - 1;
+//                                         const classes = isLast
+//                                             ? "px-5 py-   border-l  border-r border-b border-green-300"
+//                                             : "px-5 py-  border-l  border-r border-b border-green-300";
+
+//                                         return (
+//                                             <tr key={index} className=" hover:bg-green-50/50 cursor-pointer">
+//                                                 <td className={classes}>
+//                                                     <Typography
+//                                                         variant="small"
+//                                                         color="blue-gray"
+//                                                         className="font-normal app-font"
+//                                                     >
+//                                                         {index + 1 + (page - 1) * limit}.
+//                                                     </Typography>
+//                                                 </td>
+
+//                                                 <td className={classes}>
+//                                                     <LazyLoadImage
+//                                                         alt={"img"}
+//                                                         src={order?.vehicle?.vehicleImage[0]?.url}
+//                                                         className=" w-10 h-10 rounded-full"
+//                                                         effect="opacity"
+//                                                         wrapperProps={{
+//                                                             // If you need to, you can tweak the effect transition using the wrapper style.
+//                                                             style: { transitionDelay: "1s" },
+//                                                         }}
+//                                                     />
+//                                                 </td>
+
+//                                                 <td className={classes}>
+//                                                     <Typography
+//                                                         variant="small"
+//                                                         color="blue-gray"
+//                                                         className="font-normal app-font"
+//                                                     >
+//                                                         {order?.vehicle?.vehicleName}
+//                                                     </Typography>
+//                                                 </td>
+
+//                                                 <td className={classes}>
+// <Typography
+//     variant="small"
+//     color="blue-gray"
+//     className="font-normal app-font"
+// >
+//                                                         {order?.vehicle?.vehicleNumber}
+//                                                     </Typography>
+//                                                 </td>
+
+//                                                 <td className={classes}>
+//                                                     <Typography
+//                                                         variant="small"
+//                                                         color="blue-gray"
+//                                                         className="font-normal app-font"
+//                                                     >
+//                                                         ₹{order?.vehicle?.vehiclePrice}
+//                                                     </Typography>
+//                                                 </td>
+
+//                                                 <td className={classes}>
+//                                                 <Chip size="sm" variant="ghost" value={order?.status} color={order?.status === "failed" ? "red" : order?.status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
+//                                                 </td>
+
+
+//                                                 {/* <pre>{JSON.stringify(order?.settled,null,2)}</pre> */}
+
+
+//                                                 <td className={classes}>
+//                                                     <Typography
+//                                                         variant="small"
+//                                                         color="blue-gray"
+//                                                         className="font-normal app-font"
+//                                                     >
+//                                                         <Chip
+//                                                             size="sm"
+//                                                             variant="ghost"
+//                                                             value={order?.settled === false ? "pending" : "fullfill"}
+//                                                             color={
+//                                                                 order?.settled === false ? "red" :
+//                                                                     "green"
+//                                                             }
+
+//                                                             className="px-3 text-center w-28"
+//                                                         />
+//                                                     </Typography>
+//                                                 </td>
+
+//                                                 <td className={classes}>
+//                                                     <Typography
+//                                                         variant="small"
+//                                                         color="blue-gray"
+//                                                         className="font-normal app-font"
+//                                                     >
+//                                                         <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} settled={order?.settled} />
+//                                                     </Typography>
+//                                                 </td>
+
+//                                                 <td className={classes}>
+//                                                     <Typography
+//                                                         variant="small"
+//                                                         color="blue-gray"
+//                                                         className="font-normal app-font"
+//                                                     >
+//                                                         <ViewMoreOrderByShopIdModal order={order} />
+//                                                     </Typography>
+//                                                 </td>
+
+
+
+
+
+//                                             </tr>
+//                                         );
+//                                     },
+//                                 )}
+//                             </tbody>
+//                         </table>
+//                     )
+
+//                 }
+
+//             </div>
+// <div className="flex items-center justify-between border-t border-green-300 p-4">
+//     <Typography variant="small" color="blue-gray" className="font-normal">
+//         Page {page} of {Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)}
+//     </Typography>
+//     <div className="flex gap-2">
+//         <Button
+//             variant=""
+//             size="sm"
+//             className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200 "
+//         onClick={handlePrevious} disabled={page === 1}
+//         >
+//             Previous
+//         </Button>
+
+//         <Button
+//             variant=""
+//             size="sm"
+//             className=" hover:shadow-none shadow-none   bg-green-500 "
+//             onClick={handleNext}
+//         disabled={page === Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)}
+//         >
+//             Next
+//         </Button>
+//     </div>
+// </div>
+//         </div>
+//     );
+// }
+
+// // // /* eslint-disable no-unused-vars */
+// // // import { ArrowPathIcon, MagnifyingGlassIcon, Squares2X2Icon, TableCellsIcon } from "@heroicons/react/24/outline";
+// // // import {
+// // //     CardHeader,
+// // //     Input,
+// // //     Typography,
+// // //     Button,
+// // //     Spinner,
+// // //     IconButton,
+// // //     Chip,
+// // // } from "@material-tailwind/react";
+// // // import { useState } from "react";
+// // // import { LazyLoadImage } from "react-lazy-load-image-component";
+// // // import toast from "react-hot-toast";
+// // // import { useNavigate, useParams } from "react-router-dom";
+// // // import { useGetOrdersByShopQuery } from "../../../../redux/slices/orderApiSlice";
+// // // import SettelementModal from "./modal/SettelementModal";
+// // // import ViewMoreOrderByShopIdModal from "./modal/ViewMoreOrderByShopIdModal";
+// // // import RatingBadge from "../../../vehicle/RatingBadge";
+
+// // // const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Settlement Status", "Settled", "View"];
+
+// // // export default function ViewShopOwnerTable() {
+// // //     const [search, setSearch] = useState('');
+// // //     const [page, setPage] = useState(1);
+// // //     const [limit, setLimit] = useState(10);
+// // //     const [viewType, setViewType] = useState("table"); // State to toggle view type
+
+// // //     const { shopId } = useParams();
+// // //     const navigate = useNavigate();
+// // //     const { data: getOrderByShopId, error, isLoading, refetch } = useGetOrdersByShopQuery(shopId);
+
+// // //     const handleCopy = (text) => {
+// // //         navigator.clipboard.writeText(text);
+// // //         toast.success(`${text} copied!`);
+// // //     };
+
+// // //     const handleViewToggle = () => {
+// // //         setViewType((prev) => (prev === "table" ? "list" : "table"));
+// // //     };
+
+// // //     return (
+// // //         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
+// // //             <CardHeader floated={false} shadow={false} className="rounded-none">
+// // //                 <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-8">
+// // //                     <div>
+// // //                         <Typography variant="h5" color="blue-gray">
+// // //                             All Shop Order
+// // //                         </Typography>
+// // //                         <Typography color="gray" className="mt-1 font-normal">
+// // //                             See information about all Shop order
+// // //                         </Typography>
+// // //                     </div>
+
+// // //                     <div className="flex flex-wrap items-center gap-2">
+// // //                         <div className="w-full md:w-72">
+// // //                             <Input
+// // //                                 label="Search"
+// // //                                 value={search}
+// // //                                 onChange={(e) => setSearch(e.target.value)}
+// // //                                 color="green"
+// // //                                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+// // //                             />
+// // //                         </div>
+// // //                         <Button
+// // //                             variant=""
+// // //                             color="green"
+// // //                             size="sm"
+// // //                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+// // //                             onClick={refetch}
+// // //                         >
+// // //                             <ArrowPathIcon className="h-5 w-5" />
+// // //                             <p className="">Refresh</p>
+// // //                         </Button>
+
+// // //                         <Button
+// // //                             variant=""
+// // //                             color="green"
+// // //                             size="sm"
+// // //                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+// // //                             onClick={() => navigate('/super-admin-dashboard/view-user-and-shop-owner')}
+// // //                         >
+// // //                             <Squares2X2Icon className="h-5 w-5" />
+// // //                             <p className="">View Shop Owner</p>
+// // //                         </Button>
+
+// // //                         <Button
+// // //                             variant=""
+// // //                             color="green"
+// // //                             size="sm"
+// // //                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+// // //                             onClick={handleViewToggle}
+// // //                         >
+// // //                             {viewType === "table" ? (
+// // //                                 <>
+// // //                                     <Squares2X2Icon className="h-5 w-5" />
+// // //                                     <p>List View</p>
+// // //                                 </>
+// // //                             ) : (
+// // //                                 <>
+// // //                                     <TableCellsIcon className="h-5 w-5" />
+// // //                                     <p>Table View</p>
+// // //                                 </>
+// // //                             )}
+// // //                         </Button>
+// // //                     </div>
+// // //                 </div>
+// // //             </CardHeader>
+
+// // //             <div className="overflow-scroll p-2">
+//                 // {error?.data ? "" : <div className=" mb-1">
+//                 //     <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+//                 //         <div className="flex items-center gap-1">
+//                 //             <h1 className="font-bold">Shop Name:</h1>
+//                 //             <h1>{getOrderByShopId?.shop?.shopName || "N/A"}</h1>
+//                 //         </div>
+
+//                 //         {/* <div className=" border-r h-10 border-green-300"></div> */}
+//                 //         {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
+
+//                 //         <div className="flex items-center gap-1">
+//                 //             <h1 className="font-bold">Owner Name:</h1>
+//                 //             <h1>{getOrderByShopId?.shop?.ownerName || "N/A"}</h1>
+//                 //         </div>
+//                 //     </div>
+
+//                 //     <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+//                 //         <div className="flex items-center gap-1">
+//                 //             <h1 className="font-bold">Account holder name:</h1>
+//                 //             <h1>{getOrderByShopId?.shop?.account_holder_name || "N/A"}</h1>
+//                 //         </div>
+
+//                 //         {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+//                 //         <div className="flex items-center gap-1">
+//                 //             <h1 className="font-bold">Account Number:</h1>
+//                 //             <h1>{getOrderByShopId?.shop?.account_number || "N/A"}</h1>
+//                 //         </div>
+//                 //     </div>
+
+//                 //     <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
+//                 //         <div className="flex items-center gap-1">
+//                 //             <h1 className="font-bold">IFSC Code:</h1>
+//                 //             <h1>{getOrderByShopId?.shop?.ifsc || "N/A"}</h1>
+//                 //         </div>
+
+//                 //         {/* <div className=" border-r h-10 border-green-300"></div> */}
+
+//                 //         <div className="flex items-center gap-1">
+//                 //             <h1 className="font-bold">Account verified:</h1>
+//                 //             {error?.data ? "N/A" : <Chip
+//                 //                 size="sm"
+//                 //                 variant="ghost"
+//                 //                 value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
+//                 //                 color={getOrderByShopId?.shop?.account_verified === false ? "red" : "green"}
+//                 //                 className="px-3 text-center w-28"
+//                 //             />}
+
+//                 //         </div>
+//                 //     </div>
+//                 // </div>}
+
+//                 // {error?.data ? "" :
+//                 //     <div className="">
+//                 //         {/* <pre>{JSON.stringify(getOrderByShopId?.stats,null,2)}</pre> */}
+//                 //         <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+//                 //             <p><b>Total Orders:</b> {getOrderByShopId?.stats?.totalOrders}</p>
+//                 //             <p><b>Total Completed:</b> {getOrderByShopId?.stats?.totalCompleted}</p>
+//                 //             <p><b>Total Pending:</b> {getOrderByShopId?.stats?.totalPending}</p>
+//                 //             <p><b>Total Failed:</b> {getOrderByShopId?.stats?.totalFailed}</p>
+//                 //             <p><b>Total Cancelled:</b> {getOrderByShopId?.stats?.totalCancelled}</p>
+//                 //         </div>
+//                 //     </div>
+
+//                 // }
+// // //                 {isLoading ? (
+// // //                     <div className="flex justify-center p-4">
+// // //                         <Spinner className="h-8 w-8 text-green-500" />
+// // //                     </div>
+// // //                 ) : error ? (
+// // //                     <div className="p-4 text-center">
+// // //                         <img className="w-20 mx-auto" src="https://cdn-icons-png.flaticon.com/128/9961/9961360.png" alt="Error" />
+// // //                         <Typography color="red">{error?.data?.error}</Typography>
+// // //                     </div>
+// // //                 ) : (
+// // //                     viewType === "table" ? (
+// // //                         <table className="w-full min-w-max table-auto text-left">
+// // //                             <thead>
+// // //                                 <tr>
+// // //                                     {TABLE_HEAD.map((head) => (
+// // //                                         <th key={head} className="border-y border-l border-r border-green-200 bg-green-50 p-4">
+// // //                                             <Typography variant="small" color="blue-gray" className="font-bold leading-none text-green-700">
+// // //                                                 {head}
+// // //                                             </Typography>
+// // //                                         </th>
+// // //                                     ))}
+// // //                                 </tr>
+// // //                             </thead>
+// // //                             <tbody>
+// // //                                 {getOrderByShopId?.orders?.map((order, index) => {
+// // //                                     const classes = "px-5  border-l border-r border-b border-green-300";
+// // //                                     return (
+// // //                                         <tr key={index} className="hover:bg-green-50/50 cursor-pointer">
+// // //                                             <td className={classes}>{index + 1 + (page - 1) * limit}.</td>
+// // //                                             <td className={classes}>
+// // //                                                 <LazyLoadImage
+// // //                                                     alt={"img"}
+// // //                                                     src={order?.vehicle?.vehicleImage[0]?.url}
+// // //                                                     className="w-10 h-10 rounded-full"
+// // //                                                     effect="opacity"
+// // //                                                 />
+// // //                                             </td>
+// // //                                             <td className={classes}>{order?.vehicle?.vehicleName}</td>
+// // //                                             <td className={classes}>{order?.vehicle?.vehicleNumber}</td>
+// // //                                             <td className={classes}>₹{order?.vehicle?.vehiclePrice}</td>
+// // //                                             <td className={classes}>
+// // //                                                 <Chip
+// // //                                                     size="sm"
+// // //                                                     variant="ghost"
+// // //                                                     value={order?.settled ? "Fullfilled" : "pending"}
+// // //                                                     color={order?.settled ? "green" : "red"}
+// // //                                                     className="px-3 text-center w-28"
+// // //                                                 />
+// // //                                             </td>
+// // //                                             <td className={classes}>
+// // //                                                 <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} />
+// // //                                             </td>
+// // //                                             <td className={classes}>
+// // //                                                 <ViewMoreOrderByShopIdModal order={order} />
+// // //                                             </td>
+// // //                                         </tr>
+// // //                                     );
+// // //                                 })}
+// // //                             </tbody>
+// // //                         </table>
+// // //                     ) : (
+
+// // //                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+// // //                             {getOrderByShopId?.orders?.map((order, index) => (
+// // //                                 <div
+// // //                                     key={index}
+// // //                                     className="border border-green-200 rounded-lg p-2 "
+// // //                                 >
+// // //                                     <img className="w-full  h-44 object-cover rounded-md" src={order?.vehicle?.vehicleImage[0]?.url} alt="vehicle" />
+
+// // //                                     <Typography variant="h6" className=" mt-2">{order?.vehicle?.vehicleName}</Typography>
+// // //                                     <Typography className="">₹{order?.vehicle?.vehiclePrice}</Typography>
+// // //                                     <Typography className="flex">
+// // //                                     Settlement Status : 
+// // //                                     <Chip
+// // //                                                 size="sm"
+// // //                                                 variant="ghost"
+// // //                                                 value={order?.settled ? "Fullfilled" : "pending"}
+// // //                                                 color={order?.settled ? "green" : "red"}
+// // //                                                 className="px-3 text-center w-28"
+// // //                                             />
+// // //                                     </Typography>
+// // //                                     <div className="flex justify-center mt-2">
+
+// // //                                         <td >
+// // //                                             <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} />
+// // //                                         </td>
+// // //                                         <td>
+// // //                                             <ViewMoreOrderByShopIdModal order={order} />
+// // //                                         </td>
+// // //                                     </div>
+
+
+// // //                                 </div>
+// // //                             ))}
+// // //                         </div>
+// // //                     )
+// // //                 )}
+// // //             </div>
+// // //         </div>
+// // //     );
+// // // }
+
+
+
 /* eslint-disable no-unused-vars */
-import { ArrowPathIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, MagnifyingGlassIcon, ListBulletIcon, TableCellsIcon } from "@heroicons/react/24/outline";
 import {
-    CardHeader,
     Input,
     Typography,
     Button,
     Spinner,
-    IconButton,
     Chip,
 } from "@material-tailwind/react";
-import { useState } from "react";
-import { Logs, Store } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Store } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetOrdersByShopQuery } from "../../../../redux/slices/orderApiSlice";
 import SettelementModal from "./modal/SettelementModal";
 import ViewMoreOrderByShopIdModal from "./modal/ViewMoreOrderByShopIdModal";
 import CustomDropdown from "./custom/CustomDropDown";
 import SettleCustomDropDown from "./custom/SettleCustomDropDown";
+import { ArrowsPointingInIcon, ArrowsPointingOutIcon } from "@heroicons/react/24/solid";
 
-
-const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Settlement Status", "Settled", "View"];
+const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Settled", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [city, setCity] = useState('');
-
+    const [viewType, setViewType] = useState(() => {
+        // Initialize from localStorage or default to 'table'
+        return localStorage.getItem("viewType") || "table";
+    });
     const { shopId } = useParams()
     const navigate = useNavigate();
 
     const [filters, setFilters] = useState({
-        shopId, // Replace with dynamic shopId if needed
+        shopId,
         status: "",
         settled: true,
         startDate: '',
         endDate: '',
         limit: limit,
         page: page,
-      });
-    
+    });
+    const [isFullscreen, setIsFullscreen] = useState(false); // Track fullscreen status
 
-    // Pass the search, page, and limit as parameters to the query
+
     const { data: getOrderByShopId, error, isLoading, refetch } = useGetOrdersByShopQuery(filters);
 
     const handlePrevious = () => {
@@ -55,26 +736,41 @@ export default function ViewShopOwnerTable() {
         if (page < totalPages) setPage(page + 1);
     };
 
-
-    const handleCopy = (text) => {
-        navigator.clipboard.writeText(text);
-        toast.success(`${text} copied!`);
-    };
-
-   
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters((prevFilters) => ({
-          ...prevFilters,
-          [name]: value,
+            ...prevFilters,
+            [name]: value,
         }));
-      };
-      
-    
+    };
+
+    // Function to toggle view type
+    const toggleViewType = () => {
+        const newViewType = viewType === "table" ? "list" : "table";
+        setViewType(newViewType);
+        localStorage.setItem("viewType", newViewType); // Save to localStorage
+    };
+
+    useEffect(() => {
+        // Sync state with localStorage in case of external changes (optional safeguard)
+        const storedViewType = localStorage.getItem("viewType");
+        if (storedViewType && storedViewType !== viewType) {
+            setViewType(storedViewType);
+        }
+    }, []);
+
+    const toggleFullscreen = () => {
+        if (!isFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+        setIsFullscreen(!isFullscreen);
+    };
+
     return (
         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
-            {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
-            <div className="rounded-none  border-b border-green-300 px-2 py-1">
+            <div className="rounded-none border-b border-green-300 px-2 py-1">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
                         <Typography variant="h5" color="blue-gray">
@@ -86,38 +782,29 @@ export default function ViewShopOwnerTable() {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                        {/* <div className=" w-full md:w-72">
+                        <div className="">
                             <Input
-                                label="Search"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
+                                label="Start Date"
+                                type="date"
+                                name="startDate"
+                                value={filters.startDate}
+                                onChange={handleFilterChange}
                                 color="green"
-                                className=""
-                                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                             />
-                        </div> */}
-                       <div className="">
-                       <Input
-                        label="Start Date"
-          type="date"
-          name="startDate"
-          value={filters.startDate}
-          onChange={handleFilterChange}
-          color="green"
-        />
-        
-       
-                       </div>
-                       <div className="">
-                       <Input
-         label="End Date"
-          type="date"
-          name="endDate"
-          value={filters.endDate}
-          onChange={handleFilterChange}
-          color="green"
-        />
-                       </div>
+                        </div>
+                        <div className="">
+                            <Input
+                                label="End Date"
+                                type="date"
+                                name="endDate"
+                                value={filters.endDate}
+                                onChange={handleFilterChange}
+                                color="green"
+                            />
+                        </div>
+                        <CustomDropdown filters={filters} setFilters={setFilters} />
+                        <SettleCustomDropDown filters={filters} setFilters={setFilters} />
+
                         <Button
                             variant=""
                             color="green"
@@ -126,12 +813,7 @@ export default function ViewShopOwnerTable() {
                             onClick={refetch}
                         >
                             <ArrowPathIcon className="h-5 w-5" />
-                            <p className="  hidden">Refresh</p>
                         </Button>
-                       
-                       <CustomDropdown filters={filters} setFilters={setFilters}/>
-                       <SettleCustomDropDown filters={filters} setFilters={setFilters}/>
-
 
                         <Button
                             variant=""
@@ -141,71 +823,102 @@ export default function ViewShopOwnerTable() {
                             onClick={() => navigate('/super-admin-dashboard/view-user-and-shop-owner')}
                         >
                             <Store className="h-5 w-5" />
-                            <p className=" ">
-                                View Shop Owner
-                            </p>
+                            <p>View Shop Owner</p>
                         </Button>
+
+                        <Button
+                            variant=""
+                            color="green"
+                            size="sm"
+                            className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
+                            onClick={toggleViewType}
+                        >
+                            {viewType === "table" ? (
+                                <>
+                                    <ListBulletIcon className="h-5 w-5" />
+                                    {/* <p>List View</p> */}
+                                </>
+                            ) : (
+                                <>
+                                    <TableCellsIcon className="h-5 w-5" />
+                                    {/* <p>Table View</p> */}
+                                </>
+                            )}
+                        </Button>
+
+                        <Button
+                            variant=""
+                            size="sm"
+                            className="flex items-center gap-2 border hover:shadow-none shadow-none text-black bg-white border-green-200"
+                            onClick={toggleFullscreen}
+                        >
+                            {isFullscreen ? (
+                                <ArrowsPointingInIcon className="h-5 w-5" />
+                            ) : (
+                                <ArrowsPointingOutIcon className="h-5 w-5" />
+                            )}
+                            {/* <span className=" hidden lg:block sm:block md:block">{isFullscreen ? "Exit Fullscreen" : "Fullscreen"}</span> */}
+                        </Button>
+
 
                     </div>
                 </div>
-
             </div>
 
-            {/* <pre>{JSON.stringify(getOrderByShopId?.shop, null, 2)}</pre> */}
+            <div className="overflow-scroll p-2">
+                {error?.data ? "" : <div className=" mb-1">
+                    <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Shop Name:</h1>
+                            <h1>{getOrderByShopId?.shop?.shopName || "N/A"}</h1>
+                        </div>
 
-            <div className="overflow-scroll p-2 ">
-  {error?.data 
-  ? "" :   <div className=" mb-1 ">
-        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Shop Name:</h1>
-                <h1>{getOrderByShopId?.shop?.shopName ||  "N/A"}</h1>
-            </div>
+                        {/* <div className=" border-r h-10 border-green-300"></div> */}
+                        {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
 
-            {/* <div className=" border-r h-10 border-green-300"></div> */}
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Owner Name:</h1>
+                            <h1>{getOrderByShopId?.shop?.ownerName || "N/A"}</h1>
+                        </div>
+                    </div>
 
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Owner Name:</h1>
-                <h1>{getOrderByShopId?.shop?.ownerName ||  "N/A"}</h1>
-            </div>
-        </div>
+                    <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Account holder name:</h1>
+                            <h1>{getOrderByShopId?.shop?.account_holder_name || "N/A"}</h1>
+                        </div>
 
-        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Account holder name:</h1>
-                <h1>{getOrderByShopId?.shop?.account_holder_name || "N/A"}</h1>
-            </div>
+                        {/* <div className=" border-r h-10 border-green-300"></div> */}
 
-            {/* <div className=" border-r h-10 border-green-300"></div> */}
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Account Number:</h1>
+                            <h1>{getOrderByShopId?.shop?.account_number || "N/A"}</h1>
+                        </div>
+                    </div>
 
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Account Number:</h1>
-                <h1>{getOrderByShopId?.shop?.account_number || "N/A"}</h1>
-            </div>
-        </div>
+                    <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">IFSC Code:</h1>
+                            <h1>{getOrderByShopId?.shop?.ifsc || "N/A"}</h1>
+                        </div>
 
-        <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">IFSC Code:</h1>
-                <h1>{getOrderByShopId?.shop?.ifsc || "N/A"}</h1>
-            </div>
+                        {/* <div className=" border-r h-10 border-green-300"></div> */}
 
-            {/* <div className=" border-r h-10 border-green-300"></div> */}
+                        <div className="flex items-center gap-1">
+                            <h1 className="font-bold">Account verified:</h1>
+                            {error?.data ? "N/A" : <Chip
+                                size="sm"
+                                variant="ghost"
+                                value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
+                                color={getOrderByShopId?.shop?.account_verified === false ? "red" : "green"}
+                                className="px-3 text-center w-28"
+                            />}
 
-            <div className="flex items-center gap-1">
-                <h1 className="font-bold">Account verified:</h1>
-                {error?.data ? "N/A" : <Chip
-                    size="sm"
-                    variant="ghost"
-                    value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
-                    color={getOrderByShopId?.shop?.account_verified === false ? "red" : "green"}
-                    className="px-3 text-center w-28"
-                />}
+                        </div>
+                    </div>
+                </div>}
 
-            </div>
-        </div>
-    </div>}
-    {error?.data ? "" :
+                {error?.data ? "" :
                     <div className="">
                         {/* <pre>{JSON.stringify(getOrderByShopId?.stats,null,2)}</pre> */}
                         <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
@@ -218,162 +931,205 @@ export default function ViewShopOwnerTable() {
                     </div>
 
                 }
-
                 {isLoading ? (
                     <div className="flex justify-center p-4">
                         <Spinner className="h-8 w-8 text-green-500" />
-
                     </div>
                 ) : error ? (
                     <div className="p-4">
-                        <div className=" flex justify-center items-center">
+                        <div className="flex justify-center items-center">
                             <img className="w-20" src="https://cdn-icons-png.flaticon.com/128/9961/9961360.png" alt="" />
                         </div>
-                        <h1 className=" text-center" color="red">{error?.data?.error}</h1>
+                        <h1 className="text-center text-red-500">{error?.data?.error}</h1>
                     </div>
-                )
-                    :
-
-                    (
-                        <table className=" w-full min-w-max table-auto text-left ">
-                            <thead>
-                                <tr>
-                                    {TABLE_HEAD.map((head) => (
-                                        <th
-                                            key={head}
-                                            className="border-y border-l border-r border-green-200 bg-green-50 p-4"
+                ) : viewType === "table" ? (
+                    <table className="w-full min-w-max table-auto text-left app-font">
+                        <thead>
+                            <tr>
+                                {TABLE_HEAD.map((head) => (
+                                    <th
+                                        key={head}
+                                        className="border-y border-l border-r border-green-200 bg-green-50 p-4"
+                                    >
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-bold leading-none text-green-700"
                                         >
+                                            {head}
+                                        </Typography>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {getOrderByShopId?.orders?.map((order, index) => {
+                                const isLast = index === getOrderByShopId.orders.length - 1;
+                                const classes = isLast
+                                    ? "px-5 border-l border-r border-b border-green-300"
+                                    : "px-5 border-l border-r border-b border-green-300";
+
+                                return (
+                                    <tr key={index} className="hover:bg-green-50/50 cursor-pointer">
+                                        <td className={classes}>{index + 1 + (page - 1) * limit}.</td>
+                                        <td className={classes}>
+                                            <LazyLoadImage
+                                                alt="img"
+                                                src={order?.vehicle?.vehicleImage[0]?.url}
+                                                className="w-10 h-10 rounded-full"
+                                            />
+                                        </td>
+                                        <td className={classes}>
                                             <Typography
                                                 variant="small"
                                                 color="blue-gray"
-                                                className="font-bold leading-none text-green-700 "
+                                                className="font-normal app-font"
+                                            >{order?.vehicle?.vehicleName}</Typography>
+
+                                        </td>
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal app-font"
                                             >
-                                                {head}
+                                                {order?.vehicle?.vehicleNumber}
                                             </Typography>
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
-                            <tbody >
-                                {getOrderByShopId?.orders?.map(
-                                    (order, index) => {
-                                        const isLast = index === getOrderByShopId?.orders?.length - 1;
-                                        const classes = isLast
-                                            ? "px-5 py-   border-l  border-r border-b border-green-300"
-                                            : "px-5 py-  border-l  border-r border-b border-green-300";
 
-                                        return (
-                                            <tr key={index} className=" hover:bg-green-50/50 cursor-pointer">
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        {index + 1 + (page - 1) * limit}.
-                                                    </Typography>
-                                                </td>
+                                        </td>
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal app-font"
+                                            >
+                                                ₹{order?.vehicle?.vehiclePrice}
+                                            </Typography>
 
-                                                <td className={classes}>
-                                                    <LazyLoadImage
-                                                        alt={"img"}
-                                                        src={order?.vehicle?.vehicleImage[0]?.url}
-                                                        className=" w-10 h-10 rounded-full"
-                                                        effect="opacity"
-                                                        wrapperProps={{
-                                                            // If you need to, you can tweak the effect transition using the wrapper style.
-                                                            style: { transitionDelay: "1s" },
-                                                        }}
-                                                    />
-                                                </td>
+                                        </td>
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal app-font"
+                                            >
+                                                <Chip
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    value={order?.status}
+                                                    color={
+                                                        order?.status === "failed"
+                                                            ? "red"
+                                                            : order?.status === "pending"
+                                                                ? "orange"
+                                                                : "green"
+                                                    }
+                                                    className="px-3 text-center w-28"
+                                                />
+                                            </Typography>
 
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        {order?.vehicle?.vehicleName}
-                                                    </Typography>
-                                                </td>
+                                        </td>
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal app-font"
+                                            >
+                                                <Chip
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    value={order?.settled ? "fulfilled" : "pending"}
+                                                    color={order?.settled ? "green" : "red"}
+                                                    className="px-3 text-center w-28"
+                                                />
+                                            </Typography>
 
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        {order?.vehicle?.vehicleNumber}
-                                                    </Typography>
-                                                </td>
+                                        </td>
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal app-font"
+                                            >
+                                                <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} settled={order?.settled} />
+                                            </Typography>
 
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        ₹{order?.vehicle?.vehiclePrice}
-                                                    </Typography>
-                                                </td>
+                                        </td>
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal app-font"
+                                            >
+                                                <ViewMoreOrderByShopIdModal order={order} />
+                                            </Typography>
 
-
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        <Chip
-                                                            size="sm"
-                                                            variant="ghost"
-                                                            value={order?.settled === false ? "pending" : "confirm"}
-                                                            color={
-                                                                order?.settled === false ? "red" :
-                                                                    "green"
-                                                            }
-
-                                                            className="px-3 text-center w-28"
-                                                        />
-                                                    </Typography>
-                                                </td>
-
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} settled={order?.settled} />
-                                                    </Typography>
-                                                </td>
-
-                                                <td className={classes}>
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal app-font"
-                                                    >
-                                                        <ViewMoreOrderByShopIdModal order={order} />
-                                                    </Typography>
-                                                </td>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                ) : (
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {getOrderByShopId?.orders?.map((order, index) => (
+                            <div
+                                key={index}
+                                className="p-2 border border-green-300 rounded-md"
+                            >
+                                <LazyLoadImage
+                                    alt="img"
+                                    src={order?.vehicle?.vehicleImage[0]?.url}
+                                    className="w-full h-40 object-cover rounded-md mb-2"
+                                />
+                                <Typography variant="h6">{order?.vehicle?.vehicleName}</Typography>
+                                <Typography variant="body2" color="black">
+                                    <b> Number:</b> {order?.vehicle?.vehicleNumber}
+                                </Typography>
+                                <Typography variant="body2" color="black">
+                                    <b>Price:</b> ₹{order?.vehicle?.vehiclePrice}
+                                </Typography>
+                                <div className="flex justify-between items-center mt-2">
+                                    <h1 className=" font-bold">Payment Status: </h1>
+                                    <Chip size="sm" variant="ghost" value={order?.status} color={order?.status === "failed" ? "red" : order?.status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
+                                </div>
 
 
+                                <div className="flex justify-between items-center mt-2">
+                                    <h1 className=" font-bold">Settlement Status: </h1>
+                                    <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={order?.settled === false ? "pending" : "fullfill"}
+                                        color={
+                                            order?.settled === false ? "red" :
+                                                "green"
+                                        }
 
+                                        className="px-3 text-center w-28"
+                                    />
+                                </div>
 
+                                <div className="flex justify-between mt-2 bg-green-50 rounded-b-lg">
+                                    <Tooltip text={"Settelement"}>
+                                        <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} settled={order?.settled} />
 
-                                            </tr>
-                                        );
-                                    },
-                                )}
-                            </tbody>
-                        </table>
-                    )
-
-                }
-
+                                    </Tooltip>
+                                    <Tooltip text={"View More"}>
+                                        <ViewMoreOrderByShopIdModal order={order} />
+                                    </Tooltip>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
+
+            {/* <pre>{JSON.stringify(page)}</pre>
+
+            <pre>{JSON.stringify(Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0)))}</pre>
+
+            <pre>{JSON.stringify(page === Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit))}</pre> */}
             <div className="flex items-center justify-between border-t border-green-300 p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                     Page {page} of {Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)}
@@ -383,17 +1139,19 @@ export default function ViewShopOwnerTable() {
                         variant=""
                         size="sm"
                         className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200 "
-                    onClick={handlePrevious} disabled={page === 1}
+                        onClick={handlePrevious} disabled={page === 1}
                     >
                         Previous
                     </Button>
+
+
 
                     <Button
                         variant=""
                         size="sm"
                         className=" hover:shadow-none shadow-none   bg-green-500 "
                         onClick={handleNext}
-                    disabled={page === Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)}
+                        disabled={page === Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)}
                     >
                         Next
                     </Button>
@@ -403,280 +1161,13 @@ export default function ViewShopOwnerTable() {
     );
 }
 
-// /* eslint-disable no-unused-vars */
-// import { ArrowPathIcon, MagnifyingGlassIcon, Squares2X2Icon, TableCellsIcon } from "@heroicons/react/24/outline";
-// import {
-//     CardHeader,
-//     Input,
-//     Typography,
-//     Button,
-//     Spinner,
-//     IconButton,
-//     Chip,
-// } from "@material-tailwind/react";
-// import { useState } from "react";
-// import { LazyLoadImage } from "react-lazy-load-image-component";
-// import toast from "react-hot-toast";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { useGetOrdersByShopQuery } from "../../../../redux/slices/orderApiSlice";
-// import SettelementModal from "./modal/SettelementModal";
-// import ViewMoreOrderByShopIdModal from "./modal/ViewMoreOrderByShopIdModal";
-// import RatingBadge from "../../../vehicle/RatingBadge";
-
-// const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Settlement Status", "Settled", "View"];
-
-// export default function ViewShopOwnerTable() {
-//     const [search, setSearch] = useState('');
-//     const [page, setPage] = useState(1);
-//     const [limit, setLimit] = useState(10);
-//     const [viewType, setViewType] = useState("table"); // State to toggle view type
-
-//     const { shopId } = useParams();
-//     const navigate = useNavigate();
-//     const { data: getOrderByShopId, error, isLoading, refetch } = useGetOrdersByShopQuery(shopId);
-
-//     const handleCopy = (text) => {
-//         navigator.clipboard.writeText(text);
-//         toast.success(`${text} copied!`);
-//     };
-
-//     const handleViewToggle = () => {
-//         setViewType((prev) => (prev === "table" ? "list" : "table"));
-//     };
-
-//     return (
-//         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
-//             <CardHeader floated={false} shadow={false} className="rounded-none">
-//                 <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-8">
-//                     <div>
-//                         <Typography variant="h5" color="blue-gray">
-//                             All Shop Order
-//                         </Typography>
-//                         <Typography color="gray" className="mt-1 font-normal">
-//                             See information about all Shop order
-//                         </Typography>
-//                     </div>
-
-//                     <div className="flex flex-wrap items-center gap-2">
-//                         <div className="w-full md:w-72">
-//                             <Input
-//                                 label="Search"
-//                                 value={search}
-//                                 onChange={(e) => setSearch(e.target.value)}
-//                                 color="green"
-//                                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-//                             />
-//                         </div>
-//                         <Button
-//                             variant=""
-//                             color="green"
-//                             size="sm"
-//                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
-//                             onClick={refetch}
-//                         >
-//                             <ArrowPathIcon className="h-5 w-5" />
-//                             <p className="">Refresh</p>
-//                         </Button>
-
-//                         <Button
-//                             variant=""
-//                             color="green"
-//                             size="sm"
-//                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
-//                             onClick={() => navigate('/super-admin-dashboard/view-user-and-shop-owner')}
-//                         >
-//                             <Squares2X2Icon className="h-5 w-5" />
-//                             <p className="">View Shop Owner</p>
-//                         </Button>
-
-//                         <Button
-//                             variant=""
-//                             color="green"
-//                             size="sm"
-//                             className="flex hover:shadow-none shadow-none items-center gap-2 border-green-200 bg-transparent border text-black"
-//                             onClick={handleViewToggle}
-//                         >
-//                             {viewType === "table" ? (
-//                                 <>
-//                                     <Squares2X2Icon className="h-5 w-5" />
-//                                     <p>List View</p>
-//                                 </>
-//                             ) : (
-//                                 <>
-//                                     <TableCellsIcon className="h-5 w-5" />
-//                                     <p>Table View</p>
-//                                 </>
-//                             )}
-//                         </Button>
-//                     </div>
-//                 </div>
-//             </CardHeader>
-
-//             <div className="overflow-scroll p-2">
-//                 {error?.data ? "" : <div className=" mb-1">
-//                     <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
-//                         <div className="flex items-center gap-1">
-//                             <h1 className="font-bold">Shop Name:</h1>
-//                             <h1>{getOrderByShopId?.shop?.shopName || "N/A"}</h1>
-//                         </div>
-
-//                         {/* <div className=" border-r h-10 border-green-300"></div> */}
-//                         {/* <pre>{JSON.stringify(getOrderByShopId, null, 2)}</pre> */}
-
-//                         <div className="flex items-center gap-1">
-//                             <h1 className="font-bold">Owner Name:</h1>
-//                             <h1>{getOrderByShopId?.shop?.ownerName || "N/A"}</h1>
-//                         </div>
-//                     </div>
-
-//                     <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
-//                         <div className="flex items-center gap-1">
-//                             <h1 className="font-bold">Account holder name:</h1>
-//                             <h1>{getOrderByShopId?.shop?.account_holder_name || "N/A"}</h1>
-//                         </div>
-
-//                         {/* <div className=" border-r h-10 border-green-300"></div> */}
-
-//                         <div className="flex items-center gap-1">
-//                             <h1 className="font-bold">Account Number:</h1>
-//                             <h1>{getOrderByShopId?.shop?.account_number || "N/A"}</h1>
-//                         </div>
-//                     </div>
-
-//                     <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50">
-//                         <div className="flex items-center gap-1">
-//                             <h1 className="font-bold">IFSC Code:</h1>
-//                             <h1>{getOrderByShopId?.shop?.ifsc || "N/A"}</h1>
-//                         </div>
-
-//                         {/* <div className=" border-r h-10 border-green-300"></div> */}
-
-//                         <div className="flex items-center gap-1">
-//                             <h1 className="font-bold">Account verified:</h1>
-//                             {error?.data ? "N/A" : <Chip
-//                                 size="sm"
-//                                 variant="ghost"
-//                                 value={getOrderByShopId?.shop?.account_verified === false ? "Not Verified" : "Verified"}
-//                                 color={getOrderByShopId?.shop?.account_verified === false ? "red" : "green"}
-//                                 className="px-3 text-center w-28"
-//                             />}
-
-//                         </div>
-//                     </div>
-//                 </div>}
-
-                // {error?.data ? "" :
-                //     <div className="">
-                //         {/* <pre>{JSON.stringify(getOrderByShopId?.stats,null,2)}</pre> */}
-                //         <div className="flex flex-wrap items-center justify-between border border-green-300 p-2 w-full bg-green-50/50 mb-1">
-                //             <p><b>Total Orders:</b> {getOrderByShopId?.stats?.totalOrders}</p>
-                //             <p><b>Total Completed:</b> {getOrderByShopId?.stats?.totalCompleted}</p>
-                //             <p><b>Total Pending:</b> {getOrderByShopId?.stats?.totalPending}</p>
-                //             <p><b>Total Failed:</b> {getOrderByShopId?.stats?.totalFailed}</p>
-                //             <p><b>Total Cancelled:</b> {getOrderByShopId?.stats?.totalCancelled}</p>
-                //         </div>
-                //     </div>
-
-                // }
-//                 {isLoading ? (
-//                     <div className="flex justify-center p-4">
-//                         <Spinner className="h-8 w-8 text-green-500" />
-//                     </div>
-//                 ) : error ? (
-//                     <div className="p-4 text-center">
-//                         <img className="w-20 mx-auto" src="https://cdn-icons-png.flaticon.com/128/9961/9961360.png" alt="Error" />
-//                         <Typography color="red">{error?.data?.error}</Typography>
-//                     </div>
-//                 ) : (
-//                     viewType === "table" ? (
-//                         <table className="w-full min-w-max table-auto text-left">
-//                             <thead>
-//                                 <tr>
-//                                     {TABLE_HEAD.map((head) => (
-//                                         <th key={head} className="border-y border-l border-r border-green-200 bg-green-50 p-4">
-//                                             <Typography variant="small" color="blue-gray" className="font-bold leading-none text-green-700">
-//                                                 {head}
-//                                             </Typography>
-//                                         </th>
-//                                     ))}
-//                                 </tr>
-//                             </thead>
-//                             <tbody>
-//                                 {getOrderByShopId?.orders?.map((order, index) => {
-//                                     const classes = "px-5  border-l border-r border-b border-green-300";
-//                                     return (
-//                                         <tr key={index} className="hover:bg-green-50/50 cursor-pointer">
-//                                             <td className={classes}>{index + 1 + (page - 1) * limit}.</td>
-//                                             <td className={classes}>
-//                                                 <LazyLoadImage
-//                                                     alt={"img"}
-//                                                     src={order?.vehicle?.vehicleImage[0]?.url}
-//                                                     className="w-10 h-10 rounded-full"
-//                                                     effect="opacity"
-//                                                 />
-//                                             </td>
-//                                             <td className={classes}>{order?.vehicle?.vehicleName}</td>
-//                                             <td className={classes}>{order?.vehicle?.vehicleNumber}</td>
-//                                             <td className={classes}>₹{order?.vehicle?.vehiclePrice}</td>
-//                                             <td className={classes}>
-//                                                 <Chip
-//                                                     size="sm"
-//                                                     variant="ghost"
-//                                                     value={order?.settled ? "Fullfilled" : "pending"}
-//                                                     color={order?.settled ? "green" : "red"}
-//                                                     className="px-3 text-center w-28"
-//                                                 />
-//                                             </td>
-//                                             <td className={classes}>
-//                                                 <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} />
-//                                             </td>
-//                                             <td className={classes}>
-//                                                 <ViewMoreOrderByShopIdModal order={order} />
-//                                             </td>
-//                                         </tr>
-//                                     );
-//                                 })}
-//                             </tbody>
-//                         </table>
-//                     ) : (
-
-//                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-//                             {getOrderByShopId?.orders?.map((order, index) => (
-//                                 <div
-//                                     key={index}
-//                                     className="border border-green-200 rounded-lg p-2 "
-//                                 >
-//                                     <img className="w-full  h-44 object-cover rounded-md" src={order?.vehicle?.vehicleImage[0]?.url} alt="vehicle" />
-
-//                                     <Typography variant="h6" className=" mt-2">{order?.vehicle?.vehicleName}</Typography>
-//                                     <Typography className="">₹{order?.vehicle?.vehiclePrice}</Typography>
-//                                     <Typography className="flex">
-//                                     Settlement Status : 
-//                                     <Chip
-//                                                 size="sm"
-//                                                 variant="ghost"
-//                                                 value={order?.settled ? "Fullfilled" : "pending"}
-//                                                 color={order?.settled ? "green" : "red"}
-//                                                 className="px-3 text-center w-28"
-//                                             />
-//                                     </Typography>
-//                                     <div className="flex justify-center mt-2">
-                                       
-//                                         <td >
-//                                             <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} />
-//                                         </td>
-//                                         <td>
-//                                             <ViewMoreOrderByShopIdModal order={order} />
-//                                         </td>
-//                                     </div>
 
 
-//                                 </div>
-//                             ))}
-//                         </div>
-//                     )
-//                 )}
-//             </div>
-//         </div>
-//     );
-// }
+const Tooltip = ({ children, text }) => (
+    <div className="relative group">
+        {children}
+        <div className="absolute bottom-full w-[7em] text-center left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 shadow-lg">
+            {text}
+        </div>
+    </div>
+);

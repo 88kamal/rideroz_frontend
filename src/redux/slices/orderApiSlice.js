@@ -32,22 +32,51 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       refetchOnReconnect: true,
       refetchOnFocus: true,
     }),
+    // getOrders: builder.query({
+    //   query: () => ({
+    //     url: '/order/get-orders', // API endpoint
+    //     headers: {
+    //       "auth-token": JSON.parse(localStorage.getItem("token")),
+    //     },
+    //   }),
+    //   providesTags: (result) =>
+    //     result?.orders
+    //       ? result.orders.map(({ _id }) => ({ type: 'Order', id: _id })) // Update based on orders
+    //       : [{ type: 'Order' }],
+    //   keepUnusedDataFor: 300, // Cache data for 5 minutes
+    //   refetchOnMountOrArgChange: true,
+    //   refetchOnReconnect: true,
+    //   refetchOnFocus: true,
+    // }),
     getOrders: builder.query({
-      query: () => ({
-        url: '/order/get-orders', // API endpoint
-        headers: {
-          "auth-token": JSON.parse(localStorage.getItem("token")),
-        },
-      }),
+      query: ({ status, settled, startDate, endDate, limit = 10, page = 1 }) => {
+        // Build query string
+        const params = new URLSearchParams();
+    
+        if (status) params.append("status", status);
+        if (settled !== undefined) params.append("settled", settled);
+        if (startDate) params.append("startDate", startDate);
+        if (endDate) params.append("endDate", endDate);
+        if (limit) params.append("limit", limit);
+        if (page) params.append("page", page);
+    
+        return {
+          url: `/order/get-orders?${params.toString()}`, // API endpoint with query params
+          headers: {
+            "auth-token": JSON.parse(localStorage.getItem("token")),
+          },
+        };
+      },
       providesTags: (result) =>
         result?.orders
-          ? result.orders.map(({ _id }) => ({ type: 'Order', id: _id })) // Update based on orders
-          : [{ type: 'Order' }],
+          ? result.orders.map(({ _id }) => ({ type: "Order", id: _id })) // Update based on orders
+          : [{ type: "Order" }],
       keepUnusedDataFor: 300, // Cache data for 5 minutes
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
       refetchOnFocus: true,
     }),
+    
     getOrderById: builder.query({
       query: (orderId) => ({
         url: `/order/get-order/${orderId}`,

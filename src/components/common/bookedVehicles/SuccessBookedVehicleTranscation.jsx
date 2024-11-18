@@ -312,6 +312,8 @@ import authService from "../../../services/authService";
 import VerifyRideModal from "./modal/VerifyRideModal";
 import RatingBadge from "../../vehicle/RatingBadge";
 import ViewSettlementProofModal from "./modal/ViewSettlementProofModal";
+import CustomDropdown from "../shopOwner/getOrderByShopId/custom/CustomDropDown";
+import SettleCustomDropDown from "../shopOwner/getOrderByShopId/custom/SettleCustomDropDown";
 
 export default function SuccessBookedVehicleTranscation() {
   const [search, setSearch] = useState('');
@@ -322,13 +324,22 @@ export default function SuccessBookedVehicleTranscation() {
     return localStorage.getItem("viewType") || "table";
   });
 
+  const [filters, setFilters] = useState({
+    status: "",
+    settled: false,
+    startDate: '',
+    endDate: '',
+    limit: limit,
+    page: page,
+  });
+
   const [isFullscreen, setIsFullscreen] = useState(false); // Track fullscreen status
 
 
   const user = authService.getCurrentUser();
   const navigate = useNavigate();
 
-  const { data, error, isLoading, refetch, isError } = useGetOrdersQuery();
+  const { data, error, isLoading, refetch, isError } = useGetOrdersQuery(filters);
 
   const TABLE_HEAD = [
     "S.No",
@@ -368,30 +379,66 @@ export default function SuccessBookedVehicleTranscation() {
     setIsFullscreen(!isFullscreen);
   };
 
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
+
+  const handlePrevious = () => {
+    if (page > 1) setPage(page - 1);
+};
+
+const handleNext = () => {
+    const totalPages = Math.ceil((data?.stats?.totalOrders ?? 0) / limit);
+    if (page < totalPages) setPage(page + 1);
+};
+
   return (
     <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
 
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(data.stats, null, 2)}</pre> */}
       <div className="rounded-none  border-b border-green-300 px-2 py-1">
-        <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-8">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <Typography variant="h5" color="blue-gray">
-              All Vehicle Order 
+              All Vehicle Order
             </Typography>
             <Typography color="gray" className="mt-1 font-normal app-font">
               See information about all vehicle order
             </Typography>
           </div>
           <div className="flex flex-wrap items-center gap-2 mb-2">
-            <div className=" w-full md:w-72">
+            <div className="">
               <Input
-                label="Search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                label="Start Date"
+                type="date"
+                name="startDate"
+                value={filters.startDate}
+                onChange={handleFilterChange}
                 color="green"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              />
+
+
+            </div>
+            <div className="">
+              <Input
+                label="End Date"
+                type="date"
+                name="endDate"
+                value={filters.endDate}
+                onChange={handleFilterChange}
+                color="green"
               />
             </div>
+
+            <CustomDropdown filters={filters} setFilters={setFilters} />
+            {[2, 14].includes(user?.role) &&
+              <SettleCustomDropDown filters={filters} setFilters={setFilters} />
+            }
+
             <Button
               variant=""
               color="green"
@@ -400,8 +447,8 @@ export default function SuccessBookedVehicleTranscation() {
               onClick={refetch}
             >
               <ArrowPathIcon className="h-5 w-5" />
-              <p >Refresh</p>
             </Button>
+
 
             <Button
               variant=""
@@ -464,8 +511,8 @@ export default function SuccessBookedVehicleTranscation() {
                 </tr>
               </thead>
               <tbody>
-                {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId }, index) => {
-                  const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice, settled } = vehicle || {};
+                {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled }, index) => {
+                  const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
                   const isLast = index === data?.orders?.length - 1;
                   const classes = isLast
                     ? "px-5 border-l border-r border-b border-green-300"
@@ -545,6 +592,7 @@ export default function SuccessBookedVehicleTranscation() {
                             settlementDate={settlementDate}
                             settlementPlatformUsed={settlementPlatformUsed}
                             settlementTransactionId={settlementTransactionId}
+                            settled={settled}
                           />
                         </td>}
 
@@ -581,8 +629,8 @@ export default function SuccessBookedVehicleTranscation() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
 
-              {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId }, index) => {
-                const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice, settled } = vehicle || {};
+              {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled }, index) => {
+                const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
                 return (
                   <div key={index} className="p-4 border border-green-200 rounded-lg ">
                     <img className="w-full  h-44 object-cover rounded-md" src={vehicleImage?.[0]?.url} alt={vehicleName} />
@@ -633,7 +681,7 @@ export default function SuccessBookedVehicleTranscation() {
                       <div className="flex items-center bg-green-50 rounded-b-lg mt-3 justify-between">
                         <td>
                           <Tooltip text="Location">
-                          <ShowLocationModal vehicle={vehicle} />
+                            <ShowLocationModal vehicle={vehicle} />
                           </Tooltip>
                         </td>
 
@@ -678,6 +726,7 @@ export default function SuccessBookedVehicleTranscation() {
                                   settlementDate={settlementDate}
                                   settlementPlatformUsed={settlementPlatformUsed}
                                   settlementTransactionId={settlementTransactionId}
+                                  settled={settled}
                                 />
                               </Tooltip>
                             </td>
@@ -726,6 +775,34 @@ export default function SuccessBookedVehicleTranscation() {
           )
         )}
       </div>
+
+      <div className="flex items-center justify-between border-t border-green-300 p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                    {/* Page {page} of {Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)} */}
+                </Typography>
+                <div className="flex gap-2">
+                    <Button
+                        variant=""
+                        size="sm"
+                        className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200 "
+                        onClick={handlePrevious} disabled={page === 1}
+                    >
+                        Previous
+                    </Button>
+
+
+
+                    <Button
+                        variant=""
+                        size="sm"
+                        className=" hover:shadow-none shadow-none   bg-green-500 "
+                        onClick={handleNext}
+                        disabled={page === Math.ceil((data?.stats?.totalOrders ?? 0) / limit)}
+                    >
+                        Next
+                    </Button>
+                </div>
+            </div>
     </div>
   );
 }

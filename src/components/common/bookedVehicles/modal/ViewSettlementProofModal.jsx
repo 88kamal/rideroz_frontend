@@ -35,13 +35,15 @@ export default function ViewSettlementProofModal({ settled, settlementProofImage
     }, [])
     return (
         <>
-            <IconButton
-                onClick={handleOpen}
-                variant="text"
-                className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
-            >
-                <CheckCheck className="h-4 w-4" />
-            </IconButton>
+           <IconButton
+    onClick={handleOpen}
+    variant="text"
+    className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+    disabled={!settled} // Disable the button when settled is false
+>
+    <CheckCheck className="h-4 w-4" />
+</IconButton>
+
 
             <Dialog open={open} size={dialogSize} className="shadow-none hover:shadow-none rounded-none bg-green-100">
                 <div className="px-4 py-4">
