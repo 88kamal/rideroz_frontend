@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import Layout from '../../components/layout/Layout';
 import { Button, Input, Textarea } from '@material-tailwind/react';
+import Schema from '../../components/seo/Schema';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ const ContactPage = () => {
 
   return (
     <Layout>
+      <Schema/>
       <div className="">
         <div className="flex flex-col md:flex-row items-center md:items-start justify-center p-2 lg:p-8  space-y-8 md:space-y-0 md:space-x-8">
           {/* Left Column - Contact Information */}

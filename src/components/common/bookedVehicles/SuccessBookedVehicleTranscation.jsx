@@ -645,7 +645,7 @@ export default function SuccessBookedVehicleTranscation() {
               </tbody>
             </table>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
 
               {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt }, index) => {

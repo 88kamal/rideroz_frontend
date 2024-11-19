@@ -6,6 +6,7 @@ import Vehicle from "../../components/vehicle/Vehicle"
 import LoginModal from "../../components/registration/LoginModal"
 import { useSearchParams } from "react-router-dom";
 import LeftSidePopup from "../../components/leftSidePop/LeftSidePop"
+import { Helmet } from 'react-helmet';
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
@@ -15,16 +16,24 @@ const HomePage = () => {
   useEffect(() => {
     // Check for the 'loginModal' query parameter
     if (searchParams.get("loginModal") === "true") {
-        setIsLoginModalOpen(true); // Open the login modal
+      setIsLoginModalOpen(true); // Open the login modal
     }
-}, [searchParams]);
+  }, [searchParams]);
   return (
     <Layout>
-        <HeroSection/>
-        <Services/>
-        <Vehicle/>
-        {isLoginModalOpen && <LoginModal autoOpen={true} />}
-        <LeftSidePopup />
+      <Helmet>
+        <title>Rent Bikes, Scooty & Cars - Rideroz</title>
+        <meta name="description" content="Affordable bike, scooty, and car rental service in India. Book now for the best rates." />
+        <meta name="keywords" content="bike rental, scooty rental, car rental, Rideroz" />
+        <meta property="og:title" content="Rent Bikes, Scooty & Cars - Rideroz" />
+        <meta property="og:description" content="Affordable rental services in India. Flexible booking options available." />
+        <meta property="og:image" content="https://rideroz.com/images/banner.jpg" />
+      </Helmet>
+      <HeroSection />
+      <Services />
+      <Vehicle />
+      {isLoginModalOpen && <LoginModal autoOpen={true} />}
+      <LeftSidePopup />
     </Layout>
   )
 }

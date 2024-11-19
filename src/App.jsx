@@ -2,6 +2,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  useLocation,
 } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import AboutPage from "./pages/about/AboutPage";
@@ -55,11 +56,27 @@ import CustomNotification from "./helper/CustomNotification";
 import myContext from "./context/myContext";
 import SuperAdminGetOrderByShopOwner from "./pages/dashboard/super-admin/pages/SuperAdminGetOrderByShopOwner";
 import SuperAdminViewShopOwnerVehiclePage from "./pages/dashboard/super-admin/pages/SuperAdminViewShopOwnerVehiclePage";
+import Schema from "./components/seo/Schema";
+import ReactGA from 'react-ga';
 
 
 function App() {
   const [notification, setNotification] = useState(null);
   const [notificationToken, setNotificationToken] = useState('')
+
+
+  ReactGA.initialize('UA-XXXXXX-X'); // Replace with your Google Analytics ID
+
+// Component to handle page view tracking on route changes
+function usePageViews() {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location]);
+}
+
+  usePageViews();
 
   // useEffect(() => {
   //   const requestPermission = async () => {
@@ -158,7 +175,8 @@ function App() {
 
   return (
     <MyState>
-      <Router>
+      <>
+        <Schema/>
         <Toaster />
         <ScrollTop />
         <TopAlert />
@@ -367,7 +385,7 @@ function App() {
 
 
         </Routes>
-      </Router>
+      </>
     </MyState>
   )
 }
