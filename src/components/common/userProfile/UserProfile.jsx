@@ -172,7 +172,7 @@ function UserProfile() {
                 </div>
 
                 {/* Aadhaar Card Image */}
-                <div className="mt-6">
+                {/* <div className="mt-6">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Documents</h2>
                     <div className=" border border-gray-300 bg-white drop-shadow p-2 rounded-md flex justify-center items-center">
 
@@ -185,7 +185,7 @@ function UserProfile() {
                         </div>
 
                     </div>
-                </div>
+                </div> */}
             </div>}
 
             {/* FOR EMPLOYEE  */}

@@ -1,16 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Button, Input, Spinner } from "@material-tailwind/react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { Eye, EyeOff, Locate, Mail, Phone, PlusCircleIcon } from "lucide-react";
 import { useAddShopMutation } from "../../redux/slices/shopApiSlice";
 import toast from "react-hot-toast";
 import Swal from 'sweetalert2'
 import { useGetCitiesQuery } from "../../redux/slices/cityApiSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { ClipboardDocumentListIcon, CurrencyRupeeIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
+import myContext from "../../context/myContext";
 
 
 function ListShopPage() {
@@ -25,17 +26,19 @@ function ListShopPage() {
         selectCity: "",
         lat: null,
         lng: null,
-        legalDoc: "",
+        // legalDoc: "",
         account_holder_name: "",
         ifsc: "",
         account_number: ""
     });
 
     const [bankDetails, setBankDetails] = useState({
-        ifsc : "",
+        ifsc: "",
         bankName: "",
         branch: ""
     });
+
+    const {showAlert} = useContext(myContext);
 
     const navigate = useNavigate();
 
@@ -53,7 +56,7 @@ function ListShopPage() {
     const [showGenderDropdown, setShowGenderDropdown] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
-    const [preview, setPreview] = useState(null); // Storing the image preview URL
+    // const [preview, setPreview] = useState(null); // Storing the image preview URL
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE", // Replace with your actual Google Maps API key
@@ -78,19 +81,19 @@ function ListShopPage() {
         }));
     };
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            // Update the form data
-            setFormData((prevState) => ({
-                ...prevState,
-                legalDoc: file,
-            }));
+    // const handleFileChange = (event) => {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         // Update the form data
+    //         setFormData((prevState) => ({
+    //             ...prevState,
+    //             legalDoc: file,
+    //         }));
 
-            // Generate a preview URL for the image
-            setPreview(URL.createObjectURL(file));
-        }
-    };
+    //         // Generate a preview URL for the image
+    //         setPreview(URL.createObjectURL(file));
+    //     }
+    // };
 
     const handleCitySearch = (event) => {
         const value = event.target.value;
@@ -208,7 +211,9 @@ function ListShopPage() {
 
     useEffect(() => {
         if (addShopError) {
-            toast.error(addShopError?.data?.error || 'Something went wrong!');
+            // toast.error(addShopError?.data?.error || 'Something went wrong!');
+            showAlert(addShopError?.data?.error || 'Something went wrong!', "error")
+
         }
 
         if (isSuccess) {
@@ -250,11 +255,18 @@ function ListShopPage() {
         }
     };
 
+    // Validation function to check if all fields are filled
+    const isFormValid = () => {
+        return Object.values(formData).every(
+            (value) => value !== null && value !== ""
+        );
+    };
+
     return (
         <Layout>
             <div className="">
 
-{/* <pre>{JSON.stringify(formData,null,2)}</pre>
+                {/* <pre>{JSON.stringify(formData,null,2)}</pre>
 <pre>{JSON.stringify(bankDetails,null,2)}</pre> */}
 
                 <div className="main flex flex-wrap  justify-between bg-green-100 ">
@@ -313,16 +325,16 @@ function ListShopPage() {
                         <div className="flex items-center space-x-4 ">
                             <div className="call w-1/2 rounded-md border bg-white drop-shadow px-2 py-1">
                                 <p className=" text-sm mb-2 app-font">Call Us Now</p>
-                                <div className=" flex items-center gap-2 ">
-                                    <Phone className=" text-green-600" size={23} /> <p className=" text-green-600 text-xl">7505847229</p>
+                                <div className=" flex items-center lg:gap-2 ">
+                                    <Phone className=" text-green-600" size={23} /> <p className=" text-green-600 text-sm lg:text-xl">7505847229</p>
                                 </div>
 
 
                             </div>
                             <div className="mail w-1/2 rounded-md border bg-white drop-shadow px-2 py-1">
                                 <p className=" text-sm mb-2 app-font">Mail</p>
-                                <div className=" flex items-center gap-2 ">
-                                    <Mail className=" text-green-600" size={23} /> <p className=" text-green-600 text-xl">
+                                <div className=" flex items-center lg:gap-2 ">
+                                    <Mail className=" text-green-600" size={23} /> <p className=" text-green-600 text-sm lg:text-xl">
                                         riderozofficial@gmail.com
 
                                     </p>
@@ -334,7 +346,7 @@ function ListShopPage() {
 
                     </div>
 
-                    <div className="right w-full md:w-1/2 bg-green-50">
+                    <div className="right w-full md:w-1/2 bg-green-50 order-first lg:order-last">
                         <div className=" w-full">
                             {/* {isLoading && <p>Submitting...</p>}  Show this while loading */}
 
@@ -381,7 +393,7 @@ function ListShopPage() {
                                                 placeholder="Enter Shop Name"
                                                 value={formData.shopName}
                                                 onChange={handleChange}
-                                                className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                                className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                         </div>
 
@@ -392,7 +404,7 @@ function ListShopPage() {
                                                 placeholder="Enter Owner Full Name"
                                                 value={formData.ownerName}
                                                 onChange={handleChange}
-                                                className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                                className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                         </div>
                                     </div>
@@ -405,7 +417,7 @@ function ListShopPage() {
                                                 placeholder="Email"
                                                 value={formData.ownerEmail}
                                                 onChange={handleChange}
-                                                className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                                 className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                         </div>
 
@@ -416,7 +428,7 @@ function ListShopPage() {
                                                 placeholder="Password"
                                                 value={formData.password}
                                                 onChange={handleChange}
-                                                className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                                className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                             <button
                                                 type="button"
@@ -440,7 +452,7 @@ function ListShopPage() {
                                                 placeholder="Phone Number"
                                                 value={formData.ownerPhoneNumber}
                                                 onChange={handleChange}
-                                                className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                                className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                         </div>
 
@@ -452,26 +464,26 @@ function ListShopPage() {
                                                 value={formData.gender}
                                                 onChange={handleChange}
                                                 onClick={() => setShowGenderDropdown(!showGenderDropdown)}
-                                                className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                                 className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                                 readOnly
                                             />
                                             {showGenderDropdown && (
-                                                <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full">
+                                                <div className="absolute mt-1 bg-white z-50 border border-gray-400 rounded-md w-full">
                                                     <div
                                                         onClick={() => handleGenderSelect("male")}
-                                                        className="cursor-pointer p-2 hover:bg-gray-200"
+                                                        className="cursor-pointer p-2 hover:bg-gray-200 rounded-t-lg"
                                                     >
                                                         Male
                                                     </div>
                                                     <div
                                                         onClick={() => handleGenderSelect("female")}
-                                                        className="cursor-pointer p-2 hover:bg-gray-200"
+                                                        className="cursor-pointer p-2  hover:bg-gray-200"
                                                     >
                                                         Female
                                                     </div>
                                                     <div
                                                         onClick={() => handleGenderSelect("other")}
-                                                        className="cursor-pointer p-2 hover:bg-gray-200"
+                                                        className="cursor-pointer rounded-b-lg p-2 hover:bg-gray-200"
                                                     >
                                                         Other
                                                     </div>
@@ -487,18 +499,18 @@ function ListShopPage() {
                                             placeholder="Search for your city"
                                             value={searchTerm}
                                             onChange={handleCitySearch}
-                                            className="bg-white outline-none w-full py-2 px-3 border border-gray-400 rounded-md"
+                                            className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                         />
 
                                         {isCitiesLoading && (
-                                            <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full p-2">
+                                            <div className=" mt-1 bg-white  border border-gray-400 rounded-md w-full p-2">
                                                 <p className=" text-center">Loading cities...</p>
                                             </div>
                                         )}
 
                                         {/* <pre>{JSON.stringify({data: cities, error: citiesError, isLoading: isCitiesLoading},null,2)}</pre> */}
                                         {citiesError && (
-                                            <div className="absolute mt-1 bg-white z-10 border border-red-400 rounded-md w-full p-2">
+                                            <div className=" mt-1 bg-white  border border-red-400 rounded-md w-full p-2">
                                                 <p className="text-red-500 text-center">{citiesError?.data?.error}</p>
                                             </div>
                                         )}
@@ -526,7 +538,7 @@ function ListShopPage() {
                                     </div>
 
 
-                                    <div className="w-full">
+                                    {/* <div className="w-full">
                                         <div className=" border p-1 border-green-300 rounded-md">
                                             <input
                                                 ref={fileInputRefLegalDoc}
@@ -538,7 +550,6 @@ function ListShopPage() {
                                             />
                                         </div>
 
-                                        {/* Conditionally render the image preview */}
                                         {preview && (
                                             <div className="mt-4">
                                                 <img
@@ -548,7 +559,7 @@ function ListShopPage() {
                                                 />
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
 
                                     <div className="">
                                         <div className=" mb-3">
@@ -561,7 +572,6 @@ function ListShopPage() {
                                                 onChange={handleChangeForBankDetail}
                                                 color='green'
                                                 className="block w-full rounded-md sm:text-sm"
-                                                required
                                             />
                                         </div>
                                         <div className=" mb-3">
@@ -574,7 +584,6 @@ function ListShopPage() {
                                                 onChange={handleChangeForBankDetail}
                                                 color='green'
                                                 className="block w-full rounded-md sm:text-sm"
-                                                required
                                             />
                                         </div>
                                         <div className=" mb-3">
@@ -587,7 +596,6 @@ function ListShopPage() {
                                                 onChange={handleChangeForBankDetail}
                                                 color='green'
                                                 className="block w-full rounded-md sm:text-sm uppercase"
-                                                required
                                             />
                                         </div>
                                         {bankDetails.bankName && bankDetails.branch && (
@@ -666,6 +674,7 @@ function ListShopPage() {
                                             variant=""
                                             type="submit"
                                             className="bg-green-500 hover:bg-green-600 text-white outline-none py-3 px-4 rounded-md w-full shadow-none hover:shadow-none flex justify-center"
+                                            disabled={isAddingShop || !isFormValid()}
                                         >
                                             {isAddingShop ? <Spinner /> : "Register for a FREE account"}
                                         </Button>
