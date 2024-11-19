@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from "react";
-import { Dialog, DialogBody, IconButton } from "@material-tailwind/react";
+import { Button, Dialog, DialogBody } from "@material-tailwind/react";
 import { MapPinHouse, X } from "lucide-react";
 
-export default function ShowLocationModal({ vehicle }) {
+export default function ShowLocationModalForInvoice({ vehicle }) {
     const [open, setOpen] = useState(false);
     const [currentLocation, setCurrentLocation] = useState(null);
     const [currentLocationName, setCurrentLocationName] = useState("");
@@ -146,13 +146,15 @@ export default function ShowLocationModal({ vehicle }) {
 
     return (
         <>
-            <IconButton
+            <Button
+            v
                 onClick={handleOpen}
-                variant="text"
-                className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                variant=""
+                size="small"
+                className=" bg-green-700 hover:shadow-none shadow-none"
             >
-                <MapPinHouse className="w-5 h-5" />
-            </IconButton>
+                Location
+            </Button>
 
             <Dialog open={open} size="xxl" className="shadow-lg rounded-xl bg-gradient-to-br from-white to-gray-50">
                 <div className="px-4 py-4">

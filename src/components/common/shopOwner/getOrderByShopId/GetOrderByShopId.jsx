@@ -699,7 +699,7 @@ import CustomDropdown from "./custom/CustomDropDown";
 import SettleCustomDropDown from "./custom/SettleCustomDropDown";
 import { ArrowsPointingInIcon, ArrowsPointingOutIcon } from "@heroicons/react/24/solid";
 
-const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Settled", "View"];
+const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Created Date", "Settled", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState('');
@@ -766,6 +766,19 @@ export default function ViewShopOwnerTable() {
             document.exitFullscreen();
         }
         setIsFullscreen(!isFullscreen);
+    };
+
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const options = {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        };
+        return new Intl.DateTimeFormat('en-US', options).format(date);
     };
 
     return (
@@ -1045,6 +1058,10 @@ export default function ViewShopOwnerTable() {
                                             </Typography>
 
                                         </td>
+
+                                        <td className={classes}>
+                                            {formatDate(order?.createdAt)}
+                                        </td>
                                         <td className={classes}>
                                             <Typography
                                                 variant="small"
@@ -1109,6 +1126,12 @@ export default function ViewShopOwnerTable() {
                                         className="px-3 text-center w-28"
                                     />
                                 </div>
+
+                                <div className="flex justify-between items-center mt-2">
+                                    <p className="font-bold">Created Date:</p>
+                                    <p className=" app-font">{formatDate(order?.createdAt)}</p>
+                                </div>
+
 
                                 <div className="flex justify-between mt-2 bg-green-50 rounded-b-lg">
                                     <Tooltip text={"Settelement"}>

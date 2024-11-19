@@ -4,11 +4,13 @@ import { useGetOrderByIdQuery } from '../../../../redux/slices/orderApiSlice';
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { Chip, Spinner } from '@material-tailwind/react';
+import { Button, Chip, Spinner } from '@material-tailwind/react';
 import authService from '../../../../services/authService';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import ShowLocationModal from '../modal/ShowLocationModal';
+import ShowLocationModalForInvoice from './ShowLocationModalForInvoice';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -87,11 +89,14 @@ const ViewUserBookingInvoice = () => {
                     <div className="flex items-center justify-between mb- p-6">
 
                         <div className="">
-                            <h1 className="text-3xl font-bold">Rideroz</h1>
+                            {/* <h1 className="text-3xl font-bold">Rideroz</h1> */}
+                            <img src="../../../../logo/rideroz.png" alt="Company Logo" className="w-28 h-12" />
                             <p className="text-sm app-font">Your Trusted Vehicle Rental Service</p>
                         </div>
 
-                        <img src="../../../../logo/rideroz.png" alt="Company Logo" className="w-28 h-12" />
+                        {/* <img src="../../../../logo/rideroz.png" alt="Company Logo" className="w-28 h-12" /> */}
+
+                        <ShowLocationModalForInvoice vehicle={data?.order?.vehicle}/>
                     </div>
 
                     <div className="border-b">

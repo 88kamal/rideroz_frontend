@@ -47,8 +47,9 @@ import { useGetVehiclesByShopIdQuery } from "../../../../redux/slices/vehicleApi
 import { useNavigate, useParams } from "react-router-dom";
 import RatingBadge from "../../../vehicle/RatingBadge";
 import ViewMoreVehicleModal from "./modal/ViewMoreVehicleModal";
+import VehicleAvailbilityModal from "../../../../pages/vehicleInfo/modal/VehicleAvailbilityModal";
 
-const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Number", "Vehicle Price", "Delete", "View More"];
+const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Number", "Vehicle Price", "Created Date", "Delete", "View More"];
 
 export default function ViewVehicle() {
     const [search, setSearch] = useState('');
@@ -118,6 +119,19 @@ export default function ViewVehicle() {
         const totalPages = Math.ceil((vehicals?.totalVehicles ?? 0) / limit);
         if (page < totalPages) setPage(page + 1);
     };
+
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const options = {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        };
+        return new Intl.DateTimeFormat('en-US', options).format(date);
+      };
 
     return (
         <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
@@ -330,7 +344,7 @@ export default function ViewVehicle() {
                             </thead>
                             <tbody>
                                 {vehicals?.vehicles?.map((vehicle, index) => {
-                                    const { _id, vehicleNumber, vehiclePrice, vehicleImage, vehicleAvailability, bookedDates } = vehicle;
+                                    const { _id, vehicleNumber, vehiclePrice, vehicleImage, vehicleAvailability, bookedDates, createdAt } = vehicle;
                                     const isLast = index === vehicals?.vehicles?.length - 1;
                                     const classes = isLast
                                         ? "px-5 border-l border-r border-b border-green-300"
@@ -352,6 +366,10 @@ export default function ViewVehicle() {
                                             </td>
                                             <td className={classes}>{vehicleNumber}</td>
                                             <td className={classes}>₹ {vehiclePrice}</td>
+
+                                            <td className={classes}>
+                                                {formatDate(createdAt)}
+                                            </td>
 
                                             <td className={classes}>
                                                 <Trash2 className="w-4 h-4" />
@@ -386,9 +404,18 @@ export default function ViewVehicle() {
 
                                     </div>
 
+                                    <div className="flex justify-between items-center mt-2">
+                                    <p className="font-bold">Created Date:</p>
+                                    <p className=" app-font">{formatDate(vehicle?.createdAt)}</p>
+                                </div>
+
                                     {/* <pre>{JSON.stringify(vehicle,null,2)}</pre> */}
 
-                                    <div className="flex justify-between items-center mt-2 bg-green-50 rounded-b-lg">
+                                    <div className="mt-2">
+                                        <VehicleAvailbilityModal vehicleId={vehicle?._id}/>
+                                    </div>
+
+                                    <div className="flex justify-between items-center mt-2 bg-green-50 rounded-b-lg border border-green-100">
                                         <td>
                                             <IconButton
                                                 variant="text"

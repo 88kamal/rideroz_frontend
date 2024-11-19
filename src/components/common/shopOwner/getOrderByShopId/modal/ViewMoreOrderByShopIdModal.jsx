@@ -84,7 +84,7 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
                             <span className="font-bold">Shop Amount: </span> <span>₹ {order
-                            ?.vehicle?.vehiclePrice}</span>
+                                ?.vehicle?.vehiclePrice}</span>
                         </div>
                     </div>
 
@@ -102,13 +102,53 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                             <span className="font-bold">Rent Duration: </span> <span>{order?.rentDuration}</span>
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Extra Hour Charge: </span> <span>{order?.extraHourCharge}</span>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap justify-between items-center">
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">ExtraHours: </span> <span>{order?.extraHours}</span>
+                        </div>
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Platform Amount: </span> <span>₹ {order?.platformAmount}</span>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap justify-between items-center">
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Misc Amount: </span> <span>₹ {order?.miscAmount}</span>
+                        </div>
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                            <span className="font-bold">Discount Amount: </span> <span>₹ {order?.discountAmount}</span>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap justify-between items-center">
+
+                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-full">
                             <span className="font-bold">Total Amount: </span> <span>₹ {order?.totalAmount}</span>
                         </div>
                     </div>
 
                     <div className="flex flex-wrap justify-between items-center">
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Order Status: </span> <span>{order.status}</span>
+                            <div className="flex items-center gap-2">
+                                <span className="font-bold">Order Status: </span> <span>
+                                    <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={order?.status}
+                                        color={
+                                            order?.status === "failed" ? "red" :
+                                                order?.status === "pending" ? "orange" :
+                                                    "green"
+                                        }
+
+                                        className="px-3 text-center w-28"
+                                    />
+                                </span>
+                            </div>
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
                             <span className="font-bold">Created Date: </span> <span>{readableCreatedAt}</span>
@@ -143,18 +183,18 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
 
                     <div className="flex flex-wrap justify-between items-center">
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2 flex items-center gap-2">
-                            <span className="font-bold">Settlement Status: </span> 
+                            <span className="font-bold">Settlement Status: </span>
                             <Chip
-                                    size="sm"
-                                    variant="ghost"
-                                    value={order?.settled === false ? "pending" : "confirm"}
-                                    color={
-                                        order?.settled === false ? "red" :
-                                            "green"
-                                    }
+                                size="sm"
+                                variant="ghost"
+                                value={order?.settled === false ? "pending" : "confirm"}
+                                color={
+                                    order?.settled === false ? "red" :
+                                        "green"
+                                }
 
-                                    className="px-3 text-center w-28"
-                                />
+                                className="px-3 text-center w-28"
+                            />
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
                             <span className="font-bold">Coupon Code: </span> <span>{order?.coupon?.code}</span>
@@ -181,32 +221,34 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                         </div>
                     </div> */}
 
-                    <div className="">
-                        <h1 className=" text-black font-bold">Settlement</h1>
-                    </div>
+                    {order?.settlementAmount && <div className="">
+                        <div className="">
+                            <h1 className=" text-black font-bold">Settlement</h1>
+                        </div>
 
-                    <div className="flex flex-wrap justify-between items-center">
-                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Settlement Amount: </span> <span>{order.settlementAmount}</span>
+                        <div className="flex flex-wrap justify-between items-center">
+                            <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Settlement Amount: </span> <span>{order.settlementAmount}</span>
+                            </div>
+                            <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Settlement Date: </span> <span>{order.settlementDate}</span>
+                            </div>
                         </div>
-                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Settlement Date: </span> <span>{order.settlementDate}</span>
-                        </div>
-                    </div>
 
-                    <div className="flex flex-wrap justify-between items-center">
-                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Settlement Platform Used: </span> <span className=" capitalize">{order.settlementPlatformUsed}</span>
+                        <div className="flex flex-wrap justify-between items-center">
+                            <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Settlement Platform Used: </span> <span className=" capitalize">{order.settlementPlatformUsed}</span>
+                            </div>
+                            <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Settlement Transaction Id: </span> <span>{order.settlementTransactionId}</span>
+                            </div>
                         </div>
-                        <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Settlement Transaction Id: </span> <span>{order.settlementTransactionId}</span>
-                        </div>
-                    </div>
 
-                    <div className="">
-                        <h1 className=" font-bold text-black mb-1">Settlement Proof Image</h1>
-                        <img src={order?.settlementProofImage?.url} alt="img" className=" rounded-md" />
-                    </div>
+                        <div className="">
+                            <h1 className=" font-bold text-black mb-1">Settlement Proof Image</h1>
+                            <img src={order?.settlementProofImage?.url} alt="img" className=" rounded-md" />
+                        </div>
+                    </div>}
 
                 </DialogBody>
             </Dialog>

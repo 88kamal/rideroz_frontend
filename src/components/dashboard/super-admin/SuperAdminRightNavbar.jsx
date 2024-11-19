@@ -1,4 +1,3 @@
-import { BellRing } from 'lucide-react';
 import MoreButton from '../../common/moreButton/MoreButton';
 
 function SuperAdminRightNavbar() {

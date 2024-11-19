@@ -352,6 +352,7 @@ export default function SuccessBookedVehicleTranscation() {
     // ...(user?.role === 14 ? ["Verify Otp"] : []),
     ...(user?.role === 14 ? ["Settle Status"] : []),
     ...(user?.role === 14 ? ["Settlement"] : []),
+    "Created Date",
     "View Invoice",
   ];
 
@@ -389,17 +390,31 @@ export default function SuccessBookedVehicleTranscation() {
 
   const handlePrevious = () => {
     if (page > 1) setPage(page - 1);
-};
+  };
 
-const handleNext = () => {
+  const handleNext = () => {
     const totalPages = Math.ceil((data?.stats?.totalOrders ?? 0) / limit);
     if (page < totalPages) setPage(page + 1);
-};
+  };
+
+  const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const options = {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  };
+
 
   return (
     <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
 
-      {/* <pre>{JSON.stringify(data.stats, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
       <div className="rounded-none  border-b border-green-300 px-2 py-1">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -511,7 +526,7 @@ const handleNext = () => {
                 </tr>
               </thead>
               <tbody>
-                {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled }, index) => {
+                {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt }, index) => {
                   const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
                   const isLast = index === data?.orders?.length - 1;
                   const classes = isLast
@@ -547,6 +562,10 @@ const handleNext = () => {
                       {/* Add further cells based on the user role */}
                       <td className={classes} hidden={[2, 3, 14].includes(user?.role)}>
                         <CancelRideModal id={_id} vehicleBasePrice={vehiclePrice} />
+                      </td>
+
+                      <td className={classes}>
+                        {formatDate(createdAt)}
                       </td>
 
                       {/* <td className={classes} hidden={[2, 3, 15].includes(user?.role)}>
@@ -629,7 +648,7 @@ const handleNext = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
 
-              {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled }, index) => {
+              {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt }, index) => {
                 const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
                 return (
                   <div key={index} className="p-4 border border-green-200 rounded-lg ">
@@ -676,6 +695,11 @@ const handleNext = () => {
                           />
                         </div>
                       }
+
+                      <div className="flex justify-between items-center mt-2">
+                        <p className="font-bold">Created Date:</p>
+                        <p className=" app-font">{formatDate(createdAt)}</p>
+                      </div>
 
 
                       <div className="flex items-center bg-green-50 rounded-b-lg mt-3 justify-between">
@@ -777,32 +801,32 @@ const handleNext = () => {
       </div>
 
       <div className="flex items-center justify-between border-t border-green-300 p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                    {/* Page {page} of {Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)} */}
-                </Typography>
-                <div className="flex gap-2">
-                    <Button
-                        variant=""
-                        size="sm"
-                        className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200 "
-                        onClick={handlePrevious} disabled={page === 1}
-                    >
-                        Previous
-                    </Button>
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          {/* Page {page} of {Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit)} */}
+        </Typography>
+        <div className="flex gap-2">
+          <Button
+            variant=""
+            size="sm"
+            className="hover:bg-green-50 active:bg-green-50 focus:bg-green-50 transition-colors duration-300 hover:shadow-none shadow-none bg-transparent border text-black border-green-200 "
+            onClick={handlePrevious} disabled={page === 1}
+          >
+            Previous
+          </Button>
 
 
 
-                    <Button
-                        variant=""
-                        size="sm"
-                        className=" hover:shadow-none shadow-none   bg-green-500 "
-                        onClick={handleNext}
-                        disabled={page === Math.ceil((data?.stats?.totalOrders ?? 0) / limit)}
-                    >
-                        Next
-                    </Button>
-                </div>
-            </div>
+          <Button
+            variant=""
+            size="sm"
+            className=" hover:shadow-none shadow-none   bg-green-500 "
+            onClick={handleNext}
+            disabled={page === Math.ceil((data?.stats?.totalOrders ?? 0) / limit)}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

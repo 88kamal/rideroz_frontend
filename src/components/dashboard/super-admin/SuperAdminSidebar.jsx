@@ -8,7 +8,6 @@ import {
     UserCircleIcon,
     PowerIcon,
     HomeIcon,
-    UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { TicketCheck } from "lucide-react";
@@ -35,6 +34,7 @@ export default function SuperAdminSidebar() {
 
             <div className="">
                 <div className="mb-2 p-4 ">
+                    <Link to={'/'}>
                     <div
                         className=" py-6"
                     >
@@ -43,6 +43,7 @@ export default function SuperAdminSidebar() {
                         </div>
                         <h1 className="text-center text-xl text-black font-bold app-font">Super Admin Dashboard</h1>
                     </div>
+                    </Link>
                 </div>
             </div>
 
