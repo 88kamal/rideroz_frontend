@@ -106,13 +106,26 @@ export default function Navbars() {
                     >
                         <Link to={item.to} className="flex items-center">
                             {item.label}
+                            
                         </Link>
                     </Typography>
                 );
             })}
             <>
                 {/* Show the LoginModal in the mobile menu */}
-                <LoginModal showLoginButton={true}  />
+                {/* <LoginModal showLoginButton={true}  /> */}
+
+                {rolePaths[user?.role] ? (
+                            <div className=" text-black">
+                                <Link to={rolePaths[user.role]}>
+                                    <FaUserCircle className="w-7 h-7 text-black" />
+                                </Link>
+                            </div>
+                        ) : (
+                            <LoginModal showLoginButton={true}  />
+                        )}
+
+              
             </>
         </ul>
     );
