@@ -131,15 +131,11 @@ export default function ViewShopOwnerDetailModal({_id, shopImage, legalDoc, shop
           </div>
 
           {/* <pre>{JSON.stringify({ employeeAdharCard, employeePanCard, employeeAgreement }, null, 2)}</pre> */}
-          <div className="flex justify-between items-center flex-wrap ">
+          {/* <div className="flex justify-between items-center flex-wrap ">
             <div className=" hover:shadow-none shadow-none border border-green-300 text-black py-3 rounded-none px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/3">
               <img src={legalDoc?.url} alt="" />
             </div>
-
-
-
-
-          </div>
+          </div> */}
 
         </DialogBody>
       </Dialog>
