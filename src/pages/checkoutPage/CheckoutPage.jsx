@@ -18,6 +18,7 @@ import UploadAdharImage from "./UploadAdharImage";
 import LoginModal from "../../components/registration/LoginModal";
 import authService from "../../services/authService";
 
+
 const CartPage = () => {
     const user = authService.getCurrentUser();
     const { id } = useParams();
@@ -30,6 +31,7 @@ const CartPage = () => {
     const [rentDuration, setRentDuration] = useState(0); // State to store rent duration in days
     const [discountedAmount, setDiscountedAmount] = useState(0); // Discounted total amount after coupon
     const [discountAmount, setDiscountAmount] = useState(0); // Discount value
+
 
     const [formData, setFormData] = useState({
         startDate: null,
@@ -146,268 +148,268 @@ const CartPage = () => {
     // };
 
     // *** second code 5 hour added ***
-//     const calculateShopAmount = () => {
-//     const { startDate, endDate, startTime, endTime } = formData;
+    //     const calculateShopAmount = () => {
+    //     const { startDate, endDate, startTime, endTime } = formData;
 
-//     // Validate that endDate is greater than startDate
-//     if (dayjs(endDate).isBefore(dayjs(startDate))) {
-//         showAlert('End date must be greater than start date.', 'error');
-//         return; // Exit the function if validation fails
-//     }
+    //     // Validate that endDate is greater than startDate
+    //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
+    //         showAlert('End date must be greater than start date.', 'error');
+    //         return; // Exit the function if validation fails
+    //     }
 
-//     if (startDate && endDate && startTime && endTime) {
-//         // Parse the start and end times with dates
-//         const start = dayjs(`${startDate} ${startTime}`);
-//         const end = dayjs(`${endDate} ${endTime}`);
+    //     if (startDate && endDate && startTime && endTime) {
+    //         // Parse the start and end times with dates
+    //         const start = dayjs(`${startDate} ${startTime}`);
+    //         const end = dayjs(`${endDate} ${endTime}`);
 
-//         // Calculate the total difference in hours
-//         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
+    //         // Calculate the total difference in hours
+    //         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
 
-//         // Base price calculation
-//         let baseDays = Math.floor(totalHours / 24); // Full days
-//         let extraHours = totalHours % 24; // Extra hours beyond full days
+    //         // Base price calculation
+    //         let baseDays = Math.floor(totalHours / 24); // Full days
+    //         let extraHours = totalHours % 24; // Extra hours beyond full days
 
-//         let extraCharge = 0;
-//         let basePrice = baseDays * vehiclePricePerDay; // Full day price
+    //         let extraCharge = 0;
+    //         let basePrice = baseDays * vehiclePricePerDay; // Full day price
 
-//         if (extraHours <= 5) {
-//             // Charge ₹100 per hour for up to 5 hours
-//             extraCharge = Math.floor(extraHours) * 100;
+    //         if (extraHours <= 5) {
+    //             // Charge ₹100 per hour for up to 5 hours
+    //             extraCharge = Math.floor(extraHours) * 100;
 
-//             if (extraHours % 1 >= 0.5) {
-//                 // Add ₹50 for half-hour increments
-//                 extraCharge += 50;
-//             }
-//         } else {
-//             // If extra hours exceed 5, count them as another full day
-//             baseDays += 1;
-//             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
-//             extraCharge = 0; // No extra hourly charge beyond 5 hours
-//         }
+    //             if (extraHours % 1 >= 0.5) {
+    //                 // Add ₹50 for half-hour increments
+    //                 extraCharge += 50;
+    //             }
+    //         } else {
+    //             // If extra hours exceed 5, count them as another full day
+    //             baseDays += 1;
+    //             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
+    //             extraCharge = 0; // No extra hourly charge beyond 5 hours
+    //         }
 
-//         // Calculate platform and miscellaneous charges
-//         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
-//         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
+    //         // Calculate platform and miscellaneous charges
+    //         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
+    //         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
 
-//         // Calculate the total amount
-//         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
+    //         // Calculate the total amount
+    //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
 
-//         // Update the formData and rent duration with calculated values
-//         setFormData(prevState => ({
-//             ...prevState,
-//             platformAmount: platformAmount,
-//             miscAmount: miscAmount,
-//             shopAmount: totalAmount,
-//             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
-//             extraHourCharge: extraCharge,        // Store the extra hour charge
-//             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`
-//         }));
+    //         // Update the formData and rent duration with calculated values
+    //         setFormData(prevState => ({
+    //             ...prevState,
+    //             platformAmount: platformAmount,
+    //             miscAmount: miscAmount,
+    //             shopAmount: totalAmount,
+    //             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
+    //             extraHourCharge: extraCharge,        // Store the extra hour charge
+    //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`
+    //         }));
 
-//         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
-//         setDiscountedAmount(null); // Reset discountedAmount when dates change
-//         setDiscountAmount(0); // Reset discount amount when dates change
-//     }
-// };
+    //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
+    //         setDiscountedAmount(null); // Reset discountedAmount when dates change
+    //         setDiscountAmount(0); // Reset discount amount when dates change
+    //     }
+    // };
 
-// after coupon code 
-// const calculateShopAmount = () => {
-//     const { startDate, endDate, startTime, endTime } = formData;
+    // after coupon code 
+    // const calculateShopAmount = () => {
+    //     const { startDate, endDate, startTime, endTime } = formData;
 
-//     // Validate that endDate is greater than startDate
-//     if (dayjs(endDate).isBefore(dayjs(startDate))) {
-//         showAlert('End date must be greater than start date.', 'error');
-//         return; // Exit the function if validation fails
-//     }
+    //     // Validate that endDate is greater than startDate
+    //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
+    //         showAlert('End date must be greater than start date.', 'error');
+    //         return; // Exit the function if validation fails
+    //     }
 
-//     if (startDate && endDate && startTime && endTime) {
-//         // Parse the start and end times with dates
-//         const start = dayjs(`${startDate} ${startTime}`);
-//         const end = dayjs(`${endDate} ${endTime}`);
+    //     if (startDate && endDate && startTime && endTime) {
+    //         // Parse the start and end times with dates
+    //         const start = dayjs(`${startDate} ${startTime}`);
+    //         const end = dayjs(`${endDate} ${endTime}`);
 
-//         // Calculate the total difference in hours
-//         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
+    //         // Calculate the total difference in hours
+    //         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
 
-//         // Base price calculation
-//         let baseDays = Math.floor(totalHours / 24); // Full days
-//         let extraHours = totalHours % 24; // Extra hours beyond full days
+    //         // Base price calculation
+    //         let baseDays = Math.floor(totalHours / 24); // Full days
+    //         let extraHours = totalHours % 24; // Extra hours beyond full days
 
-//         let extraCharge = 0;
-//         let basePrice = baseDays * vehiclePricePerDay; // Full day price
+    //         let extraCharge = 0;
+    //         let basePrice = baseDays * vehiclePricePerDay; // Full day price
 
-//         if (extraHours <= 5) {
-//             // Charge ₹100 per hour for up to 5 hours
-//             extraCharge = Math.floor(extraHours) * 100;
+    //         if (extraHours <= 5) {
+    //             // Charge ₹100 per hour for up to 5 hours
+    //             extraCharge = Math.floor(extraHours) * 100;
 
-//             if (extraHours % 1 >= 0.5) {
-//                 // Add ₹50 for half-hour increments
-//                 extraCharge += 50;
-//             }
-//         } else {
-//             // If extra hours exceed 5, count them as another full day
-//             baseDays += 1;
-//             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
-//             extraCharge = 0; // No extra hourly charge beyond 5 hours
-//         }
+    //             if (extraHours % 1 >= 0.5) {
+    //                 // Add ₹50 for half-hour increments
+    //                 extraCharge += 50;
+    //             }
+    //         } else {
+    //             // If extra hours exceed 5, count them as another full day
+    //             baseDays += 1;
+    //             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
+    //             extraCharge = 0; // No extra hourly charge beyond 5 hours
+    //         }
 
-//         // Calculate platform and miscellaneous charges
-//         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
-//         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
+    //         // Calculate platform and miscellaneous charges
+    //         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
+    //         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
 
-//         // Calculate the total amount
-//         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
+    //         // Calculate the total amount
+    //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
 
-//         // Adjust the total amount if a discount is already applied
-//         let adjustedAmount = totalAmount;
-//         if (isCouponApplied && discountAmount > 0) {
-//             adjustedAmount -= discountAmount; // Apply the previously calculated discount
-//         }
+    //         // Adjust the total amount if a discount is already applied
+    //         let adjustedAmount = totalAmount;
+    //         if (isCouponApplied && discountAmount > 0) {
+    //             adjustedAmount -= discountAmount; // Apply the previously calculated discount
+    //         }
 
-//         // Update the formData and rent duration with calculated values
-//         setFormData(prevState => ({
-//             ...prevState,
-//             platformAmount: platformAmount,
-//             miscAmount: miscAmount,
-//             shopAmount: adjustedAmount,
-//             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
-//             extraHourCharge: extraCharge,        // Store the extra hour charge
-//             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
-//         }));
+    //         // Update the formData and rent duration with calculated values
+    //         setFormData(prevState => ({
+    //             ...prevState,
+    //             platformAmount: platformAmount,
+    //             miscAmount: miscAmount,
+    //             shopAmount: adjustedAmount,
+    //             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
+    //             extraHourCharge: extraCharge,        // Store the extra hour charge
+    //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
+    //         }));
 
-//         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
-//     }
-// };
+    //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
+    //     }
+    // };
 
-// done but minor change 
-// const calculateShopAmount = () => {
-//     const { startDate, endDate, startTime, endTime } = formData;
+    // done but minor change 
+    // const calculateShopAmount = () => {
+    //     const { startDate, endDate, startTime, endTime } = formData;
 
-//     // Validate that endDate is greater than startDate
-//     if (dayjs(endDate).isBefore(dayjs(startDate))) {
-//         showAlert('End date must be greater than start date.', 'error');
-//         return; // Exit the function if validation fails
-//     }
+    //     // Validate that endDate is greater than startDate
+    //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
+    //         showAlert('End date must be greater than start date.', 'error');
+    //         return; // Exit the function if validation fails
+    //     }
 
-//     if (startDate && endDate && startTime && endTime) {
-//         // Parse the start and end times with dates
-//         const start = dayjs(`${startDate} ${startTime}`);
-//         const end = dayjs(`${endDate} ${endTime}`);
+    //     if (startDate && endDate && startTime && endTime) {
+    //         // Parse the start and end times with dates
+    //         const start = dayjs(`${startDate} ${startTime}`);
+    //         const end = dayjs(`${endDate} ${endTime}`);
 
-//         // Calculate the total difference in hours
-//         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
+    //         // Calculate the total difference in hours
+    //         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
 
-//         // Base price calculation
-//         let baseDays = Math.floor(totalHours / 24); // Full days
-//         let extraHours = totalHours % 24; // Extra hours beyond full days
+    //         // Base price calculation
+    //         let baseDays = Math.floor(totalHours / 24); // Full days
+    //         let extraHours = totalHours % 24; // Extra hours beyond full days
 
-//         let extraCharge = 0;
-//         let basePrice = baseDays * vehiclePricePerDay; // Full day price
+    //         let extraCharge = 0;
+    //         let basePrice = baseDays * vehiclePricePerDay; // Full day price
 
-//         if (extraHours <= 5) {
-//             // Charge ₹100 per hour for up to 5 hours
-//             extraCharge = Math.floor(extraHours) * 100;
+    //         if (extraHours <= 5) {
+    //             // Charge ₹100 per hour for up to 5 hours
+    //             extraCharge = Math.floor(extraHours) * 100;
 
-//             if (extraHours % 1 >= 0.5) {
-//                 // Add ₹50 for half-hour increments
-//                 extraCharge += 50;
-//             }
-//         } else {
-//             // If extra hours exceed 5, count them as another full day
-//             baseDays += 1;
-//             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
-//             extraCharge = 0; // No extra hourly charge beyond 5 hours
-//         }
+    //             if (extraHours % 1 >= 0.5) {
+    //                 // Add ₹50 for half-hour increments
+    //                 extraCharge += 50;
+    //             }
+    //         } else {
+    //             // If extra hours exceed 5, count them as another full day
+    //             baseDays += 1;
+    //             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
+    //             extraCharge = 0; // No extra hourly charge beyond 5 hours
+    //         }
 
-//         // Calculate platform and miscellaneous charges
-//         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
-//         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
+    //         // Calculate platform and miscellaneous charges
+    //         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
+    //         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
 
-//         // Calculate the total amount
-//         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
+    //         // Calculate the total amount
+    //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
 
-//         // Update both originalShopAmount and shopAmount in formData
-//         setOriginalShopAmount(totalAmount); // Store the full amount for reference
-//         setFormData(prevState => ({
-//             ...prevState,
-//             platformAmount: platformAmount,
-//             miscAmount: miscAmount,
-//             shopAmount: totalAmount,
-//             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
-//             extraHourCharge: extraCharge,        // Store the extra hour charge
-//             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
-//         }));
+    //         // Update both originalShopAmount and shopAmount in formData
+    //         setOriginalShopAmount(totalAmount); // Store the full amount for reference
+    //         setFormData(prevState => ({
+    //             ...prevState,
+    //             platformAmount: platformAmount,
+    //             miscAmount: miscAmount,
+    //             shopAmount: totalAmount,
+    //             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
+    //             extraHourCharge: extraCharge,        // Store the extra hour charge
+    //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
+    //         }));
 
-//         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
-//     }
-// };
+    //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
+    //     }
+    // };
 
 
-// const calculateShopAmount = () => {
-//     const { startDate, endDate, startTime, endTime } = formData;
+    // const calculateShopAmount = () => {
+    //     const { startDate, endDate, startTime, endTime } = formData;
 
-//     // Validate that endDate is greater than startDate
-//     if (dayjs(endDate).isBefore(dayjs(startDate))) {
-//         showAlert('End date must be greater than start date.', 'error');
-//         return; // Exit the function if validation fails
-//     }
+    //     // Validate that endDate is greater than startDate
+    //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
+    //         showAlert('End date must be greater than start date.', 'error');
+    //         return; // Exit the function if validation fails
+    //     }
 
-//     if (startDate && endDate && startTime && endTime) {
-//         // Parse the start and end times with dates
-//         const start = dayjs(`${startDate} ${startTime}`);
-//         const end = dayjs(`${endDate} ${endTime}`);
+    //     if (startDate && endDate && startTime && endTime) {
+    //         // Parse the start and end times with dates
+    //         const start = dayjs(`${startDate} ${startTime}`);
+    //         const end = dayjs(`${endDate} ${endTime}`);
 
-//         // Calculate the total difference in hours
-//         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
+    //         // Calculate the total difference in hours
+    //         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
 
-//         // Base price calculation
-//         let baseDays = Math.floor(totalHours / 24); // Full days
-//         let extraHours = totalHours % 24; // Extra hours beyond full days
+    //         // Base price calculation
+    //         let baseDays = Math.floor(totalHours / 24); // Full days
+    //         let extraHours = totalHours % 24; // Extra hours beyond full days
 
-//         let extraCharge = 0;
-//         let basePrice = baseDays * vehiclePricePerDay; // Full day price
+    //         let extraCharge = 0;
+    //         let basePrice = baseDays * vehiclePricePerDay; // Full day price
 
-//         if (extraHours <= 5) {
-//             // Charge ₹100 per hour for up to 5 hours
-//             extraCharge = Math.floor(extraHours) * 100;
+    //         if (extraHours <= 5) {
+    //             // Charge ₹100 per hour for up to 5 hours
+    //             extraCharge = Math.floor(extraHours) * 100;
 
-//             if (extraHours % 1 >= 0.5) {
-//                 // Add ₹50 for half-hour increments
-//                 extraCharge += 50;
-//             }
-//         } else {
-//             // If extra hours exceed 5, count them as another full day
-//             baseDays += 1;
-//             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
-//             extraCharge = 0; // No extra hourly charge beyond 5 hours
-//         }
+    //             if (extraHours % 1 >= 0.5) {
+    //                 // Add ₹50 for half-hour increments
+    //                 extraCharge += 50;
+    //             }
+    //         } else {
+    //             // If extra hours exceed 5, count them as another full day
+    //             baseDays += 1;
+    //             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
+    //             extraCharge = 0; // No extra hourly charge beyond 5 hours
+    //         }
 
-//         // Calculate platform and miscellaneous charges
-//         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
-//         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
+    //         // Calculate platform and miscellaneous charges
+    //         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
+    //         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
 
-//         // Calculate the total amount
-//         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
+    //         // Calculate the total amount
+    //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
 
-//         // Apply discount if coupon is already applied
-//         let adjustedAmount = totalAmount;
-//         if (isCouponApplied && discountAmount > 0) {
-//             adjustedAmount -= discountAmount; // Apply the previously calculated discount
-//         }
+    //         // Apply discount if coupon is already applied
+    //         let adjustedAmount = totalAmount;
+    //         if (isCouponApplied && discountAmount > 0) {
+    //             adjustedAmount -= discountAmount; // Apply the previously calculated discount
+    //         }
 
-//         // Update formData with the calculated values
-//         setOriginalShopAmount(totalAmount); // Store the full amount for reference
-//         setFormData(prevState => ({
-//             ...prevState,
-//             platformAmount: platformAmount,
-//             miscAmount: miscAmount,
-//             shopAmount: adjustedAmount, // Update shopAmount with the adjusted value
-//             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
-//             extraHourCharge: extraCharge,        // Store the extra hour charge
-//             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
-//         }));
+    //         // Update formData with the calculated values
+    //         setOriginalShopAmount(totalAmount); // Store the full amount for reference
+    //         setFormData(prevState => ({
+    //             ...prevState,
+    //             platformAmount: platformAmount,
+    //             miscAmount: miscAmount,
+    //             shopAmount: adjustedAmount, // Update shopAmount with the adjusted value
+    //             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
+    //             extraHourCharge: extraCharge,        // Store the extra hour charge
+    //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
+    //         }));
 
-//         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
-//     }
-// };
+    //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
+    //     }
+    // };
 
 
 
@@ -447,11 +449,11 @@ const CartPage = () => {
     //         toast.error('Coupon already applied!');
     //         return;
     //     }
-    
+
     //     if (formData.couponCode === 'Rideroz234') {
     //         const discount = (5 / 100) * originalShopAmount; // Calculate discount on original amount
     //         const discountedValue = originalShopAmount - discount;
-    
+
     //         setDiscountedAmount(Math.round(discountedValue));
     //         setDiscountAmount(Math.round(discount));
     //         setFormData(prevState => ({
@@ -459,7 +461,7 @@ const CartPage = () => {
     //             shopAmount: Math.round(discountedValue), // Update shopAmount with discounted value
     //             discountAmount: Math.round(discount),
     //         }));
-    
+
     //         setIsCouponApplied(true);
     //         showAlert('Coupon applied successfully!', 'success');
     //     } else {
@@ -471,32 +473,32 @@ const CartPage = () => {
 
     // const calculateShopAmount = () => {
     //     const { startDate, endDate, startTime, endTime } = formData;
-    
+
     //     // Validate that endDate is greater than startDate
     //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
     //         showAlert('End date must be greater than start date.', 'error');
     //         return; // Exit the function if validation fails
     //     }
-    
+
     //     if (startDate && endDate && startTime && endTime) {
     //         // Parse the start and end times with dates
     //         const start = dayjs(`${startDate} ${startTime}`);
     //         const end = dayjs(`${endDate} ${endTime}`);
-    
+
     //         // Calculate the total difference in hours
     //         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
-    
+
     //         // Base price calculation
     //         let baseDays = Math.floor(totalHours / 24); // Full days
     //         let extraHours = totalHours % 24; // Extra hours beyond full days
-    
+
     //         let extraCharge = 0;
     //         let basePrice = baseDays * vehiclePricePerDay; // Full day price
-    
+
     //         if (extraHours <= 5) {
     //             // Charge ₹100 per hour for up to 5 hours
     //             extraCharge = Math.floor(extraHours) * 100;
-    
+
     //             if (extraHours % 1 >= 0.5) {
     //                 // Add ₹50 for half-hour increments
     //                 extraCharge += 50;
@@ -507,14 +509,14 @@ const CartPage = () => {
     //             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
     //             extraCharge = 0; // No extra hourly charge beyond 5 hours
     //         }
-    
+
     //         // Calculate platform and miscellaneous charges
     //         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
     //         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
-    
+
     //         // Calculate the total amount
     //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
-    
+
     //         // Reapply the discount if the coupon is already applied
     //         let adjustedAmount = totalAmount;
     //         if (isCouponApplied && discountAmount > 0) {
@@ -523,7 +525,7 @@ const CartPage = () => {
     //             setDiscountAmount(Math.round(discount)); // Update the discount amount state
     //             setDiscountedAmount(Math.round(adjustedAmount)); // Update the discounted amount state
     //         }
-    
+
     //         // Update formData with the recalculated values
     //         setOriginalShopAmount(totalAmount); // Store the full amount for reference
     //         setFormData(prevState => ({
@@ -535,29 +537,29 @@ const CartPage = () => {
     //             extraHourCharge: extraCharge,        // Store the extra hour charge
     //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
     //         }));
-    
+
     //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
     //     }
     // };
-    
-    
+
+
     // const applyCoupon = () => {
     //     if (isCouponApplied) {
     //         toast.error('Coupon already applied!');
     //         return;
     //     }
-    
+
     //     if (formData.couponCode === 'Rideroz234') {
     //         const discount = (5 / 100) * originalShopAmount; // Calculate discount on the original amount
     //         const discountedValue = originalShopAmount - discount;
-    
+
     //         setDiscountedAmount(Math.round(discountedValue));
     //         setDiscountAmount(Math.round(discount));
     //         setFormData(prevState => ({
     //             ...prevState,
     //             shopAmount: Math.round(discountedValue), // Update shopAmount with discounted value
     //         }));
-    
+
     //         setIsCouponApplied(true);
     //         showAlert('Coupon applied successfully!', 'success');
     //     } else {
@@ -566,107 +568,398 @@ const CartPage = () => {
     //         setDiscountAmount(0);
     //     }
     // };
-    
+
+    // const calculateShopAmount = () => {
+    //     const { startDate, endDate, startTime, endTime } = formData;
+
+    //     console.log({
+    //         startDate, endDate, startTime, endTime
+    //     })
+
+    //     // Validate that endDate is greater than startDate
+    //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
+    //         showAlert('End date must be greater than start date.', 'error');
+    //         return; // Exit the function if validation fails
+    //     }
+
+    //     if (startDate && endDate && startTime && endTime) {
+    //         // Parse the start and end times with dates
+    //         const start = dayjs(`${startDate} ${startTime}`);
+    //         const end = dayjs(`${endDate} ${endTime}`);
+
+    //         // Calculate the total difference in hours
+    //         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
+
+    //         // Base price calculation
+    //         let baseDays = Math.floor(totalHours / 24); // Full days
+    //         let extraHours = totalHours % 24; // Extra hours beyond full days
+
+    //         let extraCharge = 0;
+    //         let basePrice = baseDays * vehiclePricePerDay; // Full day price
+
+    //         if (extraHours <= 5) {
+    //             // Charge ₹100 per hour for up to 5 hours
+    //             extraCharge = Math.floor(extraHours) * 100;
+
+    //             if (extraHours % 1 >= 0.5) {
+    //                 // Add ₹50 for half-hour increments
+    //                 extraCharge += 50;
+    //             }
+    //         } else {
+    //             // If extra hours exceed 5, count them as another full day
+    //             baseDays += 1;
+    //             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
+    //             extraCharge = 0; // No extra hourly charge beyond 5 hours
+    //         }
+
+    //         // Calculate platform and miscellaneous charges
+    //         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
+    //         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
+
+    //         // Calculate the total amount
+    //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
+
+    //         // Adjust the amount if a coupon is applied
+    //         let adjustedAmount = totalAmount;
+    //         if (isCouponApplied && formData.couponCode === 'Rideroz234') {
+    //             const discount = (5 / 100) * totalAmount; // Recalculate discount based on the new total
+    //             adjustedAmount -= discount;
+    //             setDiscountAmount(Math.round(discount)); // Update the discount amount state
+    //             setDiscountedAmount(Math.round(adjustedAmount)); // Update the discounted amount state
+    //         } else {
+    //             setDiscountAmount(0); // Reset discount amount if coupon is not applied
+    //             setDiscountedAmount(null); // Reset discounted amount if coupon is not applied
+    //         }
+
+    //         // Update formData with the recalculated values
+    //         setOriginalShopAmount(totalAmount); // Store the full amount for reference
+    //         setFormData(prevState => ({
+    //             ...prevState,
+    //             platformAmount: platformAmount,
+    //             miscAmount: miscAmount,
+    //             shopAmount: Math.round(adjustedAmount), // Update shopAmount with adjusted value
+    //             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
+    //             extraHourCharge: extraCharge,        // Store the extra hour charge
+    //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
+    //         }));
+
+    //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
+    //     }
+    // };
+
+    // const calculateShopAmount = () => {
+    //     const { startDate, endDate, startTime, endTime } = formData;
+
+    //     console.log({ startDate, endDate, startTime, endTime });
+
+    //     // Validate that endDate is greater than startDate
+    //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
+    //         showAlert('End date must be greater than start date.', 'error');
+    //         return; // Exit the function if validation fails
+    //     }
+
+    //     if (startDate && endDate && startTime && endTime) {
+    //         // Normalize time strings to 24-hour format for consistent parsing
+    //         const parseTimeTo24Hour = (time) => {
+    //             const [timePart, meridian] = time.split(' ');
+    //             let [hours, minutes] = timePart.split(':').map(Number);
+    //             if (meridian === 'PM' && hours !== 12) hours += 12;
+    //             if (meridian === 'AM' && hours === 12) hours = 0;
+    //             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    //         };
+
+    //         const formattedStartTime = parseTimeTo24Hour(startTime);
+    //         const formattedEndTime = parseTimeTo24Hour(endTime);
+
+    //         // Parse the start and end times with dates
+    //         const start = dayjs(`${startDate}T${formattedStartTime}`);
+    //         const end = dayjs(`${endDate}T${formattedEndTime}`);
+
+    //         if (!start.isValid() || !end.isValid()) {
+    //             showAlert('Invalid date or time format.', 'error');
+    //             return;
+    //         }
+
+    //         // Calculate the total difference in hours
+    //         const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
+
+    //         // Base price calculation
+    //         let baseDays = Math.floor(totalHours / 24); // Full days
+    //         let extraHours = totalHours % 24; // Extra hours beyond full days
+
+    //         let extraCharge = 0;
+    //         let basePrice = baseDays * vehiclePricePerDay; // Full day price
+
+    //         if (extraHours <= 5) {
+    //             // Charge ₹100 per hour for up to 5 hours
+    //             extraCharge = Math.floor(extraHours) * 100;
+
+    //             if (extraHours % 1 >= 0.5) {
+    //                 // Add ₹50 for half-hour increments
+    //                 extraCharge += 50;
+    //             }
+    //         } else {
+    //             // If extra hours exceed 5, count them as another full day
+    //             baseDays += 1;
+    //             basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
+    //             extraCharge = 0; // No extra hourly charge beyond 5 hours
+    //         }
+
+    //         // Calculate platform and miscellaneous charges
+    //         const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
+    //         const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
+
+    //         // Calculate the total amount
+    //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
+
+    //         // Adjust the amount if a coupon is applied
+    //         let adjustedAmount = totalAmount;
+    //         if (isCouponApplied && formData.couponCode === 'Rideroz234') {
+    //             const discount = (5 / 100) * totalAmount; // Recalculate discount based on the new total
+    //             adjustedAmount -= discount;
+    //             setDiscountAmount(Math.round(discount)); // Update the discount amount state
+    //             setDiscountedAmount(Math.round(adjustedAmount)); // Update the discounted amount state
+    //         } else {
+    //             setDiscountAmount(0); // Reset discount amount if coupon is not applied
+    //             setDiscountedAmount(null); // Reset discounted amount if coupon is not applied
+    //         }
+
+    //         // Update formData with the recalculated values
+    //         setOriginalShopAmount(totalAmount); // Store the full amount for reference
+    //         setFormData((prevState) => ({
+    //             ...prevState,
+    //             platformAmount: platformAmount,
+    //             miscAmount: miscAmount,
+    //             shopAmount: Math.round(adjustedAmount), // Update shopAmount with adjusted value
+    //             extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
+    //             extraHourCharge: extraCharge,        // Store the extra hour charge
+    //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
+    //         }));
+
+    //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
+    //     }
+    // };
+
+    // const calculateShopAmount = () => {
+    //     const { startDate, endDate, startTime, endTime, couponCode } = formData;
+
+    //     console.log({ startDate, endDate, startTime, endTime });
+
+    //     if (dayjs(endDate).isBefore(dayjs(startDate))) {
+    //         showAlert('End date must be greater than start date.', 'error');
+    //         return;
+    //     }
+
+    //     if (startDate && endDate && startTime && endTime) {
+    //         const parseTimeTo24Hour = (time) => {
+    //             const [timePart, meridian] = time.split(' ');
+    //             let [hours, minutes] = timePart.split(':').map(Number);
+    //             if (meridian === 'PM' && hours !== 12) hours += 12;
+    //             if (meridian === 'AM' && hours === 12) hours = 0;
+    //             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    //         };
+
+    //         const formattedStartTime = parseTimeTo24Hour(startTime);
+    //         const formattedEndTime = parseTimeTo24Hour(endTime);
+
+    //         const start = dayjs(`${startDate}T${formattedStartTime}`);
+    //         const end = dayjs(`${endDate}T${formattedEndTime}`);
+
+    //         if (!start.isValid() || !end.isValid()) {
+    //             showAlert('Invalid date or time format.', 'error');
+    //             return;
+    //         }
+
+    //         const totalHours = end.diff(start, 'hour', true);
+
+    //         let baseDays = Math.floor(totalHours / 24);
+    //         let extraHours = totalHours % 24;
+
+    //         let extraCharge = 0;
+    //         let basePrice = baseDays * vehiclePricePerDay;
+
+    //         if (extraHours <= 5) {
+    //             extraCharge = Math.floor(extraHours) * 100;
+    //             if (extraHours % 1 >= 0.5) {
+    //                 extraCharge += 50;
+    //             }
+    //         } else {
+    //             baseDays += 1;
+    //             basePrice = baseDays * vehiclePricePerDay;
+    //             extraCharge = 0;
+    //         }
+
+    //         const platformAmount = (10 / 100) * (basePrice + extraCharge);
+    //         const miscAmount = (5 / 100) * (basePrice + extraCharge);
+    //         const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
+
+    //         let adjustedAmount = totalAmount;
+    //         let discount = 0;
+
+    //         if (isCouponApplied && couponCode === 'Rideroz234') {
+    //             discount = (5 / 100) * totalAmount;
+    //             adjustedAmount -= discount;
+    //         }
+
+    //         setOriginalShopAmount(totalAmount);
+    //         setDiscountAmount(Math.round(discount)); // Update the discount amount
+    //         setDiscountedAmount(Math.round(adjustedAmount)); // Update the discounted amount
+    //         setFormData((prevState) => ({
+    //             ...prevState,
+    //             platformAmount,
+    //             miscAmount,
+    //             shopAmount: Math.round(adjustedAmount),
+    //             extraHours: extraHours.toFixed(2),
+    //             extraHourCharge: extraCharge,
+    //             rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
+    //         }));
+
+    //         setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
+    //     }
+    // };
+
+
+
+    // const applyCoupon = () => {
+    //     if (isCouponApplied) {
+    //         showAlert('Coupon already applied!', 'error');
+    //         return;
+    //     }
+
+    //     if (formData.couponCode === 'Rideroz234') {
+    //         const discount = (5 / 100) * originalShopAmount; // Calculate discount on the original amount
+    //         const discountedValue = originalShopAmount - discount;
+
+    //         setDiscountedAmount(Math.round(discountedValue));
+    //         setDiscountAmount(Math.round(discount));
+    //         setFormData(prevState => ({
+    //             ...prevState,
+    //             shopAmount: Math.round(discountedValue), // Update shopAmount with discounted value
+    //         }));
+
+    //         setIsCouponApplied(true); // Mark the coupon as applied
+    //         showAlert('Coupon applied successfully!', 'success');
+    //     } else {
+    //         showAlert('Invalid Coupon Code', 'error');
+    //         setDiscountedAmount(null);
+    //         setDiscountAmount(0);
+    //     }
+    // };
+
+
     const calculateShopAmount = () => {
-        const { startDate, endDate, startTime, endTime } = formData;
-    
-        // Validate that endDate is greater than startDate
+        const { startDate, endDate, startTime, endTime, couponCode } = formData;
+
+        console.log({ startDate, endDate, startTime, endTime });
+
         if (dayjs(endDate).isBefore(dayjs(startDate))) {
             showAlert('End date must be greater than start date.', 'error');
-            return; // Exit the function if validation fails
+            return;
         }
-    
+
         if (startDate && endDate && startTime && endTime) {
-            // Parse the start and end times with dates
-            const start = dayjs(`${startDate} ${startTime}`);
-            const end = dayjs(`${endDate} ${endTime}`);
-    
-            // Calculate the total difference in hours
-            const totalHours = end.diff(start, 'hour', true); // Use true for floating-point precision
-    
-            // Base price calculation
-            let baseDays = Math.floor(totalHours / 24); // Full days
-            let extraHours = totalHours % 24; // Extra hours beyond full days
-    
+            const parseTimeTo24Hour = (time) => {
+                const [timePart, meridian] = time.split(' ');
+                let [hours, minutes] = timePart.split(':').map(Number);
+                if (meridian === 'PM' && hours !== 12) hours += 12;
+                if (meridian === 'AM' && hours === 12) hours = 0;
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            };
+
+            const formattedStartTime = parseTimeTo24Hour(startTime);
+            const formattedEndTime = parseTimeTo24Hour(endTime);
+
+            const start = dayjs(`${startDate}T${formattedStartTime}`);
+            const end = dayjs(`${endDate}T${formattedEndTime}`);
+
+            if (!start.isValid() || !end.isValid()) {
+                showAlert('Invalid date or time format.', 'error');
+                return;
+            }
+
+            const totalHours = end.diff(start, 'hour', true);
+
+            let baseDays = Math.floor(totalHours / 24);
+            let extraHours = totalHours % 24;
+
             let extraCharge = 0;
-            let basePrice = baseDays * vehiclePricePerDay; // Full day price
-    
+            let basePrice = baseDays * vehiclePricePerDay;
+
             if (extraHours <= 5) {
-                // Charge ₹100 per hour for up to 5 hours
                 extraCharge = Math.floor(extraHours) * 100;
-    
                 if (extraHours % 1 >= 0.5) {
-                    // Add ₹50 for half-hour increments
                     extraCharge += 50;
                 }
             } else {
-                // If extra hours exceed 5, count them as another full day
                 baseDays += 1;
-                basePrice = baseDays * vehiclePricePerDay; // Update base price with the new full day
-                extraCharge = 0; // No extra hourly charge beyond 5 hours
+                basePrice = baseDays * vehiclePricePerDay;
+                extraCharge = 0;
             }
-    
-            // Calculate platform and miscellaneous charges
-            const platformAmount = (10 / 100) * (basePrice + extraCharge); // 10% platform charge
-            const miscAmount = (5 / 100) * (basePrice + extraCharge);      // 5% miscellaneous charge
-    
-            // Calculate the total amount
+
+            const platformAmount = (10 / 100) * (basePrice + extraCharge);
+            const miscAmount = (5 / 100) * (basePrice + extraCharge);
             const totalAmount = basePrice + extraCharge + platformAmount + miscAmount;
-    
-            // Adjust the amount if a coupon is applied
+
             let adjustedAmount = totalAmount;
-            if (isCouponApplied && formData.couponCode === 'Rideroz234') {
-                const discount = (5 / 100) * totalAmount; // Recalculate discount based on the new total
+            let discount = 0;
+
+            if (isCouponApplied && couponCode === 'Rideroz234') {
+                discount = (5 / 100) * totalAmount;
                 adjustedAmount -= discount;
-                setDiscountAmount(Math.round(discount)); // Update the discount amount state
-                setDiscountedAmount(Math.round(adjustedAmount)); // Update the discounted amount state
-            } else {
-                setDiscountAmount(0); // Reset discount amount if coupon is not applied
-                setDiscountedAmount(null); // Reset discounted amount if coupon is not applied
             }
-    
-            // Update formData with the recalculated values
-            setOriginalShopAmount(totalAmount); // Store the full amount for reference
-            setFormData(prevState => ({
+
+            setOriginalShopAmount(totalAmount);
+            setDiscountAmount(Math.round(discount)); // Update the discount amount
+            setDiscountedAmount(Math.round(adjustedAmount)); // Update the discounted amount
+            setFormData((prevState) => ({
                 ...prevState,
-                platformAmount: platformAmount,
-                miscAmount: miscAmount,
-                shopAmount: Math.round(adjustedAmount), // Update shopAmount with adjusted value
-                extraHours: extraHours.toFixed(2), // Store the exact extra hours (including fractional part)
-                extraHourCharge: extraCharge,        // Store the extra hour charge
+                platformAmount,
+                miscAmount,
+                shopAmount: Math.round(adjustedAmount),
+                discountAmount: Math.round(discount), // Synchronize discountAmount with formData
+                extraHours: extraHours.toFixed(2),
+                extraHourCharge: extraCharge,
                 rentDuration: `${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`,
             }));
-    
+
             setRentDuration(`${baseDays} day(s) and ${extraHours.toFixed(1)} hour(s)`);
         }
     };
-    
+
+
+
+
     const applyCoupon = () => {
         if (isCouponApplied) {
             showAlert('Coupon already applied!', 'error');
             return;
         }
-    
+
         if (formData.couponCode === 'Rideroz234') {
             const discount = (5 / 100) * originalShopAmount; // Calculate discount on the original amount
             const discountedValue = originalShopAmount - discount;
-    
-            setDiscountedAmount(Math.round(discountedValue));
-            setDiscountAmount(Math.round(discount));
-            setFormData(prevState => ({
+
+            setDiscountAmount(Math.round(discount)); // Update discount amount in state
+            setDiscountedAmount(Math.round(discountedValue)); // Update discounted total
+            setFormData((prevState) => ({
                 ...prevState,
                 shopAmount: Math.round(discountedValue), // Update shopAmount with discounted value
+                discountAmount: Math.round(discount), // Synchronize discountAmount with formData
             }));
-    
+
             setIsCouponApplied(true); // Mark the coupon as applied
             showAlert('Coupon applied successfully!', 'success');
         } else {
             showAlert('Invalid Coupon Code', 'error');
             setDiscountedAmount(null);
             setDiscountAmount(0);
+            setFormData((prevState) => ({
+                ...prevState,
+                discountAmount: 0,
+            }));
         }
     };
-    
+
 
 
     // Recalculate shop amount whenever startDate or endDate changes
@@ -890,7 +1183,10 @@ const CartPage = () => {
                                         placeholderText="Select Pickup Date"
                                         required
                                     /> */}
+
+                                    <label htmlFor="" className=" text-xs">Pickup Date</label>
                                     <input
+                                        label="Enter Start Date"
                                         type="date"
                                         value={formData.startDate}
                                         onChange={(e) => handleDateChange(e.target.value, 'startDate')}
@@ -912,6 +1208,7 @@ const CartPage = () => {
                                         className="text-xs sm:text-sm border p-1.5 w-full outline-none border-gray-500"
                                     /> */}
 
+
                                     <CustomTimeDropdown
                                         name="startTime"
                                         value={formData.startTime}
@@ -930,7 +1227,10 @@ const CartPage = () => {
                                         placeholderText="Select Drop off Date"
                                         required
                                     /> */}
+
+                                    <label htmlFor="" className=" text-xs">Select Drop off Date</label>
                                     <input
+                                        label="Enter End Date"
                                         type="date"
                                         value={formData.endDate}
                                         onChange={(e) => handleDateChange(e.target.value, 'endDate')}
@@ -1041,11 +1341,18 @@ const CartPage = () => {
                                     </>
                                 )}
 
-                                {discountedAmount ? <p className="text-green-500 text-sm">
-                                    Discount Amount: ₹ {discountAmount} {/* Display the discount amount */}
-                                </p> : ""}
+                                {/* {discountedAmount ? <p className="text-green-500 text-sm">
+                                    Discount Amount: ₹ {discountAmount} 
+                                </p> : ""} */}
 
-                                <pre>{JSON.stringify(formData,null,2)}</pre>
+                                {discountAmount > 0 && (
+                                    <p className="text-green-500 text-sm">
+                                        Discount Amount: ₹ {discountAmount}
+                                    </p>
+                                )}
+
+
+                                {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
 
                                 {/* <p>
                                     <span className="font-bold">Total Shop Amount</span> :
@@ -1056,13 +1363,13 @@ const CartPage = () => {
                                     }</span>
                                 </p> */}
                                 <p>
-    <span className="font-bold">Total Shop Amount</span> :
-    <span className="app-font"> ₹ {
-        isCouponApplied && discountedAmount !== null
-            ? discountedAmount // Show discounted amount if coupon is applied
-            : originalShopAmount // Show original amount if no coupon applied
-    }</span>
-</p>
+                                    <span className="font-bold">Total Shop Amount</span> :
+                                    <span className="app-font"> ₹ {
+                                        isCouponApplied && discountedAmount !== null
+                                            ? discountedAmount // Show discounted amount if coupon is applied
+                                            : originalShopAmount // Show original amount if no coupon applied
+                                    }</span>
+                                </p>
 
                             </div>
 
@@ -1076,7 +1383,14 @@ const CartPage = () => {
                                     className="hover:shadow-none shadow-none w-full bg-green-500"
 
                                     onClick={handleSubmit}
-                                    disabled={verifyPaymentLoading || !formData.startDate || !formData.endDate || !formData.startTime || !formData.endTime}
+                                    disabled={
+                                        isLoading ||
+                                        verifyPaymentLoading ||
+                                        !formData.startDate ||
+                                        !formData.endDate ||
+                                        !formData.startTime ||
+                                        !formData.endTime
+                                    }
                                 >
                                     {verifyPaymentLoading ? "Processing..." : "Confirm"}
                                 </Button>
@@ -1164,12 +1478,12 @@ const CartPage = () => {
                                 </div>
                             </div>
 
-                            {/* <div className=" bg-white drop-shadow mb-4 px-4 py-4">
+                            <div className=" bg-white drop-shadow mb-4 px-4 py-4">
                                 <div className="">
                                     <p className=" app-font text-justify mb-1 text-red-600">"Vehicle book करने के बाद अगर आप 1 घंटे के अंदर Shop पर नहीं पहुँचते हैं, तो आपकी ride अपने आप cancel हो जाएगी और आपके amount का 50% refund कर दिया जाएगा।"</p>
                                     <p className=" app-font text-justify text-red-600">"If you don't arrive at the shop within 1 hour after booking the vehicle, your ride will be automatically canceled, and 50% of your amount will be refunded."</p>
                                 </div>
-                            </div> */}
+                            </div>
                         </section>
                     </form>
                 </div>

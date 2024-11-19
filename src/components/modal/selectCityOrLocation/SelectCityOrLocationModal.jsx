@@ -104,91 +104,179 @@ export default function SelectCityOrLocationModal() {
     //     }
     // };
     // Detect current location function
+    // const detectLocation = async () => {
+    //     if (!navigator.geolocation) {
+    //         showAlert("Geolocation is not supported by your browser.", "error", 2000);
+    //         return;
+    //     }
+
+    //     try {
+    //         // Check if permission for geolocation is granted, denied, or needs to be prompted
+    //         const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+
+    //         if (permissionStatus.state === 'denied') {
+    //             // If permission is denied, alert the user to enable location services
+    //             showAlert("Location permission is denied. Please enable GPS in your device settings.", "error", 3000);
+    //             return;
+    //         } else if (permissionStatus.state === 'prompt') {
+    //             // If permission is in the "prompt" state, show a message to allow location access
+    //             showAlert("Please allow location access.", "warning", 3000);
+    //         }
+
+    //         if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
+    //             // Once permission is granted or prompted, try to detect location
+    //             showAlert("Detecting your location...", "success", 2000);
+    //             navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    //             handleOpen();
+    //         }
+
+    //     } catch (error) {
+    //         console.error("Error detecting location permissions: ", error);
+    //         showAlert("An error occurred while checking location permissions.", "error", 2000);
+    //     }
+    // };
+
+
+
+
+    // const successCallback = async (position) => {
+    //     const { latitude, longitude } = position.coords;
+    //     setLat(latitude);
+    //     setLng(longitude);
+
+    //     // Reverse Geocoding using Google Maps API
+    //     try {
+    //         const response = await axios.get(
+    //             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE`
+    //         );
+    //         const addressComponents = response.data.results[0].address_components;
+
+    //         // Find the city name
+    //         const city = addressComponents.find((component) =>
+    //             component.types.includes("locality")
+    //         )?.long_name;
+
+    //         // Get full address for the location
+    //         const locationName = response.data.results[0].formatted_address;
+
+    //         if (city) {
+    //             // Set the detected city and location name
+    //             setSelectedCity(city);
+    //             setVehicleCity(city);
+    //             setCurrentLocationName(locationName);
+
+    //             // Store selected city and location in localStorage
+    //             localStorage.setItem('selectedCity', city);
+    //             localStorage.setItem('vehicleCity', city);
+    //             localStorage.setItem('lat', latitude);
+    //             localStorage.setItem('lng', longitude);
+    //             localStorage.setItem('currentLocationName', locationName);
+
+    //             // Refetch vehicles after location detection
+    //             refetch();  // Add this to fetch vehicles after detecting location
+
+    //             handleOpen(); // Close the dialog after detection
+    //         } else {
+    //             showAlert("Could not determine the city from your location.", "error", 2000);
+    //         }
+    //     } catch (error) {
+    //         showAlert("Failed to fetch location details.", "error", 2000);
+    //         console.error("Error fetching location details: ", error);
+    //     }
+    // };
+
+    // const errorCallback = (error) => {
+    //     console.error("Error detecting location: ", error);
+    //     showAlert("Unable to detect location. Please try again.", "error", 2000);
+    // };
+
     const detectLocation = async () => {
         if (!navigator.geolocation) {
             showAlert("Geolocation is not supported by your browser.", "error", 2000);
             return;
         }
-
+    
         try {
-            // Check if permission for geolocation is granted, denied, or needs to be prompted
-            const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-
-            if (permissionStatus.state === 'denied') {
-                // If permission is denied, alert the user to enable location services
-                showAlert("Location permission is denied. Please enable GPS in your device settings.", "error", 3000);
-                return;
-            } else if (permissionStatus.state === 'prompt') {
-                // If permission is in the "prompt" state, show a message to allow location access
-                showAlert("Please allow location access.", "warning", 3000);
-            }
-
-            if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
-                // Once permission is granted or prompted, try to detect location
-                showAlert("Detecting your location...", "success", 2000);
-                navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-                handleOpen();
-            }
-
+            // Show a prompt for location detection
+            showAlert("Detecting your location...", "success", 2000);
+    
+            // Request the current position
+            navigator.geolocation.getCurrentPosition(
+                successCallback,
+                errorCallback,
+                {
+                    enableHighAccuracy: true, // Use high accuracy if available
+                    timeout: 10000, // Timeout after 10 seconds
+                }
+            );
         } catch (error) {
-            console.error("Error detecting location permissions: ", error);
-            showAlert("An error occurred while checking location permissions.", "error", 2000);
+            console.error("Error detecting location: ", error);
+            showAlert("An error occurred while detecting location. Please try again.", "error", 2000);
         }
     };
-
-
-
-
+    
     const successCallback = async (position) => {
         const { latitude, longitude } = position.coords;
         setLat(latitude);
         setLng(longitude);
-
+    
         // Reverse Geocoding using Google Maps API
         try {
             const response = await axios.get(
                 `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE`
             );
-            const addressComponents = response.data.results[0].address_components;
-
-            // Find the city name
-            const city = addressComponents.find((component) =>
+            const addressComponents = response.data.results[0]?.address_components;
+    
+            const city = addressComponents?.find((component) =>
                 component.types.includes("locality")
             )?.long_name;
-
-            // Get full address for the location
-            const locationName = response.data.results[0].formatted_address;
-
+    
+            const locationName = response.data.results[0]?.formatted_address;
+    
             if (city) {
-                // Set the detected city and location name
                 setSelectedCity(city);
                 setVehicleCity(city);
                 setCurrentLocationName(locationName);
-
-                // Store selected city and location in localStorage
-                localStorage.setItem('selectedCity', city);
-                localStorage.setItem('vehicleCity', city);
-                localStorage.setItem('lat', latitude);
-                localStorage.setItem('lng', longitude);
-                localStorage.setItem('currentLocationName', locationName);
-
-                // Refetch vehicles after location detection
-                refetch();  // Add this to fetch vehicles after detecting location
-
-                handleOpen(); // Close the dialog after detection
+    
+                localStorage.setItem("selectedCity", city);
+                localStorage.setItem("vehicleCity", city);
+                localStorage.setItem("lat", latitude);
+                localStorage.setItem("lng", longitude);
+                localStorage.setItem("currentLocationName", locationName);
+    
+                refetch(); // Fetch nearby vehicles
+                handleOpen(); // Close the modal
             } else {
                 showAlert("Could not determine the city from your location.", "error", 2000);
             }
         } catch (error) {
-            showAlert("Failed to fetch location details.", "error", 2000);
             console.error("Error fetching location details: ", error);
+            showAlert("Failed to fetch location details.", "error", 2000);
         }
     };
-
+    
     const errorCallback = (error) => {
+        let errorMessage = "Unable to detect location. Please try again.";
+    
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                errorMessage = "Location permission denied. Please enable it in your browser or device settings.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                errorMessage = "Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                errorMessage = "The request to get your location timed out.";
+                break;
+            default:
+                errorMessage = "An unknown error occurred while detecting location.";
+                break;
+        }
+    
         console.error("Error detecting location: ", error);
-        showAlert("Unable to detect location. Please try again.", "error", 2000);
+        showAlert(errorMessage, "error", 2000);
     };
+    
 
 
     useEffect(() => {

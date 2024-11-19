@@ -411,7 +411,7 @@ const handleNext = () => {
             </Typography>
           </div>
           <div className="flex flex-wrap items-center gap-2 mb-2">
-            <div className="">
+            <div className=" w-full lg:w-56">
               <Input
                 label="Start Date"
                 type="date"
@@ -423,7 +423,7 @@ const handleNext = () => {
 
 
             </div>
-            <div className="">
+            <div className=" w-full lg:w-56">
               <Input
                 label="End Date"
                 type="date"

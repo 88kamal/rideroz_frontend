@@ -104,6 +104,8 @@ const ViewUserBookingInvoice = () => {
 
                 {/* User Information Table */}
 
+                {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
+
                 <div className=" p-6">
                     <div className="mb-6">
                         <table className="w-full border border-gray-300 app-font">
@@ -323,9 +325,11 @@ const ViewUserBookingInvoice = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                                {/* <pre>{JSON.stringify(user?.adharcardImg,null,2)}</pre> */}
                                 {user?.adharcardImg.map((item, index) => {
                                     return (
                                         <tr key={index}>
+                                            {/* <pre>{JSON.stringify(item,null,2)}</pre> */}
                                             <td className="border border-gray-300 px-4 py-2">
                                                 <img src={item?.url} alt="" className='w-80 rounded-md' />
                                             </td>
