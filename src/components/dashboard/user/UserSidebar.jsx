@@ -35,6 +35,7 @@ export default function UserSidebar() {
 
             <div className="">
                 <div className="mb-2 p-4 ">
+                    <Link to={'/'}>
                     <div
                         className=" py-6"
                     >
@@ -43,6 +44,7 @@ export default function UserSidebar() {
                         </div>
                         <h1 className="text-center text-xl text-black font-bold app-font">User Dashboard</h1>
                     </div>
+                    </Link>
                 </div>
             </div>
 

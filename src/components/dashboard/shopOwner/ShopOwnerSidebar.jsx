@@ -35,7 +35,8 @@ export default function ShopOwnerSidebar() {
 
             <div className="">
                 <div className="mb-2 p-4 ">
-                    <div
+                   <Link to={'/'}>
+                   <div
                         className=" py-6"
                     >
                         <div className="flex justify-center mb-2">
@@ -43,6 +44,7 @@ export default function ShopOwnerSidebar() {
                         </div>
                         <h1 className="text-center text-xl text-black font-bold app-font">Shop Owner Dashboard</h1>
                     </div>
+                   </Link>
                 </div>
             </div>
 
