@@ -10,7 +10,7 @@ import { Eye, X } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // eslint-disable-next-line no-unused-vars
-export default function ViewShopOwnerDetailModal({_id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng, account_holder_name, ifsc, account_number, account_verified}) {
+export default function ViewShopOwnerDetailModal({_id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng, account_holder_name, ifsc, account_number, account_verified, shop_OpeningTime, shop_ClosedTime}) {
   const [open, setOpen] = useState(false);
   const [dialogSize, setDialogSize] = useState("lg");
 
@@ -126,6 +126,17 @@ export default function ViewShopOwnerDetailModal({_id, shopImage, legalDoc, shop
                     className="px-3 text-center w-28"
                 />
               </span>
+            </div>
+
+          </div>
+
+          <div className="flex flex-wrap justify-between items-center">
+            <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
+              <span className=" font-bold">Shop Opening Time : </span> <span className=" app-font capitalize">{shop_OpeningTime}</span>
+            </div>
+
+            <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
+              <span className=" font-bold">Shop Closing Time : </span> <span className=" app-font capitalize">{shop_ClosedTime}</span>
             </div>
 
           </div>

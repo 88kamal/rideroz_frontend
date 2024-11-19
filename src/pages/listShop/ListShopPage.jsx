@@ -12,6 +12,7 @@ import Layout from "../../components/layout/Layout";
 import { ClipboardDocumentListIcon, CurrencyRupeeIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import myContext from "../../context/myContext";
+import CustomTimeDropdown from "./CustomTimeDropdown";
 
 
 function ListShopPage() {
@@ -29,7 +30,9 @@ function ListShopPage() {
         // legalDoc: "",
         account_holder_name: "",
         ifsc: "",
-        account_number: ""
+        account_number: "",
+        shop_OpeningTime : null,
+        shop_ClosedTime : null
     });
 
     const [bankDetails, setBankDetails] = useState({
@@ -266,8 +269,8 @@ function ListShopPage() {
         <Layout>
             <div className="">
 
-                {/* <pre>{JSON.stringify(formData,null,2)}</pre>
-<pre>{JSON.stringify(bankDetails,null,2)}</pre> */}
+                <pre>{JSON.stringify(formData,null,2)}</pre>
+{/* <pre>{JSON.stringify(bankDetails,null,2)}</pre> */}
 
                 <div className="main flex flex-wrap  justify-between bg-green-100 ">
                     <div className="left w-full md:w-1/2 p-5">
@@ -560,6 +563,22 @@ function ListShopPage() {
                                             </div>
                                         )}
                                     </div> */}
+
+                                    <div className="">
+                                        <CustomTimeDropdown  
+                                        name="shop_OpeningTime"
+                                        value={formData.shop_OpeningTime}
+                                        onChange={handleChange}
+                                        />
+                                    </div>
+
+                                    <div className="">
+                                        <CustomTimeDropdown 
+                                          name="shop_ClosedTime"
+                                          value={formData.shop_ClosedTime}
+                                          onChange={handleChange}
+                                          />
+                                    </div>
 
                                     <div className="">
                                         <div className=" mb-3">

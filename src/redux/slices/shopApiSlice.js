@@ -138,6 +138,30 @@ export const shopApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Shop'], // Invalidate cache if related data is used elsewhere
         }),
+        deactivateShopByOwner: builder.mutation({
+            query: (shopId) => ({
+                url: `/shop/deactivate-shop-by-owner/${shopId}`,
+                method: 'PUT',
+            }),
+        }),
+        activateShopByOwner: builder.mutation({
+            query: (shopId) => ({
+                url: `/shop/activate-shop-by-owner/${shopId}`,
+                method: 'PUT',
+            }),
+        }),
+        deactivateShopByAdmin: builder.mutation({
+            query: (shopId) => ({
+                url: `/shop/deactivate-shop-by-admin/${shopId}`,
+                method: 'PUT',
+            }),
+        }),
+        activateShopByAdmin: builder.mutation({
+            query: (shopId) => ({
+                url: `/shop/activate-shop-by-admin/${shopId}`,
+                method: 'PUT',
+            }),
+        }),
 
     }),
     refetchOnReconnect: true,  // Ensure data refetches when connection is restored
@@ -148,5 +172,9 @@ export const {
     useGetShopsQuery,
     useEditShopMutation,
     useDeleteShopMutation,
-    useVerifyShopOwnerMutation
+    useVerifyShopOwnerMutation,
+    useDeactivateShopByOwnerMutation,
+    useActivateShopByOwnerMutation,
+    useDeactivateShopByAdminMutation,
+    useActivateShopByAdminMutation,
 } = shopApi;

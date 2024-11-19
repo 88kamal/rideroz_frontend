@@ -1,11 +1,12 @@
 import { Chip } from '@material-tailwind/react';
 import { useGetUserByIdQuery } from '../../../redux/slices/userApiSlice';
 import authService from '../../../services/authService';
+import ShopOwnerActiveAndDeActiveButton from '../shopOwner/activeAndDeactive/ShopOwnerActiveAndDeActiveButton';
 
 function UserProfile() {
     const user = authService.getCurrentUser();
     const userId = user?.id;
-    const { data: getUserById, error, isLoading } = useGetUserByIdQuery(userId)
+    const { data: getUserById, error, isLoading, refetch } = useGetUserByIdQuery(userId)
 
     const date = new Date(getUserById?.user?.createdAt);
 
@@ -169,6 +170,40 @@ function UserProfile() {
                         <span className="text-gray-700  app-font">IFSC Code</span>
                         <span className="text-gray-600 blur  hover:blur-0 cursor-pointer ">{getUserById?.user?.ifsc}</span>
                     </div>
+                </div>
+
+                <div className="border-t pt-4 space-y-3">
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Shop Opening And Closing Time</h2>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font">Shop Opening Time</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.shop_OpeningTime || "N/A"}</span>
+                    </div>
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font">Shop Closing Time</span>
+                        <span className="text-gray-600 ">{getUserById?.user?.shop_ClosedTime || "N/A"}</span>
+                    </div>
+                </div>
+
+                <div className="border-t pt-4 space-y-3">
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Shop Activation</h2>
+
+                    <div className="flex items-center justify-between bg-gray-50 drop-shadow p-2">
+                        <span className="text-gray-700  app-font">Shop Activation</span>
+                        <span className="text-gray-600 ">{
+                            getUserById?.user?.ownerActivation === false ? "Deactive" : "Active"}</span>
+                    </div>
+                    
+                </div>
+
+                        {/* <pre>{JSON.stringify(getUserById?.user, null, 2)}</pre> */}
+
+                <div className="">
+                    <ShopOwnerActiveAndDeActiveButton 
+                    shopId={getUserById?.user?._id}
+                    ownerActivation={getUserById?.user?.ownerActivation}
+                    refetch={refetch}
+                    />
                 </div>
 
                 {/* Aadhaar Card Image */}

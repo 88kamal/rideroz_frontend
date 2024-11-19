@@ -647,7 +647,7 @@ const AllVehicle = () => {
                                                     ₹ <span className="font-bold text-black ">{vehiclePrice} /-</span>
                                                     <span className="app-font"> per day</span>
                                                 </p>
-                                                <span className="font-medium text-sm">{distance} km</span>
+                                                <span className="font-medium text-sm">{distance}</span>
                                             </div>
                                             <div className="flex w-full gap-2 mt-4">
                                                 <DatePickerModule vehicleId={_id} month={"2024-11"} />
