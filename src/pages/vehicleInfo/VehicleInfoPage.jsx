@@ -3,7 +3,7 @@ import { BsWhatsapp } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import { Button } from "@material-tailwind/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetVehicleByIdQuery } from "../../redux/slices/vehicleApiSlice";
@@ -11,6 +11,8 @@ import { TicketMinus } from "lucide-react";
 import VehicleReview from "../../components/review/VehicleReview";
 import RatingStar from "../../components/review/RatingStar";
 import VehicleAvailbilityModal from "./modal/VehicleAvailbilityModal";
+import Meta from "../../components/seo/Meta";
+import myContext from "../../context/myContext";
 
 function ProductInfo() {
     const { id } = useParams();
@@ -18,7 +20,7 @@ function ProductInfo() {
     const navigate = useNavigate();
     // console.log(imageData)
     const [slideImage, setslideImage] = useState("")
-
+    const { lat, setLat, lng, setLng, vehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName } = useContext(myContext);
 
     const imageData =
     {
@@ -32,6 +34,10 @@ function ProductInfo() {
 
     return (
         <Layout>
+            {/* <pre>{JSON.stringify({
+                lat, setLat, lng, setLng, vehicleType, vehicleCity, setVehicleCity, selectedCity, setSelectedCity, currentLocationName, setCurrentLocationName
+            },null,2)}</pre> */}
+            <Meta title={`Rental in ${selectedCity} - Rideroz`} description={"Affordable rental services in India. Flexible booking options available."}/>
             {/* Main Section  */}
             <section className=" sm:py-1">
                 {/* div 1  */}
