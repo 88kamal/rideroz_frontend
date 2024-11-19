@@ -10,11 +10,11 @@ import { Eye, X } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // eslint-disable-next-line no-unused-vars
-export default function ViewShopOwnerDetailModal({_id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng, account_holder_name, ifsc, account_number, account_verified, shop_OpeningTime, shop_ClosedTime}) {
+export default function ViewShopOwnerDetailModal(shop) {
   const [open, setOpen] = useState(false);
   const [dialogSize, setDialogSize] = useState("lg");
 
-  // const { _id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng, account_holder_name, ifsc, account_number, account_verified } = shop
+  const{_id, shopImage, legalDoc, shopName, ownerName, ownerEmail, ownerPhoneNumber, gender, selectCity, lat, lng, account_holder_name, ifsc, account_number, account_verified, shop_OpeningTime, shop_ClosedTime, adminActivation, ownerActivation} = shop
 
   const handleOpen = () => setOpen(!open);
 
@@ -137,6 +137,17 @@ export default function ViewShopOwnerDetailModal({_id, shopImage, legalDoc, shop
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
               <span className=" font-bold">Shop Closing Time : </span> <span className=" app-font capitalize">{shop_ClosedTime}</span>
+            </div>
+
+          </div>
+
+          <div className="flex flex-wrap justify-between items-center">
+            <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
+              <span className=" font-bold">Shop Activation : </span> <span className=" app-font capitalize">{ownerActivation === false ? "Active" : "Deactive"}</span>
+            </div>
+
+            <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
+              <span className=" font-bold">Rideroz Block Status : </span> <span className=" app-font capitalize">{adminActivation === false ? "Active" : "Deactive"}</span>
             </div>
 
           </div>

@@ -602,7 +602,7 @@ const AllVehicle = () => {
 
     return (
         <section className="py-5">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto">
                 <div className="flex flex-wrap -m-4 justify-center">
                     {isLoading ? (
                         <div className="flex justify-center p-4">
@@ -620,7 +620,9 @@ const AllVehicle = () => {
                             const { _id, vehicleName, vehiclePrice, vehicleImage, vehicleRatings, distance } = item;
 
                             return (
-                                <div key={index} className="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+                               <>
+                               
+                               <div key={index} className="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                                     <div className="bg-white rounded-lg border border-gray-300 drop-shadow">
                                         <div
                                             className="relative cursor-pointer"
@@ -661,6 +663,8 @@ const AllVehicle = () => {
                                         </div>
                                     </div>
                                 </div>
+                                
+                               </>
                             );
                         })
                     )}

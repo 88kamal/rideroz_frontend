@@ -310,8 +310,9 @@ import VerifyAccountModal from "./modal/shopOwner/VerifyAccountModal";
 import DeleteShopOwnerModal from "./modal/shopOwner/DeleteShopOwnerModal";
 import ViewShopOwnerDetailModal from "./modal/shopOwner/ViewShopOwnerDetailModal";
 import EditShopOwnerModal from "./modal/shopOwner/EditShopOwnerModal";
+import RiderozAdminActiveAndDeActiveButton from "../shopOwner/activeAndDeactive/RiderozAdminActiveAndDeActiveButton";
 
-const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Account Verified", "Verify Account", "View Vehicles", "Order", "Edit", "Delete", "View"];
+const TABLE_HEAD = ["S.No", "Shop Image", "Shop Name", "Account Verified", "Verify Account", "View Vehicles", "Order", "Edit", "Block", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState("");
@@ -474,6 +475,8 @@ export default function ViewShopOwnerTable() {
                                 return (
                                     <tr key={shop._id} className="hover:bg-green-50/50 cursor-pointer">
                                         <td className={classes}>{index + 1 + (page - 1) * limit}.</td>
+
+                                        {/* <pre>{JSON.stringify(shop,null,2)}</pre> */}
                                         <td className={classes}>
                                             <LazyLoadImage
                                                 alt={"img"}
@@ -529,7 +532,12 @@ export default function ViewShopOwnerTable() {
                                                 lng={shop.lng} />
                                         </td>
                                         <td className={classes}>
-                                            <DeleteShopOwnerModal id={shop._id} />
+                                            {/* <DeleteShopOwnerModal id={shop._id} /> */}
+                                            <RiderozAdminActiveAndDeActiveButton
+                                            shopId={shop?._id}
+                                            adminActivation={shop?.adminActivation}
+                                            refetch={refetch}
+                                            />
                                         </td>
                                         <td className={classes}>
                                             <ViewShopOwnerDetailModal {...shop} />
@@ -632,9 +640,14 @@ export default function ViewShopOwnerTable() {
                                     </div>
 
                                     <div className="relative group">
-                                        <DeleteShopOwnerModal id={shop._id} />
+                                        {/* <DeleteShopOwnerModal id={shop._id} /> */}
+                                        <RiderozAdminActiveAndDeActiveButton
+                                            shopId={shop?._id}
+                                            adminActivation={shop?.adminActivation}
+                                            refetch={refetch}
+                                            />
                                         <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 left-1/2 transform -translate-x-1/2 -top-6">
-                                            Delete Shop Owner
+                                            Block Shop Owner
                                         </div>
                                     </div>
 

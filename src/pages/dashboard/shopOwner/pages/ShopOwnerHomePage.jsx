@@ -1,9 +1,9 @@
-import ViewAllSettlements from "../../../../components/common/shopOwner/settlements/ViewAllSettlements"
+import ShopDeactivationBanner from "../../../../components/common/shopOwner/ShopDeactivatedBanner/ShopDeactivatedBanner"
 
 const ShopOwnerHomePage = () => {
   return (
     <div>
-      <ViewAllSettlements/>
+      <ShopDeactivationBanner/>
     </div>
   )
 }

@@ -349,7 +349,7 @@ export default function SuccessBookedVehicleTranscation() {
     "Payment Status",
     "View Location",
     ...(user?.role === 15 ? ["Cancel Ride"] : []),
-    // ...(user?.role === 14 ? ["Verify Otp"] : []),
+    ...(user?.role === 14 ? ["Verify Otp"] : []),
     ...(user?.role === 14 ? ["Settle Status"] : []),
     ...(user?.role === 14 ? ["Settlement"] : []),
     "Created Date",
@@ -476,7 +476,7 @@ export default function SuccessBookedVehicleTranscation() {
               ) : (
                 <TableCellsIcon className="h-5 w-5" />
               )}
-              <span>{viewType === "table" ? "List View" : "Table View"}</span>
+              <span>{viewType === "table" ? "List" : "Table"}</span>
             </Button>
 
             <Button
@@ -564,13 +564,15 @@ export default function SuccessBookedVehicleTranscation() {
                         <CancelRideModal id={_id} vehicleBasePrice={vehiclePrice} />
                       </td>
 
+                    
+                      <td className={classes} hidden={[2, 3, 15].includes(user?.role)}>
+                        <VerifyRideModal vehicle={vehicle} />
+                      </td>
+
                       <td className={classes}>
                         {formatDate(createdAt)}
                       </td>
 
-                      {/* <td className={classes} hidden={[2, 3, 15].includes(user?.role)}>
-                        <VerifyRideModal vehicle={vehicle} />
-                      </td> */}
 
                       {[15].includes(user?.role) && <td className={classes}>
                         <IconButton
@@ -716,11 +718,11 @@ export default function SuccessBookedVehicleTranscation() {
                           </Tooltip>
                         </td>
 
-                        {/* <td hidden={[2, 3, 15].includes(user?.role)}>
+                        <td hidden={[2, 3, 15].includes(user?.role)}>
                           <Tooltip text="Verify Ride">
                             <VerifyRideModal vehicle={vehicle} />
                           </Tooltip>
-                        </td> */}
+                        </td>
 
                         {[15].includes(user?.role) && (
                           <td>
