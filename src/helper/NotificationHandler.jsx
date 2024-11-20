@@ -107,6 +107,7 @@ import { useState, useEffect } from "react";
 import { getToken, onMessage } from "firebase/messaging";
 import { messaging } from "../firebase/firebaseConfig";
 import { useSaveDeviceTokenMutation } from "../redux/slices/deviceTokenSlice";
+import CustomNotification from "./CustomNotification";
 
 const NotificationHandler = () => {
   const [notification, setNotification] = useState(null);
@@ -170,7 +171,7 @@ const NotificationHandler = () => {
 
   return (
     <div>
-      {notification && (
+      {/* {notification && (
         <div style={styles.notification}>
           <h4>{notification.title}</h4>
           <p>{notification.body}</p>
@@ -178,7 +179,14 @@ const NotificationHandler = () => {
             Close
           </button>
         </div>
-      )}
+      )} */}
+      {notification && (
+          <CustomNotification
+            title={notification.title}
+            body={notification.body}
+            onClose={handleNotificationClose}
+          />
+        )}
     </div>
   );
 };
