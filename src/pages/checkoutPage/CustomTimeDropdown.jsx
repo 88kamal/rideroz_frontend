@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
 
-const CustomTimeDropdown = ({ value, onChange, name }) => {
+const CustomTimeDropdown = ({ value, onChange, name,shop_OpeningTime, shop_ClosedTime }) => {
     const [isOpen, setIsOpen] = useState(false);
     const times = generateTimeArray();
 

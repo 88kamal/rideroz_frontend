@@ -1213,6 +1213,7 @@ const CartPage = () => {
                                         name="startTime"
                                         value={formData.startTime}
                                         onChange={handleChange}
+                                        shop_OpeningTime={vehicle?.shop?.shop_OpeningTime}
                                     />
 
                                 </div>
@@ -1257,6 +1258,8 @@ const CartPage = () => {
                                         name={"endTime"}
                                         value={formData.endTime}
                                         onChange={handleChange}
+                                        shop_ClosedTime={vehicle?.shop?.shop_ClosedTime}
+
                                     />
                                 </div>
 
@@ -1470,6 +1473,12 @@ const CartPage = () => {
 
                                     </div>
                                 </ul>
+                            </div>
+
+                            <div className="">
+                                <div className="">
+                                    <h1>Shop Times : </h1> <span>{vehicle?.shop?.shop_OpeningTime} - {vehicle?.shop?.shop_ClosedTime}</span>
+                                </div>
                             </div>
 
                             <div className=" bg-white drop-shadow mb-4 px-4 py-4">

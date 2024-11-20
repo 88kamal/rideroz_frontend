@@ -407,6 +407,9 @@ export default function LoginModal({ autoOpen = false, showLoginButton = true })
             {/* The dialog itself */}
             <Dialog open={open} handler={handleOpen} size={dialogSize} className="shadow-none hover:shadow-none rounded-none">
                 <div className="">
+                    {/* <pre>{JSON.stringify(deviceToken,null,2)}</pre>
+                   {!deviceToken &&  <NotificationHandler/> } */}
+                    
                     <div className="flex items-center lg:space-x-3">
                         <div className="left w-[40em] h-[33em] lg:flex justify-center items-center hidden lg:block">
                             <div className="">

@@ -58,23 +58,44 @@ import SuperAdminGetOrderByShopOwner from "./pages/dashboard/super-admin/pages/S
 import SuperAdminViewShopOwnerVehiclePage from "./pages/dashboard/super-admin/pages/SuperAdminViewShopOwnerVehiclePage";
 import Schema from "./components/seo/Schema";
 import ReactGA from 'react-ga';
+import { useSaveDeviceTokenMutation } from "./redux/slices/deviceTokenSlice";
+import NotificationHandler from "./helper/NotificationHandler";
 
 
 function App() {
-  const [notification, setNotification] = useState(null);
-  const [notificationToken, setNotificationToken] = useState('')
+  // const [notification, setNotification] = useState(null);
+  // const [notificationToken, setNotificationToken] = useState('')
+
+  // const [saveDeviceToken, { isLoading, isError, isSuccess }] =
+  //   useSaveDeviceTokenMutation();
+
+
+
+  // useEffect(() => {
+  //   if (notificationToken) {
+  //     const saveToken = async () => {
+  //       try {
+  //         await saveDeviceToken(notificationToken).unwrap();
+  //         console.log('Token saved successfully!');
+  //       } catch (error) {
+  //         console.error('Error saving token:', error);
+  //       }
+  //     };
+  //     saveToken();
+  //   }
+  // }, [notificationToken, saveDeviceToken]);
 
 
   ReactGA.initialize('UA-XXXXXX-X'); // Replace with your Google Analytics ID
 
-// Component to handle page view tracking on route changes
-function usePageViews() {
-  const location = useLocation();
+  // Component to handle page view tracking on route changes
+  function usePageViews() {
+    const location = useLocation();
 
-  useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search);
-  }, [location]);
-}
+    useEffect(() => {
+      ReactGA.pageview(location.pathname + location.search);
+    }, [location]);
+  }
 
   usePageViews();
 
@@ -130,66 +151,68 @@ function usePageViews() {
 
   // }, []);
 
-  const handleNotificationClose = () => {
-    setNotification(null); // Hide the notification
-  };
+  // const handleNotificationClose = () => {
+  //   setNotification(null); // Hide the notification
+  // };
 
-  useEffect(() => {
-    const requestPermission = async () => {
-      try {
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          const currentToken = await getToken(messaging, {
-            vapidKey: "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w",
-          });
-          if (currentToken) {
-            console.log("FCM Token:", currentToken);
-            setNotificationToken(currentToken);
-          } else {
-            console.warn("No registration token available.");
-          }
-        } else {
-          console.error("Notification permission not granted.");
-        }
-      } catch (error) {
-        console.error("Error during token retrieval:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const requestPermission = async () => {
+  //     try {
+  //       const permission = await Notification.requestPermission();
+  //       if (permission === "granted") {
+  //         const currentToken = await getToken(messaging, {
+  //           vapidKey: "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w",
+  //         });
+  //         if (currentToken) {
+  //           console.log("FCM Token:", currentToken);
+  //           setNotificationToken(currentToken);
+  //         } else {
+  //           console.warn("No registration token available.");
+  //         }
+  //       } else {
+  //         console.error("Notification permission not granted.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error during token retrieval:", error);
+  //     }
+  //   };
 
-    requestPermission();
+  //   requestPermission();
 
-    // Handle foreground messages
-    onMessage(messaging, (payload) => {
-      if (document.visibilityState === 'visible') {
-        // App is in the foreground
-        console.log("Message received in the foreground:", payload);
+  //   // Handle foreground messages
+  //   onMessage(messaging, (payload) => {
+  //     if (document.visibilityState === 'visible') {
+  //       // App is in the foreground
+  //       console.log("Message received in the foreground:", payload);
 
-        // Handle the notification in the app UI (without showing a system-level notification)
-        setNotification({
-          title: payload.notification?.title,
-          body: payload.notification?.body,
-        });
-      }
-    });
-  }, []);
+  //       // Handle the notification in the app UI (without showing a system-level notification)
+  //       setNotification({
+  //         title: payload.notification?.title,
+  //         body: payload.notification?.body,
+  //       });
+  //     }
+  //   });
+  // }, []);
 
   return (
     <MyState>
       <>
-        <Schema/>
+        <Schema />
         <Toaster />
         <ScrollTop />
         <TopAlert />
 
         {/* <pre>{JSON.stringify(notificationToken,null,2)}</pre> */}
 
-        {notification && (
+        <NotificationHandler/>
+
+        {/* {notification && (
           <CustomNotification
             title={notification.title}
             body={notification.body}
             onClose={handleNotificationClose}
           />
-        )}
+        )} */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -271,19 +294,19 @@ function usePageViews() {
                 path="super-admin-home-page/super-admin-vehicle-book/vehicle-book-invoice/:id"
                 element={<ViewUserBookingInvoice />}
               />
-              
+
 
               <Route
                 index={true}
                 path="view-user-and-shop-owner/super-admin-get-order-by-shop-owner/:shopId"
                 element={<SuperAdminGetOrderByShopOwner />}
               />
-               <Route
+              <Route
                 index={true}
                 path="view-user-and-shop-owner/super-admin-view-shop-owner-vehicle/:shopId"
                 element={<SuperAdminViewShopOwnerVehiclePage />}
               />
-    
+
             </Route>
 
 

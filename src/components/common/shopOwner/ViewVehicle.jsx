@@ -571,6 +571,7 @@ export default function ViewVehicle() {
                                             <td className={classes}>{vehicleNumber}</td>
                                             <td className={classes}>₹ {vehiclePrice}</td>
                                             <td className={classes}>
+                                                {/* <pre>{JSON.stringify}</pre> */}
                                                 <UpdateAvailabilityModal
                                                     id={_id}
                                                     vehicleAvailability={vehicleAvailability}

@@ -231,15 +231,17 @@ import { useLoginMutation } from '../../redux/slices/authApiSlice';
 import authService from '../../services/authService';
 import NeedChangePassword from './NeedChangePassword';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import myContext from '../../context/myContext';
 
 
 const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
     const navigate = useNavigate();
+    const deviceToken = localStorage.getItem("notificationToken");
+
     const [loginState, setLoginState] = useState({
         email: '',
         password: '',
+        deviceToken
     });
 
     const {showAlert} = useContext(myContext);

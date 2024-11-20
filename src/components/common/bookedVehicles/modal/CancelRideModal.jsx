@@ -1,5 +1,192 @@
+// // /* eslint-disable react/prop-types */
+// // import { useState } from "react";
+// // import {
+// //   Button,
+// //   Dialog,
+// //   DialogHeader,
+// //   DialogBody,
+// //   DialogFooter,
+// //   IconButton,
+// //   Input,
+// // } from "@material-tailwind/react";
+// // import { TicketX } from "lucide-react";
+
+// // // eslint-disable-next-line no-unused-vars
+// // export default function CancelRideModal({ id, vehicleBasePrice, bookingTime }) {
+// //   const [open, setOpen] = useState(false);
+// //   const [verificationText, setVerificationText] = useState("");
+// //   const [refundAmount, setRefundAmount] = useState(0); // Initialize refund amount
+// //   const requiredText = "CANCEL";
+
+// //   const handleOpen = () => {
+// //     setOpen(!open);
+// //     if (!open) {
+// //       // Calculate refund when opening the modal
+// //       setRefundAmount(vehicleBasePrice * 0.5); // Set refund to 50% of base price
+// //     }
+// //   };
+
+// //   const handleDelete = async () => {
+// //     try {
+// //       // Implement your deletion logic here
+// //       handleOpen();
+// //       setVerificationText("");
+// //     } catch (error) {
+// //       console.error("Error deleting ride:", error);
+// //     }
+// //   };
+
+// //   // Check if the cancellation is allowed (within 1 hour of booking)
+// //   const isCancellationAllowed = () => {
+// //     const bookingDate = new Date(bookingTime);
+// //     const currentTime = new Date();
+// //     const oneHourInMilliseconds = 60 * 60 * 1000;
+// //     return currentTime - bookingDate < oneHourInMilliseconds;
+// //   };
+
+// //   return (
+// //     <>
+// //       <IconButton
+// //         onClick={handleOpen}
+// //         variant="text"
+// //         className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+// //       >
+// //         <TicketX className="h-5 w-5 text-red-500" />
+// //       </IconButton>
+
+// //       <Dialog open={open} className="shadow-none hover:shadow-none rounded-md bg-red-50">
+// //         <DialogHeader>Cancel Ride</DialogHeader>
+// //         <DialogBody>
+// //           {isCancellationAllowed() ? (
+// //             <>
+// //               <p className="app-font text-black">
+// //                 Are you sure you want to cancel this ride? This action cannot be undone.
+// //               </p>
+// //               <p className="mt-2 mb-5 text-black">
+// //                 Please type <span className="font-bold text-red-500">{requiredText}</span> to confirm.
+// //               </p>
+// //               <Input
+// //                 type="text"
+// //                 label="Enter CANCEL to confirm"
+// //                 value={verificationText}
+// //                 onChange={(e) => setVerificationText(e.target.value)}
+// //                 color="green"
+// //               />
+// //               {refundAmount > 0 && (
+// //                 <p className="mt-4 text-red-700 app-font animate-pulse">
+// //                   Refund processed: ₹ {refundAmount} (50% of base price: ₹ {vehicleBasePrice}).
+// //                 </p>
+// //               )}
+// //             </>
+// //           ) : (
+// //             <p className="text-black">
+// //               You cannot cancel this ride. Cancellation is only allowed within 1 hour after booking.
+// //             </p>
+// //           )}
+// //         </DialogBody>
+// //         <DialogFooter>
+// //           <Button
+// //             variant="text"
+// //             color="red"
+// //             onClick={handleOpen}
+// //             className="mr-1"
+// //           >
+// //             <span>Close</span>
+// //           </Button>
+// //           {isCancellationAllowed() && (
+// //             <Button
+// //               variant="gradient"
+// //               color="green"
+// //               onClick={handleDelete}
+// //               disabled={verificationText !== requiredText}
+// //             >
+// //               <span>Confirm</span>
+// //             </Button>
+// //           )}
+// //         </DialogFooter>
+// //       </Dialog>
+// //     </>
+// //   );
+// // }
+
+
+// /* eslint-disable react/prop-types */
+// import { useState } from "react";
+// import {
+//   Button,
+//   Dialog,
+//   DialogHeader,
+//   DialogBody,
+//   DialogFooter,
+//   IconButton,
+//   Input,
+// } from "@material-tailwind/react";
+// import { TicketX } from "lucide-react";
+// import { useCancelOrderMutation } from "../../../../redux/slices/orderApiSlice";
+
+// // eslint-disable-next-line no-unused-vars
+// export default function CancelRideModal({ orderId, vehicleBasePrice, bookingTime, refetch }) {
+//   const [open, setOpen] = useState(false);
+
+
+//   const [cancelOrder, { isLoading, isError, isSuccess, error }] =
+//     useCancelOrderMutation();
+
+//   const handleCancelOrder = async () => {
+//     try {
+//       const response = await cancelOrder({ orderId }).unwrap();
+//       console.log('Success:', response);
+//       alert('Order cancelled and refund initiated successfully.');
+//     } catch (err) {
+//       console.error('Error:', err);
+//       alert(err?.data?.message || 'Failed to cancel the order.');
+//     }
+//   };
+
+
+//   const handleOpen = () => {
+//     setOpen(!open);
+//   };
+
+//   return (
+//     <>
+//       <IconButton
+//         onClick={handleOpen}
+//         variant="text"
+//         className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+//       >
+//         <TicketX className="h-5 w-5 text-red-500" />
+//       </IconButton>
+
+//       <Dialog open={open} className="shadow-none hover:shadow-none rounded-md bg-red-50">
+//         <DialogHeader>Cancel Ride</DialogHeader>
+//         <DialogBody>
+
+//         </DialogBody>
+//         <DialogFooter>
+//           <Button
+//             variant="text"
+//             color="red"
+//             onClick={handleOpen}
+//             className="mr-1"
+//           >
+//             <span>Close</span>
+//           </Button>
+//             <Button
+//               variant="gradient"
+//               color="green"
+//             >
+//               <span>Confirm</span>
+//             </Button>
+//         </DialogFooter>
+//       </Dialog>
+//     </>
+//   );
+// }
+
+
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -7,45 +194,58 @@ import {
   DialogBody,
   DialogFooter,
   IconButton,
-  Input,
 } from "@material-tailwind/react";
 import { TicketX } from "lucide-react";
+import { useCancelOrderMutation } from "../../../../redux/slices/orderApiSlice";
+import myContext from "../../../../context/myContext";
 
-// eslint-disable-next-line no-unused-vars
-export default function CancelRideModal({ id, vehicleBasePrice, bookingTime }) {
+export default function CancelRideModal({
+  orderId,
+  vehicleBasePrice,
+  refetch,
+}) {
   const [open, setOpen] = useState(false);
-  const [verificationText, setVerificationText] = useState("");
-  const [refundAmount, setRefundAmount] = useState(0); // Initialize refund amount
-  const requiredText = "CANCEL";
+  const [cancelOrder, { isLoading, isError, isSuccess, error,data }] =
+    useCancelOrderMutation();
+
+    const {showAlert} = useContext(myContext);
+
+  const handleCancelOrder = async () => {
+    try {
+      const response = await cancelOrder({ orderId }).unwrap();
+      // console.log("Success:", response);
+      // alert(
+      //   `Order cancelled successfully. Refund of ₹${
+      //     vehicleBasePrice * 0.5
+      //   } has been initiated.`
+      // );
+      setOpen(false); // Close modal after success
+      if (refetch) refetch(); // Refetch data if a refetch function is provided
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
 
   const handleOpen = () => {
     setOpen(!open);
-    if (!open) {
-      // Calculate refund when opening the modal
-      setRefundAmount(vehicleBasePrice * 0.5); // Set refund to 50% of base price
-    }
   };
 
-  const handleDelete = async () => {
-    try {
-      // Implement your deletion logic here
-      handleOpen();
-      setVerificationText("");
-    } catch (error) {
-      console.error("Error deleting ride:", error);
-    }
-  };
 
-  // Check if the cancellation is allowed (within 1 hour of booking)
-  const isCancellationAllowed = () => {
-    const bookingDate = new Date(bookingTime);
-    const currentTime = new Date();
-    const oneHourInMilliseconds = 60 * 60 * 1000;
-    return currentTime - bookingDate < oneHourInMilliseconds;
-  };
+
+  useEffect(() => {
+    if (isError) {
+        showAlert(error?.data?.error,"error");
+       handleOpen()
+    }
+
+    if (isSuccess) {
+       showAlert(data?.message);
+    }
+}, [isError, error, isSuccess, data]);
 
   return (
     <>
+      {/* Cancel Icon Button */}
       <IconButton
         onClick={handleOpen}
         variant="text"
@@ -54,37 +254,23 @@ export default function CancelRideModal({ id, vehicleBasePrice, bookingTime }) {
         <TicketX className="h-5 w-5 text-red-500" />
       </IconButton>
 
-      <Dialog open={open} className="shadow-none hover:shadow-none rounded-md bg-red-50">
+      {/* Dialog Modal */}
+      <Dialog
+        open={open}
+        handler={handleOpen}
+        className="shadow-none hover:shadow-none rounded-md bg-red-50"
+      >
+        {/* <pre>{JSON.stringify(error)}</pre> */}
         <DialogHeader>Cancel Ride</DialogHeader>
-        <DialogBody>
-          {isCancellationAllowed() ? (
-            <>
-              <p className="app-font text-black">
-                Are you sure you want to cancel this ride? This action cannot be undone.
-              </p>
-              <p className="mt-2 mb-5 text-black">
-                Please type <span className="font-bold text-red-500">{requiredText}</span> to confirm.
-              </p>
-              <Input
-                type="text"
-                label="Enter CANCEL to confirm"
-                value={verificationText}
-                onChange={(e) => setVerificationText(e.target.value)}
-                color="green"
-              />
-              {refundAmount > 0 && (
-                <p className="mt-4 text-red-700 app-font animate-pulse">
-                  Refund processed: ₹ {refundAmount} (50% of base price: ₹ {vehicleBasePrice}).
-                </p>
-              )}
-            </>
-          ) : (
-            <p className="text-black">
-              You cannot cancel this ride. Cancellation is only allowed within 1 hour after booking.
-            </p>
-          )}
+        {/* <pre>{JSON.stringify(vehicleBasePrice)}</pre> */}
+        <DialogBody className="text-gray-700">
+          <p>
+            Are you sure you want to cancel this ride? Rideroz will refund 50%
+            of the base price (₹{vehicleBasePrice * 0.5.toFixed(2)}).
+          </p>
         </DialogBody>
         <DialogFooter>
+          {/* Close Button */}
           <Button
             variant="text"
             color="red"
@@ -93,16 +279,16 @@ export default function CancelRideModal({ id, vehicleBasePrice, bookingTime }) {
           >
             <span>Close</span>
           </Button>
-          {isCancellationAllowed() && (
-            <Button
-              variant="gradient"
-              color="green"
-              onClick={handleDelete}
-              disabled={verificationText !== requiredText}
-            >
-              <span>Confirm</span>
-            </Button>
-          )}
+
+          {/* Confirm Cancellation Button */}
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={handleCancelOrder}
+            disabled={isLoading}
+          >
+            <span>{isLoading ? "Processing..." : "Confirm"}</span>
+          </Button>
         </DialogFooter>
       </Dialog>
     </>

@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { Button } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 import { useFetchVehicleAvailabilityQuery } from "../../../../redux/slices/vehicleAvailabilitySlice";
 
 export default function ShopAvailbility({ vehicleId, initialMonth }) {
@@ -32,7 +32,7 @@ export default function ShopAvailbility({ vehicleId, initialMonth }) {
       <div
         className="bg-white "
       >
-        {/* <pre>{JSON.stringify(error,null,2)}</pre> */}
+        {/* <pre>{JSON.stringify(vehicleId,null,2)}</pre> */}
         <div className="">
           <div className="flex justify-between items-center bg-blue-500 sticky top-0 z-50">
             <Button
@@ -54,7 +54,12 @@ export default function ShopAvailbility({ vehicleId, initialMonth }) {
             </Button>
           </div>
           <div className="p-3">
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-4">
+            {isLoading ? 
+            
+            <div className="flex justify-center">
+              <Spinner/>
+            </div>
+            : <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-4">
               {data?.availability?.map((day, index) => (
                 <div
                   key={index}
@@ -95,7 +100,7 @@ export default function ShopAvailbility({ vehicleId, initialMonth }) {
                   </div>
                 </div>
               ))}
-            </div>
+            </div>}
           </div>
         </div>
       </div>

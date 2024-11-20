@@ -19,7 +19,7 @@ dayjs.extend(timezone);
 const ViewUserBookingInvoice = () => {
     const { id } = useParams();
     const { data, error, isLoading } = useGetOrderByIdQuery(id);
-    
+
 
     const appUser = authService.getCurrentUser()
 
@@ -42,7 +42,7 @@ const ViewUserBookingInvoice = () => {
     }
 
 
-    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge, conformationOtp, rideConfirmed } = data?.order || {};
+    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge, conformationOtp, rideConfirmed, cancellationInitiatedAt, cancellationRefundAmount, cancellationRefundId, cancellationRefundStatus } = data?.order || {};
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-US');
     // const formatDateTime = (dateString, timeString) => {
@@ -110,7 +110,7 @@ const ViewUserBookingInvoice = () => {
 
                 {/* User Information Table */}
 
-                {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
+                {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 
 
 
@@ -121,7 +121,7 @@ const ViewUserBookingInvoice = () => {
                                 <tr className="bg-gray-100">
                                     <th className="p-2 text-left">Pickup Confirmed Status</th>
                                     <th className="p-2 text-left border border-gray-300">
-                                    Conformation Otp
+                                        Conformation Otp
                                     </th>
                                 </tr>
                             </thead>
@@ -137,27 +137,77 @@ const ViewUserBookingInvoice = () => {
                                         />
                                     </td>
 
-                                    {[2,15].includes(appUser?.role) &&
-                                    <td className="p-2 border border-gray-300">
-                                        {conformationOtp}
-                                    </td>
-                                    
+                                    {[2, 15].includes(appUser?.role) &&
+                                        <td className="p-2 border border-gray-300">
+                                            {conformationOtp}
+                                        </td>
+
                                     }
 
-{[14].includes(appUser?.role) &&
-                                    <td className="p-2 border border-gray-300">
-                                       N/A
-                                    </td>
-                                    
+                                    {[14].includes(appUser?.role) &&
+                                        <td className="p-2 border border-gray-300">
+                                            N/A
+                                        </td>
+
                                     }
-                                    
+
                                 </tr>
-                              
 
-                               
+
+
                             </tbody>
                         </table>
                     </div>
+{cancellationRefundId && 
+                    <div className="mb-6">
+                        <table className="w-full border border-gray-300 app-font">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="p-2 text-left">Cancel Ride Status</th>
+                                    <th className="p-2 text-left border border-gray-300">
+                                    Cancellation Refund Id
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <Chip
+                                            size="sm"
+                                            variant="ghost"
+                                            value={cancellationRefundStatus}
+                                            color={cancellationRefundStatus ? "red" : "orange"}
+                                            className="px-3 text-center w-28"
+                                        />
+                                    </td>
+
+                                   
+                                        <td className="p-2 border border-gray-300">
+                                            {cancellationRefundId}
+                                        </td>
+
+                                 
+                                </tr>
+
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                    Cancellation Refund Amount : <span>₹{cancellationRefundAmount}</span>
+                                    </td>
+
+                                   
+                                        <td className="p-2 border border-gray-300">
+                                            {/* <p>{cancellationInitiatedAt}</p> */}
+                                            {formatDateTime(cancellationInitiatedAt)}
+                                        </td>
+
+                                 
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>}
 
                     <div className="mb-6">
                         <table className="w-full border border-gray-300 app-font">

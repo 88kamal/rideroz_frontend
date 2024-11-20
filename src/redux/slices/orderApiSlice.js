@@ -176,8 +176,28 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       refetchOnReconnect: true, // Automatically refetch data when the network connection is restored
       refetchOnMountOrArgChange: true, // Refetch when the component remounts or arguments change
     }),
+
+    cancelOrder: builder.mutation({
+      query: ({ orderId }) => ({
+        url: `/order/cancel-order/${orderId}`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Order'], // Invalidate Order tag on cancellation
+      keepUnusedDataFor: 300, // Keep unused data for 5 minutes
+      refetchOnMountOrArgChange: true, // Refetch on argument change
+      refetchOnReconnect: true, // Refetch on reconnect
+      refetchOnFocus: true, // Refetch when the window regains focus
+      onQueryStarted: async ({ orderId }, { queryFulfilled, dispatch }) => {
+        try {
+          const { data } = await queryFulfilled;
+          console.log('Refund initiated successfully:', data);
+        } catch (error) {
+          console.error('Error initiating refund:', error);
+        }
+      },
+    }),
     
   }),
 });
 
-export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetOrdersByShopQuery, useConfirmOrderMutation } = orderApiSlice;
+export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetOrdersByShopQuery, useConfirmOrderMutation, useCancelOrderMutation } = orderApiSlice;
