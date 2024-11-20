@@ -171,15 +171,6 @@ const NotificationHandler = () => {
 
   return (
     <div>
-      {/* {notification && (
-        <div style={styles.notification}>
-          <h4>{notification.title}</h4>
-          <p>{notification.body}</p>
-          <button onClick={handleNotificationClose} style={styles.closeButton}>
-            Close
-          </button>
-        </div>
-      )} */}
       {notification && (
           <CustomNotification
             title={notification.title}
@@ -189,29 +180,6 @@ const NotificationHandler = () => {
         )}
     </div>
   );
-};
-
-// Inline styles for simplicity
-const styles = {
-  notification: {
-    position: "fixed",
-    bottom: "20px",
-    right: "20px",
-    backgroundColor: "#fff",
-    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-    padding: "16px",
-    borderRadius: "8px",
-    zIndex: 1000,
-  },
-  closeButton: {
-    marginTop: "8px",
-    padding: "8px 12px",
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
 };
 
 export default NotificationHandler;
