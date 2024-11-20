@@ -234,6 +234,7 @@ import { useNavigate } from 'react-router-dom';
 import myContext from '../../context/myContext';
 
 
+
 const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
     const navigate = useNavigate();
     const deviceToken = localStorage.getItem("notificationToken");
@@ -325,6 +326,31 @@ const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
 
         }
     }, [isError, error, isSuccess, data]);
+
+    const vapidKey = "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w";
+
+    
+
+    useEffect(() => {
+        const requestPermission = async () => {
+        try {
+          console.log("Requesting notification permission...");
+          const permission = await Notification.requestPermission();
+          console.log(`Notification permission status: ${permission}`);
+          if (permission === "granted") {
+            console.log("Permission granted.");
+          } else {
+            console.error("Notification permission not granted. User chose:", permission);
+          }
+        } catch (error) {
+          console.error("Error requesting notification permission:", error);
+        }
+      };
+      
+        requestPermission();
+    
+      
+      }, [vapidKey]);
 
     return (
         <>
