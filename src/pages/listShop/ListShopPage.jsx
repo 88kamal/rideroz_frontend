@@ -269,7 +269,7 @@ function ListShopPage() {
         <Layout>
             <div className="">
 
-                <pre>{JSON.stringify(formData,null,2)}</pre>
+                {/* <pre>{JSON.stringify(formData,null,2)}</pre> */}
 {/* <pre>{JSON.stringify(bankDetails,null,2)}</pre> */}
 
                 <div className="main flex flex-wrap  justify-between bg-green-100 ">
