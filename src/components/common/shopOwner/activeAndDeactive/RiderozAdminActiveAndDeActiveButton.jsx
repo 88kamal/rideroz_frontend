@@ -66,11 +66,8 @@ const RiderozAdminActiveAndDeActiveButton = ({ shopId, adminActivation, refetch 
                     variant="text"
                     className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
                 >
-                    {isLoadingActivate ? (
-                        <span>Activating...</span>
-                    ) : (
+
                         <CheckCircle className="h-5 w-5 text-green-500" />
-                    )}
                 </IconButton>
             ) : (
                 <IconButton
@@ -79,11 +76,8 @@ const RiderozAdminActiveAndDeActiveButton = ({ shopId, adminActivation, refetch 
                     variant="text"
                     className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
                 >
-                    {isLoadingDeactive ? (
-                        <span>Deactivating...</span>
-                    ) : (
+
                         <XCircle className="h-5 w-5 text-red-500" />
-                    )}
                 </IconButton>
             )}
         </div>
