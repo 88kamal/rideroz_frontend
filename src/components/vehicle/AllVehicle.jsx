@@ -621,9 +621,9 @@ const AllVehicle = () => {
 
                             return (
                                <>
-                               
                                <div key={index} className="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                                     <div className="bg-white rounded-lg border border-gray-300 drop-shadow">
+                                        {/* <pre>{JSON.stringify(item,null,2)}</pre> */}
                                         <div
                                             className="relative cursor-pointer"
                                             onClick={() => navigate(`/vehicle-info/${selectedCity}/${_id}`)}
@@ -651,7 +651,13 @@ const AllVehicle = () => {
                                                 </p>
                                                 <span className="font-medium text-sm">{distance}</span>
                                             </div>
-                                            <div className="flex w-full gap-2 mt-4">
+
+                                            <div className=" mt-2">
+                                                <div className=" py-[1px] border rounded border-green-100 bg-green-50 px-2 app-font text-sm text-center">
+                                                    <p>Shop Time : <span>{item?.shop?.shop_OpeningTime}-{item?.shop?.shop_ClosedTime}</span></p>
+                                                </div>
+                                            </div>
+                                            <div className="flex w-full gap-2 mt-2">
                                                 <DatePickerModule vehicleId={_id} month={"2024-11"} />
                                                 <Button
                                                     onClick={() => navigate(`/checkout/${_id}`)}

@@ -6,7 +6,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createOrder: builder.mutation({
       query: ({ vehicleId, body }) => ({
-        
+
         url: `/order/create-order/${vehicleId}`,
         method: 'POST',
         body,
@@ -52,14 +52,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       query: ({ status, settled, startDate, endDate, limit = 10, page = 1 }) => {
         // Build query string
         const params = new URLSearchParams();
-    
+
         if (status) params.append("status", status);
         if (settled !== undefined) params.append("settled", settled);
         if (startDate) params.append("startDate", startDate);
         if (endDate) params.append("endDate", endDate);
         if (limit) params.append("limit", limit);
         if (page) params.append("page", page);
-    
+
         return {
           url: `/order/get-orders?${params.toString()}`, // API endpoint with query params
           headers: {
@@ -76,7 +76,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       refetchOnReconnect: true,
       refetchOnFocus: true,
     }),
-    
+
     getOrderById: builder.query({
       query: (orderId) => ({
         url: `/order/get-order/${orderId}`,
@@ -117,7 +117,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     //     const queryParams = new URLSearchParams();
     //     if (status) queryParams.append('status', status);
     //     if (settled !== undefined) queryParams.append('settled', settled);
-    
+
     //     // Construct the final URL
     //     return `/order/get-orders/${shopId}?${queryParams.toString()}`;
     //   },
@@ -144,25 +144,40 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         if (endDate) queryParams.append('endDate', endDate);
         queryParams.append('limit', limit);
         queryParams.append('page', page);
-    
+
         // Construct the final URL
         return `/order/get-orders/${shopId}?${queryParams.toString()}`;
       },
       providesTags: (result, error, { shopId }) =>
         result
           ? [
-              { type: 'Order', id: shopId },
-              ...result.orders.map(({ _id }) => ({ type: 'Order', id: _id })),
-            ]
+            { type: 'Order', id: shopId },
+            ...result.orders.map(({ _id }) => ({ type: 'Order', id: _id })),
+          ]
           : [{ type: 'Order', id: shopId }],
       keepUnusedDataFor: 60, // Cache duration
       refetchOnFocus: true,
       refetchOnReconnect: true,
       refetchOnMountOrArgChange: true,
     }),
-    
+
+    confirmOrder: builder.mutation({
+      query: ({ orderId, otp }) => {
+        // console.log('Order ID:', orderId);
+        // console.log('OTP:', otp);
+        return {
+          url: `/order/confirm-order/${orderId}`,
+          method: 'PUT',
+          body: { otp },
+        };
+      },
+      keepUnusedDataFor: 60, // Cache duration in seconds
+      refetchOnFocus: true, // Automatically refetch data when the browser regains focus
+      refetchOnReconnect: true, // Automatically refetch data when the network connection is restored
+      refetchOnMountOrArgChange: true, // Refetch when the component remounts or arguments change
+    }),
     
   }),
 });
 
-export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetOrdersByShopQuery } = orderApiSlice;
+export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetOrdersByShopQuery, useConfirmOrderMutation } = orderApiSlice;

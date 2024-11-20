@@ -347,6 +347,9 @@ export default function SuccessBookedVehicleTranscation() {
     "Vehicle Name",
     "Vehicle Number",
     "Payment Status",
+    "Pickup Confirmed Status",
+    ...(user?.role === 15 ? ["Conformation Otp"] : []),
+    ...(user?.role === 2 ? ["Conformation Otp"] : []),
     "View Location",
     ...(user?.role === 15 ? ["Cancel Ride"] : []),
     ...(user?.role === 14 ? ["Verify Otp"] : []),
@@ -414,7 +417,7 @@ export default function SuccessBookedVehicleTranscation() {
   return (
     <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
 
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(user?.role, null, 2)}</pre> */}
       <div className="rounded-none  border-b border-green-300 px-2 py-1">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -526,7 +529,7 @@ export default function SuccessBookedVehicleTranscation() {
                 </tr>
               </thead>
               <tbody>
-                {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt }, index) => {
+                {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt, conformationOtp, rideConfirmed }, index) => {
                   const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
                   const isLast = index === data?.orders?.length - 1;
                   const classes = isLast
@@ -553,9 +556,30 @@ export default function SuccessBookedVehicleTranscation() {
                           {vehicleNumber}
                         </Typography>
                       </td>
+
                       <td className={classes}>
-                        <Chip size="sm" variant="ghost" value={status} color={status === "failed" ? "red" : status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
+                        <Typography variant="small" color="blue-gray" className="font-normal app-font capitalize text-black">
+                          <Chip size="sm" variant="ghost" value={status} color={status === "failed" ? "red" : status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
+                        </Typography>
                       </td>
+
+                      <td className={classes}>
+                        <Chip
+                          size="sm"
+                          variant="ghost"
+                          value={rideConfirmed === false ? "pending" : "success"}
+                          color={rideConfirmed === false ? "red" : "orange"}
+                          className="px-3 text-center w-28"
+                        />
+                        {/* <pre>{JSON.stringify(rideConfirmed,null,2)}</pre> */}
+                      </td>
+
+                      <td className={classes} hidden={[14].includes(user?.role)}>
+                        <Typography variant="small" color="blue-gray" className=" app-font capitalize text-black font-bold">
+                          {conformationOtp}
+                        </Typography>
+                      </td>
+
                       <td className={classes}>
                         <ShowLocationModal vehicle={vehicle} />
                       </td>
@@ -564,9 +588,9 @@ export default function SuccessBookedVehicleTranscation() {
                         <CancelRideModal id={_id} vehicleBasePrice={vehiclePrice} />
                       </td>
 
-                    
-                      <td className={classes} hidden={[2, 3, 15].includes(user?.role)}>
-                        <VerifyRideModal vehicle={vehicle} />
+
+                      <td className={classes} hidden={[15].includes(user?.role)}>
+                        <VerifyRideModal orderId={_id} refetch={refetch} rideConfirmed={rideConfirmed} />
                       </td>
 
                       <td className={classes}>
@@ -650,7 +674,7 @@ export default function SuccessBookedVehicleTranscation() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
 
-              {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt }, index) => {
+              {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt, conformationOtp, rideConfirmed,  }, index) => {
                 const { vehicleImage, vehicleNumber, vehicleName, vehiclePrice } = vehicle || {};
                 return (
                   <div key={index} className="p-4 border border-green-200 rounded-lg ">
@@ -675,10 +699,34 @@ export default function SuccessBookedVehicleTranscation() {
 
                       </div>
 
+                      {[2, 15].includes(user?.role) &&
+                        <div className="flex justify-between items-center mt-2" >
+                          <h1 className=" font-bold"> Conformation Otp
+                            : </h1>
+                          <p className=" border px-2 bg-green-50">{conformationOtp}</p>
+                        </div>
+                      }
+
+
                       <div className="flex justify-between items-center mt-2">
                         <h1 className=" font-bold">Payment Status: </h1>
                         <Chip size="sm" variant="ghost" value={status} color={status === "failed" ? "red" : status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
                       </div>
+                      <div className="flex justify-between items-center mt-2">
+                        <h1 className=" font-bold">Pickup Confirmed Status
+                          : </h1>
+                        <Chip
+                          size="sm"
+                          variant="ghost"
+                          value={rideConfirmed === false ? "pending" : "success"}
+                          color={rideConfirmed === false ? "red" : "orange"}
+                          className="px-3 text-center w-28"
+                        />
+                      </div>
+
+
+
+
 
                       {[14].includes(user?.role) &&
 
@@ -718,9 +766,9 @@ export default function SuccessBookedVehicleTranscation() {
                           </Tooltip>
                         </td>
 
-                        <td hidden={[2, 3, 15].includes(user?.role)}>
-                          <Tooltip text="Verify Ride">
-                            <VerifyRideModal vehicle={vehicle} />
+                        <td hidden={[15].includes(user?.role)}>
+                          <Tooltip text="Pickup Otp">
+                            <VerifyRideModal orderId={_id} refetch={refetch} rideConfirmed={rideConfirmed} />
                           </Tooltip>
                         </td>
 

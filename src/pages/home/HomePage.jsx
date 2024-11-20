@@ -33,7 +33,7 @@ const HomePage = () => {
       <Services />
       <Vehicle />
       {isLoginModalOpen && <LoginModal autoOpen={true} />}
-      <LeftSidePopup />
+      {/* <LeftSidePopup /> */}
     </Layout>
   )
 }

@@ -55,13 +55,13 @@ const ShopOwnerActiveAndDeActiveButton = ({ shopId, ownerActivation, refetch }) 
     }, [isErrorActivate, isSuccessActivate, errorActivate, dataActivate]);
 
     return (
-        <div className=' mt-3'>
+        <div className=' mt-4'>
 
             {ownerActivation === false ?
-                <Button onClick={handleActivate}>Activate Shop</Button>
+                <Button className='w-full lg:w-64' onClick={handleActivate}>Activate Shop</Button>
 
                 :
-                <Button onClick={handleDeactivate}>Deactivate Shop</Button>
+                <Button className='w-full lg:w-64' onClick={handleDeactivate}>Deactivate Shop</Button>
 
             }
 

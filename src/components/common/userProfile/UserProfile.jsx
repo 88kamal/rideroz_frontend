@@ -1,7 +1,12 @@
-import { Chip } from '@material-tailwind/react';
+import { Button, Chip } from '@material-tailwind/react';
 import { useGetUserByIdQuery } from '../../../redux/slices/userApiSlice';
 import authService from '../../../services/authService';
 import ShopOwnerActiveAndDeActiveButton from '../shopOwner/activeAndDeactive/ShopOwnerActiveAndDeActiveButton';
+import { useDispatch } from 'react-redux';
+import { useLogoutMutation } from '../../../redux/slices/authApiSlice';
+import { useNavigate } from 'react-router-dom';
+import apiSlice from '../../../redux/slices/apiSlice';
+import { LogOut } from 'lucide-react';
 
 function UserProfile() {
     const user = authService.getCurrentUser();
@@ -23,6 +28,17 @@ function UserProfile() {
 
     // Formatted Date String
     const formattedDate = date.toLocaleString('en-US', options);
+
+    const dispatch = useDispatch();
+    const [logout] = useLogoutMutation();
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logout(); // Call the logout mutation to remove token
+        navigate('/');  // Redirect to the home page after logout
+        dispatch(apiSlice.util.resetApiState());
+    };
 
     return (
         <div className="flex flex-col items-center min-h-screen">
@@ -91,6 +107,12 @@ function UserProfile() {
                         }
                     </div>
                 </div>
+
+                <div className=" mt-3 lg:hidden md:hidden sm:hidden">
+                    <Button onClick={handleLogout} className=' w-full flex items-center justify-center gap-2 bg-red-500 shadow-none hover:shadow-none text-white border'>
+                        <LogOut className='w-4 h-4' /> Logout
+                    </Button>
+                </div>
             </div>}
 
             {/* <pre>{JSON.stringify(getUserById?.user, null, 2)}</pre> */}
@@ -139,20 +161,20 @@ function UserProfile() {
                         <span className="text-gray-700 app-font ">Account Verification</span>
                         <span className="text-gray-600">{
                             <Chip
-                            size="sm"
-                            variant="ghost"
-                            value={getUserById?.user?.account_verified === false ? "Account Not Verified" : "Account Verified"}
-                            color={
-                                getUserById?.user?.account_verified === false ? "red" :
-                                    "green"
-                            }
-    
-                            className="px-3 text-center w-44"
-                        />
+                                size="sm"
+                                variant="ghost"
+                                value={getUserById?.user?.account_verified === false ? "Account Not Verified" : "Account Verified"}
+                                color={
+                                    getUserById?.user?.account_verified === false ? "red" :
+                                        "green"
+                                }
+
+                                className="px-3 text-center w-44"
+                            />
                         }</span>
                     </div>
 
-                    
+
                 </div>
 
                 <div className="border-t pt-4 space-y-3">
@@ -193,16 +215,16 @@ function UserProfile() {
                         <span className="text-gray-600 ">{
                             getUserById?.user?.ownerActivation === false ? "Deactive" : "Active"}</span>
                     </div>
-                    
+
                 </div>
 
-                        {/* <pre>{JSON.stringify(getUserById?.user, null, 2)}</pre> */}
+                {/* <pre>{JSON.stringify(getUserById?.user, null, 2)}</pre> */}
 
                 <div className="">
-                    <ShopOwnerActiveAndDeActiveButton 
-                    shopId={getUserById?.user?._id}
-                    ownerActivation={getUserById?.user?.ownerActivation}
-                    refetch={refetch}
+                    <ShopOwnerActiveAndDeActiveButton
+                        shopId={getUserById?.user?._id}
+                        ownerActivation={getUserById?.user?.ownerActivation}
+                        refetch={refetch}
                     />
                 </div>
 
@@ -221,6 +243,12 @@ function UserProfile() {
 
                     </div>
                 </div> */}
+
+                <div className=" mt-3 lg:hidden md:hidden sm:hidden">
+                    <Button onClick={handleLogout} className=' w-full flex items-center justify-center gap-2 bg-red-500 shadow-none hover:shadow-none text-white border'>
+                        <LogOut className='w-4 h-4' /> Logout
+                    </Button>
+                </div>
             </div>}
 
             {/* FOR EMPLOYEE  */}
@@ -339,6 +367,12 @@ function UserProfile() {
 
                         </div>
                     </div>
+                </div>
+
+                <div className=" mt-3 lg:hidden md:hidden sm:hidden">
+                    <Button onClick={handleLogout} className=' w-full flex items-center justify-center gap-2 bg-red-500 shadow-none hover:shadow-none text-white border'>
+                        <LogOut className='w-4 h-4' /> Logout
+                    </Button>
                 </div>
             </div>}
         </div>

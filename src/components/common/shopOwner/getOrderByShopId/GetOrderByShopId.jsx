@@ -698,8 +698,10 @@ import ViewMoreOrderByShopIdModal from "./modal/ViewMoreOrderByShopIdModal";
 import CustomDropdown from "./custom/CustomDropDown";
 import SettleCustomDropDown from "./custom/SettleCustomDropDown";
 import { ArrowsPointingInIcon, ArrowsPointingOutIcon } from "@heroicons/react/24/solid";
+import VerifyRideModal from "../../bookedVehicles/modal/VerifyRideModal";
 
-const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Created Date", "Settled", "View"];
+const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Pickup Confirmed Status",
+    "Conformation Otp", "Verify Otp", "Created Date", "Settled", "View"];
 
 export default function ViewShopOwnerTable() {
     const [search, setSearch] = useState('');
@@ -942,7 +944,6 @@ export default function ViewShopOwnerTable() {
                             <p><b>Total Cancelled:</b> {getOrderByShopId?.stats?.totalCancelled}</p>
                         </div>
                     </div>
-
                 }
                 {isLoading ? (
                     <div className="flex justify-center p-4">
@@ -1020,6 +1021,8 @@ export default function ViewShopOwnerTable() {
                                             </Typography>
 
                                         </td>
+
+
                                         <td className={classes}>
                                             <Typography
                                                 variant="small"
@@ -1042,6 +1045,7 @@ export default function ViewShopOwnerTable() {
                                             </Typography>
 
                                         </td>
+
                                         <td className={classes}>
                                             <Typography
                                                 variant="small"
@@ -1057,6 +1061,31 @@ export default function ViewShopOwnerTable() {
                                                 />
                                             </Typography>
 
+                                        </td>
+
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal app-font"
+                                            >
+                                                <Chip
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    value={order?.rideConfirmed === false ? "pending" : "success"}
+                                                    color={order?.rideConfirmed === true ? "green" : "red"}
+                                                    className="px-3 text-center w-28"
+                                                />
+                                            </Typography>
+                                        </td>
+
+                                        <td className={classes}>
+                                            <VerifyRideModal orderId={order?._id} refetch={refetch} rideConfirmed={order?.rideConfirmed} />
+                                        </td>
+                                        {/* conformationOtp, rideConfirmed */}
+
+                                        <td className={classes}>
+                                            {order?.conformationOtp}
                                         </td>
 
                                         <td className={classes}>
@@ -1106,9 +1135,26 @@ export default function ViewShopOwnerTable() {
                                 <Typography variant="body2" color="black">
                                     <b>Price:</b> ₹{order?.vehicle?.vehiclePrice}
                                 </Typography>
+                                <div className="flex justify-between items-center mt-2" >
+                                    <h1 className=" font-bold"> Conformation Otp
+                                        : </h1>
+                                    <p className=" border px-2 bg-green-50">{order?.conformationOtp}</p>
+                                </div>
                                 <div className="flex justify-between items-center mt-2">
                                     <h1 className=" font-bold">Payment Status: </h1>
                                     <Chip size="sm" variant="ghost" value={order?.status} color={order?.status === "failed" ? "red" : order?.status === "pending" ? "orange" : "green"} className="px-3 text-center w-28" />
+                                </div>
+
+                                <div className="flex justify-between items-center mt-2">
+                                    <h1 className=" font-bold">Pickup Confirmed Status
+                                        : </h1>
+                                    <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={order?.rideConfirmed === false ? "pending" : "success"}
+                                        color={order?.rideConfirmed === false ? "red" : "orange"}
+                                        className="px-3 text-center w-28"
+                                    />
                                 </div>
 
 
@@ -1138,6 +1184,13 @@ export default function ViewShopOwnerTable() {
                                         <SettelementModal id={order?._id} amount={order?.vehicle?.vehiclePrice} refetch={refetch} settled={order?.settled} />
 
                                     </Tooltip>
+
+                                    <Tooltip text={"Verify Otp"}>
+                                    <VerifyRideModal orderId={order?._id} refetch={refetch} rideConfirmed={order?.rideConfirmed} />
+
+                                    </Tooltip>
+
+                                  
                                     <Tooltip text={"View More"}>
                                         <ViewMoreOrderByShopIdModal order={order} />
                                     </Tooltip>

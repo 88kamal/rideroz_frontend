@@ -19,6 +19,7 @@ dayjs.extend(timezone);
 const ViewUserBookingInvoice = () => {
     const { id } = useParams();
     const { data, error, isLoading } = useGetOrderByIdQuery(id);
+    
 
     const appUser = authService.getCurrentUser()
 
@@ -41,20 +42,20 @@ const ViewUserBookingInvoice = () => {
     }
 
 
-    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge } = data?.order || {};
+    const { user, vehicle, startDate, endDate, coupon, platformAmount, miscAmount, discountAmount, totalAmount, status, razorpay_order_id, razorpay_payment_id, rentDuration, extraHours, extraHourCharge, conformationOtp, rideConfirmed } = data?.order || {};
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-US');
     // const formatDateTime = (dateString, timeString) => {
     //     let date = dayjs(dateString);
-    
+
     //     if (timeString) {
     //         const [hours, minutes] = timeString.split(':');
     //         date = date.hour(hours).minute(minutes);
     //     }
-    
+
     //     return date.format('MMM D, YYYY h:mm A'); // Example: "Nov 17, 2024 3:45 PM"
     // };
-    
+
     const formatDateTime = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleString('en-US', {
@@ -68,7 +69,7 @@ const ViewUserBookingInvoice = () => {
             hour12: true,
         });
     };
-    
+
     const handleDownload = () => {
         const element = document.getElementById('invoice');
         html2canvas(element).then((canvas) => {
@@ -96,7 +97,7 @@ const ViewUserBookingInvoice = () => {
 
                         {/* <img src="../../../../logo/rideroz.png" alt="Company Logo" className="w-28 h-12" /> */}
 
-                        <ShowLocationModalForInvoice vehicle={data?.order?.vehicle}/>
+                        <ShowLocationModalForInvoice vehicle={data?.order?.vehicle} />
                     </div>
 
                     <div className="border-b">
@@ -111,7 +112,53 @@ const ViewUserBookingInvoice = () => {
 
                 {/* <pre>{JSON.stringify(data,null,2)}</pre> */}
 
+
+
                 <div className=" p-6">
+                    <div className="mb-6">
+                        <table className="w-full border border-gray-300 app-font">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="p-2 text-left">Pickup Confirmed Status</th>
+                                    <th className="p-2 text-left border border-gray-300">
+                                    Conformation Otp
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="p-2 border border-gray-300">
+                                        <Chip
+                                            size="sm"
+                                            variant="ghost"
+                                            value={rideConfirmed === false ? "pending" : "success"}
+                                            color={rideConfirmed === false ? "red" : "orange"}
+                                            className="px-3 text-center w-28"
+                                        />
+                                    </td>
+
+                                    {[2,15].includes(appUser?.role) &&
+                                    <td className="p-2 border border-gray-300">
+                                        {conformationOtp}
+                                    </td>
+                                    
+                                    }
+
+{[14].includes(appUser?.role) &&
+                                    <td className="p-2 border border-gray-300">
+                                       N/A
+                                    </td>
+                                    
+                                    }
+                                    
+                                </tr>
+                              
+
+                               
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div className="mb-6">
                         <table className="w-full border border-gray-300 app-font">
                             <thead>
@@ -227,10 +274,10 @@ const ViewUserBookingInvoice = () => {
                                                 value={status}
                                                 color={
                                                     status === "failed" ? "red" :
-                                                    status === "pending" ? "orange" : 
-                                                    "green"
-                                                  }
-                                                  
+                                                        status === "pending" ? "orange" :
+                                                            "green"
+                                                }
+
                                                 className="px-3 text-center w-28"
                                             />
                                         </div>
@@ -271,10 +318,10 @@ const ViewUserBookingInvoice = () => {
                                         </tr>
 
                                         {/* {discountAmount && ( */}
-                                            <tr>
-                                                <td className="p-2 border border-gray-300">Discount</td>
-                                                <td className="p-2 text-right border border-gray-300">-₹{discountAmount}</td>
-                                            </tr>
+                                        <tr>
+                                            <td className="p-2 border border-gray-300">Discount</td>
+                                            <td className="p-2 text-right border border-gray-300">-₹{discountAmount}</td>
+                                        </tr>
                                         {/* )} */}
 
                                         <tr className="border-t">
