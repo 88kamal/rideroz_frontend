@@ -76,3 +76,9 @@
   .gm-ui-hover-effect {
     display: none !important;
 }
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('roboto.woff2') format('woff2');
+  font-display: swap;
+}
