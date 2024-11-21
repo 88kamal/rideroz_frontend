@@ -232,12 +232,14 @@ import authService from '../../services/authService';
 import NeedChangePassword from './NeedChangePassword';
 import { useNavigate } from 'react-router-dom';
 import myContext from '../../context/myContext';
+import { getToken } from 'firebase/messaging';
+import { messaging } from '../../firebase/firebaseConfig';
 
 
 
 const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
     const navigate = useNavigate();
-    const {showAlert, notificationToken} = useContext(myContext);
+    const {showAlert, notificationToken, setNotificationToken} = useContext(myContext);
 
 
     const [loginState, setLoginState] = useState({
@@ -333,25 +335,39 @@ const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
 
     useEffect(() => {
         const requestPermission = async () => {
-        try {
-          console.log("Requesting notification permission...");
-          const permission = await Notification.requestPermission();
-          console.log(`Notification permission status: ${permission}`);
-          if (permission === "granted") {
-            console.log("Permission granted.");
-          } else {
-            console.error("Notification permission not granted. User chose:", permission);
-          }
-        } catch (error) {
-          console.error("Error requesting notification permission:", error);
-        }
-      };
-      
-        requestPermission();
+          try {
+            const permission = await Notification.requestPermission();
+            if (permission === "granted") {
+              let attempts = 0;
+              const maxAttempts = 3; // Retry up to 3 times
+              let currentToken = null;
     
-      
+              while (attempts < maxAttempts && !currentToken) {
+                try {
+                  currentToken = await getToken(messaging, { vapidKey });
+                } catch (error) {
+                  console.error("Error retrieving token, retrying...", error);
+                  attempts++;
+                }
+              }
+    
+              if (currentToken) {
+                console.log("FCM Token:", currentToken);
+                setNotificationToken(currentToken);
+                localStorage.setItem("notificationToken", currentToken); // Save to localStorage
+              } else {
+                console.warn("No registration token available after retries.");
+              }
+            } else {
+              console.error("Notification permission not granted.");
+            }
+          } catch (error) {
+            console.error("Error during token retrieval:", error);
+          } 
+        };
+    
+        requestPermission();
       }, [vapidKey]);
-
     return (
         <>
             {needPassword ?
