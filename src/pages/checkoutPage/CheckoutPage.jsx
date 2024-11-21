@@ -1147,10 +1147,10 @@ const CartPage = () => {
     return (
         <Layout>
             <div className="container mx-auto max-w-7xl px-2 lg:px-0">
-                {/* <pre>{JSON.stringify(vehicle, null, 2)}</pre> */}
+                <pre>{JSON.stringify(formData, null, 2)}</pre>
                 {/* <pre>{JSON.stringify(error?.data, null, 2)}</pre> */}
                 {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
-                <pre>{JSON.stringify(error,null,2)}</pre>
+                <pre>{JSON.stringify("Error",error,null,2)}</pre>
 
                 <div className="mx-auto max-w-2xl lg:max-w-7xl">
                     <form className="lg:mt-10 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-12">
