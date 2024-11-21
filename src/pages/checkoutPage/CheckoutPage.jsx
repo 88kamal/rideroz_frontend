@@ -1137,7 +1137,7 @@ const CartPage = () => {
         }
 
         if (isVerifyPaymentError) {
-            toast.error(verifyPaymentError?.data?.error || 'Failed to confirm payment, please try again');
+            toast.error(verifyPaymentError?.data?.error || '1140 Failed to confirm payment, please try again');
         }
 
     }, [isError, error, isSuccess, data, isVerifyPaymentError, verifyPaymentError]);
