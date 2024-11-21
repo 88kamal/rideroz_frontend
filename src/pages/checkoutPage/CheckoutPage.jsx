@@ -1149,6 +1149,7 @@ const CartPage = () => {
             <div className="container mx-auto max-w-7xl px-2 lg:px-0">
                 <pre>{JSON.stringify(formData, null, 2)}</pre>
                 <pre>{JSON.stringify(error?.data, null, 2)}</pre>
+                <pre>{JSON.stringify(formData.adharcardImg, null, 2)}</pre>
                 {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                 <pre>{JSON.stringify("Error",error,null,2)}</pre>
 
