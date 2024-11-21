@@ -15,7 +15,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         },
       }),
       invalidatesTags: ['Order'], // Invalidate Order tag on create
-      keepUnusedDataFor: 300,
+      keepUnusedDataFor : 3600,
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
       refetchOnFocus: true,
@@ -27,7 +27,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         body: paymentData,
       }),
       invalidatesTags: ['Order'], // Invalidate Order tag on payment verification
-      keepUnusedDataFor: 300,
+      keepUnusedDataFor : 3600,
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
       refetchOnFocus: true,
@@ -43,7 +43,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     //     result?.orders
     //       ? result.orders.map(({ _id }) => ({ type: 'Order', id: _id })) // Update based on orders
     //       : [{ type: 'Order' }],
-    //   keepUnusedDataFor: 300, // Cache data for 5 minutes
+    //   keepUnusedDataFor : 3600, // Cache data for 5 minutes
     //   refetchOnMountOrArgChange: true,
     //   refetchOnReconnect: true,
     //   refetchOnFocus: true,
@@ -71,7 +71,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         result?.orders
           ? result.orders.map(({ _id }) => ({ type: "Order", id: _id })) // Update based on orders
           : [{ type: "Order" }],
-      keepUnusedDataFor: 300, // Cache data for 5 minutes
+      keepUnusedDataFor : 3600, // Cache data for 5 minutes
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
       refetchOnFocus: true,
@@ -88,7 +88,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: (result, error, orderId) =>
         result ? [{ type: 'Order', id: orderId }] : [{ type: 'Order' }],
-      keepUnusedDataFor: 300, // Cache data for 5 minutes
+      keepUnusedDataFor : 3600, // Cache data for 5 minutes
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
       refetchOnFocus: true,
@@ -183,7 +183,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
       }),
       invalidatesTags: ['Order'], // Invalidate Order tag on cancellation
-      keepUnusedDataFor: 300, // Keep unused data for 5 minutes
+      keepUnusedDataFor : 3600, // Keep unused data for 5 minutes
       refetchOnMountOrArgChange: true, // Refetch on argument change
       refetchOnReconnect: true, // Refetch on reconnect
       refetchOnFocus: true, // Refetch when the window regains focus

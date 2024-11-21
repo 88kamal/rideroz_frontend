@@ -10,7 +10,7 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
     //   query: () => '/department/get-departments', // API endpoint
     //   transformResponse: (data) => data.departments,
     //   providesTags: ['Department'], // Tags for cache invalidation
-    //   keepUnusedDataFor: 300, // Cache data for 5 minutes (300 seconds)
+    //   keepUnusedDataFor : 3600, // Cache data for 5 minutes (300 seconds)
     //   refetchOnMountOrArgChange: true, // Automatically refetch when the component remounts
     //   refetchOnReconnect: true, // Automatically refetch when the browser regains connection
     //   refetchOnFocus: true, // Automatically refetch when the window/tab regains focus
@@ -24,7 +24,7 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (data) => data.departments,
       providesTags: ['Department'], // Tags for cache invalidation
-      keepUnusedDataFor: 300, // Cache data for 5 minutes (300 seconds)
+      keepUnusedDataFor : 3600, // Cache data for 5 minutes (300 seconds)
       refetchOnMountOrArgChange: true, // Automatically refetch when the component remounts
       refetchOnReconnect: true, // Automatically refetch when the browser regains connection
       refetchOnFocus: true, // Automatically refetch when the window/tab regains focus

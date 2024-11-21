@@ -10,7 +10,7 @@ export const vehicleAvailabilitySlice = apiSlice.injectEndpoints({
             }),
             providesTags: (result, error, { vehicleId }) => 
                 result ? [{ type: "VehicleAvailability", id: vehicleId }] : [],
-            keepUnusedDataFor: 60, // Keep unused data in the cache for 60 seconds
+            keepUnusedDataFor : 3600, // Keep unused data in the cache for 60 seconds
             refetchOnFocus: true, // Refetch data when the component regains focus
             refetchOnReconnect: true, // Refetch data on reconnect
             refetchOnMountOrArgChange: true, // Refetch on mount or if arguments change

@@ -54,7 +54,7 @@ export const shopApi = apiSlice.injectEndpoints({
                 result?.shops
                     ? result.shops.map(({ _id }) => ({ type: 'Shop', id: _id }))
                     : [{ type: 'Shop' }],
-            keepUnusedDataFor: 300,  // Cache data for 5 minutes
+            keepUnusedDataFor : 3600,  // Cache data for 5 minutes
             refetchOnMountOrArgChange: true,
             refetchOnReconnect: true,
             refetchOnFocus: true,

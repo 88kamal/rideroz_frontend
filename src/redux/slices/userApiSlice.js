@@ -28,7 +28,7 @@ export const userApi = apiSlice.injectEndpoints({
         result
           ? [...result.users.map(({ _id }) => ({ type: 'User', id: _id })), { type: 'User', id: 'LIST' }]
           : [{ type: 'User', id: 'LIST' }],
-      keepUnusedDataFor: 300,
+      keepUnusedDataFor : 3600,
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
       refetchOnFocus: true,

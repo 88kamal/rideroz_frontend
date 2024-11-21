@@ -57,7 +57,7 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
             { type: 'Employee', id: 'LIST' },
           ]
           : [{ type: 'Employee', id: 'LIST' }],
-      keepUnusedDataFor: 300, // Keep data for 5 minutes when unused
+      keepUnusedDataFor : 3600, // Keep data for 5 minutes when unused
       refetchOnMountOrArgChange: true, // Refetch when arguments change
       refetchOnReconnect: true, // Refetch on network reconnect
       refetchOnFocus: true, // Refetch when window is refocused

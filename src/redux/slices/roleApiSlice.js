@@ -16,7 +16,7 @@ export const roleApi = apiSlice.injectEndpoints({
         },
       }),
       invalidatesTags: ['Role'], // Invalidate role cache to refetch updated roles
-      keepUnusedDataFor: 300, // Cache the result for 5 minutes (300 seconds)
+      keepUnusedDataFor : 3600, // Cache the result for 5 minutes (300 seconds)
       refetchOnMountOrArgChange: true, // Refetch when the component remounts
       refetchOnReconnect: true, // Refetch on browser reconnect
       refetchOnFocus: true, // Refetch when window/tab gains focus
@@ -36,7 +36,7 @@ export const roleApi = apiSlice.injectEndpoints({
       },
       providesTags: ['Role'], // Provide tags for caching and invalidation
       // Automatically refetch options
-      keepUnusedDataFor: 300, // Cache data for 5 minutes (300 seconds)
+      keepUnusedDataFor : 3600, // Cache data for 5 minutes (300 seconds)
       refetchOnMountOrArgChange: true, // Automatically refetch when the component remounts
       refetchOnReconnect: true, // Automatically refetch when the browser regains connection
       refetchOnFocus: true, // Automatically refetch when the window/tab regains focus
