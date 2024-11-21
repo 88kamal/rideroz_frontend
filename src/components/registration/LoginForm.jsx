@@ -373,7 +373,7 @@ const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
                     )}
 
                     {/* <pre>{JSON.stringify(roles, null, 2)}</pre> */}
-                    {/* <pre>{JSON.stringify(user,null,2)}</pre> */}
+                    <pre>{JSON.stringify(deviceToken,null,2)}</pre>
 
                     <div className="mb-6">
                         <Input

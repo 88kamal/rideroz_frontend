@@ -8,7 +8,6 @@ import { useSearchParams } from "react-router-dom";
 import LeftSidePopup from "../../components/leftSidePop/LeftSidePop"
 import { Helmet } from 'react-helmet';
 import HowToBookRide from "../../components/howToBookRide/HowToBookRide"
-import NotificationHandler from "../../helper/NotificationHandler"
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
@@ -31,8 +30,6 @@ const HomePage = () => {
         <meta property="og:description" content="Affordable rental services in India. Flexible booking options available." />
         <meta property="og:image" content="https://rideroz.com/images/banner.jpg" />
       </Helmet>
-      <NotificationHandler/>
-
       <HeroSection />
       <Services />
       <Vehicle />
