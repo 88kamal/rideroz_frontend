@@ -204,7 +204,7 @@ function App() {
 
         {/* <pre>{JSON.stringify(notificationToken,null,2)}</pre> */}
 
-        <NotificationHandler/>
+        {/* <NotificationHandler/> */}
 
         {/* {notification && (
           <CustomNotification
