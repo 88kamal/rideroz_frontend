@@ -1150,7 +1150,7 @@ const CartPage = () => {
                 <pre>{JSON.stringify(formData, null, 2)}</pre>
                 <pre>{JSON.stringify(error?.data, null, 2)}</pre>
                 <pre>{JSON.stringify(formData.adharcardImg, null, 2)}</pre>
-                <pre>{JSON.stringify("error", error, null, 2)}</pre>
+                {isError && <pre>{JSON.stringify("error", error, null, 2)}</pre>}
                 <pre>{JSON.stringify("Verify payment Error",verifyPaymentError,null,2)}</pre>
 
                 <div className="mx-auto max-w-2xl lg:max-w-7xl">
