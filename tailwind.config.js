@@ -15,6 +15,15 @@ export default withMT({
           '75%': { color: 'purple' }, // Orange Red
         },
       },
+      colors: {
+        'deep-green-accent': {
+          100: '#dcedc8', // Light green shade
+          200: '#aed581', // Soft green
+          400: '#66bb6a', // Vibrant green
+          700: '#388e3c', // Deep green
+        },
+      },
+      
     },
   },
   plugins: [],

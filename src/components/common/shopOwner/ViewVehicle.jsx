@@ -571,7 +571,7 @@ export default function ViewVehicle() {
                                             <td className={classes}>{vehicleNumber}</td>
                                             <td className={classes}>₹ {vehiclePrice}</td>
                                             <td className={classes}>
-                                                {/* <pre>{JSON.stringify}</pre> */}
+                                                {/* <pre>{JSON.stringify(_id)}</pre> */}
                                                 <UpdateAvailabilityModal
                                                     id={_id}
                                                     vehicleAvailability={vehicleAvailability}
@@ -615,7 +615,12 @@ export default function ViewVehicle() {
 
 
                                     <div className="flex justify-between mt-2 bg-green-50 rounded-b-lg">
-                                        <UpdateAvailabilityModal {...vehicle} />
+                                        <UpdateAvailabilityModal 
+                                         id={vehicle?._id}
+                                         vehicleAvailability={vehicle?.vehicleAvailability}
+                                         bookedDates={vehicle?.bookedDates}
+                                         refetch={refetch}
+                                          />
 
                                         <IconButton
                                             variant="text"

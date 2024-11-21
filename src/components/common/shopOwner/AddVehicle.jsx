@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useAddVehicleMutation } from '../../../redux/slices/vehicleApiSlice';
 import { Button, Checkbox, Input, Textarea } from '@material-tailwind/react';
 import toast from 'react-hot-toast';
+import myContext from '../../../context/myContext';
 
 const vehicleTypes = ['Car', 'Bike', 'Scooty']; // Array of vehicle types
 
@@ -17,6 +18,8 @@ const AddVehicleForm = () => {
         vehicleImage: null,
         vehicleAvailability: true,
     });
+
+    const {showAlert} = useContext(myContext);
 
     const [addVehicle, { isLoading, isSuccess, isError, error, data }] = useAddVehicleMutation();
     const [imagePreview, setImagePreview] = useState(null); // For showing image preview
@@ -71,11 +74,11 @@ const AddVehicleForm = () => {
 
     useEffect(() => {
         if (isError) {
-            toast.error(error?.data?.error || 'Failed to add role, please try again');
+            showAlert(error?.data?.error || 'Failed to add role, please try again', "error");
         }
 
         if (isSuccess) {
-            toast.success(data?.message);
+            showAlert(data?.message, "success", 2000);
             setFormData({
                 vehicleType: '',
                 vehicleName: '',
@@ -91,6 +94,7 @@ const AddVehicleForm = () => {
             if (fileInputRef.current) {
                 fileInputRef.current.value = null; // This clears the file input field
             }
+            setImagePreview("")
         }
     }, [isError, error, isSuccess, data]);
 

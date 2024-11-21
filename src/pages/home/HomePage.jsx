@@ -7,6 +7,7 @@ import LoginModal from "../../components/registration/LoginModal"
 import { useSearchParams } from "react-router-dom";
 import LeftSidePopup from "../../components/leftSidePop/LeftSidePop"
 import { Helmet } from 'react-helmet';
+import HowToBookRide from "../../components/howToBookRide/HowToBookRide"
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
@@ -34,6 +35,7 @@ const HomePage = () => {
       <Vehicle />
       {isLoginModalOpen && <LoginModal autoOpen={true} />}
       {/* <LeftSidePopup /> */}
+      <HowToBookRide/>
     </Layout>
   )
 }

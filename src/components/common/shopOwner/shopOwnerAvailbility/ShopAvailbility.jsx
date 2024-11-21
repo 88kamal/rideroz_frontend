@@ -5,8 +5,8 @@ import dayjs from "dayjs";
 import { Button, Spinner } from "@material-tailwind/react";
 import { useFetchVehicleAvailabilityQuery } from "../../../../redux/slices/vehicleAvailabilitySlice";
 
-export default function ShopAvailbility({ vehicleId, initialMonth }) {
-  const [month, setMonth] = useState(initialMonth || dayjs().format("YYYY-MM"));
+export default function ShopAvailbility({ vehicleId }) {
+  const [month, setMonth] = useState(dayjs().format("YYYY-MM"));
 
   const { data, error, isLoading, refetch } = useFetchVehicleAvailabilityQuery({
     vehicleId,
@@ -17,15 +17,6 @@ export default function ShopAvailbility({ vehicleId, initialMonth }) {
     const newMonth = dayjs(month).add(direction, "month").format("YYYY-MM");
     setMonth(newMonth);
   };
-
-  const refreshData = () => {
-    refetch();
-  };
-
-
-  // if (isLoading) return <p>Loading...</p>;
-  // if (error) return <p>An error occurred: {error}</p>;
-
   return (
     <>
     
