@@ -8,7 +8,7 @@ import HomePage from "./pages/home/HomePage";
 import AboutPage from "./pages/about/AboutPage";
 import ContactPage from "./pages/contact/ContactPage";
 import NoPage from "./pages/noPage/NoPage";
-import toast, { Toaster } from 'react-hot-toast';
+import  { Toaster } from 'react-hot-toast';
 import ListShopPage from "./pages/listShop/ListShopPage";
 import SuperAdminDashboard from "./pages/dashboard/super-admin/SuperAdminDashboard";
 import SuperAdminHomePage from "./pages/dashboard/super-admin/pages/SuperAdminHomePage";
@@ -49,43 +49,14 @@ import DiscountCoupon from "./pages/companyInfo/discountCoupon/DiscountCoupon";
 import PickUpAndDropOff from "./pages/companyInfo/pickUpAndDropOff/PickUpAndDropOff";
 import ShopOwnerVehicleBookPage from "./pages/dashboard/shopOwner/pages/ShopOwnerVehicleBookPage";
 import ShopOwnerSettelementPage from "./pages/dashboard/shopOwner/pages/ShopOwnerSettelementPage";
-import { useContext, useEffect, useState } from "react";
-import { messaging } from "./firebase/firebaseConfig";
-import { getToken, onMessage } from "firebase/messaging";
-import CustomNotification from "./helper/CustomNotification";
-import myContext from "./context/myContext";
+import { useEffect } from "react";
 import SuperAdminGetOrderByShopOwner from "./pages/dashboard/super-admin/pages/SuperAdminGetOrderByShopOwner";
 import SuperAdminViewShopOwnerVehiclePage from "./pages/dashboard/super-admin/pages/SuperAdminViewShopOwnerVehiclePage";
 import Schema from "./components/seo/Schema";
 import ReactGA from 'react-ga';
-import { useSaveDeviceTokenMutation } from "./redux/slices/deviceTokenSlice";
-import NotificationHandler from "./helper/NotificationHandler";
 
 
 function App() {
-  // const [notification, setNotification] = useState(null);
-  // const [notificationToken, setNotificationToken] = useState('')
-
-  // const [saveDeviceToken, { isLoading, isError, isSuccess }] =
-  //   useSaveDeviceTokenMutation();
-
-
-
-  // useEffect(() => {
-  //   if (notificationToken) {
-  //     const saveToken = async () => {
-  //       try {
-  //         await saveDeviceToken(notificationToken).unwrap();
-  //         console.log('Token saved successfully!');
-  //       } catch (error) {
-  //         console.error('Error saving token:', error);
-  //       }
-  //     };
-  //     saveToken();
-  //   }
-  // }, [notificationToken, saveDeviceToken]);
-
-
   ReactGA.initialize('UA-XXXXXX-X'); // Replace with your Google Analytics ID
 
   // Component to handle page view tracking on route changes
@@ -98,101 +69,6 @@ function App() {
   }
 
   usePageViews();
-
-  // useEffect(() => {
-  //   const requestPermission = async () => {
-  //     try {
-  //       const permission = await Notification.requestPermission();
-  //       if (permission === "granted") {
-  //         const currentToken = await getToken(messaging, {
-  //           vapidKey: "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w",
-  //         });
-  //         if (currentToken) {
-  //           console.log("FCM Token:", currentToken);
-  //           setNotificationToken(currentToken)
-  //         } else {
-  //           console.warn("No registration token available.");
-  //         }
-  //       } else {
-  //         console.error("Notification permission not granted.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error during token retrieval:", error);
-  //     }
-  //   };
-
-  //   requestPermission();
-
-  //   // // Handle foreground messages
-  //   // onMessage(messaging, (payload) => {
-  //   //   console.log("Message received in the foreground:", payload);
-  //   //   // Set the notification state with the received message
-  //   //   setNotification({
-  //   //     title: payload.notification?.title,
-  //   //     body: payload.notification?.body,
-  //   //   });
-  //   // });
-
-  //   onMessage(messaging, (payload) => {
-  //     if (document.visibilityState === 'visible') {
-  //       console.log("App is in the foreground. Handle the message differently.");
-  //       console.log("Message received in the foreground:", payload);
-  //       // Set the notification state with the received message
-  //       setNotification({
-  //         title: payload.notification?.title,
-  //         body: payload.notification?.body,
-  //       });
-  //       // Display custom UI or log the message without triggering a new notification
-  //     } else {
-  //       console.log("App is in the background.");
-  //       // Here, `firebase-messaging-sw.js` will handle the notification display
-  //     }
-  //   });
-
-  // }, []);
-
-  // const handleNotificationClose = () => {
-  //   setNotification(null); // Hide the notification
-  // };
-
-  // useEffect(() => {
-  //   const requestPermission = async () => {
-  //     try {
-  //       const permission = await Notification.requestPermission();
-  //       if (permission === "granted") {
-  //         const currentToken = await getToken(messaging, {
-  //           vapidKey: "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w",
-  //         });
-  //         if (currentToken) {
-  //           console.log("FCM Token:", currentToken);
-  //           setNotificationToken(currentToken);
-  //         } else {
-  //           console.warn("No registration token available.");
-  //         }
-  //       } else {
-  //         console.error("Notification permission not granted.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error during token retrieval:", error);
-  //     }
-  //   };
-
-  //   requestPermission();
-
-  //   // Handle foreground messages
-  //   onMessage(messaging, (payload) => {
-  //     if (document.visibilityState === 'visible') {
-  //       // App is in the foreground
-  //       console.log("Message received in the foreground:", payload);
-
-  //       // Handle the notification in the app UI (without showing a system-level notification)
-  //       setNotification({
-  //         title: payload.notification?.title,
-  //         body: payload.notification?.body,
-  //       });
-  //     }
-  //   });
-  // }, []);
 
   return (
     <MyState>

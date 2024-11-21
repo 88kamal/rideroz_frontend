@@ -27,39 +27,23 @@ const UploadAdharImage = ({ formData, setFormData }) => {
     }, [formData.adharcardImg]);
 
     // Handler for file input change
-    // const handleFileChange = (event) => {
-    //     let files = Array.from(event.target.files);
-    //     if (files.length > 2) {
-    //         files = files.slice(0, 2); // Take only the first two files
-    //         alert('You can only upload a maximum of 2 images.');
-    //     }
-    //     setFormData({
-    //         ...formData,
-    //         adharcardImg: files // Update formData with the selected files array
-    //     });
-    // };
-
     const handleFileChange = (event) => {
-        console.log('File input triggered');
         let files = Array.from(event.target.files);
-        console.log('Selected files:', files);
-    
         if (files.length > 2) {
-            files = files.slice(0, 2);
+            files = files.slice(0, 2); // Take only the first two files
             alert('You can only upload a maximum of 2 images.');
         }
-    
         setFormData({
             ...formData,
-            adharcardImg: files,
+            adharcardImg: files // Update formData with the selected files array
         });
     };
-    
+
     return (
         <div>
-            {/* <pre>{JSON.stringify(formData.adharcardImg, null, 2)}</pre> */}
-            {/* <pre>{JSON.stringify(error, null, 2)}</pre> */}
-            {/* <pre>{JSON.stringify(getUserById, null, 2)}</pre> */}
+            <pre>{JSON.stringify(formData.adharcardImg, null, 2)}</pre>
+            <pre>{JSON.stringify(error, null, 2)}</pre>
+            <pre>{JSON.stringify(getUserById, null, 2)}</pre>
 
             {canUploadAdharcard && (
                 <div>
