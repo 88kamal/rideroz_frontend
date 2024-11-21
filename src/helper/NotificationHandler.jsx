@@ -103,15 +103,16 @@
 // export default NotificationHandler;
 
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getToken, onMessage } from "firebase/messaging";
 import { messaging } from "../firebase/firebaseConfig";
 import { useSaveDeviceTokenMutation } from "../redux/slices/deviceTokenSlice";
 import CustomNotification from "./CustomNotification";
+import myContext from "../context/myContext";
 
 const NotificationHandler = () => {
   const [notification, setNotification] = useState(null);
-  const [notificationToken, setNotificationToken] = useState(localStorage.getItem("notificationToken") || "");
+  const { notificationToken, setNotificationToken} = useContext(myContext)
   const [saveDeviceToken] = useSaveDeviceTokenMutation();
 
   const vapidKey = "BGJ4HEIgOHrkpNXZtvJTWtSH8WZZMHU-IG6FYnxwgU0Bf1OWoM3nMn5F4Rdd8-oLBAzqYQfvuwxap5hUMgNXC2w";

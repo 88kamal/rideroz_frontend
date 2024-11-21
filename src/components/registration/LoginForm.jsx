@@ -237,15 +237,15 @@ import myContext from '../../context/myContext';
 
 const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
     const navigate = useNavigate();
-    const deviceToken = localStorage.getItem("notificationToken");
+    const {showAlert, notificationToken} = useContext(myContext);
+
 
     const [loginState, setLoginState] = useState({
         email: '',
         password: '',
-        deviceToken
+        deviceToken : notificationToken
     });
 
-    const {showAlert} = useContext(myContext);
 
     const [needPassword, setNeedPassword] = useState(false); // Track if the user needs a password
 
@@ -373,7 +373,7 @@ const LoginForm = ({ switchToSignup, switchToLogin, handleOpen }) => {
                     )}
 
                     {/* <pre>{JSON.stringify(roles, null, 2)}</pre> */}
-                    <pre>{JSON.stringify(deviceToken,null,2)}</pre>
+                    <pre>{JSON.stringify(notificationToken,null,2)}</pre>
 
                     <div className="mb-6">
                         <Input

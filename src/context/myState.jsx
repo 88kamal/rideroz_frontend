@@ -10,8 +10,8 @@ function MyState(props) {
   const [selectedCity, setSelectedCity] = useState('');
   const [currentLocationName, setCurrentLocationName] = useState('');
   const [autoOpenLogin, setAutoOpenLogin] = useState(false);
-  const [notificationToken, setNotificationToken] = useState('');
-
+  const [notificationToken, setNotificationToken] = useState(localStorage.getItem("notificationToken") || "");
+  
   const [alert, setAlert] = useState({
     show: false,
     message: '',
