@@ -28,7 +28,7 @@ const HomePage = () => {
         <meta name="keywords" content="bike rental, scooty rental, car rental, Rideroz" />
         <meta property="og:title" content="Rent Bikes, Scooty & Cars - Rideroz" />
         <meta property="og:description" content="Affordable rental services in India. Flexible booking options available." />
-        <meta property="og:image" content="https://rideroz.com/images/banner.jpg" />
+        {/* <meta property="og:image" content="https://rideroz.com/images/banner.jpg" /> */}
       </Helmet>
       <HeroSection />
       <Services />
