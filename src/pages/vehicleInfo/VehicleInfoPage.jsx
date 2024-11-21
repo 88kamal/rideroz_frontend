@@ -82,7 +82,7 @@ function ProductInfo() {
                                 </div>
 
                                 {/* All Image Box  */}
-                                <div className="mt-3 lg:mt-0 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
+                                <div className="mt-3 hidden lg:block  lg:mt-0 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
                                     <div className="flex flex-row items-start lg:flex-col space-x-2 lg:space-x-0 justify-center">
                                         {/* Image 1  */}
                                         {image1 && (
@@ -135,7 +135,7 @@ function ProductInfo() {
                         {/* div 5 Right Item  */}
                         <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2 cursor-text">
                             {/* Brand Name Text  */}
-                            <h2 className={`app-font`}>
+                            <h2 className={`app-font mt-2 tracking-widest`}>
                                 Rideroz
                             </h2>
 

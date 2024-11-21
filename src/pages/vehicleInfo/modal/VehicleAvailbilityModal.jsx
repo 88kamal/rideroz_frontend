@@ -49,7 +49,7 @@ export default function VehicleAvailbilityModal({ vehicleId, initialMonth }) {
        <Button
                 variant=""
                 onClick={handleOpen}
-                className={`flex items-center justify-center rounded-md py-2.5  lg:px-5 lg:py-2 text-center text-[0.6em] lg:text-sm font-medium w-full hover:shadow-none shadow-none  gap-3 bg-transparent border text-green-800  `}
+                className={`flex items-center justify-center rounded-md py-2.5  lg:px-5 lg:py-2 text-center text-[0.6em] lg:text-sm font-medium w-full hover:shadow-none shadow-none  gap-2 bg-transparent border text-green-800  `}
             >
                 <CheckCircleIcon className={`text-green-800 lg:text-md size-5 `} />
                 <span className="fontPara">Check Availability</span>

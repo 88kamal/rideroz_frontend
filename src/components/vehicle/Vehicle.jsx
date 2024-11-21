@@ -103,7 +103,7 @@ export default function Vehicle() {
                     Our Vehicle
                 </h1>
             </div>
-            <div className="container mx-auto max-w-2xl">
+            <div className="container mx-auto max-w-2xl ">
                 {/* Tab Headers */}
                 <div className="flex border-b border-blue-gray-50">
                     {vehicleData.map(({ label, value }) => (
@@ -125,7 +125,7 @@ export default function Vehicle() {
                 </div>
             </div>
               {/* Tab Panels */}
-              <div className="mt-4">
+              <div className="mt-4 px-2">
                     {vehicleData.map(({ value }) => (
                         activeTab === value && (
                             <div key={value}>
