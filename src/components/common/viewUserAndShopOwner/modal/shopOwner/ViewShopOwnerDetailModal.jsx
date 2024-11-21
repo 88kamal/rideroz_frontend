@@ -143,11 +143,11 @@ export default function ViewShopOwnerDetailModal(shop) {
 
           <div className="flex flex-wrap justify-between items-center">
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
-              <span className=" font-bold">Shop Activation : </span> <span className=" app-font capitalize">{ownerActivation === false ? "Active" : "Deactive"}</span>
+              <span className=" font-bold">Shop Activation : </span> <span className=" app-font capitalize">{ownerActivation === false ? "Deactive" : "Active"}</span>
             </div>
 
             <div className=" bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full sm:w-full md:w-full lg:w-1/2">
-              <span className=" font-bold">Rideroz Block Status : </span> <span className=" app-font capitalize">{adminActivation === false ? "Active" : "Deactive"}</span>
+              <span className=" font-bold">Rideroz Block Status : </span> <span className=" app-font capitalize">{adminActivation === false ? "Deactive" : "Active"}</span>
             </div>
 
           </div>
