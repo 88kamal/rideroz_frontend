@@ -17,7 +17,7 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(utc);
 
 
-export default function UpdateAvailabilityModal({ id, refetch }) {
+export default function UpdateAvailabilityModal({ id, refetch, vehicle }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     startDate: null,
@@ -42,7 +42,7 @@ export default function UpdateAvailabilityModal({ id, refetch }) {
   // };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-};
+  };
 
 
   // Handle form submission
@@ -55,6 +55,7 @@ export default function UpdateAvailabilityModal({ id, refetch }) {
 
     try {
       await bookWalkin({ vehicleId: id, ...formData }).unwrap();
+      refetch();
     } catch (error) {
       console.error(error);
     }
@@ -82,10 +83,10 @@ export default function UpdateAvailabilityModal({ id, refetch }) {
       </IconButton>
 
       <Dialog open={open} size="xxl" className="shadow-none hover:shadow-none rounded-none bg-white">
-        {/* <pre>{JSON.stringify(formData,null,2)}</pre> */}
+        {/* <pre>{JSON.stringify(vehicle,null,2)}</pre> */}
         <div className="overflow-y-scroll">
 
-          <ShopAvailbility vehicleId={id}/>
+          <ShopAvailbility vehicleId={id} />
           {/* Current month title with navigation */}
           {/* <div className="flex justify-between items-center mb-2 bg-blue-500">
             <Button variant="text"
@@ -163,19 +164,14 @@ export default function UpdateAvailabilityModal({ id, refetch }) {
             </div> */}
 
             {/* Form for adding new booking */}
-            <form onSubmit={handleSubmit} className="space-y-4 flex justify-end mb-20">
-              <div className=" bg-gray-200 border border-gray-400 p-5">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="">
-                    {/* <DatePicker
-                                            selected={formData.startDate}
-                                            onChange={(date) => handleDateChange(date, 'startDate')}
-                                            filterDate={filterPassedDates} // Disable past and booked dates
-                                            dateFormat="yyyy-MM-dd"
-                                            className="text-xs sm:text-sm border p-2 w-full outline-none"
-                                            placeholderText="Select Pickup Date"
-                                            required
-                                        /> */}
+            <form onSubmit={handleSubmit} className=" mb-20 flex justify-end">
+              <div className=" bg-green-50 border drop-shadow rounded-md border-green-200 px-5 py-4 w-96">
+                <div className="  mb-2">
+                  <div className=" mb-2">
+                  <label htmlFor="" className=" text-sm font-bold text-black">
+                  Select Pickup Date
+                  </label>
+
                     <input
                       type="date"
                       value={formData.startDate}
@@ -188,33 +184,21 @@ export default function UpdateAvailabilityModal({ id, refetch }) {
                   </div>
 
                   <div className="">
-                    {/* <input
-                      label="Pickup Time"
-                      type="time"
-                      name="startTime"
-                      value={formData.startTime}
-                      onChange={handleChange}
-                      required
-                      className="text-xs sm:text-sm border p-1.5 w-full outline-none"
-                    /> */}
+                   
                     <CustomTimeDropdown
                       name="startTime"
                       value={formData.startTime}
                       onChange={handleChange}
+                      shop_OpeningTime={vehicle?.shop?.shop_OpeningTime}
+                      shop_ClosedTime={vehicle?.shop?.shop_ClosedTime}
                     />
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="">
-                    {/* <DatePicker
-                      selected={formData.endDate}
-                      onChange={(date) => handleDateChange(date, 'endDate')}
-                      filterDate={filterPassedDates} // Disable past and booked dates
-                      dateFormat="yyyy-MM-dd"
-                      className="text-xs sm:text-sm border p-2 w-full outline-none"
-                      placeholderText="Select Drop off Date"
-                      required
-                    /> */}
+
+                <div className="mb-2">
+                  <div className="mb-2">
+                  <label htmlFor="" className=" text-sm font-bold text-black">Select Drop off Date</label>
+
                     <input
                       type="date"
                       value={formData.endDate}
@@ -226,19 +210,12 @@ export default function UpdateAvailabilityModal({ id, refetch }) {
                   </div>
 
                   <div className="">
-                    {/* <input
-                      placeholder="Drop Off Time"
-                      type="time"
-                      name="endTime"
-                      value={formData.endTime}
-                      onChange={handleChange}
-                      required
-                      className="text-xs sm:text-sm border p-1.5 w-full outline-none"
-                    /> */}
                     <CustomTimeDropdown
                       name="endTime"
                       value={formData.endTime}
                       onChange={handleChange}
+                      shop_OpeningTime={vehicle?.shop?.shop_OpeningTime}
+                      shop_ClosedTime={vehicle?.shop?.shop_ClosedTime}
                     />
                   </div>
                 </div>

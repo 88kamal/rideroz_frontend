@@ -417,7 +417,7 @@ export default function ViewVehicle() {
                         </Typography>
                     </div>
 
-                    {/* <pre>{JSON.stringify(vehicals,null,2)}</pre> */}
+                    {/* <pre>{JSON.stringify(vehicals?.shop?.shop_OpeningTime,null,2)}</pre> */}
 
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                         <div className="w-full md:w-72">
@@ -571,12 +571,13 @@ export default function ViewVehicle() {
                                             <td className={classes}>{vehicleNumber}</td>
                                             <td className={classes}>₹ {vehiclePrice}</td>
                                             <td className={classes}>
-                                                {/* <pre>{JSON.stringify(_id)}</pre> */}
+                                                {/* <pre>{JSON.stringify(vehicle?.shop)}</pre> */}
                                                 <UpdateAvailabilityModal
                                                     id={_id}
                                                     vehicleAvailability={vehicleAvailability}
                                                     bookedDates={bookedDates}
                                                     refetch={refetch}
+                                                   vehicle={vehicals}
                                                 />
                                             </td>
                                             <td className={classes}>
@@ -620,6 +621,7 @@ export default function ViewVehicle() {
                                          vehicleAvailability={vehicle?.vehicleAvailability}
                                          bookedDates={vehicle?.bookedDates}
                                          refetch={refetch}
+                                         vehicle={vehicals}
                                           />
 
                                         <IconButton

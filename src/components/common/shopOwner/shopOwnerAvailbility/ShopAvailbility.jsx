@@ -17,6 +17,10 @@ export default function ShopAvailbility({ vehicleId }) {
     const newMonth = dayjs(month).add(direction, "month").format("YYYY-MM");
     setMonth(newMonth);
   };
+  
+  useEffect(() => {
+    refetch()
+  }, [data])
   return (
     <>
     
@@ -44,6 +48,7 @@ export default function ShopAvailbility({ vehicleId }) {
               Next
             </Button>
           </div>
+          
           <div className="p-3">
             {isLoading ? 
             
