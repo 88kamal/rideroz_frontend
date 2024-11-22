@@ -126,10 +126,10 @@ const AllVehicle = () => {
 
                                             <div className="mt-2">
                                                 <div className="py-[1px] border rounded border-green-100 bg-green-50 px-2 app-font text-sm text-center">
-                                                    <p>Shop Time: <span>{item?.shop?.shop_OpeningTime}-{item?.shop?.shop_ClosedTime}</span></p>
+                                                    <p>Shop Time: <br  className=" lg:hidden"/> <span>{item?.shop?.shop_OpeningTime}-{item?.shop?.shop_ClosedTime}</span></p>
                                                 </div>
                                             </div>
-                                            <div className="flex w-full gap-2 mt-2">
+                                            <div className="flex flex-wrap w-full gap-2 mt-2">
                                                 <DatePickerModule vehicleId={_id} month={"2024-11"} />
                                                 <Button
                                                     onClick={() => navigate(`/checkout/${_id}`)}

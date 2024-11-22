@@ -440,9 +440,9 @@ const CartPage = () => {
                 {/* {isError && <pre>{JSON.stringify("error", error, null, 2)}</pre>} */}
                 {/* <pre>{JSON.stringify("Verify payment Error",verifyPaymentError,null,2)}</pre> */}
 
-                <pre>{JSON.stringify({
+                {/* <pre>{JSON.stringify({
                     error
-                },null,2)}</pre>
+                },null,2)}</pre> */}
 
                 <div className="mx-auto max-w-2xl lg:max-w-7xl">
                     <form className="lg:mt-10 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-12">
@@ -652,22 +652,16 @@ const CartPage = () => {
 
                                 {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
 
-                                {/* <p>
+                                <p>
                                     <span className="font-bold">Total Shop Amount</span> :
                                     <span className="app-font"> ₹ {
                                         discountedAmount !== null
                                             ? discountedAmount  // Show discounted amount if coupon applied
                                             : formData.shopAmount  // Show original amount if no coupon applied
                                     }</span>
-                                </p> */}
-                                <p>
-                                    <span className="font-bold">Total Shop Amount</span> :
-                                    <span className="app-font"> ₹ {
-                                        isCouponApplied && discountedAmount !== null
-                                            ? discountedAmount // Show discounted amount if coupon is applied
-                                            : originalShopAmount // Show original amount if no coupon applied
-                                    }</span>
                                 </p>
+
+
 
                             </div>
 

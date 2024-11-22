@@ -30,8 +30,9 @@ const HomePage = () => {
         <meta property="og:description" content="Affordable rental services in India. Flexible booking options available." />
         {/* <meta property="og:image" content="https://rideroz.com/images/banner.jpg" /> */}
       </Helmet>
+
       <HeroSection />
-      <Services />
+      <Services  />
       <Vehicle />
       {isLoginModalOpen && <LoginModal autoOpen={true} />}
       {/* <LeftSidePopup /> */}

@@ -89,7 +89,7 @@ const SearchSection = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center bg-gray-100 h-[23em] lg:h-[25em] md:h-[30em] sm:h-[30em] lg:mb-20 mb-32">
+    <div className="w-full flex flex-col items-center bg-gray-100 h-[23em] lg:h-[25em] md:h-[30em] sm:h-[30em] lg:mb-20 mb-28">
       {/* Bikes Image Section */}
       <div className="w-full max-w-2xl mt-8 p-3 lg:p-0 relative">
         {/* Placeholder */}
@@ -121,7 +121,7 @@ const SearchSection = () => {
               <input
                 readOnly
                 type="text"
-                className="w-full bg-transparent focus:outline-none"
+                className="w-full bg-transparent focus:outline-none app-font"
                 placeholder="Your Current Location"
                 value={currentLocationName}
               />
@@ -132,7 +132,7 @@ const SearchSection = () => {
               <Button
                 variant=""
                 onClick={() => handleSearch()}
-                className="bg-green-500 text-white py-3 rounded-md hover:bg-green-600 flex items-center justify-center w-40 hover:shadow-none shadow-none"
+                className="bg-green-500 text-white py-3 rounded-md hover:bg-green-600 flex items-center justify-center w-40 hover:shadow-none shadow-none app-font"
               >
                 Search Vehicle
               </Button>

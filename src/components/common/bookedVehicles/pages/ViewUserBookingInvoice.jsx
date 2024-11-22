@@ -359,12 +359,12 @@ const ViewUserBookingInvoice = () => {
                                     <>
                                         <tr>
                                             <td className="p-2 border border-gray-300">Platform Fee</td>
-                                            <td className="p-2 text-right border border-gray-300">₹{platformAmount}</td>
+                                            <td className="p-2 text-right border border-gray-300">₹{platformAmount.toFixed(1)}</td>
                                         </tr>
 
                                         <tr>
                                             <td className="p-2 border border-gray-300">Miscellaneous Charges</td>
-                                            <td className="p-2 text-right border border-gray-300">₹{miscAmount}</td>
+                                            <td className="p-2 text-right border border-gray-300">₹{miscAmount.toFixed(1)}</td>
                                         </tr>
 
                                         {/* {discountAmount && ( */}
