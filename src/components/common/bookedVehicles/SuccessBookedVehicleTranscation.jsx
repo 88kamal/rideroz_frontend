@@ -395,14 +395,33 @@ export default function SuccessBookedVehicleTranscation() {
   };
 
   const handlePrevious = () => {
-    if (page > 1) setPage(page - 1);
+    if (page > 1) {
+      const newPage = page - 1;
+      setPage(newPage);
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        page: newPage,
+      }));
+    }
   };
-
+  
   const handleNext = () => {
     const totalPages = Math.ceil((data?.stats?.totalOrders ?? 0) / limit);
-    if (page < totalPages) setPage(page + 1);
+    if (page < totalPages) {
+      const newPage = page + 1;
+      setPage(newPage);
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        page: newPage,
+      }));
+    }
   };
 
+  
+  useEffect(() => {
+    refetch();
+  }, [filters, refetch]);
+  
   const formatDate = (isoDate) => {
     const date = new Date(isoDate);
     const options = {
@@ -581,8 +600,8 @@ export default function SuccessBookedVehicleTranscation() {
                         {cancellationRefundId ? <Chip
                           size="sm"
                           variant="ghost"
-                          value={cancellationRefundStatus}
-                          color={cancellationRefundId ? "red" : "orange"}
+                          value={cancellationRefundStatus && "success"}
+                          color={cancellationRefundId ? "green" : "orange"}
                           className="px-3 text-center w-28"
                         /> : <span className=" text-center">N/A</span>}
                       </td>
@@ -777,8 +796,8 @@ export default function SuccessBookedVehicleTranscation() {
                        {cancellationRefundId ?  <Chip
                           size="sm"
                           variant="ghost"
-                          value={cancellationRefundStatus}
-                          color={cancellationRefundStatus ? "red" : "orange"}
+                          value={cancellationRefundStatus && "success"}
+                          color={cancellationRefundId ? "green" : "orange"}
                           className="px-3 text-center w-28"
                         /> : "N/A"}
                       </div>

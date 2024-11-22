@@ -317,14 +317,37 @@ export default function ViewEmployee() {
 
     const { data: employeesData, error, isLoading, refetch } = useGetEmployeesQuery({ search, page, limit, department, role });
 
-    const handlePrevious = () => {
-        if (page > 1) setPage(page - 1);
-    };
+    // const handlePrevious = () => {
+    //     if (page > 1) setPage(page - 1);
+    // };
 
+    // const handleNext = () => {
+    //     const totalPages = Math.ceil((employeesData?.totalEmployee ?? 0) / limit);
+    //     if (page < totalPages) setPage(page + 1);
+    // };
+
+    const handlePrevious = () => {
+        if (page > 1) {
+            const newPage = page - 1;
+            setPage(newPage);
+            refetchWithNewPage(newPage); // Trigger refetch with updated page
+        }
+    };
+    
     const handleNext = () => {
         const totalPages = Math.ceil((employeesData?.totalEmployee ?? 0) / limit);
-        if (page < totalPages) setPage(page + 1);
+        if (page < totalPages) {
+            const newPage = page + 1;
+            setPage(newPage);
+            refetchWithNewPage(newPage); // Trigger refetch with updated page
+        }
     };
+    
+    // Helper function to refetch with new page
+    const refetchWithNewPage = (newPage) => {
+        refetch({ search, page: newPage, limit, department, role });
+    };
+    
 
     const handleCopy = (text) => {
         navigator.clipboard.writeText(text);

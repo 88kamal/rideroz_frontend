@@ -680,7 +680,7 @@
 
 
 /* eslint-disable no-unused-vars */
-import { ArrowPathIcon, MagnifyingGlassIcon, ListBulletIcon, TableCellsIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, ListBulletIcon, TableCellsIcon } from "@heroicons/react/24/outline";
 import {
     Input,
     Typography,
@@ -700,7 +700,8 @@ import SettleCustomDropDown from "./custom/SettleCustomDropDown";
 import { ArrowsPointingInIcon, ArrowsPointingOutIcon } from "@heroicons/react/24/solid";
 import VerifyRideModal from "../../bookedVehicles/modal/VerifyRideModal";
 
-const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Pickup Confirmed Status",
+const TABLE_HEAD = ["S.No", "Image", "Name", "Vehicle Number", "Price", "Payment Status", "Settlement Status", "Pickup Confirmed Status",     "Cancel Ride Status",
+
     "Conformation Otp", "Verify Otp", "Created Date", "Settled", "View"];
 
 export default function ViewShopOwnerTable() {
@@ -718,7 +719,7 @@ export default function ViewShopOwnerTable() {
     const [filters, setFilters] = useState({
         shopId,
         status: "",
-        settled: true,
+        settled: "",
         startDate: '',
         endDate: '',
         limit: limit,
@@ -729,14 +730,45 @@ export default function ViewShopOwnerTable() {
 
     const { data: getOrderByShopId, error, isLoading, refetch } = useGetOrdersByShopQuery(filters);
 
+    // const handlePrevious = () => {
+    //     if (page > 1) setPage(page - 1);
+    //     refetch()
+    // };
+
+    // const handleNext = () => {
+    //     const totalPages = Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit);
+    //     if (page < totalPages) setPage(page + 1);
+    //     refetch()
+    // };
+
     const handlePrevious = () => {
-        if (page > 1) setPage(page - 1);
+        if (page > 1) {
+            const newPage = page - 1;
+            setPage(newPage);
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                page: newPage,
+            }));
+        }
     };
 
     const handleNext = () => {
         const totalPages = Math.ceil((getOrderByShopId?.stats?.totalOrders ?? 0) / limit);
-        if (page < totalPages) setPage(page + 1);
+        if (page < totalPages) {
+            const newPage = page + 1;
+            setPage(newPage);
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                page: newPage,
+            }));
+        }
     };
+
+
+    useEffect(() => {
+        refetch();
+    }, [filters, refetch]);
+
 
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
@@ -879,6 +911,11 @@ export default function ViewShopOwnerTable() {
                     </div>
                 </div>
             </div>
+
+            {/* <pre>{JSON.stringify(getOrderByShopId,null,2)}</pre> */}
+
+
+
 
             <div className="overflow-scroll p-2">
                 {error?.data ? "" : <div className=" mb-1">
@@ -1080,6 +1117,16 @@ export default function ViewShopOwnerTable() {
                                         </td>
 
                                         <td className={classes}>
+                                            {order?.cancellationRefundId ? <Chip
+                                                size="sm"
+                                                variant="ghost"
+                                                value={order?.cancellationRefundStatus && "success"}
+                                                color={order?.cancellationRefundId ? "green" : "orange"}
+                                                className="px-3 text-center w-28"
+                                            /> : <span className=" text-center">N/A</span>}
+                                        </td>
+
+                                        <td className={classes}>
                                             <VerifyRideModal orderId={order?._id} refetch={refetch} rideConfirmed={order?.rideConfirmed} />
                                         </td>
                                         {/* conformationOtp, rideConfirmed */}
@@ -1174,6 +1221,19 @@ export default function ViewShopOwnerTable() {
                                 </div>
 
                                 <div className="flex justify-between items-center mt-2">
+                                    <h1 className=" font-bold">Ride Cancel Status
+                                        : </h1>
+                                    {order?.cancellationRefundId ? <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={order?.cancellationRefundStatus && "success"}
+                                        color={order?.cancellationRefundId ? "green" : "orange"}
+                                        className="px-3 text-center w-28"
+                                    /> : "N/A"}
+                                </div>
+
+
+                                <div className="flex justify-between items-center mt-2">
                                     <p className="font-bold">Created Date:</p>
                                     <p className=" app-font">{formatDate(order?.createdAt)}</p>
                                 </div>
@@ -1186,11 +1246,11 @@ export default function ViewShopOwnerTable() {
                                     </Tooltip>
 
                                     <Tooltip text={"Verify Otp"}>
-                                    <VerifyRideModal orderId={order?._id} refetch={refetch} rideConfirmed={order?.rideConfirmed} />
+                                        <VerifyRideModal orderId={order?._id} refetch={refetch} rideConfirmed={order?.rideConfirmed} />
 
                                     </Tooltip>
 
-                                  
+
                                     <Tooltip text={"View More"}>
                                         <ViewMoreOrderByShopIdModal order={order} />
                                     </Tooltip>

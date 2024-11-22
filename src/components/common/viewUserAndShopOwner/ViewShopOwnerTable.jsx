@@ -332,11 +332,13 @@ export default function ViewShopOwnerTable() {
 
     const handlePrevious = () => {
         if (page > 1) setPage(page - 1);
+        refetch()
     };
 
     const handleNext = () => {
         const totalPages = Math.ceil((shops?.totalShops ?? 0) / limit);
         if (page < totalPages) setPage(page + 1);
+        refetch()
     };
 
     const handleCopy = (text) => {

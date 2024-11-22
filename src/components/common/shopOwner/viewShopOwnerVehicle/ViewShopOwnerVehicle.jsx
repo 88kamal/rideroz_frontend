@@ -111,14 +111,43 @@ export default function ViewVehicle() {
     };
 
 
-    const handlePrevious = () => {
-        if (page > 1) setPage(page - 1);
-    };
+    // const handlePrevious = () => {
+    //     if (page > 1) setPage(page - 1);
+    // };
 
+    // const handleNext = () => {
+    //     const totalPages = Math.ceil((vehicals?.totalVehicles ?? 0) / limit);
+    //     if (page < totalPages) setPage(page + 1);
+    // };
+
+    const handlePrevious = () => {
+        if (page > 1) {
+            const newPage = page - 1;
+            setPage(newPage);
+            refetchWithNewPage(newPage); // Trigger refetch with updated page
+        }
+    };
+    
     const handleNext = () => {
         const totalPages = Math.ceil((vehicals?.totalVehicles ?? 0) / limit);
-        if (page < totalPages) setPage(page + 1);
+        if (page < totalPages) {
+            const newPage = page + 1;
+            setPage(newPage);
+            refetchWithNewPage(newPage); // Trigger refetch with updated page
+        }
     };
+    
+    // Helper function to update the query
+    const refetchWithNewPage = (newPage) => {
+        refetch({
+            shopId,
+            vehicleType: vehicalType, // Optional vehicle type filter
+            search,
+            page: newPage,
+            limit,
+        });
+    };
+    
 
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
