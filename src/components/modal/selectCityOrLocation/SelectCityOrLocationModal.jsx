@@ -292,14 +292,14 @@ export default function SelectCityOrLocationModal() {
                     <pre>{JSON.stringify(data?.vehicles?.length, null, 2)}</pre>
                     {/* <pre>{JSON.stringify(isFetching,null,2)}</pre> */}
 
-                    <Button
+                    {/* <Button
                         onClick={() => {
                             dispatch(vehicleApi.util.resetApiState()); // Reset entire RTK Query cache
 
                         }}
                     >
                         Reset
-                    </Button>
+                    </Button> */}
                     <div className="flex flex-wrap gap-6 justify-center p-6 overflow-x-auto scrollbar-hide">
                         {isCitiesLoading ? (
                             <Spinner color="green" />
