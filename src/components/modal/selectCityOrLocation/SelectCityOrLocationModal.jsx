@@ -288,8 +288,8 @@ export default function SelectCityOrLocationModal() {
                         </div>
                     </div>
                 </div>
-                <DialogBody className="max-h-[78vh] overflow-y-auto">
-                    <pre>{JSON.stringify(data?.vehicles?.length, null, 2)}</pre>
+                <div className="max-h-[78vh] overflow-y-auto">
+                    {/* <pre>{JSON.stringify(data?.vehicles?.length, null, 2)}</pre> */}
                     {/* <pre>{JSON.stringify(isFetching,null,2)}</pre> */}
 
                     {/* <Button
@@ -300,7 +300,7 @@ export default function SelectCityOrLocationModal() {
                     >
                         Reset
                     </Button> */}
-                    <div className="flex flex-wrap gap-6 justify-center p-6 overflow-x-auto scrollbar-hide">
+                    <div className="flex flex-wrap gap-10 lg:gap-6 justify-center p-6 overflow-x-auto scrollbar-hide">
                         {isCitiesLoading ? (
                             <Spinner color="green" />
                         ) : (
@@ -309,7 +309,7 @@ export default function SelectCityOrLocationModal() {
                             ))
                         )}
                     </div>
-                </DialogBody>
+                </div>
             </Dialog>
         </>
     );

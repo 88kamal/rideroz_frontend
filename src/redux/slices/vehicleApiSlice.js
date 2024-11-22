@@ -42,7 +42,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 };
             },
             providesTags: ['Vehicle'], // Marks the data as cached under the 'Vehicle' tag
-            keepUnusedDataFor : 3600, // Keep data in cache for 60 seconds after the last component unmounts
+            keepUnusedDataFor: 3600, // Keep data in cache for 60 seconds after the last component unmounts
             refetchOnFocus: true, // Refetch data when the window is focused
             refetchOnReconnect: true, // Refetch when the connection is re-established
             refetchOnMountOrArgChange: true, // Refetch when the component remounts or query argument changes
@@ -96,7 +96,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 return `/vehicle/vehicles-nearby?${params.toString()}`;
             },
             providesTags: ['Vehicle'],
-            keepUnusedDataFor : 3600,
+            keepUnusedDataFor: 3600,
             refetchOnFocus: true,
             refetchOnReconnect: true,
             refetchOnMountOrArgChange: true,
@@ -114,7 +114,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
             query: (id) => `/vehicle/get-vehicle/${id}`,
             transformResponse: (data) => data?.vehicle || [],
             providesTags: (result, error, id) => [{ type: 'Vehicle', id }], // Use specific vehicle ID in cache
-            keepUnusedDataFor : 3600,
+            keepUnusedDataFor: 3600,
             refetchOnFocus: true,
             refetchOnReconnect: true,
             refetchOnMountOrArgChange: true,
@@ -149,7 +149,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 },
             }),
             invalidatesTags: (result, error, { vehicleId }) => [{ type: 'Vehicle', id: vehicleId }], // Invalidate only the specific vehicle's cache
-            keepUnusedDataFor : 3600, // Keep data in cache for 60 seconds
+            keepUnusedDataFor: 3600, // Keep data in cache for 60 seconds
             refetchOnFocus: true,
             refetchOnReconnect: true,
             refetchOnMountOrArgChange: true,
@@ -160,7 +160,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
             // Invalidate cache for the specific vehicle's rating when needed
             invalidatesTags: (result, error, { vehicleId }) => [{ type: 'Vehicle', id: vehicleId }],
             // Keep data in cache for 60 seconds
-            keepUnusedDataFor : 3600,
+            keepUnusedDataFor: 3600,
             // Automatically refetch data on focus
             refetchOnFocus: true,
             // Automatically refetch data when reconnecting to the network
@@ -218,30 +218,30 @@ export const vehicleApi = apiSlice.injectEndpoints({
         getVehiclesByShopId: builder.query({
             query: ({ shopId, search = '', vehicleType, page = 1, limit = 10 }) => {
                 console.log({
-                    shopId, search, vehicleType, page, limit 
+                    shopId, search, vehicleType, page, limit
                 })
-              // Construct the query string with the provided parameters
-              const queryParams = new URLSearchParams();
-              if (search) queryParams.append('search', search);
-              if (vehicleType) queryParams.append('vehicleType', vehicleType);
-              queryParams.append('page', page);
-              queryParams.append('limit', limit);
-      
-              // Construct the final URL
-              return `/vehicle/get-vehicles-by-shop-id/${shopId}?${queryParams.toString()}`;
+                // Construct the query string with the provided parameters
+                const queryParams = new URLSearchParams();
+                if (search) queryParams.append('search', search);
+                if (vehicleType) queryParams.append('vehicleType', vehicleType);
+                queryParams.append('page', page);
+                queryParams.append('limit', limit);
+
+                // Construct the final URL
+                return `/vehicle/get-vehicles-by-shop-id/${shopId}?${queryParams.toString()}`;
             },
             providesTags: (result, error, { shopId }) =>
-              result
-                ? [
-                    { type: 'Vehicle', id: shopId },
-                    ...result.vehicles.map(({ _id }) => ({ type: 'Vehicle', id: _id })),
-                  ]
-                : [{ type: 'Vehicle', id: shopId }],
-            keepUnusedDataFor : 3600, // Cache data for 60 seconds after last unmount
+                result
+                    ? [
+                        { type: 'Vehicle', id: shopId },
+                        ...result.vehicles.map(({ _id }) => ({ type: 'Vehicle', id: _id })),
+                    ]
+                    : [{ type: 'Vehicle', id: shopId }],
+            keepUnusedDataFor: 3600, // Cache data for 60 seconds after last unmount
             refetchOnFocus: true, // Refetch on window focus
             refetchOnReconnect: true, // Refetch on reconnect
             refetchOnMountOrArgChange: true, // Refetch on remount or argument change
-          }),
+        }),
 
 
     }),
