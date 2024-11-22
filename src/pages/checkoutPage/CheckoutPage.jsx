@@ -46,7 +46,7 @@ const CartPage = () => {
         extraHours: 0,
         extraHourCharge: 0,
         rentDuration: "",
-        adharcardImg: null
+        // adharcardImg: null
     });
 
     const [isCouponApplied, setIsCouponApplied] = useState(false); // New state to track coupon application
@@ -270,40 +270,40 @@ const CartPage = () => {
         e.preventDefault();
         const vehicleId = id;
     
-        const data = new FormData();
-        Object.keys(formData).forEach((key) => {
-            // Append key-value pairs to FormData
-            if (formData[key] && key !== "adharcardImg") {
-                data.append(key, formData[key]);
-            }
-        });
+        // const data = new FormData();
+        // Object.keys(formData).forEach((key) => {
+        //     // Append key-value pairs to FormData
+        //     if (formData[key] && key !== "adharcardImg") {
+        //         data.append(key, formData[key]);
+        //     }
+        // });
     
-        // Compress and append Aadhaar card images
-        if (formData.adharcardImg && formData.adharcardImg.length > 0) {
-            for (let i = 0; i < formData.adharcardImg.length; i++) {
-                const file = formData.adharcardImg[i];
+        // // Compress and append Aadhaar card images
+        // if (formData.adharcardImg && formData.adharcardImg.length > 0) {
+        //     for (let i = 0; i < formData.adharcardImg.length; i++) {
+        //         const file = formData.adharcardImg[i];
     
-                try {
-                    // Set compression options
-                    const options = {
-                        maxSizeMB: 0.1, // Reduce the max size for faster uploads
-                        maxWidthOrHeight: 800, // Smaller dimensions can speed up upload time
-                        useWebWorker: true,
-                      };
+        //         try {
+        //             // Set compression options
+        //             const options = {
+        //                 maxSizeMB: 0.1, // Reduce the max size for faster uploads
+        //                 maxWidthOrHeight: 800, // Smaller dimensions can speed up upload time
+        //                 useWebWorker: true,
+        //               };
     
-                    // Compress the file
-                    const compressedFile = await imageCompression(file, options);
+        //             // Compress the file
+        //             const compressedFile = await imageCompression(file, options);
     
-                    // Append the compressed file to FormData
-                    data.append("adharcardImg", compressedFile);
-                } catch (compressionError) {
-                    console.error("Image compression error:", compressionError);
-                }
-            }
-        }
+        //             // Append the compressed file to FormData
+        //             data.append("adharcardImg", compressedFile);
+        //         } catch (compressionError) {
+        //             console.error("Image compression error:", compressionError);
+        //         }
+        //     }
+        // }
     
         try {
-            const orderResponse = await createOrder({ vehicleId, body: data }).unwrap();
+            const orderResponse = await createOrder({ vehicleId, body: formData }).unwrap();
     
             if (orderResponse.success) {
                 handlePaymentVerify(orderResponse);

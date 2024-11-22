@@ -196,8 +196,19 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    uploadAdharCard: builder.mutation({
+      query: (formData) => ({
+        url: '/order/upload-adharcard',
+        method: 'POST',
+        body: formData,
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
+      }),
+    }),
     
   }),
 });
 
-export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetOrdersByShopQuery, useConfirmOrderMutation, useCancelOrderMutation } = orderApiSlice;
+export const { useCreateOrderMutation, useVerifyPaymentMutation, useGetOrdersQuery, useGetOrderByIdQuery, useGetOrdersByShopQuery, useConfirmOrderMutation, useCancelOrderMutation, useUploadAdharCardMutation } = orderApiSlice;
