@@ -12,7 +12,8 @@ import { AiOutlineEnvironment } from "react-icons/ai";
 import { Locate, X } from "lucide-react";
 import myContext from "../../../context/myContext";
 import { useGetCitiesQuery } from "../../../redux/slices/cityApiSlice";
-import { useGetVehiclesNearbyQuery } from "../../../redux/slices/vehicleApiSlice";
+import { useGetVehiclesNearbyQuery, vehicleApi } from "../../../redux/slices/vehicleApiSlice";
+import { useDispatch } from "react-redux";
 
 export default function SelectCityOrLocationModal() {
     const [open, setOpen] = useState(false);
@@ -76,130 +77,16 @@ export default function SelectCityOrLocationModal() {
         }
     }, [selectedCity, vehicleCity, lat, lng]);
 
-    // Detect current location function
-    // const detectLocation = async () => {
-    //     if (!navigator.geolocation) {
-    //         showAlert("Geolocation is not supported by your browser.", "error", 2000);
-    //         return;
-    //     }
-
-    //     try {
-    //         // Check if permission for geolocation is granted or prompt if denied
-    //         const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-
-    //         if (permissionStatus.state === 'denied') {
-    //             showAlert("Location permission denied. Please enable GPS in your device settings.", "error", 2000);
-    //             return;
-    //         } else if (permissionStatus.state === 'prompt') {
-    //             showAlert("Please allow location access.", "warning", 2000);
-    //         }
-
-    //         // Request the current position
-    //         showAlert("Detecting your location...", "success", 2000);
-    //         navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-    //         handleOpen();
-    //     } catch (error) {
-    //         console.error("Error detecting location permissions: ", error);
-    //         showAlert("An error occurred while checking location permissions.", "error", 2000);
-    //     }
-    // };
-    // Detect current location function
-    // const detectLocation = async () => {
-    //     if (!navigator.geolocation) {
-    //         showAlert("Geolocation is not supported by your browser.", "error", 2000);
-    //         return;
-    //     }
-
-    //     try {
-    //         // Check if permission for geolocation is granted, denied, or needs to be prompted
-    //         const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-
-    //         if (permissionStatus.state === 'denied') {
-    //             // If permission is denied, alert the user to enable location services
-    //             showAlert("Location permission is denied. Please enable GPS in your device settings.", "error", 3000);
-    //             return;
-    //         } else if (permissionStatus.state === 'prompt') {
-    //             // If permission is in the "prompt" state, show a message to allow location access
-    //             showAlert("Please allow location access.", "warning", 3000);
-    //         }
-
-    //         if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
-    //             // Once permission is granted or prompted, try to detect location
-    //             showAlert("Detecting your location...", "success", 2000);
-    //             navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-    //             handleOpen();
-    //         }
-
-    //     } catch (error) {
-    //         console.error("Error detecting location permissions: ", error);
-    //         showAlert("An error occurred while checking location permissions.", "error", 2000);
-    //     }
-    // };
-
-
-
-
-    // const successCallback = async (position) => {
-    //     const { latitude, longitude } = position.coords;
-    //     setLat(latitude);
-    //     setLng(longitude);
-
-    //     // Reverse Geocoding using Google Maps API
-    //     try {
-    //         const response = await axios.get(
-    //             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE`
-    //         );
-    //         const addressComponents = response.data.results[0].address_components;
-
-    //         // Find the city name
-    //         const city = addressComponents.find((component) =>
-    //             component.types.includes("locality")
-    //         )?.long_name;
-
-    //         // Get full address for the location
-    //         const locationName = response.data.results[0].formatted_address;
-
-    //         if (city) {
-    //             // Set the detected city and location name
-    //             setSelectedCity(city);
-    //             setVehicleCity(city);
-    //             setCurrentLocationName(locationName);
-
-    //             // Store selected city and location in localStorage
-    //             localStorage.setItem('selectedCity', city);
-    //             localStorage.setItem('vehicleCity', city);
-    //             localStorage.setItem('lat', latitude);
-    //             localStorage.setItem('lng', longitude);
-    //             localStorage.setItem('currentLocationName', locationName);
-
-    //             // Refetch vehicles after location detection
-    //             refetch();  // Add this to fetch vehicles after detecting location
-
-    //             handleOpen(); // Close the dialog after detection
-    //         } else {
-    //             showAlert("Could not determine the city from your location.", "error", 2000);
-    //         }
-    //     } catch (error) {
-    //         showAlert("Failed to fetch location details.", "error", 2000);
-    //         console.error("Error fetching location details: ", error);
-    //     }
-    // };
-
-    // const errorCallback = (error) => {
-    //     console.error("Error detecting location: ", error);
-    //     showAlert("Unable to detect location. Please try again.", "error", 2000);
-    // };
-
     const detectLocation = async () => {
         if (!navigator.geolocation) {
             showAlert("Geolocation is not supported by your browser.", "error", 2000);
             return;
         }
-    
+
         try {
             // Show a prompt for location detection
             showAlert("Detecting your location...", "success", 2000);
-    
+
             // Request the current position
             navigator.geolocation.getCurrentPosition(
                 successCallback,
@@ -214,36 +101,36 @@ export default function SelectCityOrLocationModal() {
             showAlert("An error occurred while detecting location. Please try again.", "error", 2000);
         }
     };
-    
+
     const successCallback = async (position) => {
         const { latitude, longitude } = position.coords;
         setLat(latitude);
         setLng(longitude);
-    
+
         // Reverse Geocoding using Google Maps API
         try {
             const response = await axios.get(
                 `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDrROirhFaapbWyT1rusyEvBF0lpVxpUyE`
             );
             const addressComponents = response.data.results[0]?.address_components;
-    
+
             const city = addressComponents?.find((component) =>
                 component.types.includes("locality")
             )?.long_name;
-    
+
             const locationName = response.data.results[0]?.formatted_address;
-    
+
             if (city) {
                 setSelectedCity(city);
                 setVehicleCity(city);
                 setCurrentLocationName(locationName);
-    
+
                 localStorage.setItem("selectedCity", city);
                 localStorage.setItem("vehicleCity", city);
                 localStorage.setItem("lat", latitude);
                 localStorage.setItem("lng", longitude);
                 localStorage.setItem("currentLocationName", locationName);
-    
+
                 refetch(); // Fetch nearby vehicles
                 handleOpen(); // Close the modal
             } else {
@@ -254,10 +141,10 @@ export default function SelectCityOrLocationModal() {
             showAlert("Failed to fetch location details.", "error", 2000);
         }
     };
-    
+
     const errorCallback = (error) => {
         let errorMessage = "Unable to detect location. Please try again.";
-    
+
         switch (error.code) {
             case error.PERMISSION_DENIED:
                 errorMessage = "Location permission denied. Please enable it in your browser or device settings.";
@@ -272,11 +159,11 @@ export default function SelectCityOrLocationModal() {
                 errorMessage = "An unknown error occurred while detecting location.";
                 break;
         }
-    
+
         console.error("Error detecting location: ", error);
         showAlert(errorMessage, "error", 2000);
     };
-    
+
 
 
     useEffect(() => {
@@ -285,33 +172,94 @@ export default function SelectCityOrLocationModal() {
         }
     }, [selectedCity]);
 
-    const CityCard = ({ cityImage, _id, cityName }) => (
-        <div className="relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer">
-            <img
-                src={cityImage?.url}
-                alt={cityName}
-                className="w-full h-full object-cover"
-                onClick={() => {
-                    setSelectedCity(cityName);
-                    setVehicleCity(_id);
-                    setLat(null);
-                    setLng(null);
-                    setCurrentLocationName("");
+    
 
-                    localStorage.setItem('selectedCity', cityName);
-                    localStorage.setItem('vehicleCity', _id);
-                    localStorage.removeItem('lat');
-                    localStorage.removeItem('lng');
-                    localStorage.removeItem('currentLocationName');
+    // const CityCard = ({ cityImage, _id, cityName }) => (
 
-                    refetch();
-                }}
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-1 transition-colors duration-300 hover:bg-green-600 hover:bg-opacity-80">
-                {cityName}
-            </div>
-        </div>
-    );
+
+    //     <button className="relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer"
+
+    //         onClick={() => {
+    //             setSelectedCity(cityName);
+    //             setVehicleCity(_id);
+    //             setLat(null);
+    //             setLng(null);
+    //             setCurrentLocationName("");
+
+    //             dispatch(vehicleApi.util.resetApiState()); // Reset entire RTK Query cache
+
+
+    //             localStorage.setItem('selectedCity', cityName);
+    //             localStorage.setItem('vehicleCity', _id);
+    //             localStorage.removeItem('lat');
+    //             localStorage.removeItem('lng');
+    //             localStorage.removeItem('currentLocationName');
+
+    //             refetch();
+    //         }}>
+    //         <img
+    //             src={cityImage?.url}
+    //             alt={cityName}
+    //             className="w-full h-full object-cover"
+
+    //         />
+    //         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-1 transition-colors duration-300 hover:bg-green-600 hover:bg-opacity-80">
+    //             {cityName}
+    //         </div>
+    //     </button>
+    // );
+
+    const CityCard = ({ cityImage, _id, cityName, refetch }) => {
+        const [resettingCache, setResettingCache] = useState(false); // Track cache reset state
+        const dispatch = useDispatch();
+    
+        const handleClick = () => {
+            setResettingCache(true); // Start resetting cache
+    
+            // Reset cache
+            dispatch(vehicleApi.util.resetApiState());
+    
+            // Ensure the cache reset completes before proceeding
+            setTimeout(() => {
+                setResettingCache(false); // Cache reset complete
+                updateSelection();
+            }, 0); // Adjust timeout based on your application behavior
+        };
+    
+        const updateSelection = () => {
+            setSelectedCity(cityName);
+            setVehicleCity(_id);
+            setLat(null);
+            setLng(null);
+            setCurrentLocationName("");
+    
+            // Update localStorage
+            localStorage.setItem("selectedCity", cityName);
+            localStorage.setItem("vehicleCity", _id);
+            localStorage.removeItem("lat");
+            localStorage.removeItem("lng");
+            localStorage.removeItem("currentLocationName");
+    
+            refetch(); // Trigger refetch of nearby vehicles
+        };
+    
+        return (
+            <button
+                className={`relative rounded-xl overflow-hidden w-36 h-36 shadow-lg cursor-pointer ${resettingCache ? "opacity-50 pointer-events-none" : ""}`}
+                onClick={handleClick}
+                disabled={resettingCache} // Prevent repeated clicks during reset
+            >
+                <img
+                    src={cityImage?.url}
+                    alt={cityName}
+                    className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center py-1 transition-colors duration-300 hover:bg-green-600 hover:bg-opacity-80">
+                    {cityName}
+                </div>
+            </button>
+        );
+    };
 
 
 
@@ -341,6 +289,17 @@ export default function SelectCityOrLocationModal() {
                     </div>
                 </div>
                 <DialogBody className="max-h-[78vh] overflow-y-auto">
+                    <pre>{JSON.stringify(data?.vehicles?.length, null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(isFetching,null,2)}</pre> */}
+
+                    <Button
+                        onClick={() => {
+                            dispatch(vehicleApi.util.resetApiState()); // Reset entire RTK Query cache
+
+                        }}
+                    >
+                        Reset
+                    </Button>
                     <div className="flex flex-wrap gap-6 justify-center p-6 overflow-x-auto scrollbar-hide">
                         {isCitiesLoading ? (
                             <Spinner color="green" />
