@@ -17,6 +17,7 @@ import VehicleAvailbilityModal from "../../components/modal/vehicleBookAvaibilit
 import UploadAdharImage from "./UploadAdharImage";
 import LoginModal from "../../components/registration/LoginModal";
 import authService from "../../services/authService";
+import imageCompression from "browser-image-compression";
 
 
 const CartPage = () => {
@@ -971,69 +972,125 @@ const CartPage = () => {
     const [createOrder, { isLoading, isError, error, data }] = useCreateOrderMutation();
     const [verifyPayment, { isLoading: verifyPaymentLoading, isError: isVerifyPaymentError, error: verifyPaymentError, isSuccess }] = useVerifyPaymentMutation();
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const vehicleId = id;
+
+    //     // const data = new FormData();
+    //     // Object.keys(formData).forEach((key) => {
+    //     //   // Append only if the value is not null or undefined
+    //     //   if (formData[key]) {
+    //     //     data.append(key, formData[key]);
+    //     //   }
+    //     // });
+
+    //     const data = new FormData();
+    //     Object.keys(formData).forEach((key) => {
+    //         // Append key-value pairs to FormData
+    //         if (formData[key]) {
+    //             data.append(key, formData[key]);
+    //         }
+    //     });
+
+    //     // Append Aadhaar card images explicitly
+    //     if (formData.adharcardImg && formData.adharcardImg.length > 0) {
+    //         for (let i = 0; i < formData.adharcardImg.length; i++) {
+    //             data.append("adharcardImg", formData.adharcardImg[i]);
+    //         }
+    //     }
+
+    //     try {
+    //         const orderResponse = await createOrder({ vehicleId, body: data }).unwrap();
+
+    //         if (orderResponse.success) {
+    //             handlePaymentVerify(orderResponse);
+    //         }
+    //     } catch (error) {
+    //         console.log('Failed to create order:', error);
+
+    //         // setFormData({
+    //         //     startDate: "",
+    //         //     endDate: "",
+    //         //     startTime: '',
+    //         //     endTime: '',
+    //         //     shopAmount: 0,
+    //         //     platformAmount: 0,
+    //         //     miscAmount: 0,
+    //         //     couponCode: '',
+    //         //     discountAmount: 0,
+    //         //     extraHours: 0,
+    //         //     extraHourCharge: 0,
+    //         //     rentDuration: "",
+    //         // })
+
+    //         // Check for user not found error and show login modal
+    //         if (error.status === 500 && error.data?.error === "Access denied. Re-login") {
+    //             setAutoOpenLogin(true);
+    //         }
+
+    //         if (error.status === 404 && error.data?.error === "User not found") {
+    //             setAutoOpenLogin(true);
+    //         }
+
+
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const vehicleId = id;
-
-        // const data = new FormData();
-        // Object.keys(formData).forEach((key) => {
-        //   // Append only if the value is not null or undefined
-        //   if (formData[key]) {
-        //     data.append(key, formData[key]);
-        //   }
-        // });
-
+    
         const data = new FormData();
         Object.keys(formData).forEach((key) => {
             // Append key-value pairs to FormData
-            if (formData[key]) {
+            if (formData[key] && key !== "adharcardImg") {
                 data.append(key, formData[key]);
             }
         });
-
-        // Append Aadhaar card images explicitly
+    
+        // Compress and append Aadhaar card images
         if (formData.adharcardImg && formData.adharcardImg.length > 0) {
             for (let i = 0; i < formData.adharcardImg.length; i++) {
-                data.append("adharcardImg", formData.adharcardImg[i]);
+                const file = formData.adharcardImg[i];
+    
+                try {
+                    // Set compression options
+                    const options = {
+                        maxSizeMB: 1, // Max size in MB
+                        maxWidthOrHeight: 1920, // Max width or height
+                        useWebWorker: true, // Use web workers for better performance
+                    };
+    
+                    // Compress the file
+                    const compressedFile = await imageCompression(file, options);
+    
+                    // Append the compressed file to FormData
+                    data.append("adharcardImg", compressedFile);
+                } catch (compressionError) {
+                    console.error("Image compression error:", compressionError);
+                }
             }
         }
-
+    
         try {
             const orderResponse = await createOrder({ vehicleId, body: data }).unwrap();
-
+    
             if (orderResponse.success) {
                 handlePaymentVerify(orderResponse);
             }
         } catch (error) {
-            console.log('Failed to create order:', error);
-
-            // setFormData({
-            //     startDate: "",
-            //     endDate: "",
-            //     startTime: '',
-            //     endTime: '',
-            //     shopAmount: 0,
-            //     platformAmount: 0,
-            //     miscAmount: 0,
-            //     couponCode: '',
-            //     discountAmount: 0,
-            //     extraHours: 0,
-            //     extraHourCharge: 0,
-            //     rentDuration: "",
-            // })
-
-            // Check for user not found error and show login modal
+            console.log("Failed to create order:", error);
+    
             if (error.status === 500 && error.data?.error === "Access denied. Re-login") {
                 setAutoOpenLogin(true);
             }
-
+    
             if (error.status === 404 && error.data?.error === "User not found") {
                 setAutoOpenLogin(true);
             }
-
-
         }
     };
+    
 
     const handleLoginModalClose = () => setAutoOpenLogin(false);
 
