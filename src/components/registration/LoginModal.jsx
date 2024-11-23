@@ -280,6 +280,7 @@ export default function LoginModal({ autoOpen = false, showLoginButton = true })
                                 <>
                                     <LoginForm
                                         handleOpen={handleOpen}
+                                        switchToLogin={switchToLogin}
                                         switchToSignup={switchToSignup}
                                         switchToForgotPassword={switchToForgotPassword}
                                     />

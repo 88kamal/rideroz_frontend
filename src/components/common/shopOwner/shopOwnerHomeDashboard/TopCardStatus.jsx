@@ -133,6 +133,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useGetShopStatsQuery } from "../../../../redux/slices/shopApiSlice";
 import authService from "../../../../services/authService";
+import { Spinner } from "@material-tailwind/react";
 
 const AnimatedNumber = ({ target }) => {
     const controls = useAnimation();
@@ -202,14 +203,11 @@ const TopCardStatus = () => {
           ]
         : [];
 
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Failed to load data.</p>;
-    }
-
+        if (isLoading) {
+            return <div className=" mb-2">
+                <Spinner className=" text-green-500"/>
+            </div>
+        }
     return (
         <div>
             <section className="body-font">

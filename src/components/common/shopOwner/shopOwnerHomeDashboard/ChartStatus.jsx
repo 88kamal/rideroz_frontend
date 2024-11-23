@@ -1,4 +1,4 @@
-import { CardBody } from "@material-tailwind/react";
+import { CardBody, Spinner } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
 import authService from "../../../../services/authService";
 import { useGetShopStatsQuery } from "../../../../redux/slices/shopApiSlice";
@@ -49,13 +49,10 @@ export default function ChartStatus() {
     };
 
     if (isLoading) {
-        return <p>Loading chart...</p>;
-    }
-
-    if (error) {
-        return <p>Failed to load chart data.</p>;
-    }
-
+      return <div className=" mb-2">
+          <Spinner className=" text-green-500"/>
+      </div>
+  }
     return (
         <div className="w-full lg:w-80 flex justify-center bg-green-50 border border-green-400 rounded-lg">
             <CardBody>
