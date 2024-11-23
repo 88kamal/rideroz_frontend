@@ -10,8 +10,15 @@ export const passwordApiSlice = apiSlice.injectEndpoints({
         body: { email },
       }),
     }),
+    resetPassword: builder.mutation({
+        query: ({ token, newPassword }) => ({
+          url: `/auth/reset-password/${token}`,
+          method: 'POST',
+          body: { newPassword },
+        }),
+      }),
   }),
 });
 
 // Export hooks for usage in functional components
-export const { useForgotPasswordMutation } = passwordApiSlice;
+export const { useForgotPasswordMutation, useResetPasswordMutation } = passwordApiSlice;

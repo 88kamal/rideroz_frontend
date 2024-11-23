@@ -54,6 +54,7 @@ import SuperAdminGetOrderByShopOwner from "./pages/dashboard/super-admin/pages/S
 import SuperAdminViewShopOwnerVehiclePage from "./pages/dashboard/super-admin/pages/SuperAdminViewShopOwnerVehiclePage";
 import Schema from "./components/seo/Schema";
 import ReactGA from 'react-ga';
+import ResetPasswordPage from "./pages/resetPassword/ResetPasswordPage";
 
 
 function App() {
@@ -111,6 +112,7 @@ function App() {
           <Route path="/discount-coupons" element={<DiscountCoupon />} />
           <Route path="/faqs" element={<FAQSection />} />
           <Route path="/rental-pickup-and-drop-off" element={<PickUpAndDropOff />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
           <Route path="/*" element={<NoPage />} />
 
 

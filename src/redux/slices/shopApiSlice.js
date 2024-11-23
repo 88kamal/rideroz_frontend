@@ -177,7 +177,16 @@ export const shopApi = apiSlice.injectEndpoints({
                 },
             }),
         }),
-
+        getShopStats: builder.query({
+            query: ({ shopId, year, month }) => ({
+              url: `/shop/shop-stats/${shopId}?year=${year}&month=${month}`, // Add query parameters
+              method: 'GET',
+              headers: {
+                "auth-token": JSON.parse(localStorage.getItem("token")),
+            },
+            }),
+          }),
+          
     }),
     refetchOnReconnect: true,  // Ensure data refetches when connection is restored
 });
@@ -192,4 +201,5 @@ export const {
     useActivateShopByOwnerMutation,
     useDeactivateShopByAdminMutation,
     useActivateShopByAdminMutation,
+    useGetShopStatsQuery
 } = shopApi;
