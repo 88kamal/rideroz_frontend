@@ -16,11 +16,11 @@ function MyState(props) {
     show: false,
     message: '',
     type: 'success',
-    duration: 5000,
+    duration: 2000,
   });
 
   // Function to trigger an alert
-  const showAlert = (message, type = 'success', duration = 5000) => {
+  const showAlert = (message, type = 'success', duration = 2000) => {
     setAlert({ show: true, message, type, duration });
 
     // Automatically hide the alert after the specified duration

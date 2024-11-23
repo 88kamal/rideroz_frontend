@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Eye, View } from "lucide-react";
 import VerifyRideModal from "../../bookedVehicles/modal/VerifyRideModal";
-import { IconButton } from "@material-tailwind/react";
+import { Chip, IconButton } from "@material-tailwind/react";
 import { motion } from "framer-motion"; // Import Framer Motion
 
 const orders = [
@@ -94,16 +94,19 @@ const OrderDashboard = () => {
                                     {order.price}
                                 </td>
                                 <td className="px-6 text-sm border-r border-green-400">
-                                    <span
-                                        className={`px-3 py-1 rounded-full text-xs font-semibold ${order.status === "Delivered"
-                                            ? "bg-green-100 text-green-800"
-                                            : order.status === "Processing"
-                                                ? "bg-yellow-100 text-yellow-800"
-                                                : "bg-red-100 text-red-800"
-                                            }`}
-                                    >
-                                        {order.status}
-                                    </span>
+                                <Chip
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    value={order?.status}
+                                                    color={
+                                                        order?.status === "failed"
+                                                            ? "red"
+                                                            : order?.status === "pending"
+                                                                ? "orange"
+                                                                : "green"
+                                                    }
+                                                    className="px-3 text-center w-28"
+                                                />
                                 </td>
                                 <td className="px-6 text-sm text-black border-r border-green-400">
                                     <VerifyRideModal />

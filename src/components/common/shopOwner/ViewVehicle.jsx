@@ -333,6 +333,7 @@ import UpdateAvailabilityModal from "./modal/UpdateAvailabilityModal";
 import ViewMoreVehicle from "./modal/ViewMoreVehicle";
 import RatingBadge from "../../vehicle/RatingBadge";
 import authService from "../../../services/authService";
+import DeleteVehicleModal from "./modal/DeleteVehicleModal";
 
 const TABLE_HEAD = ["S.No", "Vehicle Image", "Vehicle Number", "Vehicle Price", "Change Availability", "Delete", "View More"];
 
@@ -581,7 +582,7 @@ export default function ViewVehicle() {
                                                 />
                                             </td>
                                             <td className={classes}>
-                                                <Trash2 className="w-4 h-4" />
+                                            <DeleteVehicleModal id={vehicle?._id}  refetch={refetch}/>
                                             </td>
                                             <td className={classes}>
                                                 <ViewMoreVehicle {...vehicle} />
@@ -624,12 +625,14 @@ export default function ViewVehicle() {
                                          vehicle={vehicals}
                                           />
 
-                                        <IconButton
+                                        {/* <IconButton
                                             variant="text"
                                             className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
                                         >
                                             <Trash2 className="w-4 h-4 text-red-500 cursor-pointer" />
-                                        </IconButton>
+                                        </IconButton> */}
+
+                                        <DeleteVehicleModal id={vehicle?._id}  refetch={refetch}/>
                                         <ViewMoreVehicle {...vehicle} />
                                     </div>
                                 </div>

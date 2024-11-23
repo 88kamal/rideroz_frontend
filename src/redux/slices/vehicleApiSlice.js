@@ -242,9 +242,19 @@ export const vehicleApi = apiSlice.injectEndpoints({
             refetchOnReconnect: true, // Refetch on reconnect
             refetchOnMountOrArgChange: true, // Refetch on remount or argument change
         }),
+        deleteVehicle: builder.mutation({
+            query: (id) => ({
+                url: `vehicle/delete-vehicle/${id}`,
+                method: 'DELETE',
+                headers: {
+                    // Adjust for your authentication token
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                },
+            }),
+        }),
 
 
     }),
 });
 
-export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery, useDeleteReviewMutation, useBookWalkinMutation, useGetVehiclesByShopIdQuery } = vehicleApi;
+export const { useAddVehicleMutation, useGetVehiclesQuery, useUpdateVehicleAvailabilityMutation, useGetVehiclesNearbyQuery, useGetVehicleByIdQuery, useAddReviewMutation, useGetVehicleRatingQuery, useDeleteReviewMutation, useBookWalkinMutation, useGetVehiclesByShopIdQuery, useDeleteVehicleMutation } = vehicleApi;
