@@ -1,11 +1,16 @@
 import { CopyX } from 'lucide-react';
 import authService from '../../../../services/authService';
 import { useGetUserByIdQuery } from '../../../../redux/slices/userApiSlice';
+import { useEffect } from 'react';
 
 const ShopDeactivationBanner = () => {
     const user = authService.getCurrentUser()
     const userId = user?.id
-    const { data: getUserById, error, isLoading } = useGetUserByIdQuery(userId);
+    const { data: getUserById, error, isLoading, refetch } = useGetUserByIdQuery(userId);
+
+    useEffect(() => {
+        refetch()
+    }, [refetch])
 
     return (
        <>

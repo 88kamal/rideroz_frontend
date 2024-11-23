@@ -7,7 +7,7 @@ function TopNavbar({ image, name }) {
     const user = authService.getCurrentUser();
     return (
         <>
-            <div className='rounded-none  bg-green-50 shadow-sm '>
+            <div className='rounded-none  bg-green-50 shadow-sm  '>
                 <div
                     className="flex items-center px-3 py-3  justify-between"
                 >

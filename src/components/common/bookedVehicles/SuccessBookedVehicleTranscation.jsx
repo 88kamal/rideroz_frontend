@@ -644,9 +644,7 @@ export default function SuccessBookedVehicleTranscation() {
                         </td>}
 
 
-                      <td className={classes}>
-                        {formatDate(createdAt)}
-                      </td>
+                    
 
 
                       {[15].includes(user?.role) && <td className={classes}>
@@ -676,6 +674,10 @@ export default function SuccessBookedVehicleTranscation() {
                           />
                         </td>}
 
+                        <td className={classes}>
+                        {formatDate(createdAt)}
+                      </td>
+
                       {[14].includes(user?.role) &&
                         <td className={classes}>
                           <IconButton
@@ -687,6 +689,7 @@ export default function SuccessBookedVehicleTranscation() {
                           </IconButton>
 
                         </td>}
+
 
 
                       {[2].includes(user?.role) &&
