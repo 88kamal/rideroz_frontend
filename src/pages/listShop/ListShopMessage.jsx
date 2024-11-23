@@ -25,7 +25,7 @@ const ListShopMessage = () => {
 
                     <div className=" flex justify-center items-center">
                         {/* <Button variant='' className=' hover:shadow-none shadow-none bg-transparent border text-green-600 border-green-600'>Login Now</Button> */}
-                        <div className=" border text-green-600 border-green-600 px-10 py-2 rounded-md cursor-pointer bg-green-50">
+                        <div className=" lg:border lg:text-green-600 lg:border-green-600 px-10 py-2 rounded-md cursor-pointer lg:bg-green-50">
                         <LoginModal />
                         </div>
                     </div>

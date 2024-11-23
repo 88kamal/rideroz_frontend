@@ -54,7 +54,7 @@ export const shopApi = apiSlice.injectEndpoints({
                 result?.shops
                     ? result.shops.map(({ _id }) => ({ type: 'Shop', id: _id }))
                     : [{ type: 'Shop' }],
-            keepUnusedDataFor : 3600,  // Cache data for 5 minutes
+            keepUnusedDataFor: 3600,  // Cache data for 5 minutes
             refetchOnMountOrArgChange: true,
             refetchOnReconnect: true,
             refetchOnFocus: true,
@@ -137,7 +137,7 @@ export const shopApi = apiSlice.injectEndpoints({
                 method: 'PUT',
                 headers: {
                     "auth-token": JSON.parse(localStorage.getItem("token")),
-                  },
+                },
             }),
             invalidatesTags: ['Shop'], // Invalidate cache if related data is used elsewhere
         }),
@@ -145,24 +145,36 @@ export const shopApi = apiSlice.injectEndpoints({
             query: (shopId) => ({
                 url: `/shop/deactivate-shop-by-owner/${shopId}`,
                 method: 'PUT',
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                },
             }),
         }),
         activateShopByOwner: builder.mutation({
             query: (shopId) => ({
                 url: `/shop/activate-shop-by-owner/${shopId}`,
                 method: 'PUT',
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                },
             }),
         }),
         deactivateShopByAdmin: builder.mutation({
             query: (shopId) => ({
                 url: `/shop/deactivate-shop-by-admin/${shopId}`,
                 method: 'PUT',
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                },
             }),
         }),
         activateShopByAdmin: builder.mutation({
             query: (shopId) => ({
                 url: `/shop/activate-shop-by-admin/${shopId}`,
                 method: 'PUT',
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                },
             }),
         }),
 

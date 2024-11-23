@@ -197,25 +197,25 @@
 
 //                                                 <td className={classes}>
 //                                                   <EditEmployeeModal
-//                                                    id={_id}
-//                                                    employeeName={employeeName}
-//                                                    employeeEmail={employeeEmail}
-//                                                    employeeMobileNumber={employeeMobileNumber}
-//                                                    department={department}
-//                                                    role={role}
-//                                                    employeeSalary={employeeSalary}
-//                                                    employeePhoto={employeePhoto}
-//                                                    employeeAdharCard={employeeAdharCard}
-//                                                    employeePanCard={employeePanCard}
-//                                                    employeeAgreement={employeeAgreement}
-//                                                    fatherOrHusbandName={fatherOrHusbandName}
-//                                                    sex={sex}
-//                                                    maritalStatus={maritalStatus}
-//                                                    bloodGroup={bloodGroup}
-//                                                    presentAddress={presentAddress}
-//                                                    permanentAddress={permanentAddress}
-//                                                    dateOfBirth={dateOfBirth}
-//                                                    dateOfJoining={dateOfJoining}
+                                                //    id={_id}
+                                                //    employeeName={employeeName}
+                                                //    employeeEmail={employeeEmail}
+                                                //    employeeMobileNumber={employeeMobileNumber}
+                                                //    department={department}
+                                                //    role={role}
+                                                //    employeeSalary={employeeSalary}
+                                                //    employeePhoto={employeePhoto}
+                                                //    employeeAdharCard={employeeAdharCard}
+                                                //    employeePanCard={employeePanCard}
+                                                //    employeeAgreement={employeeAgreement}
+                                                //    fatherOrHusbandName={fatherOrHusbandName}
+                                                //    sex={sex}
+                                                //    maritalStatus={maritalStatus}
+                                                //    bloodGroup={bloodGroup}
+                                                //    presentAddress={presentAddress}
+                                                //    permanentAddress={permanentAddress}
+                                                //    dateOfBirth={dateOfBirth}
+                                                //    dateOfJoining={dateOfJoining}
 //                                                   />
 //                                                 </td>
 
@@ -478,6 +478,7 @@ export default function ViewEmployee() {
                         </thead>
                         <tbody>
                             {employeesData?.employees?.map((employee, index) => {
+                              const  { _id, employeeName, employeeEmail, employeeMobileNumber, department, role, employeeSalary, employeePhoto, employeeAdharCard, employeePanCard, employeeAgreement, createdAt, fatherOrHusbandName, sex, maritalStatus, bloodGroup, presentAddress, permanentAddress, dateOfBirth, dateOfJoining }  = employee;
                                 const isLast = index === employeesData?.employees?.length - 1;
                                 const classes = isLast
                                     ? "px-5 border-l border-r border-b border-green-300"
@@ -497,7 +498,26 @@ export default function ViewEmployee() {
                                             {employee.employeeMobileNumber}
                                         </td>
                                         <td className={classes}>
-                                            <EditEmployeeModal {...employee} />
+                                            <EditEmployeeModal 
+                                            id={_id}
+                                            employeeName={employeeName}
+                                            employeeEmail={employeeEmail}
+                                            employeeMobileNumber={employeeMobileNumber}
+                                            department={department}
+                                            role={role}
+                                            employeeSalary={employeeSalary}
+                                            employeePhoto={employeePhoto}
+                                            employeeAdharCard={employeeAdharCard}
+                                            employeePanCard={employeePanCard}
+                                            employeeAgreement={employeeAgreement}
+                                            fatherOrHusbandName={fatherOrHusbandName}
+                                            sex={sex}
+                                            maritalStatus={maritalStatus}
+                                            bloodGroup={bloodGroup}
+                                            presentAddress={presentAddress}
+                                            permanentAddress={permanentAddress}
+                                            dateOfBirth={dateOfBirth}
+                                            dateOfJoining={dateOfJoining} />
                                         </td>
                                         <td className={classes}>
                                             <DeleteEmployeeModal id={employee._id} />
@@ -512,30 +532,56 @@ export default function ViewEmployee() {
                     </table>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {employeesData?.employees?.map((employee) => (
-                            <div key={employee._id} className="border rounded-lg  border-green-300">
-                                <div className="p-2">
-                                    <LazyLoadImage
-                                        alt="img"
-                                        src={employee.employeePhoto?.url}
-                                        className="w-20 h-20 rounded-full mx-auto mb-4 border drop-shadow"
-                                    />
-                                    <Typography variant="h6" className="text-center text-black">
-                                        {employee.employeeName}
-                                    </Typography>
-
-                                    <Typography className="text-sm text-gray-900 text-center">
-                                        {employee.employeeEmail}
-                                    </Typography>
-
-                                    <div className="flex justify-between mt-4 bg-green-50 rounded-b-lg">
-                                        <EditEmployeeModal {...employee} />
-                                        <DeleteEmployeeModal id={employee._id} />
-                                        <ViewEmployeeDetailModal {...employee} />
+                        {employeesData?.employees?.map((employee) => {
+                            const  { _id, employeeName, employeeEmail, employeeMobileNumber, department, role, employeeSalary, employeePhoto, employeeAdharCard, employeePanCard, employeeAgreement, createdAt, fatherOrHusbandName, sex, maritalStatus, bloodGroup, presentAddress, permanentAddress, dateOfBirth, dateOfJoining }  = employee;
+                            return  (
+                                <div key={employee._id} className="border rounded-lg  border-green-300">
+                                    <div className="p-2">
+                                        <LazyLoadImage
+                                            alt="img"
+                                            src={employee.employeePhoto?.url}
+                                            className="w-20 h-20 rounded-full mx-auto mb-4 border drop-shadow"
+                                        />
+                                        <Typography variant="h6" className="text-center text-black">
+                                            {employee.employeeName}
+                                        </Typography>
+    
+                                        <Typography className="text-sm text-gray-900 text-center">
+                                            {employee.employeeEmail}
+                                        </Typography>
+    
+                                        <div className="flex justify-between mt-4 bg-green-50 rounded-b-lg">
+                                            <EditEmployeeModal 
+                                            id={_id}
+                                            employeeName={employeeName}
+                                            employeeEmail={employeeEmail}
+                                            employeeMobileNumber={employeeMobileNumber}
+                                            department={department}
+                                            role={role}
+                                            employeeSalary={employeeSalary}
+                                            employeePhoto={employeePhoto}
+                                            employeeAdharCard={employeeAdharCard}
+                                            employeePanCard={employeePanCard}
+                                            employeeAgreement={employeeAgreement}
+                                            fatherOrHusbandName={fatherOrHusbandName}
+                                            sex={sex}
+                                            maritalStatus={maritalStatus}
+                                            bloodGroup={bloodGroup}
+                                            presentAddress={presentAddress}
+                                            permanentAddress={permanentAddress}
+                                            dateOfBirth={dateOfBirth}
+                                            dateOfJoining={dateOfJoining} />
+                                            <DeleteEmployeeModal id={employee._id} />
+                                            <ViewEmployeeDetailModal {...employee} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        }
+                        
+                       
+                        
+                        )}
                     </div>
                 )}
             </div>
