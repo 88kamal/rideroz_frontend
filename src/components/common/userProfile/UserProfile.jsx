@@ -1,4 +1,4 @@
-import { Button, Chip } from '@material-tailwind/react';
+import { Button, Chip, Spinner } from '@material-tailwind/react';
 import { useGetUserByIdQuery } from '../../../redux/slices/userApiSlice';
 import authService from '../../../services/authService';
 import ShopOwnerActiveAndDeActiveButton from '../shopOwner/activeAndDeactive/ShopOwnerActiveAndDeActiveButton';
@@ -42,6 +42,12 @@ function UserProfile() {
 
     return (
         <div className="flex flex-col items-center min-h-screen">
+
+            {isLoading && 
+            <div className=' flex justify-center '>
+                <Spinner/>
+            </div>
+            }
             {/* For USER  */}
             {[getUserById?.userType].includes('User') && <div className="bg-white drop-shadow border border-gray-300 rounded-md w-full p-6">
                 {/* Profile Header */}
