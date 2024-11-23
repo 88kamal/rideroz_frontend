@@ -23,6 +23,9 @@ export const settlementApiSlice = apiSlice.injectEndpoints({
                 url: `/shopPayment/settle/${orderId}`,
                 method: 'POST',
                 body: formData,
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                  },
             }),
             invalidatesTags: [{ type: 'Settlement', id: 'LIST' }],
             keepUnusedDataFor: 3600, // Data remains in cache for 1 hour

@@ -25,6 +25,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         url: '/payment/verify',
         method: 'PUT',
         body: paymentData,
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+      },
       }),
       invalidatesTags: ['Order'], // Invalidate Order tag on payment verification
       keepUnusedDataFor : 3600,
@@ -144,22 +147,28 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         if (endDate) queryParams.append('endDate', endDate);
         queryParams.append('limit', limit);
         queryParams.append('page', page);
-
-        // Construct the final URL
-        return `/order/get-orders/${shopId}?${queryParams.toString()}`;
+    
+        // Construct the final URL and include headers
+        return {
+          url: `/order/get-orders/${shopId}?${queryParams.toString()}`,
+          headers: {
+            "auth-token": JSON.parse(localStorage.getItem("token")), // Retrieve the token from localStorage
+          },
+        };
       },
       providesTags: (result, error, { shopId }) =>
         result
           ? [
-            { type: 'Order', id: shopId },
-            ...result.orders.map(({ _id }) => ({ type: 'Order', id: _id })),
-          ]
+              { type: 'Order', id: shopId },
+              ...result.orders.map(({ _id }) => ({ type: 'Order', id: _id })),
+            ]
           : [{ type: 'Order', id: shopId }],
       keepUnusedDataFor: 60, // Cache duration
       refetchOnFocus: true,
       refetchOnReconnect: true,
       refetchOnMountOrArgChange: true,
     }),
+    
 
     confirmOrder: builder.mutation({
       query: ({ orderId, otp }) => {
@@ -169,6 +178,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
           url: `/order/confirm-order/${orderId}`,
           method: 'PUT',
           body: { otp },
+          headers: {
+            "auth-token": JSON.parse(localStorage.getItem("token")),
+          },
         };
       },
       keepUnusedDataFor: 60, // Cache duration in seconds
@@ -181,6 +193,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       query: ({ orderId }) => ({
         url: `/order/cancel-order/${orderId}`,
         method: 'POST',
+        headers: {
+          "auth-token": JSON.parse(localStorage.getItem("token")),
+        },
       }),
       invalidatesTags: ['Order'], // Invalidate Order tag on cancellation
       keepUnusedDataFor : 3600, // Keep unused data for 5 minutes

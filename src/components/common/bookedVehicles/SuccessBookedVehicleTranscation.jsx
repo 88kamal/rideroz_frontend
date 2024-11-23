@@ -535,7 +535,7 @@ export default function SuccessBookedVehicleTranscation() {
           </div>
         ) : (
           viewType === "table" ? (
-            <table className="w-full min-w-max table-auto text-left">
+            <table className="w-full min-w-max table-auto text-left bg-green-50">
               <thead>
                 <tr>
                   {TABLE_HEAD.map((head) => (
@@ -709,7 +709,7 @@ export default function SuccessBookedVehicleTranscation() {
               </tbody>
             </table>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
               {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 
               {data?.orders?.map(({ _id, vehicle, status, settlementProofImage, settlementAmount, settlementDate, settlementPlatformUsed, settlementTransactionId, settled, createdAt, conformationOtp, rideConfirmed, cancellationRefundId, cancellationRefundStatus, shopAmount }, index) => {

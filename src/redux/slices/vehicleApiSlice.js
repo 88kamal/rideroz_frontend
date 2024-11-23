@@ -200,6 +200,9 @@ export const vehicleApi = apiSlice.injectEndpoints({
                     startTime,
                     endTime,
                 },
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                },
             }),
         }),
         getVehicleAvailability: builder.query({
@@ -219,7 +222,8 @@ export const vehicleApi = apiSlice.injectEndpoints({
             query: ({ shopId, search = '', vehicleType, page = 1, limit = 10 }) => {
                 console.log({
                     shopId, search, vehicleType, page, limit
-                })
+                });
+
                 // Construct the query string with the provided parameters
                 const queryParams = new URLSearchParams();
                 if (search) queryParams.append('search', search);
@@ -228,7 +232,12 @@ export const vehicleApi = apiSlice.injectEndpoints({
                 queryParams.append('limit', limit);
 
                 // Construct the final URL
-                return `/vehicle/get-vehicles-by-shop-id/${shopId}?${queryParams.toString()}`;
+                return {
+                    url: `/vehicle/get-vehicles-by-shop-id/${shopId}?${queryParams.toString()}`,
+                    headers: {
+                        "auth-token": JSON.parse(localStorage.getItem("token")),
+                    },
+                };
             },
             providesTags: (result, error, { shopId }) =>
                 result
@@ -242,6 +251,7 @@ export const vehicleApi = apiSlice.injectEndpoints({
             refetchOnReconnect: true, // Refetch on reconnect
             refetchOnMountOrArgChange: true, // Refetch on remount or argument change
         }),
+
         deleteVehicle: builder.mutation({
             query: (id) => ({
                 url: `vehicle/delete-vehicle/${id}`,

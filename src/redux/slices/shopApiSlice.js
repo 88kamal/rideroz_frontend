@@ -135,6 +135,9 @@ export const shopApi = apiSlice.injectEndpoints({
             query: (shopId) => ({
                 url: `/shop/shop-owner-account-verify/${shopId}`,
                 method: 'PUT',
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token")),
+                  },
             }),
             invalidatesTags: ['Shop'], // Invalidate cache if related data is used elsewhere
         }),
