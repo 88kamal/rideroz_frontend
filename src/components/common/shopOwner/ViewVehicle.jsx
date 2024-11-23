@@ -417,7 +417,7 @@ export default function ViewVehicle() {
                         </Typography>
                     </div>
 
-                    {/* <pre>{JSON.stringify(vehicals?.shop?.shop_OpeningTime,null,2)}</pre> */}
+                    {/* <pre>{JSON.stringify(vehicals,null,2)}</pre> */}
 
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                         <div className="w-full md:w-72">

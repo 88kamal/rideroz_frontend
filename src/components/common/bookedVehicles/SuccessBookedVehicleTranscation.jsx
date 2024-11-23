@@ -439,7 +439,7 @@ export default function SuccessBookedVehicleTranscation() {
   return (
     <div className="h-full w-full bg-white pt-1 rounded-md border border-green-300">
 
-      {/* <pre>{JSON.stringify(user?.role, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
       <div className="rounded-none  border-b border-green-300 px-2 py-1">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>

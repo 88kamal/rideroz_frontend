@@ -37,6 +37,21 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
         return () => window.removeEventListener("resize", handleResize);
     }, [])
 
+
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const options = {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        };
+        return new Intl.DateTimeFormat('en-US', options).format(date);
+    };
+
+
     return (
         <>
             <IconButton
@@ -151,7 +166,7 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                             </div>
                         </div>
                         <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                            <span className="font-bold">Created Date: </span> <span>{readableCreatedAt}</span>
+                            <span className="font-bold">Created Date: </span> <span>{formatDate(readableCreatedAt)}</span>
                         </div>
                     </div>
 
@@ -231,7 +246,7 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                                 <span className="font-bold">Settlement Amount: </span> <span>{order.settlementAmount}</span>
                             </div>
                             <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
-                                <span className="font-bold">Settlement Date: </span> <span>{order.settlementDate}</span>
+                                <span className="font-bold">Settlement Date: </span> <span>{formatDate(order.settlementDate)}</span>
                             </div>
                         </div>
 
@@ -248,6 +263,40 @@ export default function ViewMoreOrderByShopIdModal({ order }) {
                             <h1 className=" font-bold text-black mb-1">Settlement Proof Image</h1>
                             <img src={order?.settlementProofImage?.url} alt="img" className=" rounded-md" />
                         </div>
+                    </div>}
+
+                    {order?.cancellationRefundId && <div className="">
+                        <div className="">
+                            <h1 className=" text-black font-bold">Cancellation</h1>
+                        </div>
+
+                        <div className="flex flex-wrap justify-between items-center">
+                            <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Cancellation Amount: </span> <span>₹ {order?.cancellationRefundAmount}</span>
+                            </div>
+                            <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Cancellation Date: </span> <span>{formatDate(order.cancellationInitiatedAt)}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap justify-between items-center">
+                            <div className="bg-green-50 border border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Cancellation RefundId: </span> <span className=" capitalize">{order?.cancellationRefundId}</span>
+                            </div>
+                            <div className="bg-green-50 border flex items-center gap-1 border-green-200 text-black py-2 px-2 mb-2 w-full lg:w-1/2">
+                                <span className="font-bold">Cancellation Refund Status: </span>
+                                <span>
+                                    <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={order?.cancellationRefundStatus && "success"}
+                                        color={order?.cancellationRefundId ? "green" : "orange"}
+                                        className="px-3 text-center w-28"
+                                    />
+                                </span>
+                            </div>
+                        </div>
+
                     </div>}
 
                 </DialogBody>
