@@ -129,7 +129,7 @@ const AllVehicle = () => {
                                                     <p>Shop Time: <br  className=" lg:hidden"/> <span>{item?.shop?.shop_OpeningTime}-{item?.shop?.shop_ClosedTime}</span></p>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-wrap w-full gap-2 mt-2">
+                                            <div className="flex flex-wrap lg:flex-nowrap w-full gap-2 mt-2">
                                                 <DatePickerModule vehicleId={_id} month={"2024-11"} />
                                                 <Button
                                                     onClick={() => navigate(`/checkout/${_id}`)}
