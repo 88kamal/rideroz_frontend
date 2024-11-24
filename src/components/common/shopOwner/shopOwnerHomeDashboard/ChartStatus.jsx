@@ -47,12 +47,6 @@ export default function ChartStatus() {
             ],
         },
     };
-
-    if (isLoading) {
-      return <div className=" mb-2">
-          <Spinner className=" text-green-500"/>
-      </div>
-  }
     return (
         <div className="w-full lg:w-80 flex justify-center bg-green-50 border border-green-400 rounded-lg">
             <CardBody>

@@ -563,7 +563,9 @@ export default function ViewVehicle() {
                                                 backgroundColor: vehicleAvailability === false ? '#ffedd5' : ""
                                             }}
                                         >
-                                            <td className={classes}>{index + 1}.</td>
+                                            <td className={classes}>
+                                            {index + 1 + (page - 1) * limit}.
+                                            </td>
                                             <td className={classes}>
                                                 <div className="flex justify-center">
                                                     <img className="w-10 h-10 py-2" src={vehicleImage[0]?.url} alt="vehicle" />
