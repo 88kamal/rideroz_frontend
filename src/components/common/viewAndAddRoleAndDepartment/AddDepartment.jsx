@@ -114,6 +114,7 @@ const AddDepartment = () => {
                             onChange={(e) => setDepartmentName(e.target.value)}
                             size="lg"
                             color='green'
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                         />
                     </div>
 

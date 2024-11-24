@@ -149,6 +149,7 @@ const AddVehicleForm = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-2 rounded-md "
                             color='green'
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                         />
                     </div>
 
@@ -167,6 +168,7 @@ const AddVehicleForm = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-2 rounded-md "
                             color='green'
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                         />
                     </div>
                 </div>
@@ -181,6 +183,7 @@ const AddVehicleForm = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-2 rounded-md "
                             color='green'
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                         />
                     </div>
                 </div>
@@ -197,6 +200,7 @@ const AddVehicleForm = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-2 rounded-md "
                             color='green'
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                         />
                     </div>
                 </div>
@@ -225,6 +229,7 @@ const AddVehicleForm = () => {
                                 readOnly={formData.vehicleType === 'bike' || formData.vehicleType === 'scooty'} // Disable input for bike/scooty
                                 className="w-full px-4 py-2 rounded-md "
                                 color='green'
+                                style={{ fontSize: '16px' }} // Add this to prevent zooming
                             />
                         )}
                     </div>
@@ -243,6 +248,7 @@ const AddVehicleForm = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-2 rounded-md "
                             color='green'
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                         ></Textarea>
                     </div>
                 </div>

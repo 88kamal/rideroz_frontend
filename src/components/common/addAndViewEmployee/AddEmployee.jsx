@@ -113,7 +113,7 @@ const AddEmployeeForm = () => {
             if (fileInputRefAdharCard.current) {
                 fileInputRefAdharCard.current.value = null; // This clears the file input field
             }
-             if (fileInputRefPanCard.current) {
+            if (fileInputRefPanCard.current) {
                 fileInputRefPanCard.current.value = null; // This clears the file input field
             }
 
@@ -173,6 +173,7 @@ const AddEmployeeForm = () => {
                                     size="lg"
                                     color='green'
                                     className=' app-font'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
                                 />
                             </div>
 
@@ -185,7 +186,9 @@ const AddEmployeeForm = () => {
                                     label="Email"
                                     size="lg"
                                     color='green'
-                                         className=' app-font'
+                                    className=' app-font'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
                         </div>
@@ -200,7 +203,9 @@ const AddEmployeeForm = () => {
                                     label="Mobile Number"
                                     size="lg"
                                     color='green'
-                                         className=' app-font'
+                                    className=' app-font'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
 
@@ -277,14 +282,16 @@ const AddEmployeeForm = () => {
                                     label="Salary"
                                     size="lg"
                                     color='green'
-                                         className=' app-font'
+                                    className=' app-font'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
                         </div>
 
                         {/* Employee Name and Father/Husband Name */}
                         <div className="flex flex-col sm:flex-row gap-4">
-                         
+
                             <div className="w-full sm:w-1/2">
                                 <Input
                                     type="text"
@@ -294,6 +301,8 @@ const AddEmployeeForm = () => {
                                     label="Father or Husband Name"
                                     size="lg"
                                     color='green'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
 
@@ -313,7 +322,7 @@ const AddEmployeeForm = () => {
 
                         {/* Sex and Marital Status */}
                         <div className="flex flex-col sm:flex-row gap-4">
-                           
+
                             <div className="w-full sm:w-1/2">
                                 <Select
                                     label="Marital Status"
@@ -337,13 +346,15 @@ const AddEmployeeForm = () => {
                                     label="Blood Group"
                                     size="lg"
                                     color='green'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
                         </div>
 
                         {/* Blood Group, Present Address, and Permanent Address */}
                         <div className="flex flex-col sm:flex-row gap-4">
-                           
+
                             <div className="w-full sm:w-1/2">
                                 <Input
                                     type="text"
@@ -353,6 +364,8 @@ const AddEmployeeForm = () => {
                                     label="Present Address"
                                     size="lg"
                                     color='green'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
                             <div className="w-full sm:w-1/2">
@@ -364,6 +377,8 @@ const AddEmployeeForm = () => {
                                     label="Permanent Address"
                                     size="lg"
                                     color='green'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
                         </div>
@@ -379,6 +394,8 @@ const AddEmployeeForm = () => {
                                     label="Date of Birth"
                                     size="lg"
                                     color='green'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
                             <div className="w-full sm:w-1/2">
@@ -390,12 +407,14 @@ const AddEmployeeForm = () => {
                                     label="Date of Joining"
                                     size="lg"
                                     color='green'
+                                    style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <Typography variant="small" color="blue-gray"      className=' app-font'>
+                            <Typography variant="small" color="blue-gray" className=' app-font'>
                                 Upload Employee Documents (PDF only)
                             </Typography>
 
@@ -415,12 +434,12 @@ const AddEmployeeForm = () => {
 
                             {pdfPreviews.employeeAdharCard && (
                                 <div className="mt-2">
-                                    <Typography variant="small" color="blue-gray"      className=' app-font  mb-2 text-md text-green-700'>Preview:</Typography>
+                                    <Typography variant="small" color="blue-gray" className=' app-font  mb-2 text-md text-green-700'>Preview:</Typography>
                                     <embed src={pdfPreviews.employeeAdharCard} width="100%" height="500px" type="application/pdf" />
                                 </div>
                             )}
 
-                           
+
                             <div className=" border border-green-300 ">
                                 <p className=' text-sm font-bold bg-green-100 p-1 mb-3 text-green-700'>Employee Pan Card</p>
                                 <div className="px-2">
@@ -437,12 +456,12 @@ const AddEmployeeForm = () => {
 
                             {pdfPreviews.employeePanCard && (
                                 <div className="mt-2">
-                                    <Typography variant="small" color="blue-gray"      className=' app-font  mb-2 text-md text-green-700'>Preview:</Typography>
+                                    <Typography variant="small" color="blue-gray" className=' app-font  mb-2 text-md text-green-700'>Preview:</Typography>
                                     <embed src={pdfPreviews.employeePanCard} width="100%" height="500px" type="application/pdf" />
                                 </div>
                             )}
 
-    
+
                             <div className=" border border-green-300 ">
                                 <p className=' text-sm font-bold bg-green-100 p-1 mb-3 text-green-700'>Employee Agreement</p>
                                 <div className="px-2">
@@ -460,7 +479,7 @@ const AddEmployeeForm = () => {
 
                             {pdfPreviews.employeeAgreement && (
                                 <div className="mt-2">
-                                    <Typography variant="small" color="blue-gray"      className=' app-font mb-2 text-md text-green-700'>Preview:</Typography>
+                                    <Typography variant="small" color="blue-gray" className=' app-font mb-2 text-md text-green-700'>Preview:</Typography>
                                     <embed src={pdfPreviews.employeeAgreement} width="100%" height="500px" type="application/pdf" />
                                 </div>
                             )}

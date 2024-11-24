@@ -269,7 +269,7 @@ const CartPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const vehicleId = id;
-    
+
         // const data = new FormData();
         // Object.keys(formData).forEach((key) => {
         //     // Append key-value pairs to FormData
@@ -277,12 +277,12 @@ const CartPage = () => {
         //         data.append(key, formData[key]);
         //     }
         // });
-    
+
         // // Compress and append Aadhaar card images
         // if (formData.adharcardImg && formData.adharcardImg.length > 0) {
         //     for (let i = 0; i < formData.adharcardImg.length; i++) {
         //         const file = formData.adharcardImg[i];
-    
+
         //         try {
         //             // Set compression options
         //             const options = {
@@ -290,10 +290,10 @@ const CartPage = () => {
         //                 maxWidthOrHeight: 800, // Smaller dimensions can speed up upload time
         //                 useWebWorker: true,
         //               };
-    
+
         //             // Compress the file
         //             const compressedFile = await imageCompression(file, options);
-    
+
         //             // Append the compressed file to FormData
         //             data.append("adharcardImg", compressedFile);
         //         } catch (compressionError) {
@@ -301,26 +301,26 @@ const CartPage = () => {
         //         }
         //     }
         // }
-    
+
         try {
             const orderResponse = await createOrder({ vehicleId, body: formData }).unwrap();
-    
+
             if (orderResponse.success) {
                 handlePaymentVerify(orderResponse);
             }
         } catch (error) {
             console.log("Failed to create order:", error);
-    
+
             if (error.status === 500 && error.data?.error === "Access denied. Re-login") {
                 setAutoOpenLogin(true);
             }
-    
+
             if (error.status === 404 && error.data?.error === "User not found") {
                 setAutoOpenLogin(true);
             }
         }
     };
-    
+
 
     const handleLoginModalClose = () => setAutoOpenLogin(false);
 
@@ -466,16 +466,6 @@ const CartPage = () => {
                             {/* Pickup/Dropoff Date and Time */}
                             <div>
                                 <div className="mb-2">
-                                    {/* <DatePicker
-                                        selected={formData.startDate}
-                                        onChange={(date) => handleDateChange(date, 'startDate')}
-                                        filterDate={filterPassedDates}
-                                        dateFormat="yyyy-MM-dd"
-                                        className="text-xs sm:text-sm p-2 w-[241%] md:w-[200%] lg:w-[216.4%] outline-none border-gray-500 border"
-                                        placeholderText="Select Pickup Date"
-                                        required
-                                    /> */}
-
                                     <label htmlFor="" className=" text-xs">Pickup Date</label>
                                     <input
                                         label="Enter Start Date"
@@ -483,46 +473,23 @@ const CartPage = () => {
                                         value={formData.startDate}
                                         onChange={(e) => handleDateChange(e.target.value, 'startDate')}
                                         min={new Date().toISOString().split('T')[0]} // This will prevent selecting past dates
-                                        className="text-xs sm:text-sm p-2 w-full outline-none rounded border-gray-500 border"
+                                        className="text-xs sm:text-sm p-2 w-full  outline-none rounded border-gray-500 border appearance-none"
                                         placeholder="Select Pickup Date"
                                     />
 
                                 </div>
 
                                 <div className="mb-2">
-                                    {/* <input
-                                        label="Pickup Time"
-                                        type="time"
-                                        name="startTime"
-                                        value={formData.startTime}
-                                        onChange={handleChange}
-                                        required
-                                        className="text-xs sm:text-sm border p-1.5 w-full outline-none border-gray-500"
-                                    /> */}
-
-
                                     <CustomTimeDropdown
                                         name="startTime"
                                         value={formData.startTime}
                                         onChange={handleChange}
                                         shop_OpeningTime={vehicle?.shop?.shop_OpeningTime}
                                         shop_ClosedTime={vehicle?.shop?.shop_ClosedTime}
-
                                     />
-
                                 </div>
 
                                 <div className="mb-2">
-                                    {/* <DatePicker
-                                        selected={formData.endDate}
-                                        onChange={(date) => handleDateChange(date, 'endDate')}
-                                        filterDate={filterPassedDates}
-                                        dateFormat="yyyy-MM-dd"
-                                        className="text-xs sm:text-sm border p-2 w-[241%] md:w-[200%] lg:w-[216.4%] outline-none border-gray-500"
-                                        placeholderText="Select Drop off Date"
-                                        required
-                                    /> */}
-
                                     <label htmlFor="" className=" text-xs">Select Drop off Date</label>
                                     <input
                                         label="Enter End Date"

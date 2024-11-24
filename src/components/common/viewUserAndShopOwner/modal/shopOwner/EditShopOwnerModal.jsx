@@ -214,6 +214,7 @@ export default function EditShopOwnerModal({
             >
                 <Edit className="h-4" />
             </IconButton>
+
             <Dialog open={open} size="xxl" handler={handleOpen} className="shadow-none hover:shadow-none rounded-none bg-green-50 overflow-scroll">
                 <div className="px-4 py-4">
                     <h1 className="text-xl text-black font-bold">Edit Employee</h1>
@@ -266,6 +267,7 @@ export default function EditShopOwnerModal({
                                         onChange={handleInputChange}
                                         color="green"
                                         className=" app-font"
+                                        style={{ fontSize: '16px' }} // Add this to prevent zooming
                                     />
                                 </div>
                                 <div className="w-full sm:w-1/2">
@@ -276,6 +278,7 @@ export default function EditShopOwnerModal({
                                         onChange={handleInputChange}
                                         color="green"
                                         className=" app-font"
+                                        style={{ fontSize: '16px' }} // Add this to prevent zooming
                                     />
                                 </div>
                             </div>
@@ -289,7 +292,9 @@ export default function EditShopOwnerModal({
                                         value={formData.ownerEmail}
                                         onChange={handleInputChange}
                                         color="green"
-                                          className=" app-font"
+                                        className=" app-font"
+                                        style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                     />
                                 </div>
                                 <div className="w-full sm:w-1/2">
@@ -299,7 +304,9 @@ export default function EditShopOwnerModal({
                                         value={formData.ownerPhoneNumber}
                                         onChange={handleInputChange}
                                         color="green"
-                                          className=" app-font"
+                                        className=" app-font"
+                                        style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                     />
                                 </div>
                             </div>
@@ -336,7 +343,9 @@ export default function EditShopOwnerModal({
                                             value={searchTerm}
                                             onChange={handleCitySearch}
                                             color="green"
-                                              className=" app-font capitalize"
+                                            className=" app-font capitalize"
+                                            style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                                         />
                                         {isCitiesLoading && (
                                             <div className="absolute mt-1 bg-white z-10 border border-gray-400 rounded-md w-full p-2">
@@ -455,11 +464,12 @@ export default function EditShopOwnerModal({
                                 />
                             </div>
 
-                            <div className="border border-green-200 p-2 flex justify-center">
-                                {legalDocPreview && (
+                            {legalDocPreview && (
+                                <div className="border border-green-200 p-2 flex justify-center">
                                     <img src={legalDocPreview} alt="Legal Doc Preview" className="mb-2 w-96 h-80" />
-                                )}
-                            </div>
+                                </div>
+
+                            )}
 
                             <Button type="submit" fullWidth disabled={isLoading || !isFormChanged}>
                                 {isLoading ? "Updating..." : "Update Shop"}

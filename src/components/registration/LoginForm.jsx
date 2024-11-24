@@ -10,8 +10,6 @@ import NeedChangePassword from './NeedChangePassword';
 import { useNavigate } from 'react-router-dom';
 import myContext from '../../context/myContext';
 
-
-
 const LoginForm = ({ switchToSignup, switchToLogin, handleOpen, switchToForgotPassword }) => {
     const navigate = useNavigate();
     const {showAlert} = useContext(myContext);
@@ -133,6 +131,7 @@ const LoginForm = ({ switchToSignup, switchToLogin, handleOpen, switchToForgotPa
                             name="email"
                             className="app-font"
                             value={loginState.email}
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                             onChange={(e) =>
                                 setLoginState({ ...loginState, email: e.target.value })
                             }
@@ -145,6 +144,7 @@ const LoginForm = ({ switchToSignup, switchToLogin, handleOpen, switchToForgotPa
                             label="Password"
                             className="app-font"
                             value={loginState.password}
+                            style={{ fontSize: '16px' }} // Add this to prevent zooming
                             onChange={(e) =>
                                 setLoginState({ ...loginState, password: e.target.value })
                             }

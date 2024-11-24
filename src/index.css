@@ -82,3 +82,16 @@
   src: url('roboto.woff2') format('woff2');
   font-display: swap;
 }
+
+input[type="date"] {
+  appearance: none; /* Remove default styles */
+  -webkit-appearance: none; /* For Safari */
+  -moz-appearance: none; /* For Firefox */
+}
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: transparent;
+  background: none;
+  z-index: 1;
+}

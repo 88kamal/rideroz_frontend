@@ -86,6 +86,7 @@ const AddCity = () => {
                                 size="lg"
                                 placeholder="Enter city name"
                                 className=" app-font"
+                                style={{ fontSize: '16px' }} // Add this to prevent zooming
                             />
                         </div>
 
@@ -101,6 +102,8 @@ const AddCity = () => {
                                 size="lg"
                                 placeholder="Enter state"
                                 className=" app-font"
+                                style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                             />
                         </div>
 

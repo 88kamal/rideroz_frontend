@@ -76,6 +76,7 @@ const AddRoleForm = () => {
                                 size="lg"
                                 placeholder="Enter role name"
                                 className="app-font"
+                                style={{ fontSize: '16px' }} // Add this to prevent zooming
                             />
                         </div>
 
@@ -90,6 +91,8 @@ const AddRoleForm = () => {
                                 size="lg"
                                 placeholder="Enter role code"
                                 className="app-font"
+                                style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                             />
                         </div>
 

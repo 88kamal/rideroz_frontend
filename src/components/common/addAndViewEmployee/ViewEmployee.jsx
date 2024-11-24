@@ -400,6 +400,8 @@ export default function ViewEmployee() {
                                 onChange={(e) => setSearch(e.target.value)}
                                 color="green"
                                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                                style={{ fontSize: '16px' }} // Add this to prevent zooming
+
                             />
                         </div>
                         <Button

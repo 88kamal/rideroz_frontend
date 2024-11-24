@@ -582,39 +582,39 @@ function ListShopPage() {
 
                                     <div className="">
                                         <div className=" mb-3">
-                                            <Input
-                                                label='Account Holder Name'
+                                            <input
+                                                placeholder='Account Holder Name'
                                                 type="text"
                                                 id="account_holder_name"
                                                 name="account_holder_name"
                                                 value={bankDetails.account_holder_name}
                                                 onChange={handleChangeForBankDetail}
                                                 color='green'
-                                                className="block w-full rounded-md sm:text-sm"
+                                              className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                         </div>
                                         <div className=" mb-3">
-                                            <Input
-                                                label='Account Number'
+                                            <input
+                                                placeholder='Account Number'
                                                 type="text"
                                                 id="account_number"
                                                 name="account_number"
                                                 value={bankDetails.account_number}
                                                 onChange={handleChangeForBankDetail}
                                                 color='green'
-                                                className="block w-full rounded-md sm:text-sm"
+                                                className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                         </div>
                                         <div className=" mb-3">
-                                            <Input
-                                                label='IFSC Code'
+                                            <input
+                                                placeholder='IFSC Code'
                                                 type="text"
                                                 id="ifsc"
                                                 name="ifsc"
                                                 value={bankDetails.ifsc}
                                                 onChange={handleChangeForBankDetail}
                                                 color='green'
-                                                className="block w-full rounded-md sm:text-sm uppercase"
+                                               className="bg-green-50 outline-none w-full py-2 px-3 border border-green-400 rounded-md placeholder-gray-700"
                                             />
                                         </div>
                                         {bankDetails.bankName && bankDetails.branch && (
