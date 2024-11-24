@@ -61,7 +61,7 @@ const OrderDashboard = () => {
                                 Payment Status
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider border-r border-green-400">
-                                Pickup Confirmed Status
+                                Pickup Status
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider border-r border-green-400">
                                 Verify Otp
