@@ -113,12 +113,6 @@ function UserProfile() {
                         }
                     </div>
                 </div>
-
-                <div className=" mt-3 lg:hidden md:hidden sm:hidden">
-                    <Button onClick={handleLogout} className=' w-full flex items-center justify-center gap-2 bg-red-500 shadow-none hover:shadow-none text-white border'>
-                        <LogOut className='w-4 h-4' /> Logout
-                    </Button>
-                </div>
             </div>}
 
             {/* <pre>{JSON.stringify(getUserById?.user, null, 2)}</pre> */}
@@ -250,11 +244,7 @@ function UserProfile() {
                     </div>
                 </div> */}
 
-                <div className=" mt-3 lg:hidden md:hidden sm:hidden">
-                    <Button onClick={handleLogout} className=' w-full flex items-center justify-center gap-2 bg-red-500 shadow-none hover:shadow-none text-white border'>
-                        <LogOut className='w-4 h-4' /> Logout
-                    </Button>
-                </div>
+               
             </div>}
 
             {/* FOR EMPLOYEE  */}
@@ -374,13 +364,13 @@ function UserProfile() {
                         </div>
                     </div>
                 </div>
+            </div>}
 
-                <div className=" mt-3 lg:hidden md:hidden sm:hidden">
+            <div className=" mt-3 lg:hidden md:hidden sm:hidden w-full">
                     <Button onClick={handleLogout} className=' w-full flex items-center justify-center gap-2 bg-red-500 shadow-none hover:shadow-none text-white border'>
                         <LogOut className='w-4 h-4' /> Logout
                     </Button>
                 </div>
-            </div>}
         </div>
     );
 }
