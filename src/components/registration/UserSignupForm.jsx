@@ -93,6 +93,7 @@ const UserSignupForm = ({ switchToLogin }) => {
                             userName: e.target.value
                         })
                     }}
+                    style={{ fontSize: '16px' }} // Add this to prevent zooming
                 />
             </div>
             <div className="mb-5">
@@ -109,6 +110,7 @@ const UserSignupForm = ({ switchToLogin }) => {
                             userEmail: e.target.value
                         })
                     }}
+                    style={{ fontSize: '16px' }} // Add this to prevent zooming
                 />
             </div>
             <div className="mb-5">
@@ -125,6 +127,7 @@ const UserSignupForm = ({ switchToLogin }) => {
                             userPhoneNumber: e.target.value
                         })
                     }}
+                    style={{ fontSize: '16px' }} // Add this to prevent zooming
                 />
             </div>
             <div className="mb-5">
@@ -143,6 +146,7 @@ const UserSignupForm = ({ switchToLogin }) => {
                     icon={<span className="flex justify-around items-center cursor-pointer -mt-[3px]">
                         <Icon className=" text-green-200 " icon={icon} size={20} onClick={handleToggle} />
                     </span>}
+                     style={{ fontSize: '16px' }} // Add this to prevent zooming
 
                 />
             </div>

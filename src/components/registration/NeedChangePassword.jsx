@@ -107,6 +107,7 @@ const NeedChangePassword = ({switchToLogin,setNeedPassword, needPassword}) => {
                             />
                         </span>
                     }
+                    style={{ fontSize: '16px' }} // Add this to prevent zooming
                 />
             </div>
 
@@ -133,6 +134,7 @@ const NeedChangePassword = ({switchToLogin,setNeedPassword, needPassword}) => {
                             />
                         </span>
                     }
+                    style={{ fontSize: '16px' }} // Add this to prevent zooming
                 />
             </div>
 
