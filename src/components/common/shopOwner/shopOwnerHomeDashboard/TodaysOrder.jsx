@@ -3,6 +3,9 @@ import { Eye, View } from "lucide-react";
 import VerifyRideModal from "../../bookedVehicles/modal/VerifyRideModal";
 import { Chip, IconButton } from "@material-tailwind/react";
 import { motion } from "framer-motion"; // Import Framer Motion
+import { useGetShopStatsQuery } from "../../../../redux/slices/shopApiSlice";
+import authService from "../../../../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const orders = [
     { id: 1, customer: "1234", price: "345", status: "success" },
@@ -25,8 +28,13 @@ const rowVariants = {
 };
 
 const OrderDashboard = () => {
+    const user = authService.getCurrentUser();
+    const navigate = useNavigate();
+    const shopId = user?.id
+    const { data, error, isLoading, refetch } = useGetShopStatsQuery({ shopId, year: "2024", month: "11" });
     return (
         <div className="bg-green-50 p-2.5 border border-green-400 rounded-lg w-full">
+            {/* <pre>{JSON.stringify(data?.todayOrders, null, 2)}</pre> */}
             <header className="mb-6">
                 <h1 className="text-2xl font-bold text-gray-800">Today's Orders</h1>
             </header>
@@ -53,10 +61,10 @@ const OrderDashboard = () => {
                                 Payment Status
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider border-r border-green-400">
-                                Verify Otp
+                                Pickup Confirmed Status
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider border-r border-green-400">
-                                View More
+                                Verify Otp
                             </th>
                             <th className="px-6 py-3 text-right text-xs font-medium text-black uppercase tracking-wider">
                                 Invoice
@@ -75,7 +83,7 @@ const OrderDashboard = () => {
                             },
                         }}
                     >
-                        {orders.map((order, index) => (
+                        {data?.todayOrders?.map((order, index) => (
                             <motion.tr
                                 key={order.id}
                                 className={`hover:bg-gray-100 cursor-pointer  transition-colors ${index > 0 ? "border-t border-green-400" : ""}`}
@@ -85,47 +93,63 @@ const OrderDashboard = () => {
                                 whileTap={{ scale: 0.98 }}
                             >
                                 <td className="px-6 text-sm text-black border-r border-green-400">
-                                    {order.id}.
+                                    {index + 1}.
                                 </td>
                                 <td className="px-6 text-sm text-black border-r border-green-400">
-                                    {order.customer}
+                                    {order?.vehicleDetails?.vehicleNumber}
                                 </td>
                                 <td className="px-6 text-sm text-black border-r border-green-400">
-                                    {order.price}
+                                    ₹ {order?.vehicleDetails?.vehiclePrice}
                                 </td>
                                 <td className="px-6 text-sm border-r border-green-400">
-                                <Chip
-                                                    size="sm"
-                                                    variant="ghost"
-                                                    value={order?.status}
-                                                    color={
-                                                        order?.status === "failed"
-                                                            ? "red"
-                                                            : order?.status === "pending"
-                                                                ? "orange"
-                                                                : "green"
-                                                    }
-                                                    className="px-3 text-center w-28"
-                                                />
+                                    <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={order?.status}
+                                        color={
+                                            order?.status === "failed"
+                                                ? "red"
+                                                : order?.status === "pending"
+                                                    ? "orange"
+                                                    : "green"
+                                        }
+                                        className="px-3 text-center w-28"
+                                    />
                                 </td>
                                 <td className="px-6 text-sm text-black border-r border-green-400">
-                                    <VerifyRideModal />
+                                    <Chip
+                                        size="sm"
+                                        variant="ghost"
+                                        value={order?.rideConfirmed === false ? "pending" : "success"}
+                                        color={order?.rideConfirmed === true ? "green" : "red"}
+                                        className="px-3 text-center w-28"
+                                    />
                                 </td>
                                 <td className="px-6 text-sm text-black border-r border-green-400">
-                                    <View className="w-4 h-4" />
+                                    <VerifyRideModal orderId={order?._id} refetch={refetch} rideConfirmed={order?.rideConfirmed} />
                                 </td>
+
                                 <td className="px-6 text-right text-sm text-black">
-                                    <IconButton
-                                        variant="text"
-                                        className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+
+                                    <motion.div
+                                        whileHover={{ scale: 1.2 }}
+                                        whileTap={{ scale: 0.9 }}
                                     >
-                                        <motion.div
-                                            whileHover={{ scale: 1.2 }}
-                                            whileTap={{ scale: 0.9 }}
-                                        >
-                                            <Eye className="h-5 w-5" />
-                                        </motion.div>
-                                    </IconButton>
+
+                                        {[14].includes(user?.role) &&
+                                            <IconButton
+                                                onClick={() => navigate(`/shop-owner-dashboard/shop-owner-home-page/shop-owner-vehicle-book/vehicle-book-invoice/${order?._id}`)}
+                                                variant="text"
+                                                className="hover:bg-transparent active:bg-transparent focus:bg-transparent transition-colors duration-300"
+                                            >
+                                                <Eye className="h-5 w-5" />
+                                            </IconButton>
+
+                                        }
+
+
+
+                                    </motion.div>
                                 </td>
                             </motion.tr>
                         ))}
