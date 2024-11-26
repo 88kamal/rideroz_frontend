@@ -55,6 +55,7 @@ import SuperAdminViewShopOwnerVehiclePage from "./pages/dashboard/super-admin/pa
 import Schema from "./components/seo/Schema";
 import ReactGA from 'react-ga';
 import ResetPasswordPage from "./pages/resetPassword/ResetPasswordPage";
+import PWAInstallPrompt from "./helper/PWAInstallPrompt";
 
 
 function App() {
@@ -78,6 +79,8 @@ function App() {
         <Toaster />
         <ScrollTop />
         <TopAlert />
+
+        <PWAInstallPrompt/>
 
         {/* <pre>{JSON.stringify(notificationToken,null,2)}</pre> */}
 
