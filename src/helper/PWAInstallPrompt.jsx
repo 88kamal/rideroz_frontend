@@ -42,7 +42,7 @@ const PWAInstallPrompt = () => {
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="fixed bottom-0 left-0 w-full rounded-t-2xl shadow-lg z-50 border border-green-300 bg-green-200"
+          className="fixed bottom-0 left-0 w-full rounded-t-2xl shadow-lg z-50 border border-green-300 bg-green-100"
         >
           {/* Header */}
           <div className="flex justify-center py-2">
