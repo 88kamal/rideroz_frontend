@@ -80,7 +80,7 @@ function App() {
         <ScrollTop />
         <TopAlert />
 
-        {/* <PWAInstallPrompt/> */}
+        <PWAInstallPrompt/>
 
         {/* <pre>{JSON.stringify(notificationToken,null,2)}</pre> */}
 
