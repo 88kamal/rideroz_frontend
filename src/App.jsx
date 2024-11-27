@@ -190,8 +190,6 @@ function App() {
               />
 
             </Route>
-
-
           </>
 
           <>
@@ -281,14 +279,8 @@ function App() {
                 path="shop-owner-settlement"
                 element={<ShopOwnerSettelementPage />}
               />
-
-
             </Route>
-
-
           </>
-
-
         </Routes>
       </>
     </MyState>
