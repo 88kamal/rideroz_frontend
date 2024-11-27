@@ -7,6 +7,7 @@ const BookingInvoice = () => {
   const { id } = useParams(); // Assuming you're using React Router to get the order ID from the URL
   const { data, error, isLoading } = useGetOrderByIdQuery(id);
 
+  
   const formatDate = (date) => new Date(date).toLocaleString();
 
   if (isLoading) return <p>Loading...</p>;
