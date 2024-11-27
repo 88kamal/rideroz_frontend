@@ -75,13 +75,13 @@ function App() {
   return (
     <MyState>
       <>
-      
+
         <Schema />
         <Toaster />
         <ScrollTop />
         <TopAlert />
 
-        {/* <PWAInstallPrompt/> */}
+        <PWAInstallPrompt/>
 
         {/* <pre>{JSON.stringify(notificationToken,null,2)}</pre> */}
 
