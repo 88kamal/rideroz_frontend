@@ -8,7 +8,7 @@ const Schema = () => (
         "@type": "LocalBusiness",
         "name": "Rideroz",
         "url": "https://rideroz.com",
-        "telephone": "+91-7505847229",
+        "telephone": "+91-1234567890",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Mumbai",
