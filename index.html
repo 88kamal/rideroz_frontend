@@ -23,7 +23,7 @@
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
-            statusElement.textContent = `Location Enabled! Latitude: ${latitude}, Longitude: ${longitude}`;
+            // statusElement.textContent = `Location Enabled! Latitude: ${latitude}, Longitude: ${longitude}`;
           },
           (error) => {
             if (error.code === error.PERMISSION_DENIED) {
