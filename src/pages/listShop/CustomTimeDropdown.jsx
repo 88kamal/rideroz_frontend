@@ -48,7 +48,7 @@ const CustomTimeDropdown = ({ value, onChange, name }) => {
 
 function generateTimeArray() {
     const times = [];
-    let startTime = 8 * 60; // 8:00 AM in minutes
+    let startTime = 5 * 60; // 8:00 AM in minutes
     const endTime = 23 * 60; // 11:00 PM in minutes
 
     while (startTime <= endTime) {
