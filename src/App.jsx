@@ -56,6 +56,8 @@ import Schema from "./components/seo/Schema";
 import ReactGA from 'react-ga';
 import ResetPasswordPage from "./pages/resetPassword/ResetPasswordPage";
 import PWAInstallPrompt from "./helper/PWAInstallPrompt";
+import BlogPage from "./pages/blog/BlogPage";
+import BlogInfoPage from "./pages/blog/BlogInfoPage";
 
 
 function App() {
@@ -117,6 +119,8 @@ function App() {
           <Route path="/faqs" element={<FAQSection />} />
           <Route path="/rental-pickup-and-drop-off" element={<PickUpAndDropOff />} />
           <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/bloginfo/:id" element={<BlogInfoPage />} />
           <Route path="/*" element={<NoPage />} />
 
 
