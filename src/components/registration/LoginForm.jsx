@@ -52,7 +52,7 @@ const LoginForm = ({ switchToSignup, switchToLogin, handleOpen, switchToForgotPa
         e.preventDefault();
         try {
             const response = await login(loginState).unwrap();
-            console.log(response); // Logged in user data, token etc
+            // console.log(response); // Logged in user data, token etc
 
             toggleNeedPassword()
         } catch (err) {
