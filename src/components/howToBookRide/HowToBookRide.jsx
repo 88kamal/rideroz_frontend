@@ -208,7 +208,7 @@ const HowToBookRide = () => {
                 <div className="relative p-5 duration-300 transform bg-white border-2 rounded shadow-sm border-deep-green-accent-700 hover:-translate-y-2">
                     <div className="flex items-center mb-2">
                         <p className="flex items-center justify-center w-10 h-10 mr-2 text-lg font-bold text-white rounded-full bg-deep-green-accent-400">
-                            6
+                            4
                         </p>
                         <p className="text-lg font-bold leading-5">Ride</p>
                     </div>
