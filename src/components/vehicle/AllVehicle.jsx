@@ -113,7 +113,7 @@ const AllVehicle = () => {
                                         <div className="p-4">
                                             <h2 className="tracking-widest text-sm app-font text-gray-600 mb-1">Rideroz</h2>
                                             <div className="flex justify-between items-center mb-2">
-                                                <h1 className="text-xl font-bold text-gray-900">{vehicleName}</h1>
+                                                <h1 className="text-xl font-bold text-gray-900">{vehicleName.substr(0,20)}...</h1>
                                                 <RatingBadge vehicleRatings={vehicleRatings} />
                                             </div>
                                             <div className="flex justify-between items-center">
