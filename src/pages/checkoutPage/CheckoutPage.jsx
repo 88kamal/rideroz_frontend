@@ -329,7 +329,7 @@ const CartPage = () => {
         sessionStorage.setItem('paymentInProgress', 'true');
 
         const options = {
-            key: 'rzp_live_y0sAuEaMQpoqzQ',
+            key: 'rzp_test_zduXjxmS0NPzET',
             amount: order.amount,
             currency: order.currency,
             name: 'Rideroz',
